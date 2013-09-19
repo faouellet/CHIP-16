@@ -1,0 +1,1 @@
+- Make the inclusion of SDL generic

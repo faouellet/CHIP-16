@@ -1,1 +1,2 @@
-add_executable(Chip16 main.cpp)
+add_subdirectory (Chip16)
+add_subdirectory (Tests) 
