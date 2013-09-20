@@ -10,6 +10,7 @@
 class GPU
 {
 private:
+	// TODO : ...
 
 public:
 	GPU();
