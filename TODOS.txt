@@ -1,1 +1,2 @@
-- Make the inclusion of SDL generic
+- Fix SDL2 inclusion in CMake
+- Copy SDL.dll automatically to the .exe folder

@@ -1,10 +1,8 @@
 cmake_minimum_required (VERSION 2.8)
 
-set(Boost_USE_STATIC_LIBS OFF)
-set(Boost_USE_MULTITHREAD OFF)
+set(Boost_USE_STATIC_LIBS ON)
 
-set(BOOST_MIN_VERSION "1.46.0")
-find_package(Boost ${BOOST_MIN_VERSION})
+find_package(Boost)
 
 if(Boost_FOOUND)
     include_directories(${Boost_INCLUDE_DIRS}) 
