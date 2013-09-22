@@ -1,2 +1,2 @@
-- Fix SDL2 inclusion in CMake
-- Copy SDL.dll automatically to the .exe folder
+- Add a nice interface
+- CMake : add additional files to the VS solution

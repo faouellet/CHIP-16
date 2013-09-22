@@ -1,0 +1,15 @@
+Trucs faits cette semaine:
+- Trouver un projet
+- Écrire la proposition de projet
+- Ouvrir un repo sur Github pour le projet : https://github.com/faouellet/CHIP-16
+- Mettre en place un build system automqtique à l'aide de CMake
+- Tester la bibliothèque SDL qui sera finalement celle que je vais utiliser pour tout l'aspect
+  visuel et audio du projet
+- Commencer la lecture des spécifications de Chip16
+- Commencer à travailler sur l'architecture du projet
+
+Trucs à faire dans la semaine à venir:
+- Permettre de choisir une ROM
+- Valider le choix de cette ROM
+- Commencer à émuler les instructions CPU
+- Mettre en place les tests associés aux instructions émulées
