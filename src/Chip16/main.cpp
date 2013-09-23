@@ -1,38 +1,14 @@
 #include <iostream>
 #include <map>
-#include <string>
 
-#include "SDL.h"
+#include "emulator.h"
 
-// TODO : I think this should go into the GPU emulation
-void TestSDL()
-{
-	SDL_Window* l_Window = nullptr;
 
-	l_Window = SDL_CreateWindow("Hello World!", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 640, 480, SDL_WINDOW_SHOWN);
-
-	SDL_Renderer* l_Renderer = nullptr;
-
-	l_Renderer = SDL_CreateRenderer(l_Window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
-
-	SDL_Texture* l_Tex = SDL_CreateTextureFromSurface(l_Renderer, nullptr);
-	
-	SDL_RenderClear(l_Renderer);
-	SDL_RenderCopy(l_Renderer, l_Tex, nullptr, nullptr);
-	SDL_RenderPresent(l_Renderer);
-
-	SDL_Delay(2000);
-
-	SDL_DestroyTexture(l_Tex);
-	SDL_DestroyRenderer(l_Renderer);
-	SDL_DestroyWindow(l_Window);
-	SDL_Quit();
-}
-
-// TODO1 : At least validate the input
-// TODO2 : Change it to a GUI
+// TODO 1 : At least validate the input
+// TODO 2 : Change it to a GUI
 std::string ChooseROM()
 {
+	// TODO : Make this portable for at least vc11
 	static std::map<int, std::string> l_DemoChoices = { {1,"AdsrDemo"}, {2, "Anim"}, {3,"ASCII"}, {4,"Ball"}, 
 														{5,"GB16"}, {6,"Intro"}, {7,"Mandel"}, {8,"Maze"}, 
 														{9,"SongOfStorms"}, {10,"Starfield" }, {11,"Static"}, 
@@ -87,11 +63,18 @@ std::string ChooseROM()
 	return l_ROM;
 }
 
+/**
+* \fn main
+* \brief Main application driver
+*/
 int main(int argc, char** argv)
 {
 	std::string l_ROM = ChooseROM();
 
-	// TODO : Load it to memory and start emulating
+	Emulator l_Emu;
+	// TODO : Error reporting
+	l_Emu.Init(l_ROM);
+	l_Emu.Emulate();
 
 	return 0;
 }

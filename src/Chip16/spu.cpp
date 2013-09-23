@@ -3,3 +3,5 @@
 SPU::SPU() { }
 
 SPU::~SPU() { }
+
+bool SPU::Init() { }
