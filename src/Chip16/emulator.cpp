@@ -2,6 +2,7 @@
 
 #include <fstream>
 
+
 Emulator::Emulator() { }
 
 Emulator::~Emulator() { }
@@ -14,9 +15,9 @@ void Emulator::Emulate()
 
 unsigned Emulator::Init(const std::string & in_ROMName)
 {
-	// FIXME : Ain't that ugly
-	if(LoadROM(in_ROMName))
-		if(m_CPU.Init(m_ROMData[4]))
+	auto l_ROMData = ReadROM(in_ROMName);
+	if(!l_ROMData.empty())
+		if(m_CPU.Init(std::move(l_ROMData)))
 			if(m_GPU.Init())
 				if(m_SPU.Init())
 					return NoError;
@@ -27,20 +28,19 @@ unsigned Emulator::Init(const std::string & in_ROMName)
 		return FileError;
 }
 
-bool Emulator::LoadROM(const std::string & in_ROMName)
+std::vector<const UInt8> Emulator::ReadROM(const std::string & in_ROMName)
 {
 	std::ifstream l_FileStream(in_ROMName, std::ios::in | std::ios::binary);
-	bool l_Success = false;
+	std::vector<const UInt8> l_ROMData;
 
 	if(l_FileStream.is_open())
 	{
-		m_ROMData.insert(m_ROMData.begin(), 
+		l_ROMData.insert(l_ROMData.begin(), 
 			std::istream_iterator<unsigned char>(l_FileStream), 
 			std::istream_iterator<unsigned char>());
-
+			
 		l_FileStream.close();
-		l_Success = true;
 	}
 
-	return l_Success;
+	return l_ROMData;
 }

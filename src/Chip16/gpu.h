@@ -11,6 +11,7 @@ class GPU
 {
 private:
 	// TODO : ...
+	// Most certainly a screen buffer
 
 public:
 	/**

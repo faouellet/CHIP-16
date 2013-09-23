@@ -12,4 +12,5 @@ GPU::~GPU()
 bool GPU::Init()
 {
 	SDL_Init(SDL_INIT_VIDEO);
+	return true;
 }

@@ -2,11 +2,16 @@
 #define EMULATOR_H
 
 #include <string>
-#include <vector>
 
 #include "cpu.h"
 #include "gpu.h"
 #include "spu.h"
+
+#include "utils.h"
+
+using Utils::UInt8;
+using Utils::UInt16;
+using Utils::UInt32;
 
 /*
 * \class Emulator
@@ -17,8 +22,6 @@
 class Emulator
 {
 private:
-	std::vector<const unsigned char> m_ROMData;		/*!< Data + header of a c16 file */
-
 	CPU m_CPU;	/*!< The central processing unit */
 	GPU m_GPU;	/*!< The graphics processing unit */
 	SPU m_SPU;	/*!< The sound processing unit */
@@ -60,12 +63,12 @@ public:
 
 private:
 	/**
-	* \fn LoadROM
-	* \brief Read a ROM from disk and load it into the emulator
+	* \fn ReadROM
+	* \brief Read a ROM from disk
 	* \param in_ROMName The absolute path to the ROM
 	* \return Success or failure
 	*/
-	bool LoadROM(const std::string & in_ROMName);
+	std::vector<const UInt8> ReadROM(const std::string & in_ROMName);
 };
 
 #endif // EMULATOR_H
