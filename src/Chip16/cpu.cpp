@@ -146,7 +146,7 @@ UInt32 CPU::FetchOpCode()
 	// Q : Should the last 2 bytes be read now or during a specific interpret function ?
 	UInt32 l_OpCode = 0;
 	for(int i = 0; i < OPCODE_SIZE; ++i)
-		(l_OpCode << 8) | (m_Memory[m_PC+=i]);
+		l_OpCode = (l_OpCode << 8) | (m_Memory[m_PC+=i]);
 
 	return l_OpCode;
 }

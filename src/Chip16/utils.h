@@ -46,12 +46,9 @@ namespace Utils
 		>::type type;
 	};
 
-	//template<int N>
-	//Int_<N> operator>>(Int_)
-
-	typedef Int_<1> UInt8;
-	typedef Int_<2> UInt16;
-	typedef Int_<4> UInt32;
+	typedef Int_<1>::type UInt8;
+	typedef Int_<2>::type UInt16;
+	typedef Int_<4>::type UInt32;
 };
 
 #endif // UTILS_H
