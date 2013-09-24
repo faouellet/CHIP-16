@@ -1,4 +1,4 @@
 - Add a nice interface
-- CMake : add additional files to the VS solution
 - Generate doc with doxygen
 - Link the tests project with the emulator
+- Refactor (if possible using template metaprogramming)

@@ -87,19 +87,23 @@ void CPU::InterpretOp()
 
 void CPU::InterpretAdds(UInt32 && in_OpCode)
 {
+	// TODO : Set carry flag
 	switch (in_OpCode >> 24 & 0xF)
 	{
 		case 0x0:	// ADDI
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// ADD	(inplace)
 		{
-			// TODO
+			m_Regs[in_OpCode >> 16 & 0xF] += m_Regs[in_OpCode >> 20 & 0xF];
+			break;
 		}
 		case 0x2:	// ADD
 		{
-			// TODO
+			m_Regs[in_OpCode >> 16 & 0xF] = m_Regs[in_OpCode >> 16 & 0xF] + m_Regs[in_OpCode >> 20 & 0xF];
+			break;
 		}
 		default:
 		{
@@ -120,11 +124,17 @@ void CPU::InterpretAnds(UInt32 && in_OpCode)
 		}
 		case 0x1:	// AND	(inplace)
 		{
-			// TODO
+			m_Regs[in_OpCode >> 16 & 0xF] &= m_Regs[in_OpCode >> 20 & 0xF];
+			// Set the zero flag
+			m_FR = m_Regs[in_OpCode >> 16 & 0xF] == 0 ? m_Regs[in_OpCode >> 16 & 0xF] | 0x4 : m_FR & ~0x4;
+			break;
 		}
 		case 0x2:	// AND
 		{
-			// TODO
+			m_Regs[in_OpCode >> 8 & 0xF] = m_Regs[in_OpCode >> 16 & 0xF] & m_Regs[in_OpCode >> 20 & 0xF];
+			// Set the zero flag
+			m_FR = m_Regs[in_OpCode >> 8 & 0xF] == 0 ? m_Regs[in_OpCode >> 8 & 0xF] | 0x4 : m_FR & ~0x4;
+			break;
 		}
 		case 0x3:	// TSTI
 		{
@@ -132,7 +142,9 @@ void CPU::InterpretAnds(UInt32 && in_OpCode)
 		}
 		case 0x4:	// TST
 		{
-			// TODO
+			// Set the zero flag
+			m_FR = m_Regs[in_OpCode >> 16 & 0xF] & m_Regs[in_OpCode >> 20 & 0xF] == 0 ? m_Regs[in_OpCode >> 16 & 0xF] | 0x4 : m_FR & ~0x4;
+			break;
 		}
 		default:
 		{
@@ -196,6 +208,99 @@ void CPU::InterpretCallJumps(UInt32 && in_OpCode)
 	}
 }
 
+bool CPU::InterpretConditions(UInt8 && in_CondCode)
+{
+	switch (in_CondCode >> 24 & 0xF)
+	{
+		case 0x0:	// Z
+		{
+			// TODO
+			break;
+		}
+		case 0x1:	// NZ
+		{
+			// TODO
+			break;
+		}
+		case 0x2:	// N
+		{
+			// TODO
+			break;
+		}
+		case 0x3:	// NN
+		{
+			// TODO
+			break;
+		}
+		case 0x4:	// P
+		{
+			// TODO
+			break;
+		}
+		case 0x5:	// O
+		{
+			// TODO
+			break;
+		}
+		case 0x6:	// NO
+		{
+			// TODO
+			break;
+		}
+		case 0x7:	// A
+		{
+			// TODO
+			break;
+		}
+		case 0x8:	// AE
+		{
+			// TODO
+			break;
+		}
+		case 0x9:	// B
+		{
+			// TODO
+			break;
+		}
+		case 0xA:	// BE
+		{
+			// TODO
+			break;
+		}
+		case 0xB:	// G
+		{
+			// TODO
+			break;
+		}
+		case 0xC:	// GE
+		{
+			// TODO
+			break;
+		}
+		case 0xD:	// L
+		{
+			// TODO
+			break;
+		}
+		case 0xE:	// LE
+		{
+			// TODO
+			break;
+		}
+		case 0xF:	// RES
+		{
+			// TODO
+			break;
+		}
+		default:
+		{
+			// PANIC !!!
+			// TODO : Panic behavior
+			break;
+		}
+	}
+}
+
 void CPU::InterpretDivs(UInt32 && in_OpCode)
 {
 	switch (in_OpCode >> 24 & 0xF)
@@ -203,14 +308,17 @@ void CPU::InterpretDivs(UInt32 && in_OpCode)
 		case 0x0:	// DIVI
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// DIV	(inplace)
 		{
 			// TODO
+			break;
 		}
 		case 0x2:	// DIV
 		{
 			// TODO
+			break;
 		}
 		default:
 		{
@@ -273,7 +381,7 @@ void CPU::InterpretMisc(UInt32 && in_OpCode)
 			// TODO
 			break;
 		}
-		case 0x2:	//VBLNK
+		case 0x2:	// VBLNK
 		{
 			// TODO
 			break;
@@ -292,6 +400,11 @@ void CPU::InterpretMisc(UInt32 && in_OpCode)
 		case 0x6:	// DRW
 		{
 			// TODO : Dispatch to GPU
+			break;
+		}
+		case 0x7:	// RND
+		{
+			// TODO
 			break;
 		}
 		case 0x8:	// FLIP
@@ -345,14 +458,17 @@ void CPU::InterpretMuls(UInt32 && in_OpCode)
 		case 0x0:	// MULI
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// MUL	(inplace)
 		{
 			// TODO
+			break;
 		}
 		case 0x2:	// MUL
 		{
 			// TODO
+			break;
 		}
 		default:
 		{
@@ -373,11 +489,17 @@ void CPU::InterpretOrs(UInt32 && in_OpCode)
 		}
 		case 0x1:	// OR	(inplace)
 		{
-			// TODO
+			m_Regs[in_OpCode >> 16 & 0xF] |= m_Regs[in_OpCode >> 20 & 0xF];
+			// Set the zero flag
+			m_FR = m_Regs[in_OpCode >> 16 & 0xF] == 0 ? m_Regs[in_OpCode >> 16 & 0xF] | 0x4 : m_FR & ~0x4;
+			break;
 		}
 		case 0x2:	// OR
 		{
-			// TODO
+			m_Regs[in_OpCode >> 8 & 0xF] = m_Regs[in_OpCode >> 16 & 0xF] | m_Regs[in_OpCode >> 20 & 0xF];
+			// Set the zero flag
+			m_FR = m_Regs[in_OpCode >> 8 & 0xF] == 0 ? m_Regs[in_OpCode >> 8 & 0xF] | 0x4 : m_FR & ~0x4;
+			break;
 		}
 		default:
 		{
@@ -395,26 +517,32 @@ void CPU::InterpretPushPops(UInt32 && in_OpCode)
 		case 0x0:	// PUSH
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// POP
 		{
 			// TODO
+			break;
 		}
 		case 0x2:	// PUSHALL
 		{
 			// TODO
+			break;
 		}
 		case 0x3:	// POPALL
 		{
 			// TODO
+			break;
 		}
 		case 0x4:	// PUSHF
 		{
 			// TODO
+			break;
 		}
 		case 0x5:	// POPF
 		{
 			// TODO
+			break;
 		}
 		default:
 		{
@@ -432,18 +560,22 @@ void CPU::InterpretShifts(UInt32 && in_OpCode)
 		case 0x0:	// SHL
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// SHR
 		{
 			// TODO
+			break;
 		}
 		case 0x2:	// SAL
 		{
 			// TODO
+			break;
 		}
 		case 0x3:	// SAR
 		{
 			// TODO
+			break;
 		}
 		default:
 		{
@@ -461,10 +593,12 @@ void CPU::InterpretStores(UInt32 && in_OpCode)
 		case 0x0:	// STM	(direct)
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// STM	(indirect)
 		{
 			// TODO
+			break;
 		}
 		default:
 		{
@@ -482,22 +616,27 @@ void CPU::InterpretSubs(UInt32 && in_OpCode)
 		case 0x0:	// SUBI
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// SUB	(inplace)
 		{
 			// TODO
+			break;
 		}
 		case 0x2:	// SUB
 		{
 			// TODO
+			break;
 		}
 		case 0x3:	// CMPI
 		{
 			// TODO
+			break;
 		}
 		case 0x4:	// CMP
 		{
 			// TODO
+			break;
 		}
 		default:
 		{
@@ -515,14 +654,21 @@ void CPU::InterpretXors(UInt32 && in_OpCode)
 		case 0x0:	// XORI
 		{
 			// TODO
+			break;
 		}
 		case 0x1:	// XOR	(inplace)
 		{
-			// TODO
+			m_Regs[in_OpCode >> 16 & 0xF] ^= m_Regs[in_OpCode >> 20 & 0xF];
+			// Set the zero flag
+			m_FR = m_Regs[in_OpCode >> 16 & 0xF] == 0 ? m_Regs[in_OpCode >> 16 & 0xF] | 0x4 : m_FR & ~0x4;
+			break;
 		}
 		case 0x2:	// XOR
 		{
-			// TODO
+			m_Regs[in_OpCode >> 8 & 0xF] = m_Regs[in_OpCode >> 16 & 0xF] ^ m_Regs[in_OpCode >> 20 & 0xF];
+			// Set the zero flag
+			m_FR = m_Regs[in_OpCode >> 8 & 0xF] == 0 ? m_Regs[in_OpCode >> 8 & 0xF] | 0x4 : m_FR & ~0x4;
+			break;
 		}
 		default:
 		{

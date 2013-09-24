@@ -92,6 +92,13 @@ private:
 	void InterpretCallJumps(UInt32 && in_OpCode);
 
 	/**
+	* \fn InterpretConditions
+	* \brief Decode and execute a condition
+	* \param in_OpCode A byte representing a condition
+	*/
+	bool InterpretConditions(UInt8 && in_CondCode);
+
+	/**
 	* \fn InterpretDivs
 	* \brief Decode and execute a div opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
