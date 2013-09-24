@@ -3,7 +3,7 @@ cmake_minimum_required (VERSION 2.8)
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
 set(DLL_3RD "${CMAKE_CURRENT_SOURCE_DIR}/../../3rd party/SDL2/lib/x86")
 #set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MD")
-set(SOURCES main.cpp emulator.cpp emulator.h cpu.cpp cpu.h gpu.cpp gpu.h spu.cpp spu.h)
+set(SOURCES main.cpp emulator.cpp emulator.h cpu.cpp cpu.h gpu.cpp gpu.h spu.cpp spu.h utils.h)
 
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../3rd party/SDL2/include")
 link_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../3rd party/SDL2/lib/x86")

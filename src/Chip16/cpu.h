@@ -71,29 +71,36 @@ public:
 
 private:
 	/**
-	* \fn InterpretArithmetics
-	* \brief Decode and execute an arithmetic opcode
+	* \fn InterpretAdds
+	* \brief Decode and execute an add opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
 	*/
-	void InterpretArithmetics(UInt32 && in_OpCode);
+	void InterpretAdds(UInt32 && in_OpCode);
 
 	/**
-	* \fn InterpretCalls
-	* \brief Decode and execute an call opcode
+	* \fn InterpretAnds
+	* \brief Decode and execute an and opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
 	*/
-	void InterpretCalls(UInt32 && in_OpCode);
+	void InterpretAnds(UInt32 && in_OpCode);
 
 	/**
-	* \fn InterpretJumps
-	* \brief Decode and execute an jump opcode
+	* \fn InterpretCallJumps
+	* \brief Decode and execute a call or jump opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
 	*/
-	void InterpretJumps(UInt32 && in_OpCode);
+	void InterpretCallJumps(UInt32 && in_OpCode);
+
+	/**
+	* \fn InterpretDivs
+	* \brief Decode and execute a div opcode
+	* \param in_OpCode A 4 bytes Chip16 instruction
+	*/
+	void InterpretDivs(UInt32 && in_OpCode);
 
 	/**
 	* \fn InterpretLoads
-	* \brief Decode and execute an load opcode
+	* \brief Decode and execute a load opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
 	*/
 	void InterpretLoads(UInt32 && in_OpCode);
@@ -101,24 +108,59 @@ private:
 	// TODO : Find a better name
 	/**
 	* \fn InterpretMisc
-	* \brief Decode and execute an misc opcode
+	* \brief Decode and execute a misc opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
 	*/
 	void InterpretMisc(UInt32 && in_OpCode);
 
 	/**
+	* \fn InterpretMuls
+	* \brief Decode and execute a mul opcode
+	* \param in_OpCode A 4 bytes Chip16 instruction
+	*/
+	void InterpretMuls(UInt32 && in_OpCode);
+
+	/**
+	* \fn InterpretOrs
+	* \brief Decode and execute an or opcode
+	* \param in_OpCode A 4 bytes Chip16 instruction
+	*/
+	void InterpretOrs(UInt32 && in_OpCode);
+
+	/**
 	* \fn InterpretPushPops
-	* \brief Decode and execute an push or pop opcode
+	* \brief Decode and execute a push or pop opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
 	*/
 	void InterpretPushPops(UInt32 && in_OpCode);
 
 	/**
+	* \fn InterpretShifts
+	* \brief Decode and execute a shift opcode
+	* \param in_OpCode A 4 bytes Chip16 instruction
+	*/
+	void InterpretShifts(UInt32 && in_OpCode);
+
+	/**
 	* \fn InterpretStores
-	* \brief Decode and execute an store  opcode
+	* \brief Decode and execute a store  opcode
 	* \param in_OpCode A 4 bytes Chip16 instruction
 	*/
 	void InterpretStores(UInt32 && in_OpCode);
+
+	/**
+	* \fn InterpretSubs
+	* \brief Decode and execute a sub opcode
+	* \param in_OpCode A 4 bytes Chip16 instruction
+	*/
+	void InterpretSubs(UInt32 && in_OpCode);
+
+	/**
+	* \fn InterpretXORs
+	* \brief Decode and execute a xor opcode
+	* \param in_OpCode A 4 bytes Chip16 instruction
+	*/
+	void InterpretXors(UInt32 && in_OpCode);
 
 	/**
 	* \fn FetchOpCode
