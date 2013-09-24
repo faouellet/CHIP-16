@@ -25,10 +25,10 @@ private:
 	enum { OPCODE_SIZE = 4, HEADER_SIZE = 16, MEMORY_SIZE = 65536 };
 
 private:
-	UInt16 m_PC;		/*!< Program counter */
-	UInt16 m_SP;		/*!< Stack pointer */
-	UInt8 m_FR;			/*!< Flag register */
-	UInt16 m_Regs[16];	/*!< General purpose registers */
+	UInt16 m_PC;			/*!< Program counter */
+	UInt16 m_SP;			/*!< Stack pointer */
+	UInt8 m_FR;				/*!< Flag register */
+	UInt16 m_Registers[16];	/*!< General purpose registers */
 
 	// Q : Maybe change to vector ?
 	UInt8 m_ROMHeader[HEADER_SIZE];	/*!< The header of a .c16 file. See specs for details*/

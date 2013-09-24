@@ -1,4 +1,4 @@
 - Add a nice interface
 - Generate doc with doxygen
 - Link the tests project with the emulator
-- Refactor (if possible using template metaprogramming)
+- REFACTOR (if possible using template metaprogramming)

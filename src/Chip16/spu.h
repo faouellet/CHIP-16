@@ -11,6 +11,7 @@ class SPU
 {
 private:
 	// TODO : ...
+	// Most certainly a current generator
 
 public:
 	/**
@@ -32,6 +33,27 @@ public:
 	* \return Success or failure
 	*/
 	bool Init();
+	
+	/**
+	* \fn GenerateSound
+	* \brief Activate the sound generator
+	* \param in_OpCode A 4 bytes Chip16 instruction
+	*/
+	void GenerateSound(unsigned long && in_OpCode);
+
+	/**
+	* \fn PlayTone
+	* \brief Play a given tone for a given duration
+	* \param in_Tone	 The frequency of the tone to play
+	*        in_Duration The duration in milliseconds of the tone to play
+	*/
+	void PlayTone(unsigned in_Tone, unsigned in_Duration);
+
+	/**
+	* \fn Stop
+	* \brief Stop the sound generator
+	*/
+	void Stop();
 };
 
 #endif // SPU_H

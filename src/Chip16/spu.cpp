@@ -6,4 +6,10 @@ SPU::SPU() { }
 
 SPU::~SPU() { }
 
-bool SPU::Init() { return true; }
+bool SPU::Init() { /* Call SDL_Mixer */ return true; }
+
+void SPU::GenerateSound(unsigned long && in_OpCode) { }
+
+void SPU::PlayTone(unsigned in_Tone, unsigned in_Duration) { }
+
+void SPU::Stop() { }
