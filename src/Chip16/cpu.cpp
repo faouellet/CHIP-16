@@ -140,7 +140,7 @@ void CPU::InterpretAnds(UInt32 && in_OpCode)
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 16 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
 			// Set the negative flag
-			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x1000 ? m_FR | 0x1000 : m_FR & ~0x1000;
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		case 0x1:	// AND	(inplace)
@@ -148,6 +148,8 @@ void CPU::InterpretAnds(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 16 & 0xF] &= m_Registers[in_OpCode >> 20 & 0xF];
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 16 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		case 0x2:	// AND
@@ -155,6 +157,8 @@ void CPU::InterpretAnds(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 8 & 0xF] = m_Registers[in_OpCode >> 16 & 0xF] & m_Registers[in_OpCode >> 20 & 0xF];
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 8 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		case 0x3:	// TSTI
@@ -459,6 +463,8 @@ void CPU::InterpretOrs(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 16 & 0xF] |= in_OpCode & 0xFFFF;
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 16 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		case 0x1:	// OR	(inplace)
@@ -466,6 +472,8 @@ void CPU::InterpretOrs(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 16 & 0xF] |= m_Registers[in_OpCode >> 20 & 0xF];
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 16 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		case 0x2:	// OR
@@ -473,6 +481,8 @@ void CPU::InterpretOrs(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 8 & 0xF] = m_Registers[in_OpCode >> 16 & 0xF] | m_Registers[in_OpCode >> 20 & 0xF];
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 8 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		default:
@@ -638,6 +648,8 @@ void CPU::InterpretXors(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 16 & 0xF] ^= in_OpCode & 0xFFFF;
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 16 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		case 0x1:	// XOR	(inplace)
@@ -645,6 +657,8 @@ void CPU::InterpretXors(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 16 & 0xF] ^= m_Registers[in_OpCode >> 20 & 0xF];
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 16 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		case 0x2:	// XOR
@@ -652,6 +666,8 @@ void CPU::InterpretXors(UInt32 && in_OpCode)
 			m_Registers[in_OpCode >> 8 & 0xF] = m_Registers[in_OpCode >> 16 & 0xF] ^ m_Registers[in_OpCode >> 20 & 0xF];
 			// Set the zero flag
 			m_FR = m_Registers[in_OpCode >> 8 & 0xF] == 0 ? m_FR | 0x4 : m_FR & ~0x4;
+			// Set the negative flag
+			m_FR = m_Registers[in_OpCode >> 16 & 0xF] & 0x4000 ? m_FR | 0x1000 : m_FR & ~0x4000;
 			break;
 		}
 		default:

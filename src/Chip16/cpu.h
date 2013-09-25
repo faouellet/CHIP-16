@@ -20,7 +20,7 @@ class CPU
 private:
 	/**
 	* \enum
-	* \brief Useful siz constants
+	* \brief Useful size constants
 	*/
 	enum { OPCODE_SIZE = 4, HEADER_SIZE = 16, MEMORY_SIZE = 65536 };
 
@@ -177,4 +177,4 @@ private:
 	UInt32 FetchOpCode();
 };
 
-#endif // SPU_H
+#endif // CPU_H
