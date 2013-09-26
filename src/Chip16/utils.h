@@ -4,21 +4,21 @@
 /**
 * \namespace Utils
 * \brief Contains a mix of useful templated tools.
-*        Credits goes to Patrice Roy for teaching me those tools
+*        Credits goes to Patrice Roy for teaching me some of those tools
 *        His website : <a href="http://h-deb.clg.qc.ca/">h-deb</a>
 */
 namespace Utils
 {
-	template <bool Cond, typename If, typename Else>
+	template <bool Cond, class If, class Else>
 	struct IfElse;
 
-	template <typename If, typename Else>
+	template <class If, class Else>
 	struct IfElse<true, If, Else>
 	{
 		typedef If type;
 	};
 
-	template <typename If, typename Else>
+	template <class If, class Else>
 	struct IfElse<false, If, Else>
 	{
 		typedef Else type;
@@ -49,6 +49,18 @@ namespace Utils
 	typedef Int_<1>::type UInt8;
 	typedef Int_<2>::type UInt16;
 	typedef Int_<4>::type UInt32;
+
+	template<UInt16 Val>
+	struct Constant
+	{
+		typedef Val value;
+	};
+
+	template<UInt16 LHS, UInt16 RHS>
+	struct Plus
+	{
+		typedef Constant<LHS+RHS>::value value;
+	};
 };
 
 #endif // UTILS_H
