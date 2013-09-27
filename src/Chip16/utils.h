@@ -26,18 +26,18 @@ namespace Utils
 
 	class Error;
 	template<int N>
-	struct Int_
+	struct UInt_
 	{
 		typedef typename IfElse<
-			sizeof(char)==N, char,
+			sizeof(char)==N, unsigned char,
 				typename IfElse<
-					sizeof(short)==N, short,
+					sizeof(short)==N, unsigned short,
 					typename IfElse<
-						sizeof(int)==N, int,
+						sizeof(int)==N, unsigned int,
 						typename IfElse<
-							sizeof(long)==N, long,
+							sizeof(long)==N, unsigned long,
 							typename IfElse<
-								sizeof(long long)==N, long long,
+								sizeof(long long)==N, unsigned long long,
 								Error
 							>::type
 						>::type
@@ -46,9 +46,9 @@ namespace Utils
 		>::type type;
 	};
 
-	typedef Int_<1>::type UInt8;
-	typedef Int_<2>::type UInt16;
-	typedef Int_<4>::type UInt32;
+	typedef UInt_<1>::type UInt8;
+	typedef UInt_<2>::type UInt16;
+	typedef UInt_<4>::type UInt32;
 
 	template<class T>
 	struct LeftShift

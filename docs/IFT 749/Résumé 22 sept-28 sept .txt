@@ -1,0 +1,43 @@
+Trucs faits cette semaine:
+- Tweaks au build system automatique
+- Apprentissage de la librairie SDL
+- Ajout d'une interface en ligne de commande
+- Début de l'émulation des instructions CPU
+- Début du design de l'architecture
+
+Trucs à faire dans la semaine à venir:
+- Valider le choix d'une ROM
+- Continuer à émuler les instructions CPU
+- TESTS !!!
+- REFACTORING !!!
+- Si le temps le permet, commencer à émuler les instructions GPU et SPU
+
+Un mot sur le design
+La première approche abordée en fut une où l'usage (l'abus) de switch était prévalent. Elle est intuitive
+et facile à implémenter. Par contre, elle est redondante et je me pose des questions à savoir ce qu'un
+compilateur pourrait produire comme code dans un tel cas. 
+
+La seconde approche abordée consista en la création statique d'un tableau de pointeurs de fonction. L'idée 
+me venu en lisant le blogue suivant: 
+http://vermeille.fr/dotclear2/index.php/post/23-Metaprogramming-a-full-Virtual-Machine
+Malheureusement, je suis rendu compte que cette approche se prêtait plus ou moins à l'architecture Chip16.
+En effet, dans l'article, l'architecture émulée est le Z80 qui comporte principalement des registres dédiés 
+à des tâches spécifiques. À l'inverse Chip16 comporte 16 registres à usage général. Le nombre de spécialisations
+partielles aurait donc explosé à cause de toutes les combinaisons possibles.
+
+La troisième approche fut une variante de la seconde. En gros, les registres n'étaient plus des structures
+génériques ce qui me permettait d'éviter l'explosion combinatoire de l'approche précédente. Je conservais par
+contre l'idée de structure générique comme abstraction statique d'exécution d'instruction machine. Le problème
+apporté par cette approche était que pour effectuer mes spécialisations partielles, je devais découpler
+les instructions du CPU. Comme les instructions agissent sur la mémoire et les registres du CPU, cette 
+approche était inacceptable.
+
+La prochaine approche, qui ne fut que brièvement explorée, consistait à explorer la possibilité de générer une
+matrice de décodage telle qu'illustrée dans ce vidéo : http://www.youtube.com/watch?v=y71lli8MS8s&list=WL4275FC766942C5A5
+Le problème dans cette approche est qu'elle est spécifique à l'architecture 6502 et qu'elle ne peut être
+adaptée à Chip16. Ainsi, les instructions de Chip16 se représentent plutôt sous la forme d'un jagged array.
+
+Finalement, le design final s'enligne pour être une reprise de la première approche dans laquelle un gros 
+effort de refactoring sera effectué pour alléger le code. Cette approche m'apparaît la plus simple et la plus
+apte à porter fruit. De plus, il me semble a priori que cette approche va me faciliter la vie lorsque viendra
+le temps d'implémenter un recompilateur dynamique ou un débuggeur.
