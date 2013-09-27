@@ -50,16 +50,22 @@ namespace Utils
 	typedef Int_<2>::type UInt16;
 	typedef Int_<4>::type UInt32;
 
-	template<UInt16 Val>
-	struct Constant
+	template<class T>
+	struct LeftShift
 	{
-		typedef Val value;
+		T operator()(const T & in_LHS, const UInt16 & in_RHS)
+		{
+			return in_LHS << in_RHS;
+		}
 	};
 
-	template<UInt16 LHS, UInt16 RHS>
-	struct Plus
+	template<class T>
+	struct RightShift
 	{
-		typedef Constant<LHS+RHS>::value value;
+		T operator()(const T & in_LHS, const UInt16 & in_RHS)
+		{
+			return in_LHS >> in_RHS;
+		}
 	};
 };
 

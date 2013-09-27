@@ -25,18 +25,23 @@ private:
 
 	/**
 	* \enum
-	* \brief Masks for the flag register
+	* \brief All possible opcodes
 	*/
-	enum { UnsignedCarry = 1, UnsignedBorrow = 1, Zero = 2, SignedOverflow = 64, Sign = 128 };
+	enum { NOP=0, CLS, VBLNK, BGC, SPR, DRWXY, DRWXYZ, RND, FLIP00, FLIP01, FLIP10,
+			FLIP11, SND0, SND1, SND2, SND3, SNP, SNG, JMP, JX, JME, JMPX, CALL,
+			RET, CX, CALLX, LDIX, LDISP, LDMX, LDMXY, MOV, STMX, STMXY, ADDI, 
+			ADDXY, ADDXYZ, SUBI, SUBXY, SUBXYZ, CMPI, CMP, ANDI, ANDXY, ANDXYZ,
+			TSTI, TST, ORI, ORXY, ORXYZ, XORI, XORXY, XORXYZ, MULI, MULXY, MULXYZ, 
+			DIVI, DIVXY, DIVXYZ, SHLXN, SHRXN, SALXN, SARXN, SHLXY, SHRXY, SALXY,
+			SARXY, PUSH, POP, PUSHALL, POPALL, PUSHF, POPF, PAL, PALX };
 
 private:
 	UInt16 m_PC;							/*!< Program counter */
 	UInt16 m_SP;							/*!< Stack pointer */
-	UInt8 m_FR;								/*!< Flag register */
+	UInt16 m_FR;							/*!< Flag register */
 	UInt16 m_Registers[16];					/*!< General purpose registers */
-	std::function<void()> m_FctTable[75];	/*!< Pointers to every Chip16 instructions */
+	std::function<void()> m_FctTable[73];	/*!< Pointers to every Chip16 instructions */
 
-	// Q : Maybe change to vector ?
 	UInt8 m_ROMHeader[HEADER_SIZE];	/*!< The header of a .c16 file. See specs for details*/
 	UInt8 m_Memory[MEMORY_SIZE];	/*!< Memory of the CPU. See specs for layout details */
 
@@ -85,11 +90,24 @@ private:
 	UInt16 GetInputRegisterValue();
 
 private:
+	/**
+	* \fn RegisterOpCode
+	* \brief Add an emulation function at the opcode index
+	* \tparam Opcode		The function opcode
+	* \tparam Instruction	The emulation function type
+	*/
 	template<UInt8 OpCode, class Instruction>
 	void RegisterOpCode()
 	{
 		m_FctTable[OpCode] = [](){ Instruction::Execute(); };
 	}
+
+	/**
+	* \fn SetNegativeZeroFlag
+	* \brief Set the negative flag if the bit[15] of the result is lit
+	*        and set the zero flag if the result is zero
+	*/
+	void SetNegativeZeroFlag(UInt16 in_Result);
 	
 private:
 	struct ImmediateOpMode 
@@ -124,6 +142,7 @@ private:
 		{
 			Fct<UInt16> l_Func; // Q : Could there be a better (static) way (except constexpr functor) ?
 			m_Registers[OpMode::OutAddr()] = l_Func(GetInputRegisterValue(), OpMode::Value());
+			SetNegativeZeroFlag();
 		}
 	};
 
@@ -133,6 +152,10 @@ private:
 		void Execute()
 		{
 			m_Registers[OpMode::OutAddr()] = std::divides(GetInputRegisterValue(), OpMode::Value());
+			// Set carry flag
+			m_FR = m_Registers[OpMode::OutAddr()] * OpMode::Value() == GetInputRegisterValue() ?
+				m_FR & ~0x2 : m_FR | 0x2;
+			SetNegativeZeroFlag();
 		}
 	};
 	
@@ -142,6 +165,9 @@ private:
 		void Execute()
 		{
 			m_Registers[OpMode::OutAddr()] = std::minus(GetInputRegisterValue(), OpMode::Value());
+			// Set carry flag
+
+			SetNegativeZeroFlag();
 		}
 	};
 
@@ -151,6 +177,9 @@ private:
 		void Execute()
 		{
 			m_Registers[OpMode::OutAddr()] = std::multiplies(GetInputRegisterValue(), OpMode::Value());
+			// Set carry flag
+
+			SetNegativeZeroFlag();
 		}
 	};
 
@@ -160,6 +189,9 @@ private:
 		void Execute()
 		{
 			m_Registers[OpMode::OutAddr()] = std::plus(GetInputRegisterValue(), OpMode::Value());
+			// Set carry flag
+
+			SetNegativeZeroFlag();
 		}
 	};
 
@@ -173,11 +205,20 @@ private:
 	};
 
 	template<class OpMode>
-	struct LoadStoreInstruction
+	struct LoadInstruction
 	{
 		void Execute()
 		{
 			m_Registers[OpMode::OutAddr()] = OpMode::Value();
+		}
+	};
+
+	template<class OpMode>
+	struct StoreInstruction
+	{
+		void Execute()
+		{
+			m_Memory[OpMode::OutAddr()] = OpMode::Value();
 		}
 	};
 };

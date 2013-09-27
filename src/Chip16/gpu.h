@@ -33,6 +33,12 @@ public:
 	* \return Success or failure
 	*/
 	bool Init();
+
+	/**
+	* \fn Draw
+	* \brief Draw ...
+	*/
+	void Draw();
 };
 
 #endif // GPU_H
