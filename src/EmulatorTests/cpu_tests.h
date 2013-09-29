@@ -2,6 +2,7 @@
 #define CPU_TESTS_H
 
 #include "cpu.h"
+#include "cpu.cpp"
 
 struct CPUFixture
 {
