@@ -1,6 +1,10 @@
 #ifndef SPU_H
 #define SPU_H
 
+#include "utils.h"
+
+using Utils::UInt8;
+
 /*
 * \class SPU
 * \brief Emulates the Sound Processing Unit (SPU)
@@ -37,15 +41,16 @@ public:
 	/**
 	* \fn GenerateSound
 	* \brief Activate the sound generator
-	* \param in_OpCode A 4 bytes Chip16 instruction
+	* \param TODO
 	*/
-	void GenerateSound(unsigned long && in_OpCode);
+	void GenerateSound(UInt8 in_Attack, UInt8 in_Decay, UInt8 in_Sustain, 
+		UInt8 in_Release, UInt8 in_Volume, UInt8 in_Type);
 
 	/**
 	* \fn PlayTone
 	* \brief Play a given tone for a given duration
-	* \param in_Tone	 The frequency of the tone to play
-	*        in_Duration The duration in milliseconds of the tone to play
+	* \param in_Tone The frequency in Hertz of the tone to play
+	* \param in_Duration The duration in milliseconds of the tone to play
 	*/
 	void PlayTone(unsigned in_Tone, unsigned in_Duration);
 

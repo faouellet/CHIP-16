@@ -8,8 +8,9 @@ SPU::~SPU() { }
 
 bool SPU::Init() { /* Call SDL_Mixer */ return true; }
 
-void SPU::GenerateSound(unsigned long && in_OpCode) { }
+void SPU::GenerateSound(UInt8 in_Attack, UInt8 in_Decay, UInt8 in_Sustain, 
+		UInt8 in_Release, UInt8 in_Volume, UInt8 in_Type) { /*TODO*/ }
 
-void SPU::PlayTone(unsigned in_Tone, unsigned in_Duration) { }
+void SPU::PlayTone(unsigned in_Tone, unsigned in_Duration) { /*TODO*/ }
 
-void SPU::Stop() { }
+void SPU::Stop() { /*TODO*/ }

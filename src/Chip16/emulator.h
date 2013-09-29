@@ -4,8 +4,6 @@
 #include <string>
 
 #include "cpu.h"
-#include "gpu.h"
-#include "spu.h"
 
 #include "utils.h"
 
@@ -23,8 +21,6 @@ class Emulator
 {
 private:
 	CPU m_CPU;	/*!< The central processing unit */
-	GPU m_GPU;	/*!< The graphics processing unit */
-	SPU m_SPU;	/*!< The sound processing unit */
 
 public:
 	/**
@@ -38,14 +34,7 @@ public:
 	* \brief Destructor
 	*/
 	~Emulator();
-
-public:
-	/**
-	* \enum
-	* \brief Masks for the possible errors that can happen during the initialization
-	*/
-	enum { NoError = 0, CPUError = 1, GPUError = 2, SPUError = 4, FileError = 8 };
-
+	
 public:
 	/**
 	* \fn Init
@@ -68,7 +57,7 @@ private:
 	* \param in_ROMName The absolute path to the ROM
 	* \return Success or failure
 	*/
-	std::vector<const UInt8> ReadROM(const std::string & in_ROMName);
+	std::vector<UInt8> ReadROM(const std::string & in_ROMName);
 };
 
 #endif // EMULATOR_H

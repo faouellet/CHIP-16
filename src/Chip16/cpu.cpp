@@ -1,14 +1,17 @@
 #include "cpu.h"
 
 #include <functional>
+#include <limits>
 
 CPU::CPU() { }
 
 CPU::~CPU() { }
 
 // TODO : Finish it and ask yourself what could go wrong
-bool CPU::Init(std::vector<UInt8> && in_ROMData) 
+unsigned CPU::Init(std::vector<UInt8> && in_ROMData) 
 {
+	unsigned l_Ret;
+
 	for(int i = 0; i < HEADER_SIZE; ++i)
 		m_ROMHeader[i] = in_ROMData[i];
 
@@ -18,7 +21,12 @@ bool CPU::Init(std::vector<UInt8> && in_ROMData)
 	m_PC = m_ROMHeader[0xA];
 	m_SP = 0xFDF0;
 
-	return true;
+	if(!m_GPU.Init())
+		l_Ret |= GPUError;
+	if(!m_SPU.Init())
+		l_Ret |= SPUError;
+
+	return l_Ret;
 }
 
 void CPU::InterpretOp()
@@ -91,6 +99,11 @@ void CPU::InterpretOp()
 			InterpretPushPops();
 			break;
 		}
+		case 0xD:	// Palette
+		{
+			InterpretPalettes();
+			break;
+		}
 		default:
 		{
 			// PANIC !!!
@@ -102,50 +115,74 @@ void CPU::InterpretOp()
 
 void CPU::InterpretCallJumps()
 {
-	switch (in_OpCode >> 24 & 0xF)
+	switch (m_Memory[m_PC++] & 0xF)
 	{
 		case 0x0:	// JMP	(direct)
 		{
-			// TODO
+			m_PC++;
+			m_PC = FetchImmediateValue();
 			break;
 		}
 		case 0x2:	// Jx
 		{
-			// TODO
+			UInt8 l_CondCode = m_Memory[m_PC++];
+			if(InterpretConditions(l_CondCode))
+				m_PC = FetchImmediateValue();
+			else
+				m_PC += 2;
 			break;
 		}
 		case 0x3:	// JME
 		{
-			// TODO
+			UInt16 l_XVal, l_YVal;
+			FetchRegistersValues(l_XVal, l_YVal);
+			m_PC++;
+			if(l_XVal == l_YVal)
+				m_PC = FetchImmediateValue();
+			else
+				m_PC += 2;
 			break;
 		}
 		case 0x4:	// CALL	(direct)
 		{
-			// TODO : Private Push/Pop functions dealing with the emulator's stack
 			m_PC++;
 			UInt16 l_Addr = FetchImmediateValue();
-			m_Memory[m_SP++] = m_PC & 0xF0;
-			m_Memory[m_SP++] = m_PC & 0xF;
+			Push(m_PC);
+			m_PC = l_Addr;
 			break;
 		}
 		case 0x5:	// RET
 		{
-			// TODO
+			m_PC = Pop();
 			break;
 		}
 		case 0x6:	// JMP	(indirect)
 		{
-			// TODO
+			UInt16 l_Addr = FetchRegisterAddress();
+			m_PC = m_Registers[l_Addr];
 			break;
 		}
 		case 0x7:	// Cx
 		{
-			// TODO
+			UInt8 l_CondCode = m_Memory[m_PC++];
+			if(InterpretConditions(l_CondCode))
+			{
+				UInt16 l_Addr = FetchImmediateValue();
+				Push(m_PC);
+				m_PC = l_Addr;
+			}
+			else
+			{
+				m_PC += 2;
+			}
 			break;
 		}
 		case 0x8:	// CALL	(indirect)
 		{
-			// TODO
+			UInt16 l_Addr = FetchRegisterAddress();
+			m_PC += 3;
+			Push(m_PC);
+			m_PC = m_Registers[m_PC];
 			break;
 		}
 		default:
@@ -252,7 +289,7 @@ void CPU::InterpretLoads()
 
 void CPU::InterpretMisc()
 {
-	switch (in_OpCode >> 24 & 0xF)
+	switch (m_Memory[m_PC++] & 0xF)
 	{
 		case 0x0:	// NOP	
 		{
@@ -260,7 +297,8 @@ void CPU::InterpretMisc()
 		}
 		case 0x1:	// CLS
 		{
-			// TODO
+			m_GPU.ClearScreen();
+			m_PC += 3;
 			break;
 		}
 		case 0x2:	// VBLNK
@@ -270,18 +308,35 @@ void CPU::InterpretMisc()
 		}
 		case 0x3:	// BGC
 		{
-			// TODO : Dispatch to GPU
+			m_PC++;
+			m_GPU.SetBackgroundColor(m_Memory[m_PC++] & 0xF);
+			m_PC++;
 			break;
 		}
 		case 0x4:	// SPR
 		{
-			// TODO : Dispatch to GPU
+			m_PC++;
+			m_GPU.SetSpriteDimensions(m_Memory[m_PC++], m_Memory[m_PC++]);
 			break;
 		}
-		case 0x5:
+		case 0x5:	// DRW
+		{
+			// TODO : Deal with carry flag
+			UInt16 l_XVal, l_YVal;
+			FetchRegistersValues(l_XVal, l_YVal);
+			m_PC++;
+			UInt16 l_Addr = FetchImmediateValue();
+			m_GPU.Draw(l_XVal, l_YVal, m_Memory[l_Addr]);
+			break;
+		}
 		case 0x6:	// DRW
 		{
-			// TODO : Dispatch to GPU
+			UInt16 l_XVal, l_YVal;
+			FetchRegistersValues(l_XVal, l_YVal);
+			m_PC++;
+			UInt16 l_Addr = m_Memory[m_PC++];
+			m_PC++;
+			m_GPU.Draw(l_XVal, l_YVal, m_Memory[l_Addr]);
 			break;
 		}
 		case 0x7:	// RND
@@ -291,37 +346,44 @@ void CPU::InterpretMisc()
 		}
 		case 0x8:	// FLIP
 		{
-			// TODO : Dispatch to GPU
+			m_PC += 2;
+			m_GPU.Flip(m_Memory[m_PC], m_Memory[m_PC++]);
 			break;
 		}
 		case 0x9:	// SND0
 		{
-			// TODO : Dispatch to SPU
+			m_PC += 3;
+			m_SPU.Stop();
 			break;
 		}
 		case 0xA:	// SND1
 		{
-			// TODO : Dispatch to SPU
+			m_PC++;
+			m_SPU.PlayTone(500, FetchImmediateValue());
 			break;
 		}
 		case 0xB:	// SND2
 		{
-			// TODO : Dispatch to SPU
+			m_PC++;
+			m_SPU.PlayTone(1000, FetchImmediateValue());
 			break;
 		}
 		case 0xC:	// SND3
 		{
-			// TODO : Dispatch to SPU
+			m_PC++;
+			m_SPU.PlayTone(1500, FetchImmediateValue());
 			break;
 		}
 		case 0xD:	// SNP
 		{
-			// TODO : Dispatch to SPU
+			m_SPU.PlayTone(FetchRegisterAddress(), FetchImmediateValue());
 			break;
 		}
 		case 0xE:	// SNG
 		{
-			// TODO : Dispatch to SPU
+			m_SPU.GenerateSound(m_Memory[m_PC] & 0xF0, m_Memory[m_PC++] & 0xF, 
+				m_Memory[m_PC] & 0xF0, m_Memory[m_PC++] & 0xF,
+				m_Memory[m_PC] & 0xF0, m_Memory[m_PC++] & 0xF);
 			break;
 		}
 		default:
@@ -333,6 +395,41 @@ void CPU::InterpretMisc()
 	}
 }
 
+void CPU::InterpretPalettes()
+{
+	UInt8 l_PaletteData[16][3];	// Per specifications
+	UInt16 l_Addr;
+	switch (m_Memory[m_PC++] & 0xF)
+	{
+		case 0x0:
+		{
+			m_PC++;
+			l_Addr = FetchImmediateValue();
+			break;
+		}
+		case 0x1:
+		{
+			l_Addr = FetchRegisterAddress();
+			m_PC += 3;
+			break;
+		}
+		default:
+		{
+			// PANIC !!!
+			// TODO : Panic behavior
+			break;
+		}
+	}
+
+	for(UInt16 i = 0; i < 16; ++i)
+	{
+		l_PaletteData[i][0] = m_Memory[l_Addr+i];
+		l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
+		l_PaletteData[i][2] = m_Memory[l_Addr+i+2];
+	}
+	m_GPU.LoadPalette(l_PaletteData);
+}
+
 void CPU::InterpretPushPops()
 {
 	// TODO : Check for stack overflow
@@ -340,35 +437,25 @@ void CPU::InterpretPushPops()
 	{
 		case 0x0:	// PUSH
 		{
-			m_Memory[m_SP++] = m_Registers[m_Memory[m_PC]] & 0xF0;
-			m_Memory[m_SP++] = m_Registers[m_Memory[m_PC]] & 0xF;
+			Push(m_Registers[m_Memory[m_PC]]);
 			m_PC += 3;
 			break;
 		}
 		case 0x1:	// POP
 		{
-			m_Registers[m_Memory[m_PC]] = m_Memory[m_SP--];
-			m_Registers[m_Memory[m_PC]] << 8;
-			m_Registers[m_Memory[m_PC]] |= m_Memory[m_SP--];
+			m_Registers[m_Memory[m_PC]] = Pop();
 			break;
 		}
 		case 0x2:	// PUSHALL
 		{
 			for(UInt16 i = 0; i < 16; ++i)
-			{
-				m_Memory[m_SP++] = m_Registers[i] & 0xF0;
-				m_Memory[m_SP++] = m_Registers[i] & 0xF;
-			}
+				Push(m_Registers[i]);
 			break;
 		}
 		case 0x3:	// POPALL
 		{
 			for(UInt16 i = 15; i > -1; --i)
-			{
-				m_Registers[i] = m_Memory[m_SP--];
-				m_Registers[i] << 8;
-				m_Registers[i] |= m_Memory[m_SP--];
-			}
+				m_Registers[i] = Pop();
 			break;
 		}
 		case 0x4:	// PUSHF
@@ -394,34 +481,49 @@ void CPU::InterpretPushPops()
 
 void CPU::InterpretShifts()
 {
-	unsigned l_ShiftValue = 0;
-
-	if(in_OpCode >> 20 & 0xF)	// Number of times to shift is stored in a register
-		l_ShiftValue = m_Registers[in_OpCode >> 20 & 0xF];
-	else
-		l_ShiftValue = in_OpCode >> 8 & 0xF;
-
-	
-	switch (in_OpCode >> 24 & 0xF)
+	// TODO : Refactor (possibly by templating on the function type)
+	switch (m_Memory[m_PC++] & 0xF)
 	{
-		case 0x0:	// SHL
+		case 0x0:	// SHL, SAL
 		{
-			
+			UInt16 l_Addr = FetchRegisterAddress();
+			m_Registers[l_Addr] = LeftShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			m_PC++;
 			break;
 		}
 		case 0x1:	// SHR
 		{
-			// TODO
+			UInt16 l_Addr = FetchRegisterAddress();
+			m_Registers[l_Addr] = LogicalRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			m_PC++;
 			break;
 		}
-		case 0x2:	// SAL
+		case 0x2:	// SAR
 		{
-			// TODO
+			UInt16 l_Addr = FetchRegisterAddress();
+			m_Registers[l_Addr] = ArithmeticRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			m_PC++;
 			break;
 		}
-		case 0x3:	// SAR
+		case 0x3:	// SHL
 		{
-			// TODO
+			UInt16 l_Addr = m_Memory[m_PC] & 0xF;
+			m_Registers[l_Addr] = LeftShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_PC += 2;
+			break;
+		}
+		case 0x4:	// SHR
+		{
+			UInt16 l_Addr = FetchRegisterAddress();
+			m_Registers[l_Addr] = LogicalRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_PC++;
+			break;
+		}
+		case 0x5:	// SAR
+		{
+			UInt16 l_Addr = FetchRegisterAddress();
+			m_Registers[l_Addr] = ArithmeticRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_PC++;
 			break;
 		}
 		default:
@@ -439,15 +541,18 @@ void CPU::InterpretStores()
 	{
 		case 0x0:	// STM	(direct)
 		{
-			UInt16 l_Addr = FetchRegisterAddress();
-			m_Memory[FetchImmediateValue()] = m_Registers[l_Addr];
+			UInt16 l_RegAddr = FetchRegisterAddress();
+			UInt16 l_MemAddr = FetchImmediateValue();
+			m_Memory[l_MemAddr] = m_Registers[l_RegAddr] & 0xF0;
+			m_Memory[l_MemAddr+1] = m_Registers[l_RegAddr] & 0xF;
 			break;
 		}
 		case 0x1:	// STM	(indirect)
 		{
 			UInt16 l_XVal, l_YVal;
 			FetchRegistersValues(l_XVal, l_YVal);
-			m_Memory[l_YVal] = l_XVal;
+			m_Memory[l_YVal] = l_XVal & 0xF0;
+			m_Memory[l_YVal+1] = l_XVal & 0xF;
 			m_PC += 2;
 			break;
 		}
@@ -478,6 +583,17 @@ void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y)
 	out_Y = m_Registers[m_Memory[m_PC] & 0xF0];
 }
 
+UInt16 CPU::Pop()
+{
+	return UInt16((m_Memory[m_SP--] << 8) | m_Memory[m_SP--]);
+}
+
+void CPU::Push(UInt16 in_Val)
+{
+	m_Memory[m_SP++] = in_Val & 0xF0;
+	m_Memory[m_SP++] = in_Val & 0xF;
+}
+
 void CPU::SetSignZeroFlag(UInt16 in_Result)
 {
 	// Set the zero flag (Bit[2])
@@ -486,9 +602,38 @@ void CPU::SetSignZeroFlag(UInt16 in_Result)
 	m_FR = in_Result & 0x4000 ? m_FR | NegativeFlag : m_FR & ~NegativeFlag;
 }
 
-// TODO
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, Tag) { }
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, AddTag) { }
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, DivTag) { }
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, MulTag) { }
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, SubTag) { }
+void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, AddTag) 
+{
+	UInt16 l_Result = in_Op1 + in_Op2;
+	// Set carry flag
+	m_FR = l_Result < in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+	// Set overflow flag
+	m_FR = (l_Result >= 0 && in_Op1 < 0 && in_Op2 < 0)
+		|| (l_Result < 0 && in_Op1 >= 0 && in_Op2 >= 0) ?
+		m_FR | SignedOverflowFlag : m_FR & ~SignedOverflowFlag;
+}
+
+void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, DivTag) 
+{
+	// Set carry flag
+	m_FR = in_Op1 % in_Op2 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+}
+
+void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, MulTag) 
+{
+	// Set carry flag
+	UInt32 l_Result = in_Op1 * in_Op2;
+	m_FR = l_Result > std::numeric_limits<UInt16>::max() ? 
+		m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+}
+
+void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, SubTag) 
+{
+	UInt16 l_Result = in_Op1 - in_Op2;
+	// Set carry flag
+	m_FR = l_Result > in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+	// Set overflow flag
+	m_FR = (l_Result >= 0 && in_Op1 < 0 && in_Op2 >= 0)
+		|| (l_Result < 0 && in_Op1 >= 0 && in_Op2 < 0) ?
+		m_FR | SignedOverflowFlag : m_FR & ~SignedOverflowFlag;
+}
