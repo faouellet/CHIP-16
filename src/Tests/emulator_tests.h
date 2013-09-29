@@ -9,9 +9,9 @@ struct EmulatorFixture
 {
 	static const std::string ROM_PATH;
 
-	Emulator Emu;
+	// Emulator Emu;
 
-	EmulatorFixture() { }
+	// EmulatorFixture() { }
 };
 
 const std::string ROM_PATH = "../../Chip16 Program Pack";

@@ -1,19 +1,13 @@
 #ifndef CPU_H
 #define CPU_H
 
+#include <functional>
 #include <vector>
 
 #include "gpu.h"
 #include "spu.h"
 
 using namespace Utils;
-
-// For tag dispatching when emulating arithmetic instructions
-struct Tag { };
-struct AddTag : Tag { };
-struct DivTag : Tag { };
-struct MulTag : Tag { };
-struct SubTag : Tag { };
 
 /*
 * \class CPU
@@ -41,7 +35,7 @@ private:
 
 	GPU m_GPU;				/*!< The graphics processing unit */
 	SPU m_SPU;				/*!< The sound processing unit */
-
+	
 private:
 	/**
 	* \enum
@@ -124,86 +118,25 @@ private:
 	void SetSignZeroFlag(UInt16 in_Result);
 
 	/**
-	* \fn SetCarryOverflowFlag
-	* \brief Set the sign flag if the bit[15] of the result is lit and set
-	*        the zero flag if the result is zero. Tag dispatching is used to
-	*        use the correct behavior for a given instruction type
+	* \fn SetCarryOverflowFlag*
+	* \brief Set the carry and the overflow flag depending on the instruction used. 
 	* \param in_Op1 The left hand side operand in a computation
 	* \param in_Op2 The right hand side operand in a computation
-	* \param Tag Indication regarding the instruction type
 	*/
-
-	void SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, AddTag);
-	void SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, DivTag);
-	void SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, MulTag);
-	void SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, SubTag);
+	void SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2) { }
+	void SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2);
+	void SetCarryOverflowFlagDiv(UInt16 in_Op1, UInt16 in_Op2);
+	void SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2);
+	void SetCarryOverflowFlagSub(UInt16 in_Op1, UInt16 in_Op2);
 
 private:
 	/**
 	* \fn InterpretArithmetics
 	* \brief Decode and execute an arithmetic opcode
-	* \tparam A functor type
 	* \param The function to apply to the operand pointed by the PC
+	* \param The function to apply to the flag register
 	*/
-	template<class F>
-	void InterpretArithmetics(F in_Func, Tag in_Tag)	// TODO : Check the tag dispatching works correctly
-	{
-		switch (m_Memory[m_PC++] & 0xF)
-		{
-			case 0x0:	// X = F(X, I)
-			{
-				UInt16 l_Addr = FetchRegistersAddress();
-				UInt16 l_IVal = FetchImmediateValue();
-				SetCarryOverflowFlag(l_Addr, l_IVal, in_Tag);
-				m_Registers[l_Addr] = in_Func(m_Registers[l_Addr], l_IVal);
-				SetNegativeZeroFlag(m_Registers[m_Memory[m_PC] & 0xF]);
-				break;
-			}
-			case 0x1:	// X = F(X, Y)
-			{
-				UInt16 l_XVal, l_YVal;
-				FetchRegistersValues(l_XVal, l_YVal);
-				SetCarryOverflowFlag(l_XVal, l_YVal, in_Tag);
-				m_Registers[m_Memory[m_PC] & 0xF] = in_Func(l_XVal, l_YVal);
-				SetNegativeZeroFlag(m_Registers[m_Memory[m_PC] & 0xF]);
-				m_PC += 3;
-				break;
-			}
-			case 0x2:	// Z = F(X, Y)
-			{
-				UInt16 l_XVal, l_YVal;
-				FetchRegistersValues(l_XVal, l_YVal);
-				SetCarryOverflowFlag(l_XVal, l_YVal, in_Tag);
-				m_Registers[m_Memory[++m_PC] & 0xF] = in_Func(l_XVal, l_YVal);
-				SetNegativeZeroFlag(m_Registers[m_Memory[m_PC] & 0xF]);
-				m_PC += 2;
-				break;
-			}
-			case 0x3:	// F(X, I)
-			{
-				UInt16 l_Addr = FetchRegistersAddress();
-				UInt16 l_IVal = FetchImmediateValue();
-				UInt16 l_Result = in_Func(m_Registers[l_Addr], l_IVal);
-				SetNegativeZeroFlag(l_Result);
-				break;
-			}
-			case 0x4:	// F(X, Y)
-			{
-				UInt16 l_XVal, l_YVal;
-				FetchRegistersValues(l_XVal, l_YVal);
-				UInt16 l_Result = in_Func(l_XVal, l_YVal);
-				SetNegativeZeroFlag(l_Result);
-				m_PC += 3;
-				break;
-			}
-			default:
-			{
-				// PANIC !!!
-				// TODO : Panic behavior
-				break;
-			}
-		}
-	}
+	void InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
 
 	/**
 	* \fn InterpretCallJumps
@@ -217,7 +150,7 @@ private:
 	* \param in_CondCode A byte containing the condition to be evaluated
 	* \return Condition evalution result
 	*/
-	bool InterpretConditions(UInt8 in_CondCode);
+	unsigned InterpretConditions(UInt8 in_CondCode);
 	
 	/**
 	* \fn InterpretLoads

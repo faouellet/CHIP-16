@@ -5,9 +5,9 @@
 
 struct SPUFixture
 {
-	SPU spu;
+	// SPU spu;
 
-	SPUFixture() { }
+	// SPUFixture() { }
 };
 
 #endif // SPU_TESTS_H

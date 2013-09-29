@@ -1,6 +1,5 @@
 #include "cpu.h"
 
-#include <functional>
 #include <limits>
 
 CPU::CPU() { }
@@ -56,37 +55,37 @@ void CPU::InterpretOp()
 		}
 		case 0x4:	// Add
 		{
-			InterpretArithmetics(std::plus<UInt16>(), AddTag());
+			InterpretArithmetics(std::plus<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagAdd(in_Op1, in_Op2); });
 			break;
 		}
 		case 0x5:	// Sub
 		{
-			InterpretArithmetics(std::minus<UInt16>(), SubTag());
+			InterpretArithmetics(std::minus<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagSub(in_Op1, in_Op2); });
 			break;
 		}
 		case 0x6:	// And
 		{
-			InterpretArithmetics(std::bit_and<UInt16>(), Tag());
+			InterpretArithmetics(std::bit_and<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlag(in_Op1, in_Op2); });
 			break;
 		}
 		case 0x7:	// Or
 		{
-			InterpretArithmetics(std::bit_or<UInt16>(), Tag());
+			InterpretArithmetics(std::bit_or<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlag(in_Op1, in_Op2); });
 			break;
 		}
 		case 0x8:	// Xor
 		{
-			InterpretArithmetics(std::bit_xor<UInt16>(), Tag());
+			InterpretArithmetics(std::bit_xor<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlag(in_Op1, in_Op2); });
 			break;
 		}
 		case 0x9:	// Mul
 		{
-			InterpretArithmetics(std::multiplies<UInt16>(), MulTag());
+			InterpretArithmetics(std::multiplies<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagMul(in_Op1, in_Op2); });
 			break;
 		}
 		case 0xA:	// Div
 		{
-			InterpretArithmetics(std::divides<UInt16>(), DivTag());
+			InterpretArithmetics(std::divides<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
 			break;
 		}
 		case 0xB:	// Shift
@@ -102,6 +101,65 @@ void CPU::InterpretOp()
 		case 0xD:	// Palette
 		{
 			InterpretPalettes();
+			break;
+		}
+		default:
+		{
+			// PANIC !!!
+			// TODO : Panic behavior
+			break;
+		}
+	}
+}
+
+void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH)
+{
+	switch (m_Memory[m_PC++] & 0xF)
+	{
+		case 0x0:	// X = F(X, I)
+		{
+			UInt16 l_Addr = FetchRegisterAddress();
+			UInt16 l_IVal = FetchImmediateValue();
+			in_FRH(l_Addr, l_IVal);
+			m_Registers[l_Addr] = in_Ins(m_Registers[l_Addr], l_IVal);
+			SetSignZeroFlag(m_Registers[m_Memory[m_PC] & 0xF]);
+			break;
+		}
+		case 0x1:	// X = F(X, Y)
+		{
+			UInt16 l_XVal, l_YVal;
+			FetchRegistersValues(l_XVal, l_YVal);
+			in_FRH(l_XVal, l_YVal);
+			m_Registers[m_Memory[m_PC] & 0xF] = in_Ins(l_XVal, l_YVal);
+			SetSignZeroFlag(m_Registers[m_Memory[m_PC] & 0xF]);
+			m_PC += 3;
+			break;
+		}
+		case 0x2:	// Z = F(X, Y)
+		{
+			UInt16 l_XVal, l_YVal;
+			FetchRegistersValues(l_XVal, l_YVal);
+			in_FRH(l_XVal, l_YVal);
+			m_Registers[m_Memory[++m_PC] & 0xF] = in_Ins(l_XVal, l_YVal);
+			SetSignZeroFlag(m_Registers[m_Memory[m_PC] & 0xF]);
+			m_PC += 2;
+			break;
+		}
+		case 0x3:	// F(X, I)
+		{
+			UInt16 l_Addr = FetchRegisterAddress();
+			UInt16 l_IVal = FetchImmediateValue();
+			UInt16 l_Result = in_Ins(m_Registers[l_Addr], l_IVal);
+			SetSignZeroFlag(l_Result);
+			break;
+		}
+		case 0x4:	// F(X, Y)
+		{
+			UInt16 l_XVal, l_YVal;
+			FetchRegistersValues(l_XVal, l_YVal);
+			UInt16 l_Result = in_Ins(l_XVal, l_YVal);
+			SetSignZeroFlag(l_Result);
+			m_PC += 3;
 			break;
 		}
 		default:
@@ -194,7 +252,7 @@ void CPU::InterpretCallJumps()
 	}
 }
 
-bool CPU::InterpretConditions(UInt8 in_CondCode)
+unsigned CPU::InterpretConditions(UInt8 in_CondCode)
 {
 	switch (in_CondCode & 0xF)
 	{
@@ -602,7 +660,7 @@ void CPU::SetSignZeroFlag(UInt16 in_Result)
 	m_FR = in_Result & 0x4000 ? m_FR | NegativeFlag : m_FR & ~NegativeFlag;
 }
 
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, AddTag) 
+void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2) 
 {
 	UInt16 l_Result = in_Op1 + in_Op2;
 	// Set carry flag
@@ -613,13 +671,13 @@ void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, AddTag)
 		m_FR | SignedOverflowFlag : m_FR & ~SignedOverflowFlag;
 }
 
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, DivTag) 
+void CPU::SetCarryOverflowFlagDiv(UInt16 in_Op1, UInt16 in_Op2) 
 {
 	// Set carry flag
 	m_FR = in_Op1 % in_Op2 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 }
 
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, MulTag) 
+void CPU::SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2) 
 {
 	// Set carry flag
 	UInt32 l_Result = in_Op1 * in_Op2;
@@ -627,7 +685,7 @@ void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, MulTag)
 		m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 }
 
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2, SubTag) 
+void CPU::SetCarryOverflowFlagSub(UInt16 in_Op1, UInt16 in_Op2) 
 {
 	UInt16 l_Result = in_Op1 - in_Op2;
 	// Set carry flag

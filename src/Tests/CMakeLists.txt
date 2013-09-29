@@ -11,7 +11,15 @@ find_package(Boost)
 
 if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIR})
+    include_directories("${CMAKE_SOURCE_DIR}/Chip16")
     link_directories("${Boost_LIBRARY_DIRS}")
     add_executable(Tests ${SOURCES}) 
     target_link_libraries(Tests ${Boost_LIBRARIES})
+
+	add_custom_command(TARGET Tests
+                   POST_BUILD 
+    			   COMMAND ${CMAKE_COMMAND} -E copy_directory
+				   "${PROJECT_SOURCE_DIR}/../Chip16 Program Pack"
+				   $<TARGET_FILE_DIR:Tests>
+				   COMMENT "Copying test pack")
 endif()
