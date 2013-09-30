@@ -5,9 +5,9 @@
 
 struct GPUFixture
 {
-	// GPU gpu;
+	GPU gpu;
 
-	// GPUFixture() { }
+	GPUFixture() { }
 };
 
 #endif // GPU_TESTS_H

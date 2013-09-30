@@ -72,6 +72,9 @@ public:
 	*/
 	void InterpretOp();
 
+
+	// Dump();
+
 private:
 	/*
 	* \fn FetchImmediateValue

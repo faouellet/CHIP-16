@@ -9,6 +9,10 @@
 */
 namespace Utils
 {
+	/*
+	* \struct IfElse
+	* \brief Defines a type depending on the condition by using partial specialization
+	*/
 	template <bool Cond, class If, class Else>
 	struct IfElse;
 
@@ -24,7 +28,17 @@ namespace Utils
 		typedef Else type;
 	};
 
+	/*
+	* \class Error
+	* \brief Dummy class
+	*/
 	class Error;
+
+	/*
+	* \struct UInt_
+	* \brief Defines an unsigned type that will at most contain the specified 
+	*        number of bytes
+	*/
 	template<int N>
 	struct UInt_
 	{
@@ -46,6 +60,11 @@ namespace Utils
 		>::type type;
 	};
 
+	/*
+	* \struct UInt_
+	* \brief Defines an signed type that will at most contain the specified 
+	*        number of bytes
+	*/
 	template<int N>
 	struct Int_
 	{
@@ -73,28 +92,41 @@ namespace Utils
 
 	typedef Int_<2>::type Int16;
 
-	template<class T>
+	/*
+	* \struct LeftShift
+	* \brief Functor wrapping the left shift operator
+	*/
 	struct LeftShift
 	{
-		T operator()(const T & in_LHS, const UInt16 & in_RHS)
+		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS)
 		{
 			return in_LHS << in_RHS;
 		}
 	};
 
-	template<class T>
+	/*
+	* \struct ArithmeticRightShift
+	* \brief Functor wrapping the right shift operator when the value to shift doesn't
+	*        have its sign bit on. Otherwise, it uses a mask to copy the sign bit.
+	*/
 	struct ArithmeticRightShift
 	{
-		T operator()(const T & in_LHS, const Int16 & in_RHS)
+		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS)
 		{
-			return in_LHS >> in_RHS;
+			if(static_cast<Int16>(in_LHS) < 0)
+				return in_LHS >> in_RHS | ~(~0U >> in_RHS);
+			else
+				return in_LHS >> in_RHS;
 		}
 	};
 
-	template<class T>
+	/*
+	* \struct LogicalRightShift
+	* \brief Functor wrapping the right shift operator
+	*/
 	struct LogicalRightShift
 	{
-		T operator()(const T & in_LHS, const UInt16 & in_RHS)
+		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS)
 		{
 			return in_LHS >> in_RHS;
 		}

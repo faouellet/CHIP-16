@@ -20,4 +20,44 @@ BOOST_AUTO_TEST_CASE( InitTest )
 	// TODO : Test SPU error
 }
 
+BOOST_AUTO_TEST_CASE( AdsrTest )
+{
+	// TODO
+}
+
+BOOST_AUTO_TEST_CASE( BC_TestRom )
+{
+	// TODO
+}
+
+BOOST_AUTO_TEST_CASE( CollisionTest )
+{
+	// TODO
+}
+
+BOOST_AUTO_TEST_CASE( flip_test )
+{
+	// TODO
+}
+
+BOOST_AUTO_TEST_CASE( PadTest )
+{
+	// TODO
+}
+
+BOOST_AUTO_TEST_CASE( PaleteTest )
+{
+	// TODO
+}
+
+BOOST_AUTO_TEST_CASE( PaletteFlip )
+{
+	// TODO
+}
+
+BOOST_AUTO_TEST_CASE( SoundTest )
+{
+	// TODO
+}
+
 BOOST_AUTO_TEST_SUITE_END()

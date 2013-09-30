@@ -539,48 +539,47 @@ void CPU::InterpretPushPops()
 
 void CPU::InterpretShifts()
 {
-	// TODO : Refactor (possibly by templating on the function type)
 	switch (m_Memory[m_PC++] & 0xF)
 	{
 		case 0x0:	// SHL, SAL
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = LeftShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
 			m_PC++;
 			break;
 		}
 		case 0x1:	// SHR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = LogicalRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
 			m_PC++;
 			break;
 		}
 		case 0x2:	// SAR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = ArithmeticRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
 			m_PC++;
 			break;
 		}
 		case 0x3:	// SHL
 		{
 			UInt16 l_Addr = m_Memory[m_PC] & 0xF;
-			m_Registers[l_Addr] = LeftShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
 			m_PC += 2;
 			break;
 		}
 		case 0x4:	// SHR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = LogicalRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
 			m_PC++;
 			break;
 		}
 		case 0x5:	// SAR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = ArithmeticRightShift<UInt16>()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
 			m_PC++;
 			break;
 		}

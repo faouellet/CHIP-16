@@ -4,6 +4,12 @@
 #include "cpu.h"
 #include "cpu.cpp"
 
+/*
+* \struct CPUFixture
+* \brief Fixture containing data to test the CPU specific instructions.
+*        That means the arithmetic, call, jump, load, pop, push, shift and
+*         store instructions.
+*/
 struct CPUFixture
 {
 	CPU cpu;
