@@ -23,7 +23,7 @@ if(Boost_FOUND)
 	link_directories("${CMAKE_BINARY_DIR}/lib")
     
 	add_executable(EmulatorTests ${SOURCES}) 
-    target_link_libraries(EmulatorTests ${Boost_LIBRARIES} SDL2 SDL2main EmulatorLib)
+    target_link_libraries(EmulatorTests ${Boost_LIBRARIES} SDL2 EmulatorLib)
 
 	add_custom_command(TARGET EmulatorTests
                    POST_BUILD 

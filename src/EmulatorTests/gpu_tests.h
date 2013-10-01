@@ -3,6 +3,11 @@
 
 #include "gpu.h"
 
+/*
+* \struct GPUFixture
+* \brief Fixture containing data to test the GPU specific instructions.
+*        That means the draw, flip and palette instructions.
+*/
 struct GPUFixture
 {
 	GPU gpu;
