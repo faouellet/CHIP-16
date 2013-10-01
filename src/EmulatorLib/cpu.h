@@ -25,9 +25,10 @@ private:
 	enum { HEADER_SIZE = 16, MEMORY_SIZE = 64*1024 };
 
 private:
+	UInt8 m_FR;				/*!< Flag register */
 	UInt16 m_PC;			/*!< Program counter */
 	UInt16 m_SP;			/*!< Stack pointer */
-	UInt8 m_FR;				/*!< Flag register */
+	
 	UInt16 m_Registers[16];	/*!< General purpose registers */
 
 	UInt8 m_ROMHeader[HEADER_SIZE];	/*!< The header of a .c16 file. See specs for details*/
@@ -58,6 +59,20 @@ public:
 	~CPU();
 
 public:
+	/*
+	* \fn DumpMemory
+	* \brief DumpMemory the CPU memory
+	* \return The data contained in the CPU memory
+	*/
+	std::vector<UInt8> DumpMemory();
+
+	/*
+	* \fn DumpRegisters
+	* \brief DumpRegisters the CPU memory
+	* \return The data contained in the CPU registers
+	*/
+	std::vector<UInt16> DumpRegisters();
+
 	/**
 	* \fn Init
 	* \brief Initialize the central processing unit
@@ -71,9 +86,6 @@ public:
 	* \n brief Read an opcode from the ROM and execute it
 	*/
 	void InterpretOp();
-
-
-	// Dump();
 
 private:
 	/*

@@ -1,10 +1,32 @@
 #include "cpu.h"
 
+#include <iterator>
 #include <limits>
 
-CPU::CPU() { }
+CPU::CPU() 
+{
+	for(int i = 0; i < 16; ++i)
+		m_Registers[i] = 0;
+
+	for(int i = 0; i < MEMORY_SIZE; ++i)
+		m_Memory[i] = 0;
+
+	m_FR = 0;
+	m_PC = 0;
+	m_SP = 0;
+}
 
 CPU::~CPU() { }
+
+std::vector<UInt8> CPU::DumpMemory()
+{
+	return std::vector<UInt8>(std::begin(m_Memory), std::end(m_Memory));
+}
+
+std::vector<UInt16> CPU::DumpRegisters()
+{
+	return std::vector<UInt16>(std::begin(m_Registers), std::end(m_Registers));
+}
 
 // TODO : Finish it and ask yourself what could go wrong
 unsigned CPU::Init(std::vector<UInt8> && in_ROMData) 
@@ -14,6 +36,7 @@ unsigned CPU::Init(std::vector<UInt8> && in_ROMData)
 	for(int i = 0; i < HEADER_SIZE; ++i)
 		m_ROMHeader[i] = in_ROMData[i];
 
+	// TODO : What if the ROM is too big ??
 	for(unsigned i = HEADER_SIZE ; i < in_ROMData.size(); ++i)
 		m_Memory[i-HEADER_SIZE] = in_ROMData[i];
 
