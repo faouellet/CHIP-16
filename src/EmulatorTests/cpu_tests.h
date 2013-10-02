@@ -15,6 +15,8 @@ struct CPUFixture
 
 	std::vector<Utils::UInt8> Header;
 
+	enum { NB_REGISTERS = 16 };
+
 	// Data for the arithmetic tests
 	std::vector<Utils::UInt8> AddTestData;
 	std::vector<Utils::UInt8> AndTestData;
@@ -34,13 +36,25 @@ struct CPUFixture
 	* \fn Constructor
 	* \brief Setup the data for the cpu instructions tests
 	*/
-	CPUFixture() : Header(16,0) 
+	CPUFixture() : Header(NB_REGISTERS,0) 
 	{
 		SetupArithmeticData();
-
 		SetupLoadStoreData();
-		
 		SetupShiftData();
+	}
+
+	/*
+	* \fn PrepareData
+	* \brief Concatenate a data vector to the header
+	* \param in_Data Vector containing the data relevant to a specific instruction
+	*                testing procedure
+	* \return A data vector
+	*/
+	std::vector<Utils::UInt8> PrepareData(const std::vector<Utils::UInt8> & in_Data)
+	{
+		std::vector<Utils::UInt8> l_Data(Header);
+		l_Data.insert(l_Data.end(), in_Data.begin(), in_Data.end());
+		return l_Data;
 	}
 
 private:
@@ -50,13 +64,28 @@ private:
 	*/
 	void SetupArithmeticData()
 	{
+		SetupAddTestData();
+		SetupAndTestData();
+		SetupDivTestData();
+		SetupMulTestData();
+		SetupOrTestData();
+		SetupSubTestData();
+		SetupXorTestData();
+	}
+
+	/*
+	* \fn SetupAddTestData
+	* \brief Fills a vector with addition opcodes
+	*/
+	void SetupAddTestData()
+	{
 		AddTestData.push_back(0x40);	// ADDI
-		AddTestData.push_back(0x00);	// Add 65535 to R0
+		AddTestData.push_back(0x00);	// R0 += 65535
 		AddTestData.push_back(0xFF);
 		AddTestData.push_back(0xFF);
 
 		AddTestData.push_back(0x41);	// ADD (inplace)
-		AddTestData.push_back(0x10);	// R1 += R0 
+		AddTestData.push_back(0x01);	// R1 += R0 
 		AddTestData.push_back(0x00);
 		AddTestData.push_back(0x00);
 
@@ -66,10 +95,138 @@ private:
 		AddTestData.push_back(0x00);
 
 		AddTestData.push_back(0x42);	// ADD
-		AddTestData.push_back(0x04);	// R4 = R0 + R1
-		AddTestData.push_back(0x02);	// Should overflow (65535 + 65535)
+		AddTestData.push_back(0x01);	// R4 = R0 + R1
+		AddTestData.push_back(0x03);	// Should overflow (65535 + 65535)
 		AddTestData.push_back(0x00);
+	}
 
+	/*
+	* \fn SetupAndTestData
+	* \brief Fills a vector with and opcodes
+	*/
+	void SetupAndTestData()
+	{
+		AndTestData.push_back(0x60);	// ANDI
+		AndTestData.push_back(0x00);
+		AndTestData.push_back(0xFF);
+		AndTestData.push_back(0xFF);
+
+		AndTestData.push_back(0x61);	// AND (inplace)
+		AndTestData.push_back(0x01);
+		AndTestData.push_back(0x00);
+		AndTestData.push_back(0x00);
+
+		AndTestData.push_back(0x62);	// AND
+		AndTestData.push_back(0x01);
+		AndTestData.push_back(0x02);
+		AndTestData.push_back(0x00);
+
+		//AndTestData.push_back(0x63);	// TSTI
+		//AndTestData.push_back();
+		//AndTestData.push_back();
+		//AndTestData.push_back();
+
+		//AndTestData.push_back(0x64);	// TST
+		//AndTestData.push_back();
+		//AndTestData.push_back();
+		//AndTestData.push_back();
+	}
+
+	/*
+	* \fn SetupDivTestData
+	* \brief Fills a vector with division opcodes
+	*/
+	void SetupDivTestData()
+	{
+		// R0 += 8
+		AddTestData.push_back(0x40);
+		AddTestData.push_back(0x00);
+		AddTestData.push_back(0x00);
+		AddTestData.push_back(0x08);
+
+		// R1 += 4
+		AddTestData.push_back(0x40);
+		AddTestData.push_back(0x01);
+		AddTestData.push_back(0x00);
+		AddTestData.push_back(0x04);
+
+		// R2 += 2
+		AddTestData.push_back(0x40);
+		AddTestData.push_back(0x02);
+		AddTestData.push_back(0x00);
+		AddTestData.push_back(0x02);
+
+		DivTestData.push_back(0xA0);	// DIVI
+		DivTestData.push_back(0x00);	// R0 /= 2
+		DivTestData.push_back(0x00);
+		DivTestData.push_back(0x00);
+
+		DivTestData.push_back(0XA1);	// DIV (inplace)
+		DivTestData.push_back(0x12);	// R1 /= R2
+		DivTestData.push_back(0x00);
+		DivTestData.push_back(0x00);
+
+		DivTestData.push_back(0XA2);	// DIV
+		DivTestData.push_back(0x20);	// R3 = R2 / R0
+		DivTestData.push_back(0x03);
+		DivTestData.push_back(0x00);
+
+		DivTestData.push_back(0XA2);	// DIV
+		DivTestData.push_back(0x02);	// R4 = R0 / R2
+		DivTestData.push_back(0x04);
+		DivTestData.push_back(0x00);
+	}
+
+	/*
+	* \fn SetupMulTestData
+	* \brief Fills a vector with multiplication opcodes
+	*/
+	void SetupMulTestData()
+	{
+		//MulTestData.push_back(0x90);	// MULI
+		//MulTestData.push_back();
+		//MulTestData.push_back();
+		//MulTestData.push_back();
+
+		//MulTestData.push_back(0x91);	// MUL (inplace)
+		//MulTestData.push_back();
+		//MulTestData.push_back();
+		//MulTestData.push_back();
+
+		//MulTestData.push_back(0x92);	// MUL
+		//MulTestData.push_back();
+		//MulTestData.push_back();
+		//MulTestData.push_back();
+	}
+
+	/*
+	* \fn SetupOrTestData
+	* \brief Fills a vector with or opcodes
+	*/
+	void SetupOrTestData()
+	{
+		//OrTestData.push_back(0x70);	// ORI
+		//OrTestData.push_back();
+		//OrTestData.push_back();
+		//OrTestData.push_back();
+
+		//OrTestData.push_back(0x71);	// OR (inplace)
+		//OrTestData.push_back();
+		//OrTestData.push_back();
+		//OrTestData.push_back();
+
+		//OrTestData.push_back(0x72);	// OR
+		//OrTestData.push_back();
+		//OrTestData.push_back();
+		//OrTestData.push_back();
+	}
+
+	/*
+	* \fn SetupSubTestData
+	* \brief Fills a vector with subtraction opcodes
+	*/
+	void SetupSubTestData()
+	{
 		//SubTestData.push_back(0x50);	// SUBI
 		//SubTestData.push_back();
 		//SubTestData.push_back();
@@ -94,47 +251,14 @@ private:
 		//SubTestData.push_back();
 		//SubTestData.push_back();
 		//SubTestData.push_back();
-
-		//AndTestData.push_back(0x60);	// ANDI
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-
-		//AndTestData.push_back(0x61);	// AND (inplace)
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-
-		//AndTestData.push_back(0x62);	// AND
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-
-		//AndTestData.push_back(0x63);	// TSTI
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-
-		//AndTestData.push_back(0x64);	// TST
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-		//AndTestData.push_back();
-
-		//OrTestData.push_back(0x70);	// ORI
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-
-		//OrTestData.push_back(0x71);	// OR (inplace)
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-
-		//OrTestData.push_back(0x72);	// OR
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-
+	}
+	
+	/*
+	* \fn SetupXorTestData
+	* \brief Fills a vector with xor opcodes
+	*/
+	void SetupXorTestData()
+	{
 		//XorTestData.push_back(0x80);	// XORI
 		//XorTestData.push_back();
 		//XorTestData.push_back();
@@ -149,36 +273,6 @@ private:
 		//XorTestData.push_back();
 		//XorTestData.push_back();
 		//XorTestData.push_back();
-
-		//MulTestData.push_back(0x90);	// MULI
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-
-		//MulTestData.push_back(0x91);	// MUL (inplace)
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-
-		//MulTestData.push_back(0x92);	// MUL
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-		//
-		//DivTestData.push_back(0xA0);	// DIVI
-		//DivTestData.push_back();
-		//DivTestData.push_back();
-		//DivTestData.push_back();
-
-		//DivTestData.push_back(0XA1);	// DIV (inplace)
-		//DivTestData.push_back();
-		//DivTestData.push_back();
-		//DivTestData.push_back();
-
-		//DivTestData.push_back(0XA2);	// DIV
-		//DivTestData.push_back();
-		//DivTestData.push_back();
-		//DivTestData.push_back();
 	}
 
 	/*

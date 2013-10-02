@@ -9,55 +9,68 @@ BOOST_FIXTURE_TEST_SUITE( CPUTestSuite, CPUFixture )
 
 BOOST_AUTO_TEST_CASE( InitTest )
 {
-	std::vector<Utils::UInt8> l_Data(Header);
-	l_Data.insert(l_Data.begin(), AddTestData.begin(), AddTestData.end());
-	cpu.Init(std::move(l_Data));
+	cpu.Init(PrepareData(AddTestData));
 	std::vector<Utils::UInt8> l_MemoryDump(cpu.DumpMemory());
 
-	for(unsigned i = 0; i < l_MemoryDump.size(); ++i)
+	for(unsigned i = 0; i < AddTestData.size(); ++i)
 		BOOST_REQUIRE(AddTestData[i] == l_MemoryDump[i]);
+	for(unsigned i = AddTestData.size(); i < l_MemoryDump.size(); ++i)
+		BOOST_REQUIRE(l_MemoryDump[i] == 0);
 }
 
 BOOST_AUTO_TEST_CASE( AddTest )
 {
-	cpu.Init(std::move(AddTestData));
+	cpu.Init(PrepareData(AddTestData));
 	cpu.InterpretOp();	// ADDI
 	cpu.InterpretOp();	// ADD	(inplace)
 	cpu.InterpretOp();	// ADD
 	cpu.InterpretOp();	// ADD	(overflow)
 	std::vector<UInt16> l_AddDump(cpu.DumpRegisters());
 
-	BOOST_REQUIRE(l_AddDump[0] == 15);
-	BOOST_REQUIRE(l_AddDump[1] == 15);
-	BOOST_REQUIRE(l_AddDump[2] == 30);
-	BOOST_REQUIRE(l_AddDump[3] == -2);
+	BOOST_REQUIRE(l_AddDump[0] == 65535);
+	BOOST_REQUIRE(l_AddDump[1] == 65535);
+	BOOST_REQUIRE(l_AddDump[2] == 65535);
+	BOOST_REQUIRE(l_AddDump[3] == 65534);
 
-	for(int i = 4; i < 16; ++i)
+	for(int i = 4; i < NB_REGISTERS; ++i)
 		BOOST_REQUIRE(l_AddDump[i] == 0);
 }
 
-//BOOST_AUTO_TEST_CASE( AndTest )
-//{
-//	cpu.Init(std::move(AndTestData));
-//	cpu.InterpretOp();	// ANDI
-//	cpu.InterpretOp();	// AND	(inplace)
-//	cpu.InterpretOp();	// AND
-//	cpu.InterpretOp();	// TSTI
-//	cpu.InterpretOp();	// TST
-//	std::vector<UInt16> l_AndDump(cpu.DumpRegisters());
-//
-//}
-//
-//BOOST_AUTO_TEST_CASE( DivTest )
-//{
-//	cpu.Init(std::move(DivTestData));
-//	cpu.InterpretOp();	// DIVI
-//	cpu.InterpretOp();	// DIV	(inplace)
-//	cpu.InterpretOp();	// DIV
-//	std::vector<UInt16> l_DivDump(cpu.DumpRegisters());
-//
-//}
-//
+BOOST_AUTO_TEST_CASE( AndTest )
+{
+	cpu.Init(PrepareData(AndTestData));
+	cpu.InterpretOp();	// ANDI
+	cpu.InterpretOp();	// AND	(inplace)
+	cpu.InterpretOp();	// AND
+	cpu.InterpretOp();	// TSTI
+	cpu.InterpretOp();	// TST
+	std::vector<UInt16> l_AndDump(cpu.DumpRegisters());
+
+	for(int i = 0; i < NB_REGISTERS; ++i)
+		BOOST_REQUIRE(l_AndDump[i] == 0);
+}
+
+BOOST_AUTO_TEST_CASE( DivTest )
+{
+	cpu.Init(PrepareData(DivTestData));
+	cpu.InterpretOp();	// DIVI
+	cpu.InterpretOp();	// DIV	(inplace)
+	cpu.InterpretOp();	// DIV
+	cpu.InterpretOp();	// DIV
+	std::vector<UInt16> l_DivDump(cpu.DumpRegisters());
+
+	// TODO : Test div by 0
+	BOOST_REQUIRE(l_DivDump[0] == 4);
+	BOOST_REQUIRE(l_DivDump[1] == 2);
+	BOOST_REQUIRE(l_DivDump[2] == 2);
+	BOOST_REQUIRE(l_DivDump[3] == 0);
+	BOOST_REQUIRE(l_DivDump[4] == 2);
+
+	for(int i = 5; i < NB_REGISTERS; ++i)
+		BOOST_REQUIRE(l_DivDump[i] == 0);
+
+}
+
 //BOOST_AUTO_TEST_CASE( MulTest )
 //{
 //	cpu.Init(std::move(MulTestData));

@@ -648,7 +648,7 @@ void CPU::InterpretStores()
 UInt16 CPU::FetchImmediateValue()
 {
 	UInt16 l_IVal = m_Memory[m_PC++];
-	l_IVal >>= 8;
+	l_IVal <<= 8;
 	return l_IVal | m_Memory[m_PC++];
 }
 

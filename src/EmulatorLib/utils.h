@@ -111,11 +111,11 @@ namespace Utils
 	*/
 	struct ArithmeticRightShift
 	{
-		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS)
+		UInt16 operator()(const Int16 & in_LHS, const UInt16 & in_RHS)
 		{
-			if(static_cast<Int16>(in_LHS) < 0)
-				return in_LHS >> in_RHS | ~(~0U >> in_RHS);
-			else
+			// if(in_LHS < 0)
+			//	return in_LHS >> in_RHS | ~(~0U >> in_RHS);
+			//else
 				return in_LHS >> in_RHS;
 		}
 	};
