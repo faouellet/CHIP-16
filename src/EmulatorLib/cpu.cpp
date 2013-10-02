@@ -345,7 +345,7 @@ void CPU::InterpretLoads()
 		case 0x3:	// LDM	(indirect)
 		{
 			UInt16 l_AddrX = m_Memory[m_PC] & 0xF;
-			UInt16 l_AddrY = m_Memory[m_PC] & 0xF0;
+			UInt16 l_AddrY = (m_Memory[m_PC] & 0xF0) >> 4;
 			UInt16 l_Val = ((0 | m_Memory[l_AddrY]) << 8) | m_Memory[l_AddrY+1];
 			m_Registers[l_AddrX] = l_Val;
 			m_PC += 3;
@@ -354,7 +354,7 @@ void CPU::InterpretLoads()
 		case 0x4:	// MOV
 		{
 			UInt16 l_AddrX = m_Memory[m_PC] & 0xF;
-			UInt16 l_AddrY = m_Memory[m_PC] & 0xF0;
+			UInt16 l_AddrY = (m_Memory[m_PC] & 0xF0) >> 4;
 			m_Registers[l_AddrX] = m_Registers[l_AddrY];
 			m_PC += 3;
 			break;
@@ -462,9 +462,9 @@ void CPU::InterpretMisc()
 		}
 		case 0xE:	// SNG
 		{
-			m_SPU.GenerateSound(m_Memory[m_PC] & 0xF0, m_Memory[m_PC++] & 0xF, 
-				m_Memory[m_PC] & 0xF0, m_Memory[m_PC++] & 0xF,
-				m_Memory[m_PC] & 0xF0, m_Memory[m_PC++] & 0xF);
+			m_SPU.GenerateSound((m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF, 
+				(m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF,
+				(m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF);
 			break;
 		}
 		default:
@@ -588,21 +588,21 @@ void CPU::InterpretShifts()
 		case 0x3:	// SHL
 		{
 			UInt16 l_Addr = m_Memory[m_PC] & 0xF;
-			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], (m_Memory[m_PC++] & 0xF0) >> 4);
 			m_PC += 2;
 			break;
 		}
 		case 0x4:	// SHR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], (m_Memory[m_PC++] & 0xF0) >> 4);
 			m_PC++;
 			break;
 		}
 		case 0x5:	// SAR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF0);
+			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], (m_Memory[m_PC++] & 0xF0) >> 4);
 			m_PC++;
 			break;
 		}
@@ -660,7 +660,7 @@ UInt16 CPU::FetchRegisterAddress()
 void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y)
 {
 	out_X = m_Registers[m_Memory[m_PC] & 0xF];
-	out_Y = m_Registers[m_Memory[m_PC] & 0xF0];
+	out_Y = m_Registers[(m_Memory[m_PC] & 0xF0) >> 4];
 }
 
 UInt16 CPU::Pop()
@@ -670,7 +670,7 @@ UInt16 CPU::Pop()
 
 void CPU::Push(UInt16 in_Val)
 {
-	m_Memory[m_SP++] = in_Val & 0xF0;
+	m_Memory[m_SP++] = (in_Val & 0xF0) >> 4;
 	m_Memory[m_SP++] = in_Val & 0xF;
 }
 

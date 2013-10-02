@@ -86,11 +86,11 @@ namespace Utils
 		>::type type;
 	};
 
-	typedef UInt_<1>::type UInt8;
-	typedef UInt_<2>::type UInt16;
-	typedef UInt_<4>::type UInt32;
+	typedef UInt_<1>::type UInt8;	/**< Unsigned 8 bits integer type */
+	typedef UInt_<2>::type UInt16;	/**< Unsigned 16 bits integer type */
+	typedef UInt_<4>::type UInt32;	/**< Unsigned 32 bits integer type */
 
-	typedef Int_<2>::type Int16;
+	typedef Int_<2>::type Int16;	/**< Signed 16 bits integer type */
 
 	/*
 	* \struct LeftShift

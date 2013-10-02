@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>CHIP-16: Emulator Class Reference</title>
+<title>Chip16: Emulator Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -22,7 +22,8 @@
  <tbody>
  <tr style="height: 56px;">
   <td style="padding-left: 0.5em;">
-   <div id="projectname">CHIP-16
+   <div id="projectname">Chip16
+   &#160;<span id="projectnumber">0.1</span>
    </div>
    <div id="projectbrief">Emulator for the Chip16 architecture</div>
   </td>
@@ -71,7 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Namespaces</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -84,6 +85,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_emulator-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">Emulator Class Reference</div>  </div>
@@ -107,6 +110,17 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#a5e42664956149cc074729f73a5c20f73">Emulate</a> ()</td></tr>
 <tr class="memdesc:a5e42664956149cc074729f73a5c20f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emulate the Chip16 by interpreting opcodes one at the time. <br/></td></tr>
 <tr class="separator:a5e42664956149cc074729f73a5c20f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
+<tr class="memitem:acd94cc80b61d0e787d789c5efb666b1c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#acd94cc80b61d0e787d789c5efb666b1c">ReadROM</a> (const std::string &amp;in_ROMName)</td></tr>
+<tr class="memdesc:acd94cc80b61d0e787d789c5efb666b1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a ROM from disk.  <a href="#acd94cc80b61d0e787d789c5efb666b1c">More...</a><br/></td></tr>
+<tr class="separator:acd94cc80b61d0e787d789c5efb666b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:aac5fe6fa9370c20b5a2ccbdb9a19d44a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_p_u.html">CPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a">m_CPU</a></td></tr>
+<tr class="separator:aac5fe6fa9370c20b5a2ccbdb9a19d44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <h2 class="groupheader">Member Function Documentation</h2>
 <a class="anchor" id="a66f2e9657706f445882cd1bbf08052aa"></a>
@@ -134,6 +148,61 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
+<a class="anchor" id="acd94cc80b61d0e787d789c5efb666b1c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">Emulator::ReadROM </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>in_ROMName</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Read a ROM from disk. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_ROMName</td><td>The absolute path to the ROM </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Success or failure </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="aac5fe6fa9370c20b5a2ccbdb9a19d44a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_c_p_u.html">CPU</a> Emulator::m_CPU</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The central processing unit </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>C:/Users/ouef2901/Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="emulator_8h_source.html">emulator.h</a></li>
 <li>C:/Users/ouef2901/Desktop/CHIP-16/src/EmulatorLib/emulator.cpp</li>
@@ -141,7 +210,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 2 2013 13:26:18 for CHIP-16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 2 2013 16:17:55 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

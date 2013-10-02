@@ -31,7 +31,7 @@ private:
 	
 	UInt16 m_Registers[16];	/*!< General purpose registers */
 
-	UInt8 m_ROMHeader[HEADER_SIZE];	/*!< The header of a .c16 file. See specs for details*/
+	UInt8 m_ROMHeader[HEADER_SIZE];	/*!< The header of a .c16 file. See specs for details */
 	UInt8 m_Memory[MEMORY_SIZE];	/*!< Memory of the CPU. See specs for layout details */
 
 	GPU m_GPU;				/*!< The graphics processing unit */
@@ -83,7 +83,7 @@ public:
 
 	/**
 	* \fn InterpretOp
-	* \n brief Read an opcode from the ROM and execute it
+	* \brief Read an opcode from the ROM and execute it
 	*/
 	void InterpretOp();
 

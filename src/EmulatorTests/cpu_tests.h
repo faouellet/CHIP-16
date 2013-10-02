@@ -139,30 +139,30 @@ private:
 	void SetupDivTestData()
 	{
 		// R0 += 8
-		AddTestData.push_back(0x40);
-		AddTestData.push_back(0x00);
-		AddTestData.push_back(0x00);
-		AddTestData.push_back(0x08);
+		DivTestData.push_back(0x40);
+		DivTestData.push_back(0x00);
+		DivTestData.push_back(0x00);
+		DivTestData.push_back(0x08);
 
 		// R1 += 4
-		AddTestData.push_back(0x40);
-		AddTestData.push_back(0x01);
-		AddTestData.push_back(0x00);
-		AddTestData.push_back(0x04);
+		DivTestData.push_back(0x40);
+		DivTestData.push_back(0x01);
+		DivTestData.push_back(0x00);
+		DivTestData.push_back(0x04);
 
 		// R2 += 2
-		AddTestData.push_back(0x40);
-		AddTestData.push_back(0x02);
-		AddTestData.push_back(0x00);
-		AddTestData.push_back(0x02);
+		DivTestData.push_back(0x40);
+		DivTestData.push_back(0x02);
+		DivTestData.push_back(0x00);
+		DivTestData.push_back(0x02);
 
 		DivTestData.push_back(0xA0);	// DIVI
 		DivTestData.push_back(0x00);	// R0 /= 2
 		DivTestData.push_back(0x00);
-		DivTestData.push_back(0x00);
+		DivTestData.push_back(0x02);
 
 		DivTestData.push_back(0XA1);	// DIV (inplace)
-		DivTestData.push_back(0x12);	// R1 /= R2
+		DivTestData.push_back(0x21);	// R1 /= R2
 		DivTestData.push_back(0x00);
 		DivTestData.push_back(0x00);
 
@@ -183,20 +183,32 @@ private:
 	*/
 	void SetupMulTestData()
 	{
-		//MulTestData.push_back(0x90);	// MULI
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-		//MulTestData.push_back();
+		// R0 += 2
+		MulTestData.push_back(0x40);
+		MulTestData.push_back(0x00);
+		MulTestData.push_back(0x00);
+		MulTestData.push_back(0x02);
 
-		//MulTestData.push_back(0x91);	// MUL (inplace)
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-		//MulTestData.push_back();
+		// R1 += 2
+		MulTestData.push_back(0x40);
+		MulTestData.push_back(0x01);
+		MulTestData.push_back(0x00);
+		MulTestData.push_back(0x02);
 
-		//MulTestData.push_back(0x92);	// MUL
-		//MulTestData.push_back();
-		//MulTestData.push_back();
-		//MulTestData.push_back();
+		MulTestData.push_back(0x90);	// MULI
+		MulTestData.push_back(0x00);	// R0 *= 10
+		MulTestData.push_back(0x00);
+		MulTestData.push_back(0x0A);
+
+		MulTestData.push_back(0x91);	// MUL (inplace)
+		MulTestData.push_back(0x01);	// R1 *= R0
+		MulTestData.push_back(0x00);
+		MulTestData.push_back(0x00);
+
+		MulTestData.push_back(0x92);	// MUL
+		MulTestData.push_back(0x01);	// R2 = R1 * R0
+		MulTestData.push_back(0x02);
+		MulTestData.push_back(0x00);
 	}
 
 	/*
@@ -205,20 +217,20 @@ private:
 	*/
 	void SetupOrTestData()
 	{
-		//OrTestData.push_back(0x70);	// ORI
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-		//OrTestData.push_back();
+		OrTestData.push_back(0x70);	// ORI
+		OrTestData.push_back(0x00);	// R0 | 1
+		OrTestData.push_back(0x00);
+		OrTestData.push_back(0x01);
 
-		//OrTestData.push_back(0x71);	// OR (inplace)
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-		//OrTestData.push_back();
+		OrTestData.push_back(0x71);	// OR (inplace)
+		OrTestData.push_back(0x01);	// R1 |= R0
+		OrTestData.push_back(0x00);
+		OrTestData.push_back(0x00);
 
-		//OrTestData.push_back(0x72);	// OR
-		//OrTestData.push_back();
-		//OrTestData.push_back();
-		//OrTestData.push_back();
+		OrTestData.push_back(0x72);	// OR
+		OrTestData.push_back(0x03);	// R2 = R0 | R3
+		OrTestData.push_back(0x02);
+		OrTestData.push_back(0x00);
 	}
 
 	/*
@@ -227,20 +239,41 @@ private:
 	*/
 	void SetupSubTestData()
 	{
-		//SubTestData.push_back(0x50);	// SUBI
-		//SubTestData.push_back();
-		//SubTestData.push_back();
-		//SubTestData.push_back();
+		// R0 += 12
+		SubTestData.push_back(0x40);
+		SubTestData.push_back(0x00);
+		SubTestData.push_back(0x00);
+		SubTestData.push_back(0x0C);
 
-		//SubTestData.push_back(0x51);	// SUB (inplace)
-		//SubTestData.push_back();
-		//SubTestData.push_back();
-		//SubTestData.push_back();
+		SubTestData.push_back(0x50);	// SUBI
+		SubTestData.push_back(0x00);	// R0 -= 4
+		SubTestData.push_back(0x00);
+		SubTestData.push_back(0x04);
 
-		//SubTestData.push_back(0x52);	// SUB
-		//SubTestData.push_back();
-		//SubTestData.push_back();
-		//SubTestData.push_back();
+		SubTestData.push_back(0x50);	// SUBI
+		SubTestData.push_back(0x01);	// R1 -= 4
+		SubTestData.push_back(0x00);
+		SubTestData.push_back(0x04);
+
+		SubTestData.push_back(0x51);	// SUB (inplace)
+		SubTestData.push_back(0x10);	// R0 -= R1  
+		SubTestData.push_back(0x00);
+		SubTestData.push_back(0x00);
+
+		SubTestData.push_back(0x51);	// SUB (inplace)
+		SubTestData.push_back(0x01);	// R1 -= R0
+		SubTestData.push_back(0x00);
+		SubTestData.push_back(0x00);
+
+		SubTestData.push_back(0x52);	// SUB
+		SubTestData.push_back(0x10);	// R2 = R0 - R1
+		SubTestData.push_back(0x02);
+		SubTestData.push_back(0x00);
+
+		SubTestData.push_back(0x52);	// SUB
+		SubTestData.push_back(0x01);	// R3 = R1 - R0
+		SubTestData.push_back(0x03);
+		SubTestData.push_back(0x00);
 
 		//SubTestData.push_back(0x53);	// CMPI
 		//SubTestData.push_back();
@@ -259,20 +292,20 @@ private:
 	*/
 	void SetupXorTestData()
 	{
-		//XorTestData.push_back(0x80);	// XORI
-		//XorTestData.push_back();
-		//XorTestData.push_back();
-		//XorTestData.push_back();
+		XorTestData.push_back(0x80);	// XORI
+		XorTestData.push_back(0x00);	// R0 ^ 1
+		XorTestData.push_back(0x00);
+		XorTestData.push_back(0x01);
 
-		//XorTestData.push_back(0x81);	// XOR (inplace)
-		//XorTestData.push_back();
-		//XorTestData.push_back();
-		//XorTestData.push_back();
+		XorTestData.push_back(0x81);	// XOR (inplace)
+		XorTestData.push_back(0x01);	// R1 ^= R0
+		XorTestData.push_back(0x00);
+		XorTestData.push_back(0x00);
 
-		//XorTestData.push_back(0x82);	// XOR
-		//XorTestData.push_back();
-		//XorTestData.push_back();
-		//XorTestData.push_back();
+		XorTestData.push_back(0x82);	// XOR
+		XorTestData.push_back(0x01);	// R2 = R0 ^ R1
+		XorTestData.push_back(0x02);
+		XorTestData.push_back(0x00);
 	}
 
 	/*
@@ -290,7 +323,23 @@ private:
 	*/
 	void SetupShiftData()
 	{
+		// R0 += 8
+		ShiftTestData.push_back(0x40);
+		ShiftTestData.push_back(0x00);
+		ShiftTestData.push_back(0x00);
+		ShiftTestData.push_back(0x08);
 
+		// R1 += 4
+		ShiftTestData.push_back(0x40);
+		ShiftTestData.push_back(0x01);
+		ShiftTestData.push_back(0x00);
+		ShiftTestData.push_back(0x04);
+
+		// R2 += 2
+		ShiftTestData.push_back(0x40);
+		ShiftTestData.push_back(0x02);
+		ShiftTestData.push_back(0x00);
+		ShiftTestData.push_back(0x02);
 	}
 };
 
