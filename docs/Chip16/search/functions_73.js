@@ -1,0 +1,7 @@
+var searchData=
+[
+  ['setbackgroundcolor',['SetBackgroundColor',['../class_g_p_u.html#afc1d89644aeaeee535a94257e78280fe',1,'GPU']]],
+  ['setspritedimensions',['SetSpriteDimensions',['../class_g_p_u.html#a379fa51e51eb623c3811cd97a418f6e1',1,'GPU']]],
+  ['spu',['SPU',['../class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8',1,'SPU']]],
+  ['stop',['Stop',['../class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5',1,'SPU']]]
+];
