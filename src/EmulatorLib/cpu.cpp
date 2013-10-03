@@ -23,26 +23,40 @@ std::vector<UInt8> CPU::DumpMemory()
 	return std::vector<UInt8>(std::begin(m_Memory), std::end(m_Memory));
 }
 
+UInt16 CPU::DumpProgramCounter()
+{
+	return m_PC;
+}
+
 std::vector<UInt16> CPU::DumpRegisters()
 {
 	return std::vector<UInt16>(std::begin(m_Registers), std::end(m_Registers));
 }
 
-// TODO : Finish it and ask yourself what could go wrong
+UInt16 CPU::DumpStackPointer()
+{
+	return m_SP;
+}
+
+// TODO : Ask yourself what could go wrong
 unsigned CPU::Init(std::vector<UInt8> && in_ROMData) 
 {
-	unsigned l_Ret;
+	if(in_ROMData.empty())
+		return EmptyROMError;
+	if(in_ROMData.size() > STACK_START)
+		return ROMOverflowError;
 
 	for(int i = 0; i < HEADER_SIZE; ++i)
 		m_ROMHeader[i] = in_ROMData[i];
 
-	// TODO : What if the ROM is too big ??
 	for(unsigned i = HEADER_SIZE ; i < in_ROMData.size(); ++i)
 		m_Memory[i-HEADER_SIZE] = in_ROMData[i];
 
 	m_PC = m_ROMHeader[0xA];
-	m_SP = 0xFDF0;
+	m_SP = STACK_START;
 
+	unsigned l_Ret = NoError;
+	
 	if(!m_GPU.Init())
 		l_Ret |= GPUError;
 	if(!m_SPU.Init())
@@ -339,14 +353,14 @@ void CPU::InterpretLoads()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			UInt16 l_IVal = FetchImmediateValue();
-			m_Registers[l_Addr] = m_Memory[l_IVal];
+			m_Registers[l_Addr] = (m_Memory[l_IVal] << 8) | m_Memory[l_IVal+1];
 			break;
 		}
 		case 0x3:	// LDM	(indirect)
 		{
 			UInt16 l_AddrX = m_Memory[m_PC] & 0xF;
 			UInt16 l_AddrY = (m_Memory[m_PC] & 0xF0) >> 4;
-			UInt16 l_Val = ((0 | m_Memory[l_AddrY]) << 8) | m_Memory[l_AddrY+1];
+			UInt16 l_Val = (m_Memory[m_Registers[l_AddrY]] << 8) | m_Memory[m_Registers[l_AddrY]+1];
 			m_Registers[l_AddrX] = l_Val;
 			m_PC += 3;
 			break;
@@ -525,30 +539,35 @@ void CPU::InterpretPushPops()
 		case 0x1:	// POP
 		{
 			m_Registers[m_Memory[m_PC]] = Pop();
+			m_PC += 3;
 			break;
 		}
 		case 0x2:	// PUSHALL
 		{
 			for(UInt16 i = 0; i < 16; ++i)
 				Push(m_Registers[i]);
+			m_PC += 3;
 			break;
 		}
 		case 0x3:	// POPALL
 		{
-			for(UInt16 i = 15; i > -1; --i)
+			for(Int16 i = 15; i > -1; --i)
 				m_Registers[i] = Pop();
+			m_PC += 3;
 			break;
 		}
 		case 0x4:	// PUSHF
 		{
 			m_Memory[m_SP] = m_FR;
 			m_SP += 2;
+			m_PC += 3;
 			break;
 		}
 		case 0x5:	// POPF
 		{
 			m_FR = m_Memory[m_SP];
 			m_SP -= 2;
+			m_PC += 3;
 			break;
 		}
 		default:
@@ -588,21 +607,21 @@ void CPU::InterpretShifts()
 		case 0x3:	// SHL
 		{
 			UInt16 l_Addr = m_Memory[m_PC] & 0xF;
-			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], (m_Memory[m_PC++] & 0xF0) >> 4);
+			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
 			m_PC += 2;
 			break;
 		}
 		case 0x4:	// SHR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], (m_Memory[m_PC++] & 0xF0) >> 4);
+			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
 			m_PC++;
 			break;
 		}
 		case 0x5:	// SAR
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], (m_Memory[m_PC++] & 0xF0) >> 4);
+			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
 			m_PC++;
 			break;
 		}
@@ -623,17 +642,17 @@ void CPU::InterpretStores()
 		{
 			UInt16 l_RegAddr = FetchRegisterAddress();
 			UInt16 l_MemAddr = FetchImmediateValue();
-			m_Memory[l_MemAddr] = m_Registers[l_RegAddr] & 0xF0;
-			m_Memory[l_MemAddr+1] = m_Registers[l_RegAddr] & 0xF;
+			m_Memory[l_MemAddr] = m_Registers[l_RegAddr] & 0xFF00;
+			m_Memory[l_MemAddr+1] = m_Registers[l_RegAddr] & 0x00FF;
 			break;
 		}
 		case 0x1:	// STM	(indirect)
 		{
 			UInt16 l_XVal, l_YVal;
 			FetchRegistersValues(l_XVal, l_YVal);
-			m_Memory[l_YVal] = l_XVal & 0xF0;
-			m_Memory[l_YVal+1] = l_XVal & 0xF;
-			m_PC += 2;
+			m_Memory[m_Registers[l_YVal]] = l_XVal & 0xFF00;
+			m_Memory[m_Registers[l_YVal]+1] = l_XVal & 0x00FF;
+			m_PC += 3;
 			break;
 		}
 		default:
@@ -648,8 +667,7 @@ void CPU::InterpretStores()
 UInt16 CPU::FetchImmediateValue()
 {
 	UInt16 l_IVal = m_Memory[m_PC++];
-	l_IVal <<= 8;
-	return l_IVal | m_Memory[m_PC++];
+	return l_IVal | (m_Memory[m_PC++] << 8);
 }
 
 UInt16 CPU::FetchRegisterAddress()
@@ -665,13 +683,13 @@ void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y)
 
 UInt16 CPU::Pop()
 {
-	return UInt16((m_Memory[m_SP--] << 8) | m_Memory[m_SP--]);
+	return UInt16(m_Memory[--m_SP] | (m_Memory[--m_SP] << 8));
 }
 
 void CPU::Push(UInt16 in_Val)
 {
-	m_Memory[m_SP++] = (in_Val & 0xF0) >> 4;
-	m_Memory[m_SP++] = in_Val & 0xF;
+	m_Memory[m_SP++] = (in_Val & 0xFF00) >> 8;
+	m_Memory[m_SP++] = in_Val & 0x00FF;
 }
 
 void CPU::SetSignZeroFlag(UInt16 in_Result)

@@ -5,8 +5,6 @@
 
 #include "cpu.h"
 
-#include "utils.h"
-
 using Utils::UInt8;
 using Utils::UInt16;
 using Utils::UInt32;

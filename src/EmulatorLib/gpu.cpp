@@ -12,7 +12,8 @@ GPU::~GPU()
 bool GPU::Init()
 {
 	// Q : Correct condition ??
-	return SDL_Init(SDL_INIT_VIDEO) > 0;
+	return true;
+	//return SDL_Init(SDL_INIT_VIDEO) > 0;
 }
 
 void GPU::ClearScreen() { /*TODO*/ }

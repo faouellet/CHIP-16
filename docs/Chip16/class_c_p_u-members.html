@@ -90,9 +90,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="class_c_p_u.html">CPU</a>, including all inherited members.</p>
 <table class="directory">
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>CONTROLLER_1</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>CONTROLLER_2</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_c_p_u.html#a2fdd8153d0979ccad9ed8452897267f4">CPU</a>()</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>DumpMemory</b>() (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>DumpRegisters</b>() (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>DumpProgramCounter</b>() (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>DumpRegisters</b>() (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>DumpStackPointer</b>() (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>FetchImmediateValue</b>() (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>FetchRegisterAddress</b>() (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr bgcolor="#f0f0f0"><td class="entry"><b>FetchRegistersValues</b>(UInt16 &amp;out_X, UInt16 &amp;out_Y) (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
@@ -127,14 +131,15 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SetCarryOverflowFlagSub</b>(UInt16 in_Op1, UInt16 in_Op2) (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_c_p_u.html#a3ace29681aa63f0552c37f431ff980e0">SetSignZeroFlag</a>(UInt16 in_Result)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>SignedOverflowFlag</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>UnsignedBorrowFlag</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>UnsignedCarryFlag</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>ZeroFlag</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_c_p_u.html#aa32e0ed85bebabb167ace09050d20707">~CPU</a>()</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>STACK_START</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>UnsignedBorrowFlag</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>UnsignedCarryFlag</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>ZeroFlag</b> enum value (defined in <a class="el" href="class_c_p_u.html">CPU</a>)</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_c_p_u.html#aa32e0ed85bebabb167ace09050d20707">~CPU</a>()</td><td class="entry"><a class="el" href="class_c_p_u.html">CPU</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 2 2013 16:17:55 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 3 2013 16:18:49 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

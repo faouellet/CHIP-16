@@ -6,7 +6,9 @@
 #include "emulator_tests.h"
 #include "utils.h"
 
-BOOST_FIXTURE_TEST_SUITE( EmulatorTestSuite, EmulatorFixture )
+BOOST_FIXTURE_TEST_SUITE( EmulatorTestSuite, EmulatorTestFixture )
+
+// TODO : Check the results ?? do something more ??
 
 BOOST_AUTO_TEST_CASE( InitTest )
 {
@@ -22,42 +24,50 @@ BOOST_AUTO_TEST_CASE( InitTest )
 
 BOOST_AUTO_TEST_CASE( AdsrTest )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/AdsrTest/AdsrTest.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_CASE( BC_TestRom )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/BC_TestRom/BC_TestRom.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_CASE( CollisionTest )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/CollisionTest/CollisionTest.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_CASE( flip_test )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/flip_test/flip_test.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_CASE( PadTest )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/PadTest/PadTest.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_CASE( PaleteTest )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/PaleteTest/PaleteTest.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_CASE( PaletteFlip )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/PaletteFlip/PaletteFlip.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_CASE( SoundTest )
 {
-	// TODO
+	/*Emu.Init(ROM_PATH + "/SoundTest/SoundTest.c16");
+	Emu.Emulate();*/
 }
 
 BOOST_AUTO_TEST_SUITE_END()

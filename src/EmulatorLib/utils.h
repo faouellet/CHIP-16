@@ -9,6 +9,12 @@
 */
 namespace Utils
 {
+	/**
+	* \enum
+	* \brief Masks for the possible errors that can happen during the initialization
+	*/
+	enum { NoError = 0, EmptyROMError = 1, ROMOverflowError = 2, GPUError = 4, SPUError = 8, FileError = 16 };
+
 	/*
 	* \struct IfElse
 	* \brief Defines a type depending on the condition by using partial specialization
@@ -131,12 +137,6 @@ namespace Utils
 			return in_LHS >> in_RHS;
 		}
 	};
-
-	/**
-	* \enum
-	* \brief Masks for the possible errors that can happen during the initialization
-	*/
-	enum { NoError = 0, CPUError = 1, GPUError = 2, SPUError = 4, FileError = 8 };
 };
 
 #endif // UTILS_H

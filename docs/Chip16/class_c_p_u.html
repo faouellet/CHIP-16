@@ -107,9 +107,15 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a0a14e61c50018d1b68c67714feaa2154"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a14e61c50018d1b68c67714feaa2154"></a>
 std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>DumpMemory</b> ()</td></tr>
 <tr class="separator:a0a14e61c50018d1b68c67714feaa2154"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae565b47093c049ab5a9800b05384d9d0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae565b47093c049ab5a9800b05384d9d0"></a>
+<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><b>DumpProgramCounter</b> ()</td></tr>
+<tr class="separator:ae565b47093c049ab5a9800b05384d9d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a3f6908332ef7906cfe189f381df006"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6a3f6908332ef7906cfe189f381df006"></a>
 std::vector&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>DumpRegisters</b> ()</td></tr>
 <tr class="separator:a6a3f6908332ef7906cfe189f381df006"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0cc659262e2651231d01c4ca768f646"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0cc659262e2651231d01c4ca768f646"></a>
+<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><b>DumpStackPointer</b> ()</td></tr>
+<tr class="separator:ae0cc659262e2651231d01c4ca768f646"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad1442d889ce7ab4a1e871ecd8cf2c52d"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ad1442d889ce7ab4a1e871ecd8cf2c52d">Init</a> (std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt; &amp;&amp;in_ROMData)</td></tr>
 <tr class="memdesc:ad1442d889ce7ab4a1e871ecd8cf2c52d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the central processing unit.  <a href="#ad1442d889ce7ab4a1e871ecd8cf2c52d">More...</a><br/></td></tr>
 <tr class="separator:ad1442d889ce7ab4a1e871ecd8cf2c52d"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -120,8 +126,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:ae22fb22d03f9e385312dbefd5ba19a4e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>HEADER_SIZE</b> = 16, 
-<b>MEMORY_SIZE</b> = 64*1024
+<tr class="memitem:ae22fb22d03f9e385312dbefd5ba19a4e"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<b>HEADER_SIZE</b> = 16, 
+<b>MEMORY_SIZE</b> = 64*1024, 
+<b>STACK_START</b> = 0xFDF0, 
+<b>CONTROLLER_1</b> = 0xFFF0, 
+<br/>
+&#160;&#160;<b>CONTROLLER_2</b> = 0xFFF2
+<br/>
  }</td></tr>
 <tr class="separator:ae22fb22d03f9e385312dbefd5ba19a4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a53d44f23ee5b706dc9eb102d1dd7da3b"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
@@ -503,7 +515,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 2 2013 16:17:55 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Oct 3 2013 16:18:49 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

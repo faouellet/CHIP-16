@@ -22,7 +22,14 @@ private:
 	* \enum
 	* \brief Useful size constants
 	*/
-	enum { HEADER_SIZE = 16, MEMORY_SIZE = 64*1024 };
+	enum { HEADER_SIZE = 16, MEMORY_SIZE = 64*1024, STACK_START = 0xFDF0, CONTROLLER_1 = 0xFFF0, CONTROLLER_2 = 0xFFF2 };
+
+	/**
+	* \enum
+	* \brief Masks for the flag register
+	*/
+	enum { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, 
+			SignedOverflowFlag = 64, NegativeFlag = 128 };
 
 private:
 	UInt8 m_FR;				/*!< Flag register */
@@ -36,14 +43,6 @@ private:
 
 	GPU m_GPU;				/*!< The graphics processing unit */
 	SPU m_SPU;				/*!< The sound processing unit */
-	
-private:
-	/**
-	* \enum
-	* \brief Masks for the flag register
-	*/
-	enum { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, 
-			SignedOverflowFlag = 64, NegativeFlag = 128 };
 
 public:
 	/**
@@ -61,17 +60,31 @@ public:
 public:
 	/*
 	* \fn DumpMemory
-	* \brief DumpMemory the CPU memory
+	* \brief Dump the CPU memory
 	* \return The data contained in the CPU memory
 	*/
 	std::vector<UInt8> DumpMemory();
 
 	/*
+	* \fn DumpFlagRegister
+	* \brief Dump the program counter
+	* \return The memory address pointed by the PC
+	*/
+	UInt16 DumpProgramCounter();
+
+	/*
 	* \fn DumpRegisters
-	* \brief DumpRegisters the CPU memory
+	* \brief Dump the CPU registers
 	* \return The data contained in the CPU registers
 	*/
 	std::vector<UInt16> DumpRegisters();
+
+	/*
+	* \fn DumpStackPointer
+	* \brief Dump the stack pointer
+	* \return The memory address pointed by the SP
+	*/
+	UInt16 DumpStackPointer();
 
 	/**
 	* \fn Init

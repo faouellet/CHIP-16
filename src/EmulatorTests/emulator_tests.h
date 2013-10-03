@@ -5,15 +5,15 @@
 
 #include "emulator.h"
 
-struct EmulatorFixture
+struct EmulatorTestFixture
 {
 	static const std::string ROM_PATH;
+	
+	Emulator Emu;
 
-	// Emulator Emu;
-
-	// EmulatorFixture() { }
+	EmulatorTestFixture() { }
 };
 
-const std::string ROM_PATH = "../../Chip16 Program Pack";
+const std::string EmulatorTestFixture::ROM_PATH = "../../Chip16 Program Pack/Tests";
 
 #endif // EMULATOR_TESTS_H
