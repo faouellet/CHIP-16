@@ -3,17 +3,13 @@
 #include <iterator>
 #include <limits>
 
-CPU::CPU() 
+CPU::CPU() : m_Dist(0U, std::numeric_limits<UInt16>::max()), m_FR(0), m_PC(0), m_SP(0)
 {
 	for(int i = 0; i < 16; ++i)
 		m_Registers[i] = 0;
 
 	for(int i = 0; i < MEMORY_SIZE; ++i)
 		m_Memory[i] = 0;
-
-	m_FR = 0;
-	m_PC = 0;
-	m_SP = 0;
 }
 
 CPU::~CPU() { }
@@ -436,7 +432,12 @@ void CPU::InterpretMisc()
 		}
 		case 0x7:	// RND
 		{
-			// TODO
+			UInt16 l_Addr = FetchRegisterAddress();
+			UInt16 l_MaxVal = FetchImmediateValue();
+			UInt16 l_RandVal = m_Dist(m_RandEngine);
+			if(l_RandVal > l_MaxVal)
+				l_RandVal -= l_MaxVal;
+			m_Registers[l_Addr] = l_RandVal;
 			break;
 		}
 		case 0x8:	// FLIP

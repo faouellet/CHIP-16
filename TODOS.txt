@@ -2,3 +2,4 @@
 - Generate doc with doxygen
 - REFACTOR
 - License ??
+- Update README

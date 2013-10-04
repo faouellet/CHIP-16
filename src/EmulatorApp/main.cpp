@@ -18,9 +18,24 @@ int main(int argc, char** argv)
 	if(!l_ROM.empty())
 	{
 		Emulator l_Emu;
-		// TODO : Error reporting
-		l_Emu.Init(l_ROM);
-		l_Emu.Emulate();
+		unsigned l_ErrorCode = l_Emu.Init(l_ROM);
+		if(!l_ErrorCode)
+		{
+			l_Emu.Emulate();
+		}
+		else
+		{
+			if(l_ErrorCode & EmptyROMError)
+				std::cout << "ROM doesn't contain any data" << std::endl;
+			if(l_ErrorCode & ROMOverflowError)
+				std::cout << "ROM too big, doesn't fit into memory" << std::endl;
+			if(l_ErrorCode & GPUError)
+				std::cout << "GPU error" << std::endl;
+			if(l_ErrorCode & SPUError)
+				std::cout << "SPU Error" << std::endl;
+			if(l_ErrorCode & FileError)
+				std::cout << "File not found" << std::endl;
+		}
 	}
 	else
 	{

@@ -243,4 +243,22 @@ BOOST_AUTO_TEST_CASE( ShiftTest )
 		BOOST_REQUIRE_EQUAL(l_ShiftDump[i], 0);
 }
 
+BOOST_AUTO_TEST_CASE( RndTest )
+{
+	std::vector<UInt8> l_RndData;
+	for(int i = 0; i < NB_REGISTERS; ++i)
+		InsertInstruction(l_RndData, 0x07, i, 0x00, 0xFF);	// Ri = Random
+
+	Cpu.Init(PrepareData(l_RndData));
+	for(int i = 0; i < NB_REGISTERS; ++i)
+		Cpu.InterpretOp();
+
+	std::vector<UInt16> l_RndDump(Cpu.DumpRegisters());
+	for(int i = 0; i < NB_REGISTERS; ++i)
+	{
+		BOOST_REQUIRE_GE(l_RndDump[i], 0);
+		BOOST_REQUIRE_LE(l_RndDump[i], 0xFF00);
+	}
+}
+
 BOOST_AUTO_TEST_SUITE_END()

@@ -64,7 +64,6 @@ struct CPUFixture
 		return l_Data;
 	}
 
-private:
 	/**
 	* \fn PrepareData
 	* \brief Insert a 32 bits instruction into a data vector
@@ -82,6 +81,7 @@ private:
 		out_DataVec.push_back(in_Op4);
 	}
 
+private:
 	/**
 	* \fn SetupArithmeticData
 	* \brief Fills the arithmetic data vectors with opcodes

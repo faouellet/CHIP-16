@@ -2,6 +2,7 @@
 #define CPU_H
 
 #include <functional>
+#include <random>
 #include <vector>
 
 #include "gpu.h"
@@ -42,6 +43,9 @@ private:
 
 	GPU m_GPU;				/*!< The graphics processing unit */
 	SPU m_SPU;				/*!< The sound processing unit */
+
+	std::default_random_engine m_RandEngine;		/*!< Random number engine */
+	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Uniform distribution */
 
 public:
 	/**
