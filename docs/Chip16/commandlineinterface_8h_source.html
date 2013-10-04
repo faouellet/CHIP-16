@@ -92,31 +92,45 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef CINTERFACE_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define CINTERFACE_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;map&gt;</span></div>
-<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
 <div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;</div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;<span class="comment">// TODO 1 : At least validate the input</span></div>
 <div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="comment">// TODO 2 : Change it to a GUI</span></div>
-<div class="line"><a name="l00009"></a><span class="lineno"><a class="line" href="class_command_line_interface.html">    9</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_command_line_interface.html">CommandLineInterface</a></div>
-<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;{</div>
-<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;    std::map&lt;int, std::string&gt; m_DemoChoices;</div>
-<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    std::map&lt;int, std::string&gt; m_GameChoices;</div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;    std::map&lt;int, std::string&gt; m_TestChoices;</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
-<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;    <a class="code" href="class_command_line_interface.html">CommandLineInterface</a>();</div>
-<div class="line"><a name="l00018"></a><span class="lineno">   18</span>&#160;    ~<a class="code" href="class_command_line_interface.html">CommandLineInterface</a>();</div>
-<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    std::string ChooseROM();</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;};</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;<span class="preprocessor">#endif // CINTERFACE_H</span></div>
-<div class="ttc" id="class_command_line_interface_html"><div class="ttname"><a href="class_command_line_interface.html">CommandLineInterface</a></div><div class="ttdef"><b>Definition:</b> commandlineinterface.h:9</div></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00015"></a><span class="lineno"><a class="line" href="class_command_line_interface.html">   15</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_command_line_interface.html">CommandLineInterface</a></div>
+<div class="line"><a name="l00016"></a><span class="lineno">   16</span>&#160;{</div>
+<div class="line"><a name="l00017"></a><span class="lineno">   17</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_command_line_interface.html#a65e663ff05ad2b7a3317c6e44dbded80">   18</a></span>&#160;    std::vector&lt;std::string&gt; <a class="code" href="class_command_line_interface.html#a65e663ff05ad2b7a3317c6e44dbded80">m_DemoChoices</a>; </div>
+<div class="line"><a name="l00019"></a><span class="lineno"><a class="line" href="class_command_line_interface.html#afcaf6271a1230a749ccd5797ab829205">   19</a></span>&#160;    std::vector&lt;std::string&gt; <a class="code" href="class_command_line_interface.html#afcaf6271a1230a749ccd5797ab829205">m_GameChoices</a>; </div>
+<div class="line"><a name="l00020"></a><span class="lineno"><a class="line" href="class_command_line_interface.html#a522931469c19f97b525b3333be5a6670">   20</a></span>&#160;    std::vector&lt;std::string&gt; <a class="code" href="class_command_line_interface.html#a522931469c19f97b525b3333be5a6670">m_TestChoices</a>; </div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <a class="code" href="class_command_line_interface.html#aa242712bc60f8d45d65c92af14e32691">CommandLineInterface</a>();</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <a class="code" href="class_command_line_interface.html#ac61d99b3178bb74ff725a12e9ec73d66">~CommandLineInterface</a>();</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;    std::string <a class="code" href="class_command_line_interface.html#a319768a2b46af0cbad521d59b7ae4f94">ChooseROM</a>();</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="class_command_line_interface.html#a9727deb86a0fc49c2ac7a2615ba5f464">Choose</a>(<span class="keyword">const</span> std::vector&lt;std::string&gt; in_Choices) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;    std::string <a class="code" href="class_command_line_interface.html#a631d1baa525aefb64aad3cbf1bb04e39">FormatChoice</a>(<span class="keyword">const</span> std::string &amp; in_Folder, <span class="keyword">const</span> std::string &amp; in_Choice) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;};</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;<span class="preprocessor">#endif // CINTERFACE_H</span></div>
+<div class="ttc" id="class_command_line_interface_html_aa242712bc60f8d45d65c92af14e32691"><div class="ttname"><a href="class_command_line_interface.html#aa242712bc60f8d45d65c92af14e32691">CommandLineInterface::CommandLineInterface</a></div><div class="ttdeci">CommandLineInterface()</div><div class="ttdoc">Default constructor. </div><div class="ttdef"><b>Definition:</b> commandlineinterface.cpp:6</div></div>
+<div class="ttc" id="class_command_line_interface_html_a522931469c19f97b525b3333be5a6670"><div class="ttname"><a href="class_command_line_interface.html#a522931469c19f97b525b3333be5a6670">CommandLineInterface::m_TestChoices</a></div><div class="ttdeci">std::vector&lt; std::string &gt; m_TestChoices</div><div class="ttdef"><b>Definition:</b> commandlineinterface.h:20</div></div>
+<div class="ttc" id="class_command_line_interface_html_a319768a2b46af0cbad521d59b7ae4f94"><div class="ttname"><a href="class_command_line_interface.html#a319768a2b46af0cbad521d59b7ae4f94">CommandLineInterface::ChooseROM</a></div><div class="ttdeci">std::string ChooseROM()</div><div class="ttdoc">Ask the user to choose a demo, game or test ROM. </div><div class="ttdef"><b>Definition:</b> commandlineinterface.cpp:41</div></div>
+<div class="ttc" id="class_command_line_interface_html_a65e663ff05ad2b7a3317c6e44dbded80"><div class="ttname"><a href="class_command_line_interface.html#a65e663ff05ad2b7a3317c6e44dbded80">CommandLineInterface::m_DemoChoices</a></div><div class="ttdeci">std::vector&lt; std::string &gt; m_DemoChoices</div><div class="ttdef"><b>Definition:</b> commandlineinterface.h:18</div></div>
+<div class="ttc" id="class_command_line_interface_html_a9727deb86a0fc49c2ac7a2615ba5f464"><div class="ttname"><a href="class_command_line_interface.html#a9727deb86a0fc49c2ac7a2615ba5f464">CommandLineInterface::Choose</a></div><div class="ttdeci">int Choose(const std::vector&lt; std::string &gt; in_Choices) const </div><div class="ttdoc">Outputs ROM choices to the console and get the user&amp;#39;s choice. </div><div class="ttdef"><b>Definition:</b> commandlineinterface.cpp:80</div></div>
+<div class="ttc" id="class_command_line_interface_html"><div class="ttname"><a href="class_command_line_interface.html">CommandLineInterface</a></div><div class="ttdoc">Basic interface from which to choose a ROM. </div><div class="ttdef"><b>Definition:</b> commandlineinterface.h:15</div></div>
+<div class="ttc" id="class_command_line_interface_html_ac61d99b3178bb74ff725a12e9ec73d66"><div class="ttname"><a href="class_command_line_interface.html#ac61d99b3178bb74ff725a12e9ec73d66">CommandLineInterface::~CommandLineInterface</a></div><div class="ttdeci">~CommandLineInterface()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> commandlineinterface.cpp:39</div></div>
+<div class="ttc" id="class_command_line_interface_html_a631d1baa525aefb64aad3cbf1bb04e39"><div class="ttname"><a href="class_command_line_interface.html#a631d1baa525aefb64aad3cbf1bb04e39">CommandLineInterface::FormatChoice</a></div><div class="ttdeci">std::string FormatChoice(const std::string &amp;in_Folder, const std::string &amp;in_Choice) const </div><div class="ttdoc">Format the relative path to the chosen ROM. </div><div class="ttdef"><b>Definition:</b> commandlineinterface.cpp:90</div></div>
+<div class="ttc" id="class_command_line_interface_html_afcaf6271a1230a749ccd5797ab829205"><div class="ttname"><a href="class_command_line_interface.html#afcaf6271a1230a749ccd5797ab829205">CommandLineInterface::m_GameChoices</a></div><div class="ttdeci">std::vector&lt; std::string &gt; m_GameChoices</div><div class="ttdef"><b>Definition:</b> commandlineinterface.h:19</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 3 2013 16:18:48 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 4 2013 12:11:25 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

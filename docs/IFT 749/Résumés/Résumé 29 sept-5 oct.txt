@@ -1,0 +1,18 @@
+Trucs faits cette semaine:
+- Émulation des instructions CPU
+- Tests des instructions arithmétiques, des instructions touchant à la mémoire
+  et des instructions touchant à la pile
+- Production de la documentation doxygen
+- Choix du premier article à critiquer
+- Refactoring
+- Correction de bugs exposés par les tests unitaires
+- Validation du choix d'une ROM
+
+Trucs à faire dans la semaine à venir:
+- Commencer à travailler sur la critique de l'article trouvé
+- Prévenir les possibilités de corruption de la mémoire et de la pile
+- Commencer à s'attarder sur la propagation d'erreurs
+- Commencer à travailler sur l'émulation du GPU ou du SPU
+- Continuer l'écriture de tests pour les instructions CPU
+- Si possible, tenter de rouler les ROMs de tests fournies dans le program pack
+

@@ -3,7 +3,17 @@ var searchData=
   ['setbackgroundcolor',['SetBackgroundColor',['../class_g_p_u.html#afc1d89644aeaeee535a94257e78280fe',1,'GPU']]],
   ['setsignzeroflag',['SetSignZeroFlag',['../class_c_p_u.html#a3ace29681aa63f0552c37f431ff980e0',1,'CPU']]],
   ['setspritedimensions',['SetSpriteDimensions',['../class_g_p_u.html#a379fa51e51eb623c3811cd97a418f6e1',1,'GPU']]],
-  ['setupsubtestdata',['SetupSubTestData',['../struct_c_p_u_fixture.html#a79846ea82aa7e917084c860b8112d21b',1,'CPUFixture']]],
+  ['setupaddtestdata',['SetupAddTestData',['../struct_c_p_u_fixture.html#a1da3456a88a7e583051a5e7529b2682f',1,'CPUFixture']]],
+  ['setupandtestdata',['SetupAndTestData',['../struct_c_p_u_fixture.html#a26ace7215d3a8c4284dd7612283c140b',1,'CPUFixture']]],
+  ['setuparithmeticdata',['SetupArithmeticData',['../struct_c_p_u_fixture.html#a37fcf8c40cec4509e0fd2be205b7a18d',1,'CPUFixture']]],
+  ['setupdivtestdata',['SetupDivTestData',['../struct_c_p_u_fixture.html#ae559c251b9752533c248fcdcf30c09f7',1,'CPUFixture']]],
+  ['setuploadstoredata',['SetupLoadStoreData',['../struct_c_p_u_fixture.html#a8539308df1c9963096b9db5574c624ea',1,'CPUFixture']]],
+  ['setupmultestdata',['SetupMulTestData',['../struct_c_p_u_fixture.html#afb65cb20607bcc90834cca583498a1f1',1,'CPUFixture']]],
+  ['setuportestdata',['SetupOrTestData',['../struct_c_p_u_fixture.html#a01acaed750d0707766f88c75128705bc',1,'CPUFixture']]],
+  ['setupshiftdata',['SetupShiftData',['../struct_c_p_u_fixture.html#a9100ce40a88018568447353e8a301ddc',1,'CPUFixture']]],
+  ['setupstackdata',['SetupStackData',['../struct_c_p_u_fixture.html#a17a1dc2dcd106595e885b13a8921029c',1,'CPUFixture']]],
+  ['setupsubtestdata',['SetupSubTestData',['../struct_c_p_u_fixture.html#ad6f71a2c33060b78dec4e19bcc506461',1,'CPUFixture']]],
+  ['setupxortestdata',['SetupXorTestData',['../struct_c_p_u_fixture.html#a212879f6fb8e31f296d4ffe65c980aa7',1,'CPUFixture']]],
   ['spu',['SPU',['../class_s_p_u.html',1,'SPU'],['../class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8',1,'SPU::SPU()']]],
   ['stop',['Stop',['../class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5',1,'SPU']]]
 ];

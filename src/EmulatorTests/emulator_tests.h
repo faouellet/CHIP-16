@@ -5,6 +5,12 @@
 
 #include "emulator.h"
 
+/**
+* \struct EmulatorTestFixture
+* \brief Fixture containing the information needed to run the test ROMs included
+*        in the program pack
+* \author Felix-Antoine Ouellet
+*/
 struct EmulatorTestFixture
 {
 	static const std::string ROM_PATH;

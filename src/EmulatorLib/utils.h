@@ -6,6 +6,7 @@
 * \brief Contains a mix of useful templated tools.
 *        Credits goes to Patrice Roy for teaching me some of those tools
 *        His website : <a href="http://h-deb.clg.qc.ca/">h-deb</a>
+* \author Felix-Antoine Ouellet
 */
 namespace Utils
 {
@@ -15,7 +16,7 @@ namespace Utils
 	*/
 	enum { NoError = 0, EmptyROMError = 1, ROMOverflowError = 2, GPUError = 4, SPUError = 8, FileError = 16 };
 
-	/*
+	/**
 	* \struct IfElse
 	* \brief Defines a type depending on the condition by using partial specialization
 	*/
@@ -34,13 +35,13 @@ namespace Utils
 		typedef Else type;
 	};
 
-	/*
+	/**
 	* \class Error
 	* \brief Dummy class
 	*/
 	class Error;
 
-	/*
+	/**
 	* \struct UInt_
 	* \brief Defines an unsigned type that will at most contain the specified 
 	*        number of bytes
@@ -66,7 +67,7 @@ namespace Utils
 		>::type type;
 	};
 
-	/*
+	/**
 	* \struct UInt_
 	* \brief Defines an signed type that will at most contain the specified 
 	*        number of bytes
@@ -98,7 +99,7 @@ namespace Utils
 
 	typedef Int_<2>::type Int16;	/**< Signed 16 bits integer type */
 
-	/*
+	/**
 	* \struct LeftShift
 	* \brief Functor wrapping the left shift operator
 	*/
@@ -110,7 +111,7 @@ namespace Utils
 		}
 	};
 
-	/*
+	/**
 	* \struct ArithmeticRightShift
 	* \brief Functor wrapping the right shift operator when the value to shift doesn't
 	*        have its sign bit on. Otherwise, it uses a mask to copy the sign bit.
@@ -126,7 +127,7 @@ namespace Utils
 		}
 	};
 
-	/*
+	/**
 	* \struct LogicalRightShift
 	* \brief Functor wrapping the right shift operator
 	*/

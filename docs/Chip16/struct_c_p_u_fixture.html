@@ -93,24 +93,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="title">CPUFixture Struct Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Fixture containing data to test the <a class="el" href="class_c_p_u.html" title="Emulates the Central Processing Unit (CPU) ">CPU</a> specific instructions. That means the arithmetic, bitwise, call, jump, load, pop, push, shift and store instructions.  
+ <a href="struct_c_p_u_fixture.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="cpu__tests_8h_source.html">cpu_tests.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
-<tr class="memitem:ada396ccbb27a3daa737225842782e803"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>NB_REGISTERS</b> = 16, 
+<tr class="memitem:a96312f748a0bd366c0fe79cb05caee89"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>NB_REGISTERS</b> = 16, 
 <b>STACK_START</b> = 0xFDF0
  }</td></tr>
-<tr class="separator:ada396ccbb27a3daa737225842782e803"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a96312f748a0bd366c0fe79cb05caee89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a5aced1761523120ce02bf759c1da7e2d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5aced1761523120ce02bf759c1da7e2d"></a>
-std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>PrepareData</b> (const std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt; &amp;in_Data)</td></tr>
-<tr class="separator:a5aced1761523120ce02bf759c1da7e2d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a742e63d648b09862656203c528f47a46"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a742e63d648b09862656203c528f47a46">PrepareData</a> (const std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt; &amp;in_Data)</td></tr>
+<tr class="memdesc:a742e63d648b09862656203c528f47a46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Concatenate a data vector to the header.  <a href="#a742e63d648b09862656203c528f47a46">More...</a><br/></td></tr>
+<tr class="separator:a742e63d648b09862656203c528f47a46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aa5528becb6857236650d4ea231450a10"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_p_u.html">CPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#aa5528becb6857236650d4ea231450a10">cpu</a></td></tr>
-<tr class="separator:aa5528becb6857236650d4ea231450a10"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d4774039047e51c31ff69f318d24c21"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_p_u.html">CPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a5d4774039047e51c31ff69f318d24c21">Cpu</a></td></tr>
+<tr class="separator:a5d4774039047e51c31ff69f318d24c21"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac3bc7e2ec2b9b32bb638cde9c2a0e22a"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#ac3bc7e2ec2b9b32bb638cde9c2a0e22a">Header</a></td></tr>
 <tr class="separator:ac3bc7e2ec2b9b32bb638cde9c2a0e22a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab697129b4f1a78b2778f8a9d40d0cf64"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab697129b4f1a78b2778f8a9d40d0cf64"></a>
@@ -149,41 +154,55 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:a39658ff3f58ef36cf61b4d2bc9b4454c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a39658ff3f58ef36cf61b4d2bc9b4454c"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>InsertInstruction</b> (std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt; &amp;out_DataVec, <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Op1, <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Op2, <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Op3, <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Op4)</td></tr>
 <tr class="separator:a39658ff3f58ef36cf61b4d2bc9b4454c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2085bd32afeb1c2c90d0fe372f4eab8b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2085bd32afeb1c2c90d0fe372f4eab8b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupArithmeticData</b> ()</td></tr>
-<tr class="separator:a2085bd32afeb1c2c90d0fe372f4eab8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a199cf1309f4a8da6464843d586cefc02"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a199cf1309f4a8da6464843d586cefc02"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupAddTestData</b> ()</td></tr>
-<tr class="separator:a199cf1309f4a8da6464843d586cefc02"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43cce41605967a2ec511040a8d98b8af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43cce41605967a2ec511040a8d98b8af"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupAndTestData</b> ()</td></tr>
-<tr class="separator:a43cce41605967a2ec511040a8d98b8af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeec90dbbdc5df63cd49d49ef25b64cbf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeec90dbbdc5df63cd49d49ef25b64cbf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupDivTestData</b> ()</td></tr>
-<tr class="separator:aeec90dbbdc5df63cd49d49ef25b64cbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaacb5250eb43a4f50a1ee91a416fd9ec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaacb5250eb43a4f50a1ee91a416fd9ec"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupLoadStoreData</b> ()</td></tr>
-<tr class="separator:aaacb5250eb43a4f50a1ee91a416fd9ec"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aafc47756bf7ba13f4aed14c29c24e651"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aafc47756bf7ba13f4aed14c29c24e651"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupMulTestData</b> ()</td></tr>
-<tr class="separator:aafc47756bf7ba13f4aed14c29c24e651"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a168c9919f090dec1bff293ce21556141"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a168c9919f090dec1bff293ce21556141"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupOrTestData</b> ()</td></tr>
-<tr class="separator:a168c9919f090dec1bff293ce21556141"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a79846ea82aa7e917084c860b8112d21b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a79846ea82aa7e917084c860b8112d21b">SetupSubTestData</a> ()</td></tr>
-<tr class="separator:a79846ea82aa7e917084c860b8112d21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a681c81a720bc313f2601908285677902"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a681c81a720bc313f2601908285677902"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupXorTestData</b> ()</td></tr>
-<tr class="separator:a681c81a720bc313f2601908285677902"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abfe491afd4545616b84b05bf02b26a85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abfe491afd4545616b84b05bf02b26a85"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupShiftData</b> ()</td></tr>
-<tr class="separator:abfe491afd4545616b84b05bf02b26a85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac58a435ebfaa91b415f56f607f23fd0a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac58a435ebfaa91b415f56f607f23fd0a"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupStackData</b> ()</td></tr>
-<tr class="separator:ac58a435ebfaa91b415f56f607f23fd0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a37fcf8c40cec4509e0fd2be205b7a18d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37fcf8c40cec4509e0fd2be205b7a18d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a37fcf8c40cec4509e0fd2be205b7a18d">SetupArithmeticData</a> ()</td></tr>
+<tr class="memdesc:a37fcf8c40cec4509e0fd2be205b7a18d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills the arithmetic data vectors with opcodes. <br/></td></tr>
+<tr class="separator:a37fcf8c40cec4509e0fd2be205b7a18d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1da3456a88a7e583051a5e7529b2682f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1da3456a88a7e583051a5e7529b2682f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a1da3456a88a7e583051a5e7529b2682f">SetupAddTestData</a> ()</td></tr>
+<tr class="memdesc:a1da3456a88a7e583051a5e7529b2682f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with addition opcodes. <br/></td></tr>
+<tr class="separator:a1da3456a88a7e583051a5e7529b2682f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a26ace7215d3a8c4284dd7612283c140b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26ace7215d3a8c4284dd7612283c140b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a26ace7215d3a8c4284dd7612283c140b">SetupAndTestData</a> ()</td></tr>
+<tr class="memdesc:a26ace7215d3a8c4284dd7612283c140b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with and opcodes. <br/></td></tr>
+<tr class="separator:a26ace7215d3a8c4284dd7612283c140b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae559c251b9752533c248fcdcf30c09f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae559c251b9752533c248fcdcf30c09f7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#ae559c251b9752533c248fcdcf30c09f7">SetupDivTestData</a> ()</td></tr>
+<tr class="memdesc:ae559c251b9752533c248fcdcf30c09f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with division opcodes. <br/></td></tr>
+<tr class="separator:ae559c251b9752533c248fcdcf30c09f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8539308df1c9963096b9db5574c624ea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8539308df1c9963096b9db5574c624ea"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a8539308df1c9963096b9db5574c624ea">SetupLoadStoreData</a> ()</td></tr>
+<tr class="memdesc:a8539308df1c9963096b9db5574c624ea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with load/store opcodes. <br/></td></tr>
+<tr class="separator:a8539308df1c9963096b9db5574c624ea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb65cb20607bcc90834cca583498a1f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb65cb20607bcc90834cca583498a1f1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#afb65cb20607bcc90834cca583498a1f1">SetupMulTestData</a> ()</td></tr>
+<tr class="memdesc:afb65cb20607bcc90834cca583498a1f1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with multiplication opcodes. <br/></td></tr>
+<tr class="separator:afb65cb20607bcc90834cca583498a1f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01acaed750d0707766f88c75128705bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01acaed750d0707766f88c75128705bc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a01acaed750d0707766f88c75128705bc">SetupOrTestData</a> ()</td></tr>
+<tr class="memdesc:a01acaed750d0707766f88c75128705bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with or opcodes. <br/></td></tr>
+<tr class="separator:a01acaed750d0707766f88c75128705bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad6f71a2c33060b78dec4e19bcc506461"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#ad6f71a2c33060b78dec4e19bcc506461">SetupSubTestData</a> ()</td></tr>
+<tr class="memdesc:ad6f71a2c33060b78dec4e19bcc506461"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with subtraction opcodes.  <a href="#ad6f71a2c33060b78dec4e19bcc506461">More...</a><br/></td></tr>
+<tr class="separator:ad6f71a2c33060b78dec4e19bcc506461"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a212879f6fb8e31f296d4ffe65c980aa7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a212879f6fb8e31f296d4ffe65c980aa7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a212879f6fb8e31f296d4ffe65c980aa7">SetupXorTestData</a> ()</td></tr>
+<tr class="memdesc:a212879f6fb8e31f296d4ffe65c980aa7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with xor opcodes. <br/></td></tr>
+<tr class="separator:a212879f6fb8e31f296d4ffe65c980aa7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9100ce40a88018568447353e8a301ddc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9100ce40a88018568447353e8a301ddc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a9100ce40a88018568447353e8a301ddc">SetupShiftData</a> ()</td></tr>
+<tr class="memdesc:a9100ce40a88018568447353e8a301ddc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with shift opcodes. <br/></td></tr>
+<tr class="separator:a9100ce40a88018568447353e8a301ddc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a17a1dc2dcd106595e885b13a8921029c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a17a1dc2dcd106595e885b13a8921029c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_c_p_u_fixture.html#a17a1dc2dcd106595e885b13a8921029c">SetupStackData</a> ()</td></tr>
+<tr class="memdesc:a17a1dc2dcd106595e885b13a8921029c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fills a vector with pop/push opcodes. <br/></td></tr>
+<tr class="separator:a17a1dc2dcd106595e885b13a8921029c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a79846ea82aa7e917084c860b8112d21b"></a>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Fixture containing data to test the <a class="el" href="class_c_p_u.html" title="Emulates the Central Processing Unit (CPU) ">CPU</a> specific instructions. That means the arithmetic, bitwise, call, jump, load, pop, push, shift and store instructions. </p>
+<dl class="section author"><dt>Author</dt><dd>Felix-Antoine Ouellet </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a742e63d648b09862656203c528f47a46"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -191,7 +210,51 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupStackData</b> ()
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void CPUFixture::SetupSubTestData </td>
+          <td class="memname">CPUFixture::PrepareData </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>in_Data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Concatenate a data vector to the header. </p>
+<p>Insert a 32 bits instruction into a data vector.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_Data</td><td>Vector containing the data relevant to a specific instruction testing procedure </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>A data vector</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out_DataVec</td><td>Data vector to be inserted into </td></tr>
+    <tr><td class="paramname">in_Op1</td><td>Bit[0] to bit[3] of the instruction </td></tr>
+    <tr><td class="paramname">in_Op2</td><td>Bit[4] to bit[7] of the instruction </td></tr>
+    <tr><td class="paramname">in_Op3</td><td>Bit[8] to bit[11] of the instruction </td></tr>
+    <tr><td class="paramname">in_Op4</td><td>Bit[12] to bit[15] of the instruction </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ad6f71a2c33060b78dec4e19bcc506461"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPUFixture::SetupSubTestData </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -203,21 +266,23 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupStackData</b> ()
   </tr>
 </table>
 </div><div class="memdoc">
+
+<p>Fills a vector with subtraction opcodes. </p>
 <p>CMPI ?? </p>
 
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a class="anchor" id="aa5528becb6857236650d4ea231450a10"></a>
+<a class="anchor" id="a5d4774039047e51c31ff69f318d24c21"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_c_p_u.html">CPU</a> CPUFixture::cpu</td>
+          <td class="memname"><a class="el" href="class_c_p_u.html">CPU</a> CPUFixture::Cpu</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p><a class="el" href="class_c_p_u.html">CPU</a> implementation </p>
+<p><a class="el" href="class_c_p_u.html" title="Emulates the Central Processing Unit (CPU) ">CPU</a> implementation </p>
 
 </div>
 </div>
@@ -240,7 +305,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>SetupStackData</b> ()
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Oct 3 2013 16:18:49 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 4 2013 12:11:25 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

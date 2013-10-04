@@ -2,7 +2,25 @@
 
 #include "SDL.h"
 
-GPU::GPU() { }
+GPU::GPU() 
+{
+	m_ColorIndexes.push_back(0x000000);		// Black (Transparent in foreground layer)
+	m_ColorIndexes.push_back(0x000000);		// Black
+	m_ColorIndexes.push_back(0x888888);		// Gray
+	m_ColorIndexes.push_back(0xBF3932);		// Red
+	m_ColorIndexes.push_back(0xDE7AAE);		// Pink
+	m_ColorIndexes.push_back(0x4C3D21);		// Dark Brown
+	m_ColorIndexes.push_back(0x905F25);		// Brown
+	m_ColorIndexes.push_back(0xE49452);		// Orange
+	m_ColorIndexes.push_back(0xEAD979);		// Yellow
+	m_ColorIndexes.push_back(0x537A3B);		// Green
+	m_ColorIndexes.push_back(0xABD54A);		// Light Green
+	m_ColorIndexes.push_back(0x252E38);		// Dark Blue
+	m_ColorIndexes.push_back(0x00467F);		// Blue
+	m_ColorIndexes.push_back(0x68ABCC);		// Light Blue
+	m_ColorIndexes.push_back(0xBCDEE4);		// Sky Blue
+	m_ColorIndexes.push_back(0xFFFFFF);		// White
+}
 
 GPU::~GPU() 
 {

@@ -18,22 +18,22 @@ CPU::CPU()
 
 CPU::~CPU() { }
 
-std::vector<UInt8> CPU::DumpMemory()
+std::vector<UInt8> CPU::DumpMemory() const
 {
 	return std::vector<UInt8>(std::begin(m_Memory), std::end(m_Memory));
 }
 
-UInt16 CPU::DumpProgramCounter()
+UInt16 CPU::DumpProgramCounter() const
 {
 	return m_PC;
 }
 
-std::vector<UInt16> CPU::DumpRegisters()
+std::vector<UInt16> CPU::DumpRegisters() const
 {
 	return std::vector<UInt16>(std::begin(m_Registers), std::end(m_Registers));
 }
 
-UInt16 CPU::DumpStackPointer()
+UInt16 CPU::DumpStackPointer() const
 {
 	return m_SP;
 }

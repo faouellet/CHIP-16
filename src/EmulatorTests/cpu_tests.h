@@ -5,15 +5,16 @@
 
 using Utils::UInt8;
 
-/*
+/**
 * \struct CPUFixture
 * \brief Fixture containing data to test the CPU specific instructions.
 *        That means the arithmetic, bitwise, call, jump, load, pop, push,
 *        shift and store instructions.
+* \author Felix-Antoine Ouellet
 */
 struct CPUFixture
 {
-	CPU cpu;	/*!< CPU implementation */
+	CPU Cpu;	/*!< CPU implementation */
 
 	std::vector<Utils::UInt8> Header;	/*!< The header of a .c16 file. See specs for details */
 
@@ -37,7 +38,7 @@ struct CPUFixture
 	// Data for the pop/push tests
 	std::vector<UInt8> StackTestData;
 	
-	/*
+	/**
 	* \fn Constructor
 	* \brief Setup the data for the cpu instructions tests
 	*/
@@ -49,7 +50,7 @@ struct CPUFixture
 		SetupStackData();
 	}
 
-	/*
+	/**
 	* \fn PrepareData
 	* \brief Concatenate a data vector to the header
 	* \param in_Data Vector containing the data relevant to a specific instruction
@@ -64,7 +65,7 @@ struct CPUFixture
 	}
 
 private:
-	/*
+	/**
 	* \fn PrepareData
 	* \brief Insert a 32 bits instruction into a data vector
 	* \param out_DataVec Data vector to be inserted into
@@ -81,7 +82,7 @@ private:
 		out_DataVec.push_back(in_Op4);
 	}
 
-	/*
+	/**
 	* \fn SetupArithmeticData
 	* \brief Fills the arithmetic data vectors with opcodes
 	*/
@@ -96,7 +97,7 @@ private:
 		SetupXorTestData();
 	}
 
-	/*
+	/**
 	* \fn SetupAddTestData
 	* \brief Fills a vector with addition opcodes
 	*/
@@ -109,7 +110,7 @@ private:
 		InsertInstruction(AddTestData, 0x42, 0x01, 0x03, 0x00);	// ADD : R3 = R0 + R1
 	}
 
-	/*
+	/**
 	* \fn SetupAndTestData
 	* \brief Fills a vector with and opcodes
 	*/
@@ -123,7 +124,7 @@ private:
 		// TST ??
 	}
 
-	/*
+	/**
 	* \fn SetupDivTestData
 	* \brief Fills a vector with division opcodes
 	*/
@@ -139,7 +140,7 @@ private:
 		InsertInstruction(DivTestData, 0XA2, 0x02, 0x04, 0x00);	// DIV : R4 = R0 / R2
 	}
 
-	/*
+	/**
 	* \fn SetupLoadStoreData
 	* \brief Fills a vector with load/store opcodes
 	*/
@@ -154,7 +155,7 @@ private:
 		InsertInstruction(MemoryTestData, 0x24, 0x02, 0x00, 0x00);	// MOV : R2 = R0
 	}
 
-	/*
+	/**
 	* \fn SetupMulTestData
 	* \brief Fills a vector with multiplication opcodes
 	*/
@@ -169,7 +170,7 @@ private:
 		InsertInstruction(MulTestData, 0x92, 0x22, 0x03, 0x00);	// MUL : R3 = R2 * R2
 	}
 
-	/*
+	/**
 	* \fn SetupOrTestData
 	* \brief Fills a vector with or opcodes
 	*/
@@ -180,7 +181,7 @@ private:
 		InsertInstruction(OrTestData, 0x72, 0x03, 0x02, 0x00);	// OR : R2 = R0 | R3
 	}
 
-	/*
+	/**
 	* \fn SetupSubTestData
 	* \brief Fills a vector with subtraction opcodes
 	*/
@@ -199,7 +200,7 @@ private:
 		// CMP ??
 	}
 	
-	/*
+	/**
 	* \fn SetupXorTestData
 	* \brief Fills a vector with xor opcodes
 	*/
@@ -210,7 +211,7 @@ private:
 		InsertInstruction(XorTestData, 0x82, 0x01, 0x02, 0x00);	// XOR : R2 = R0 ^ R3
 	}
 
-	/*
+	/**
 	* \fn SetupShiftData
 	* \brief Fills a vector with shift opcodes
 	*/
@@ -230,7 +231,7 @@ private:
 		InsertInstruction(ShiftTestData, 0xB5, 0x17, 0x00, 0x00);	// SAR : R7 >> R1 (Arithmetic)
 	}
 
-	/*
+	/**
 	* \fn SetupStackData
 	* \brief Fills a vector with pop/push opcodes
 	*/

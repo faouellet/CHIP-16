@@ -9,11 +9,10 @@ using Utils::UInt8;
 using Utils::UInt16;
 using Utils::UInt32;
 
-/*
+/**
 * \class Emulator
 * \brief Emulate the Chip16 architecture
-* \author Félix-Antoine Ouellet
-* \version 0.1
+* \author Felix-Antoine Ouellet
 */
 class Emulator
 {

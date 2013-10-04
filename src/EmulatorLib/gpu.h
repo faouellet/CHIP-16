@@ -1,23 +1,26 @@
 #ifndef GPU_H
 #define GPU_H
 
+#include <vector>
+
 #include "utils.h"
 
 using Utils::UInt8;
 using Utils::Int16;
 using Utils::UInt16;
+using Utils::UInt32;
 
-/*
+/**
 * \class GPU
 * \brief Emulates the Graphics Processing Unit (GPU)
-* \author Félix-Antoine Ouellet
-* \version 0.1
+* \author Felix-Antoine Ouellet
 */
 class GPU
 {
 private:
 	// TODO : ...
 	// Most certainly a screen buffer
+	std::vector<UInt32> m_ColorIndexes;
 
 public:
 	/**
@@ -64,7 +67,7 @@ public:
 	*/
 	void Flip(UInt8 in_H, UInt8 in_V);
 
-	/*
+	/**
 	* \fn LoadPalette
 	* \brief Load a palette
 	* \param in_Palette 16*3 bytes representing the palette data

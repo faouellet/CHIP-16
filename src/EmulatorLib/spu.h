@@ -5,17 +5,31 @@
 
 using Utils::UInt8;
 
-/*
+/**
 * \class SPU
 * \brief Emulates the Sound Processing Unit (SPU)
-* \author Félix-Antoine Ouellet
-* \version 0.1
+* \author Felix-Antoine Ouellet
 */
 class SPU
 {
 private:
+	/**
+	* \enum
+	* \brief Type of sound wave
+	*/
+	enum { Triangle = 0, Sawtooth, Pulse, Noise };
+
+private:
 	// TODO : ...
 	// Most certainly a current generator
+
+	// Maybe these ... ?
+	/*UInt8 m_Attack;
+	UInt8 m_Decay;
+	UInt8 m_Sustain;
+	UInt8 m_Release;
+	UInt8 m_Volume;
+	UInt8 m_Type;*/
 
 public:
 	/**
@@ -29,6 +43,8 @@ public:
 	* \brief Destructor
 	*/
 	~SPU();
+
+	// TODO : Need a callback to fill the buffer in the SDL audio thread
 
 public:
 	/**

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['cpu',['cpu',['../struct_c_p_u_fixture.html#aa5528becb6857236650d4ea231450a10',1,'CPUFixture']]]
+  ['cpu',['Cpu',['../struct_c_p_u_fixture.html#a5d4774039047e51c31ff69f318d24c21',1,'CPUFixture']]]
 ];

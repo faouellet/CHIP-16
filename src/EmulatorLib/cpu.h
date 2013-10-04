@@ -9,11 +9,10 @@
 
 using namespace Utils;
 
-/*
+/**
 * \class CPU
-* \brief Emulates the Central Processing Unit (SPU)
-* \author Félix-Antoine Ouellet
-* \version 0.1
+* \brief Emulates the Central Processing Unit (CPU)
+* \author Felix-Antoine Ouellet
 */
 class CPU
 {
@@ -58,33 +57,33 @@ public:
 	~CPU();
 
 public:
-	/*
+	/**
 	* \fn DumpMemory
 	* \brief Dump the CPU memory
 	* \return The data contained in the CPU memory
 	*/
-	std::vector<UInt8> DumpMemory();
+	std::vector<UInt8> DumpMemory() const;
 
-	/*
-	* \fn DumpFlagRegister
+	/**
+	* \fn DumpProgramCounter
 	* \brief Dump the program counter
 	* \return The memory address pointed by the PC
 	*/
-	UInt16 DumpProgramCounter();
+	UInt16 DumpProgramCounter() const;
 
-	/*
+	/**
 	* \fn DumpRegisters
 	* \brief Dump the CPU registers
 	* \return The data contained in the CPU registers
 	*/
-	std::vector<UInt16> DumpRegisters();
+	std::vector<UInt16> DumpRegisters() const;
 
-	/*
+	/**
 	* \fn DumpStackPointer
 	* \brief Dump the stack pointer
 	* \return The memory address pointed by the SP
 	*/
-	UInt16 DumpStackPointer();
+	UInt16 DumpStackPointer() const;
 
 	/**
 	* \fn Init
@@ -101,7 +100,7 @@ public:
 	void InterpretOp();
 
 private:
-	/*
+	/**
 	* \fn FetchImmediateValue
 	* \brief Concatenate the value pointed by the PC with the one the PC is going
 	*        to point next. Note that this function will increment the PC by 2.
@@ -109,7 +108,7 @@ private:
 	*/
 	UInt16 FetchImmediateValue();
 
-	/*
+	/**
 	* \fn FetchRegisterAddress
 	* \brief Extract the address given at where the PC is pointed.
 	*        This function increment the PC by 1.
@@ -117,21 +116,21 @@ private:
 	*/
 	UInt16 FetchRegisterAddress();
 
-	/*
-	* \fn FetchImmediateValue
+	/**
+	* \fn FetchRegistersValues
 	* \brief Extract the values contained within the registers whose addresses
 	*        are in the byte pointed by the PC
 	*/
 	void FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y);
 
-	/*
+	/**
 	* \fn Pop
 	* \brief Pop a value from the stack of the emulator and decrement the SP by 2
 	* \return The value that was at the top of the stack
 	*/
 	UInt16 Pop();
 
-	/*
+	/**
 	* \fn Push
 	* \brief Push a value on the stack of the emulator and increment the SP by 2
 	* \param in_Val The value to be pushed

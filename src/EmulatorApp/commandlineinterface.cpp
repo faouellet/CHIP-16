@@ -1,86 +1,96 @@
 #include "commandlineinterface.h"
 
 #include <iostream>
+#include <sstream>
 
 CommandLineInterface::CommandLineInterface()
 {
-	m_DemoChoices[1] = "AdsrDemo";
-	m_DemoChoices[2] = "Anim";
-	m_DemoChoices[3] = "ASCII";
-	m_DemoChoices[4] = "Ball";
-	m_DemoChoices[5] = "GB16";
-	m_DemoChoices[6] = "Intro";
-	m_DemoChoices[7] = "Mandel";
-	m_DemoChoices[8] = "Maze";
-	m_DemoChoices[9] = "SongOfStorms";
-	m_DemoChoices[10] = "Starfield";
-	m_DemoChoices[11] = "Static";
-	m_DemoChoices[12] = "Stopwatch";
-	m_DemoChoices[13] = "Triangle";
+	m_DemoChoices.push_back("AdsrDemo");
+	m_DemoChoices.push_back("Anim");
+	m_DemoChoices.push_back("ASCII");
+	m_DemoChoices.push_back("Ball");
+	m_DemoChoices.push_back("GB16");
+	m_DemoChoices.push_back("Intro");
+	m_DemoChoices.push_back("Mandel");
+	m_DemoChoices.push_back("Maze");
+	m_DemoChoices.push_back("SongOfStorms");
+	m_DemoChoices.push_back("Starfield");
+	m_DemoChoices.push_back("Static");
+	m_DemoChoices.push_back("Stopwatch");
+	m_DemoChoices.push_back("Triangle");
 
-	m_GameChoices[1] = "Herdle";
-	m_GameChoices[2] = "MusicMaker";
-	m_GameChoices[3] = "Ninja";
-	m_GameChoices[4] = "Pong";
-	m_GameChoices[5] = "Reflection";
-	m_GameChoices[6] = "Snafu";
+	m_GameChoices.push_back("Herdle");
+	m_GameChoices.push_back("MusicMaker");
+	m_GameChoices.push_back("Ninja");
+	m_GameChoices.push_back("Pong");
+	m_GameChoices.push_back("Reflection");
+	m_GameChoices.push_back("Snafu");
 
-	m_TestChoices[1] = "AdsrTest";
-	m_TestChoices[2] = "BC_TestRom";
-	m_TestChoices[3] = "CollisionTest";
-	m_TestChoices[4] = "flip_test";
-	m_TestChoices[5] = "PadTest";
-	m_TestChoices[6] = "PaleteTest";
-	m_TestChoices[7] = "PaletteFlip";
-	m_TestChoices[8] = "SoundTest";
+	m_TestChoices.push_back("AdsrTest");
+	m_TestChoices.push_back("BC_TestRom");
+	m_TestChoices.push_back("CollisionTest");
+	m_TestChoices.push_back("flip_test");
+	m_TestChoices.push_back("PadTest");
+	m_TestChoices.push_back("PaleteTest");
+	m_TestChoices.push_back("PaletteFlip");
+	m_TestChoices.push_back("SoundTest");
 }
 
 CommandLineInterface::~CommandLineInterface() { }
 
 std::string CommandLineInterface::ChooseROM()
 {
+	// TODO : Could probably still be refactored
 	std::cout << "Choose between 1- Demos 2- Games 3- Tests" << std::endl;
 	unsigned l_Choice = 0;
 	std::cin >> l_Choice;
 
-	std::string l_ROM = "";
+	std::string l_ROM;
 
 	switch (l_Choice)
 	{
 		case 1:
 		{
 			std::cout << "Choose a demo to run" << std::endl;
-			for(auto& l_DemoChoice : m_DemoChoices)
-				std::cout << l_DemoChoice.first << "- " << l_DemoChoice.second << std::endl;
-
-			std::cin >> l_Choice;
-			l_ROM = "Demos/" + m_DemoChoices[l_Choice];
+			l_Choice = Choose(m_DemoChoices);
+			if(0 <= l_Choice && l_Choice < m_DemoChoices.size())
+				l_ROM = FormatChoice("Demos", m_DemoChoices[l_Choice]);
 			break;
 		}
 		case 2:
 		{
 			std::cout << "Choose a game to run" << std::endl;
-			for(auto& l_GameChoice : m_GameChoices)
-				std::cout << l_GameChoice.first << "- " << l_GameChoice.second << std::endl;
-
-			std::cin >> l_Choice;
-			l_ROM = "Games/" + m_GameChoices[l_Choice];
+			l_Choice = Choose(m_GameChoices);
+			if(0 <= l_Choice && l_Choice < m_GameChoices.size())
+				l_ROM = FormatChoice("Games", m_GameChoices[l_Choice]);
 			break;
 		}
 		case 3:
 		{
 			std::cout << "Choose a test to run" << std::endl;
-			for(auto& l_TestChoice : m_TestChoices)
-				std::cout << l_TestChoice.first << "- " << l_TestChoice.second << std::endl;
-
-			std::cin >> l_Choice;
-			l_ROM = "Tests/" + m_TestChoices[l_Choice];
+			l_Choice = Choose(m_TestChoices);
+			if(0 <= l_Choice && l_Choice < m_TestChoices.size())
+				l_ROM = FormatChoice("Tests", m_TestChoices[l_Choice]);
 			break;
-		}
-		default:
-		{
-			std::cout << "Unknown option" << std::endl;
 		}
 	}
 	return l_ROM;
+}
+
+int CommandLineInterface::Choose(const std::vector<std::string> in_Choices) const
+{
+	for(unsigned i = 0; i < in_Choices.size(); ++i)
+		std::cout << i << "- " << in_Choices[i] << std::endl;
+
+	int l_Choice;
+	std::cin >> l_Choice;
+	return l_Choice;
+}
+
+std::string CommandLineInterface::FormatChoice(const std::string & in_Folder, 
+											   const std::string & in_Choice) const
+{
+	std::stringstream l_SStream;
+	l_SStream << in_Folder << "/" << in_Choice << "/" << in_Choice << ".c16";
+	return l_SStream.str();
 }
