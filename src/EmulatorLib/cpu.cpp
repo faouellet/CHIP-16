@@ -1,5 +1,6 @@
 #include "cpu.h"
 
+#include <iostream>
 #include <iterator>
 #include <limits>
 
@@ -61,7 +62,7 @@ unsigned CPU::Init(std::vector<UInt8> && in_ROMData)
 	return l_Ret;
 }
 
-void CPU::InterpretOp()
+unsigned CPU::InterpretOp()
 {
 	// The magic starts here
 	switch (m_Memory[m_PC] >> 4)
@@ -138,11 +139,14 @@ void CPU::InterpretOp()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[m_PC]);
+			m_ErrorCode |= UnknownError;
 			break;
 		}
 	}
+	if(m_PC > m_ROMHeader[6])	// TODO : make sure with the test ROMs
+		m_ErrorCode |= EmulationDone;
+	return m_ErrorCode;
 }
 
 void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH)
@@ -197,8 +201,8 @@ void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std:
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= ArithmeticError;
 			break;
 		}
 	}
@@ -278,8 +282,8 @@ void CPU::InterpretCallJumps()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= CallJumpError;
 			break;
 		}
 	}
@@ -371,8 +375,8 @@ void CPU::InterpretLoads()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= MemoryError;
 			break;
 		}
 	}
@@ -484,8 +488,8 @@ void CPU::InterpretMisc()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= DeviceError;
 			break;
 		}
 	}
@@ -511,8 +515,8 @@ void CPU::InterpretPalettes()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= PaletteError;
 			break;
 		}
 	}
@@ -573,8 +577,8 @@ void CPU::InterpretPushPops()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= StackError;
 			break;
 		}
 	}
@@ -628,8 +632,8 @@ void CPU::InterpretShifts()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= ArithmeticError;
 			break;
 		}
 	}
@@ -658,8 +662,8 @@ void CPU::InterpretStores()
 		}
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
+			OutputUnknownOpCode(m_Memory[--m_PC]);
+			m_ErrorCode |= MemoryError;
 			break;
 		}
 	}
@@ -680,6 +684,11 @@ void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y)
 {
 	out_X = m_Registers[m_Memory[m_PC] & 0xF];
 	out_Y = m_Registers[(m_Memory[m_PC] & 0xF0) >> 4];
+}
+
+void CPU::OutputUnknownOpCode(UInt8 in_Code)
+{
+	std::cout << "Unknown opcode: " << std::hex << in_Code << std::endl;
 }
 
 UInt16 CPU::Pop()

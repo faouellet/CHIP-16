@@ -35,6 +35,8 @@ private:
 	UInt8 m_FR;				/*!< Flag register */
 	UInt16 m_PC;			/*!< Program counter */
 	UInt16 m_SP;			/*!< Stack pointer */
+
+	UInt16 m_ErrorCode;		/*!< Code used when an error happens during emulation */
 	
 	UInt16 m_Registers[16];	/*!< General purpose registers */
 
@@ -101,7 +103,7 @@ public:
 	* \fn InterpretOp
 	* \brief Read an opcode from the ROM and execute it
 	*/
-	void InterpretOp();
+	unsigned InterpretOp();
 
 private:
 	/**
@@ -126,6 +128,13 @@ private:
 	*        are in the byte pointed by the PC
 	*/
 	void FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y);
+
+	/**
+	* \fn OutputUnknownOpCode
+	* \brief Output an unknown/problematic opcode to the console
+	* \param in_Code The instruction opcode
+	*/
+	void OutputUnknownOpCode(UInt8 in_Code);
 
 	/**
 	* \fn Pop

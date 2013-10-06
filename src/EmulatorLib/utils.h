@@ -17,6 +17,13 @@ namespace Utils
 	enum { NoError = 0, EmptyROMError = 1, ROMOverflowError = 2, GPUError = 4, SPUError = 8, FileError = 16 };
 
 	/**
+	* \enum
+	* \brief Masks for the possible errors that can happen during the emulation
+	*/
+	enum { ArithmeticError = 1, CallJumpError = 2, MemoryError = 4, DeviceError = 8,
+			PaletteError = 16, StackError = 32, UnknownError = 64, EmulationDone = 128 };
+
+	/**
 	* \struct IfElse
 	* \brief Defines a type depending on the condition by using partial specialization
 	*/

@@ -125,7 +125,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ad1442d889ce7ab4a1e871ecd8cf2c52d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the central processing unit.  <a href="#ad1442d889ce7ab4a1e871ecd8cf2c52d">More...</a><br/></td></tr>
 <tr class="separator:ad1442d889ce7ab4a1e871ecd8cf2c52d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6c9bd7de90e4fad06b6d4ac0942d73e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6c9bd7de90e4fad06b6d4ac0942d73e4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a6c9bd7de90e4fad06b6d4ac0942d73e4">InterpretOp</a> ()</td></tr>
+unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a6c9bd7de90e4fad06b6d4ac0942d73e4">InterpretOp</a> ()</td></tr>
 <tr class="memdesc:a6c9bd7de90e4fad06b6d4ac0942d73e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an opcode from the ROM and execute it. <br/></td></tr>
 <tr class="separator:a6c9bd7de90e4fad06b6d4ac0942d73e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -164,6 +164,9 @@ Private Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ad83be8b6e25cb375210c165d9d92b21b">FetchRegistersValues</a> (<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;out_X, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;out_Y)</td></tr>
 <tr class="memdesc:ad83be8b6e25cb375210c165d9d92b21b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extract the values contained within the registers whose addresses are in the byte pointed by the PC. <br/></td></tr>
 <tr class="separator:ad83be8b6e25cb375210c165d9d92b21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7553fb89fc5cbba2bb30edba3941a9c6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a7553fb89fc5cbba2bb30edba3941a9c6">OutputUnknownOpCode</a> (<a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Code)</td></tr>
+<tr class="memdesc:a7553fb89fc5cbba2bb30edba3941a9c6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Output an unknown/problematic opcode to the console.  <a href="#a7553fb89fc5cbba2bb30edba3941a9c6">More...</a><br/></td></tr>
+<tr class="separator:a7553fb89fc5cbba2bb30edba3941a9c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af1202bccda6ff040002e136b538fed67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#af1202bccda6ff040002e136b538fed67">Pop</a> ()</td></tr>
 <tr class="memdesc:af1202bccda6ff040002e136b538fed67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop a value from the stack of the emulator and decrement the SP by 2.  <a href="#af1202bccda6ff040002e136b538fed67">More...</a><br/></td></tr>
 <tr class="separator:af1202bccda6ff040002e136b538fed67"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -232,6 +235,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:ae23d7da0e1b35635ee7e1dec59cc996a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8126bebe5b900b45185ac7601a773844"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a8126bebe5b900b45185ac7601a773844">m_SP</a></td></tr>
 <tr class="separator:a8126bebe5b900b45185ac7601a773844"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aebd5639c9022bcdebd160e46a37a50e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">m_ErrorCode</a></td></tr>
+<tr class="separator:aebd5639c9022bcdebd160e46a37a50e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6e41c1cbae173c2eb7180b374d48c8d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4">m_Registers</a> [16]</td></tr>
 <tr class="separator:a6e41c1cbae173c2eb7180b374d48c8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4159826f5375a1f7b7fbe7346ffff942"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a4159826f5375a1f7b7fbe7346ffff942">m_ROMHeader</a> [HEADER_SIZE]</td></tr>
@@ -242,6 +247,11 @@ Private Attributes</h2></td></tr>
 <tr class="separator:adb5a8ded5899b5a23682870e79261705"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb391801aa832ac521cd491fba2c11a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_p_u.html">SPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">m_SPU</a></td></tr>
 <tr class="separator:aeb391801aa832ac521cd491fba2c11a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aee26e52ec9b888f8f07f71ebdb7bef2e"><td class="memItemLeft" align="right" valign="top">std::default_random_engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">m_RandEngine</a></td></tr>
+<tr class="separator:aee26e52ec9b888f8f07f71ebdb7bef2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a457bfec1c90381f673297e96bf2f5fb4"><td class="memItemLeft" align="right" valign="top">std::uniform_int_distribution<br class="typebreak"/>
+&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">m_Dist</a></td></tr>
+<tr class="separator:a457bfec1c90381f673297e96bf2f5fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Emulates the Central Processing Unit (<a class="el" href="class_c_p_u.html" title="Emulates the Central Processing Unit (CPU) ">CPU</a>) </p>
@@ -472,6 +482,38 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a7553fb89fc5cbba2bb30edba3941a9c6"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPU::OutputUnknownOpCode </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td>
+          <td class="paramname"><em>in_Code</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Output an unknown/problematic opcode to the console. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_Code</td><td>The instruction opcode </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="af1202bccda6ff040002e136b538fed67"></a>
 <div class="memitem">
 <div class="memproto">
@@ -531,6 +573,48 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a457bfec1c90381f673297e96bf2f5fb4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::uniform_int_distribution&lt;<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&gt; CPU::m_Dist</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Uniform distribution </p>
+
+</div>
+</div>
+<a class="anchor" id="aebd5639c9022bcdebd160e46a37a50e5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> CPU::m_ErrorCode</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Code used when an error happens during emulation </p>
+
+</div>
+</div>
 <a class="anchor" id="a044ef6a2c2623cc0a2fcb29322dc41f7"></a>
 <div class="memitem">
 <div class="memproto">
@@ -612,6 +696,27 @@ Private Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <p>Program counter </p>
+
+</div>
+</div>
+<a class="anchor" id="aee26e52ec9b888f8f07f71ebdb7bef2e"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::default_random_engine CPU::m_RandEngine</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Random number engine </p>
 
 </div>
 </div>
@@ -700,13 +805,13 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>C:/Users/ouef2901/Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="cpu_8h_source.html">cpu.h</a></li>
-<li>C:/Users/ouef2901/Desktop/CHIP-16/src/EmulatorLib/cpu.cpp</li>
+<li>Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="cpu_8h_source.html">cpu.h</a></li>
+<li>Desktop/CHIP-16/src/EmulatorLib/cpu.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 4 2013 12:11:25 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Oct 6 2013 10:48:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

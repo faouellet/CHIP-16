@@ -8,8 +8,8 @@ Emulator::~Emulator() { }
 
 void Emulator::Emulate()
 {
-	for(;;)
-		m_CPU.InterpretOp();
+	while(m_CPU.InterpretOp() == NoError)
+		;
 }
 
 unsigned Emulator::Init(const std::string & in_ROMName)
