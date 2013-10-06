@@ -1,0 +1,79 @@
+0 - ABSTRACT
+** But du papier est de présenter un simulateur pouvant servir de référence à l'avenir
+** Simulateur performant et pouvant être reciblé
+** Se base sur la technologie de la traduction de binaires juste à temps
+
+I - INTRODUCTION
+** Note : simulateur =/= émulateur
+	-> Simulateur : Logiciel s'attardant principalement à la modélisant du comportement interne de sa cible
+	-> Émulateur : Logiciel modélisant le comportement externe de sa cible pour éventuellement être capable de s'y substituer
+	=> Conclusion : Un excellent simulateur va aussi émuler sa cible
+** Offre une première limitation de la simulation par recompilation statique : le code du programme doit être entièrement connu à l'avance
+	
+II - SIMULATOR OVERVIEW
+** Cible initiale : ARC 700
+** Implémente le processeur, son sous-système mémoire et des périphériques opérant par interruptions
+** Assez complet pour simuler le lancement et l'interaction avec un système basé sur Linux
+** Fourni deux modes d'opérations : 
+	-> Interpréteur : Garanti des observations précises après chaque instructions
+	-> JIT : Garanti des observations précises après chaque blocs de base
+** Permet de compiler des statistiques sur la simulation
+** En moyenne, il faut 100 instructions hôte pour exécuter 1 instruction cible en mode interpréteur
+** JIT commence par interpréter et puis traduit graduellement les blocs de bases en ordre décroissant d'utilisation
+** Pour simplifier les choses, les accès mémoire, les E/S et les exceptions de la cible sont celles de l'hôte
+
+III - SIMULATING MEMORY ACCESSES
+** Utilise la mémoization pour soucis de performance
+** Exigences fonctionnelles pour simuler l'accès mémoire:
+	-> Mapping entre une adresse virtuelle cible et une adresse virtuelle hôte ar le biais de l'espace d'adressage physique de la cible 
+	-> Détection de toutes formes d'exceptions lors d'accès à la mémoire
+	-> Rend visible le résultat d'un load ou d'un store après exécution
+	-> Minimise le nombre d'instructions hôte pour implémenter load et store
+** Besoin de 3 Page Translation Cache structures pour accès Read, Write et Fetch
+** Une mémoization d'une page de la cible a lieu ssi:
+	-> L'adresse virtuelle cible associée est mappé par une des entrées TLB de la cible
+	-> Le processus actuel a les droits requis pour accéder à la page
+	-> La page doit avoir la permission correspondant à l'accès demandé
+	-> La page physique est implémentée de façon normale
+(Je me demande à quel point je devrais m'attarder à cet aspect dans mon émulateur)
+	
+IV - INTERPRETIVE MODE
+** Implémenté à l'aide d'un switch dont les cases sont en ordre décroissant de fréquence
+	(Pour un simulateur qui se veut portable, ça me semble awfully target-specific)
+** Implémenté aussi grâce à une cache de décodage
+	(L'idée est intéressante, à considérer...)
+
+V - BLOCK PROFILING
+** Pourquoi ne pas faire de traduction statique?
+	-> Impossible de découvrir quelles régions sont garanties de contenir uniquement du code ou uniquement des données
+	-> Produirait des traductions de blocs de base qui ne sont pas nécessaires à une performance de haut niveau
+	(OK, ça enflerait des binaires outre mesure)
+	-> L'utilisateur se ferait chier à attendre la recompilation
+** L'abstaction d'un bloc de base contiendra aussi de l'information sur sa fréquence et sa représentation native
+(À ce point-ci, je me demande si ce simulateur serait capable de dealer avec du self-modifying code qui est si courant dans les
+jeux de l'ère 16 bits et 32 bits)
+
+VI - JIT TRANSLATION
+** Algo du JIT:
+	- Est-ce que l'instruction pointée par le PC est présente dans la cache de blocs traduits?
+		-- Oui -> Exécution du bloc traduit
+		-- Non -> Est-ce la première fois qu'on voit ce bloc de base?
+			-- Non -> Va chercher son TBF et maj le BTC avec
+			-- Oui -> Crée un TBF pour le bloc de base
+	- Traduction des blocs chauds qui n'ont pas encore d'équivalents natifs en se basant sur une heuristique
+	(Le terme époque dans cette sous-section est un peu mal défini, à savoir, quel est le réel intervalle entre deux passes de traduction?)
+	(Ils ne précisent pas le(s) outil(s) utilisé(s) pour effectuer la traduction)
+
+VII - PERFORMANCE MEASUREMENTS
+** À revoir
+
+VIII - EXTENDING THE SIMULATOR DYNAMICALLY
+** Dit que c'est possible sans offrir grand détails
+
+IX - RELATED WORKS
+** Idées importantes apportées par la revue de littérature:
+	-> Recompilation statique n'est pas assez flexible
+	-> L'interprétation est trop lente
+
+X - CONCLUSION
+** Short, sweet et sans intérêt
