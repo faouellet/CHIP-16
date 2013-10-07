@@ -2,3 +2,5 @@
 - REFACTOR
 - License ??
 - Update README
+- Allow user to choose screen resolution
+- Make a pass to check the const-correctness especially at the function level

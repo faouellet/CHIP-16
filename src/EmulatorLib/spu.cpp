@@ -6,7 +6,12 @@ SPU::SPU() { }
 
 SPU::~SPU() { }
 
-bool SPU::Init() { /* Call SDL_Mixer */ return true; }
+bool SPU::Init() 
+{
+	return SDL_Init(SDL_INIT_AUDIO) < 0;
+}
+
+void SPU::Reset() { }
 
 void SPU::GenerateSound(UInt8 in_Attack, UInt8 in_Decay, UInt8 in_Sustain, 
 		UInt8 in_Release, UInt8 in_Volume, UInt8 in_Type) { /*TODO*/ }

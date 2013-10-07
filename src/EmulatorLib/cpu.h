@@ -107,7 +107,7 @@ public:
 
 	/**
 	* \fn Reset
-	* \brief Restore the emulator at its pre-initialized state
+	* \brief Restore the central processing unit at its pre-initialized state
 	*/
 	void Reset();
 
@@ -133,14 +133,22 @@ private:
 	* \brief Extract the values contained within the registers whose addresses
 	*        are in the byte pointed by the PC
 	*/
-	void FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y);
+	void FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y) const;
+
+	/**
+	* \fn FetchSprite
+	* \brief Read a number of bytes from memory which corresponds to a sprite data
+	* \param in_Addr Address in memory where the sprite is stored
+	* \return The sprite data
+	*/
+	std::vector<UInt8> FetchSprite(UInt16 in_Addr) const;
 
 	/**
 	* \fn OutputUnknownOpCode
 	* \brief Output an unknown/problematic opcode to the console
 	* \param in_Code The instruction opcode
 	*/
-	void OutputUnknownOpCode(UInt8 in_Code);
+	void OutputUnknownOpCode(UInt8 in_Code) const;
 
 	/**
 	* \fn Pop

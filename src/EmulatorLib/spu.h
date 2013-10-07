@@ -55,6 +55,12 @@ public:
 	bool Init();
 	
 	/**
+	* \fn Reset
+	* \brief Restore the sound processing unit at its pre-initialized state
+	*/
+	void Reset();
+
+	/**
 	* \fn GenerateSound
 	* \brief Activate the sound generator
 	* \param TODO

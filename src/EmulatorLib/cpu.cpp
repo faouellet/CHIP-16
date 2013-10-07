@@ -54,8 +54,8 @@ unsigned CPU::Init(std::vector<UInt8> && in_ROMData)
 
 	unsigned l_Ret = NoError;
 	
-	if(!m_GPU.Init())
-		l_Ret |= GPUError;
+	l_Ret |= m_GPU.Init();
+		
 	if(!m_SPU.Init())
 		l_Ret |= SPUError;
 
@@ -74,6 +74,9 @@ void CPU::Reset()
 	m_FR = 0;
 	m_SP = 0;
 	m_PC = 0;
+
+	m_GPU.Reset();
+	m_SPU.Reset();
 }
 
 unsigned CPU::InterpretOp()
@@ -432,12 +435,12 @@ void CPU::InterpretMisc()
 		}
 		case 0x5:	// DRW
 		{
-			// TODO : Deal with carry flag
 			UInt16 l_XVal, l_YVal;
 			FetchRegistersValues(l_XVal, l_YVal);
 			m_PC++;
 			UInt16 l_Addr = FetchImmediateValue();
-			m_GPU.Draw(l_XVal, l_YVal, m_Memory[l_Addr]);
+			UInt8 l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_Memory[l_Addr]);
+			m_FR = l_RetVal > 0 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 			break;
 		}
 		case 0x6:	// DRW
@@ -447,7 +450,8 @@ void CPU::InterpretMisc()
 			m_PC++;
 			UInt16 l_Addr = m_Memory[m_PC++];
 			m_PC++;
-			m_GPU.Draw(l_XVal, l_YVal, m_Memory[l_Addr]);
+			UInt8 l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
+			m_FR = l_RetVal > 0 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 			break;
 		}
 		case 0x7:	// RND
@@ -521,11 +525,23 @@ void CPU::InterpretPalettes()
 		{
 			m_PC++;
 			l_Addr = FetchImmediateValue();
+			for(int i = 0; i < 16*3; i+=3)
+			{
+				l_PaletteData[i][0] = m_Memory[l_Addr+i];
+				l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
+				l_PaletteData[i][2] = m_Memory[l_Addr+i+2];
+			}
 			break;
 		}
 		case 0x1:
 		{
-			l_Addr = FetchRegisterAddress();
+			l_Addr = m_Registers[FetchRegisterAddress()];
+			for(int i = 0; i < 16*3; i+=3)
+			{
+				l_PaletteData[i][0] = m_Memory[l_Addr+i];
+				l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
+				l_PaletteData[i][2] = m_Memory[l_Addr+i+2];
+			}
 			m_PC += 3;
 			break;
 		}
@@ -696,14 +712,26 @@ UInt16 CPU::FetchRegisterAddress()
 	return m_Memory[m_PC++] & 0xF;
 }
 
-void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y)
+void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y) const
 {
 	out_X = m_Registers[m_Memory[m_PC] & 0xF];
 	out_Y = m_Registers[(m_Memory[m_PC] & 0xF0) >> 4];
 }
 
-void CPU::OutputUnknownOpCode(UInt8 in_Code)
+std::vector<UInt8> CPU::FetchSprite(UInt16 in_Addr) const
 {
+	std::vector<UInt8> l_SpriteData(m_GPU.SpriteWidth() * m_GPU.SpriteHeight());
+
+	// TODO : What if the address is invalid or if part of the sprite is in the stack?
+	for(int i = 0; i < m_GPU.SpriteWidth() * m_GPU.SpriteHeight(); ++i)
+		l_SpriteData[i] = m_Memory[in_Addr + i];
+
+	return l_SpriteData;
+}
+
+void CPU::OutputUnknownOpCode(UInt8 in_Code) const
+{
+	// Q : Beef it up?
 	std::cout << "Unknown opcode: " << std::hex << in_Code << std::endl;
 }
 

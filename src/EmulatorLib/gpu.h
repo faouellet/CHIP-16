@@ -4,6 +4,8 @@
 #include <memory>
 #include <vector>
 
+#include "SDL.h"
+
 #include "utils.h"
 
 using Utils::UInt8;
@@ -19,18 +21,54 @@ using Utils::UInt32;
 class GPU
 {
 private:
-	static const UInt8 M_HEIGHT;	/*!< Height of the screen */
-	static const UInt8 M_WIDTH;		/*!< Width of the screen */
+	/**
+	* \enum
+	* \brief Useful constants
+	*/
+	enum { NB_COLORS = 16, HEIGHT = 240, WIDTH = 320 };
 
 private:
-	// TODO : ...
-	// Most certainly a screen buffer
-	Uint8 m_SpritesVerticalOrientation;		/*!< Vertical orientation of all the sprites */
-	Uint8 m_SpritesHorizontalOrientation;	/*!< Horizontal orientation of all the sprites */
-	UInt8 m_VBlankFlag;						/*!< TODO */
-	std::vector<UInt32> m_ColorIndexes;		/*!< TODO */
+	/**
+	* \struct
+	* \brief Aggregate of the properties of a pre-rendered figure. This will 
+	*        serve for all sprites to draw at a given frame
+	*/
+	struct Sprite
+	{
+		bool FlipHorizontal;	/*!< True = Sprite oriented right \n False = Sprite oriented left */
+		bool FlipVertical;		/*!< True = Sprite oriented upward \n False = Sprite oriented downward */
+		UInt8 Height;			/*!< Height of the sprite in number of pixels */
+		UInt8 Width;			/*!< Width of the sprite in number of pixels */
 
-	std::unique_ptr<SDL_Window> m_Window;	/*!< Emulator window */
+		/**
+		* \fn Sprite
+		* \brief Default constructor
+		*/
+		Sprite() : FlipHorizontal(true), FlipVertical(true), Height(0), Width(0) { }
+		
+		/**
+		* \fn ~Sprite
+		* \brief Destructor
+		*/
+		~Sprite() { }
+	};
+
+private:
+	// Q : UInt32 or UInt8 for the screen buffer ???
+	UInt32 m_ScreenBuffer[WIDTH][HEIGHT];		/*!< Buffer to be drawn */
+
+	UInt8 m_SpritesVerticalOrientation;			/*!< Vertical orientation of all the sprites */
+	UInt8 m_SpritesHorizontalOrientation;		/*!< Horizontal orientation of all the sprites */
+
+	UInt8 m_VBlankFlag;							/*!< VBlank Flag */
+	
+	UInt32 m_Colors[NB_COLORS];					/*!< Palette of colors used when drawing a frame */
+
+	std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> m_Window;			/*!< Emulator window */
+	std::unique_ptr<SDL_Renderer, void(*)(SDL_Renderer*)> m_Renderer;	/*!< Renderer abstracting away the details of how a window is drawn */
+	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> m_Texture;		/*!< TODO */
+
+	Sprite m_Sprite;							/*!< Abstraction of the properties of all the sprites */
 
 public:
 	/**
@@ -45,20 +83,47 @@ public:
 	*/
 	~GPU();
 	
-public:
+private:
 	/**
-	* \fn VBlankFlag
-	* \brief Get the value of the vblank flag
-	* \return The value of the vblank flag
+	* \fn SetOriginalColorPalette
+	* \brief Set the color palette to its original state
 	*/
-	Utils::UInt8 VBlankFlag();
+	void SetOriginalColorPalette();
 
+public:
 	/**
 	* \fn Init
 	* \brief Initialize the graphics processing unit
 	* \return Error code
 	*/
 	unsigned Init();
+
+	/**
+	* \fn Reset
+	* \brief Restore the graphics processing unit at its pre-initialized state
+	*/
+	void Reset();
+
+	/**
+	* \fn SpriteHeight
+	* \brief Get the height for all the sprite
+	* \return The value of the height
+	*/
+	UInt16 SpriteHeight() const;
+
+	/**
+	* \fn SpriteWidth
+	* \brief Get the width for all the sprite
+	* \return The value of the width
+	*/
+	UInt16 SpriteWidth() const;
+
+	/**
+	* \fn VBlankFlag
+	* \brief Get the value of the vblank flag
+	* \return The value of the vblank flag
+	*/
+	Utils::UInt8 VBlankFlag() const;
 
 public:
 	/**
@@ -74,7 +139,7 @@ public:
 	* \param in_Y The Y coordinate of where to draw the sprite
 	* \param in_Sprite The sprite to draw on the screen
 	*/
-	void Draw(Int16 in_X, Int16 in_Y, UInt16 in_Sprite);
+	UInt8 Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite);
 
 	/**
 	* \fn Flip

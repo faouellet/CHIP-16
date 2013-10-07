@@ -15,7 +15,8 @@ namespace Utils
 	* \brief Masks for the possible errors that can happen during the initialization
 	*/
 	enum { NoError = 0, EmptyROMError = 1, ROMOverflowError = 2, GPUInitError = 4, 
-		GPUWindowCreationError = 8, SPUError = 16, FileError = 32 };
+		GPUWindowCreationError = 8, GPURendererError = 16, GPUTextureError = 32, 
+		SPUError = 64, FileError = 128 };
 
 	/**
 	* \enum

@@ -29,8 +29,10 @@ int main(int argc, char** argv)
 				std::cout << "ROM doesn't contain any data" << std::endl;
 			if(l_ErrorCode & ROMOverflowError)
 				std::cout << "ROM too big, doesn't fit into memory" << std::endl;
-			if(l_ErrorCode & GPUError)
-				std::cout << "GPU error" << std::endl;
+			if(l_ErrorCode & GPUInitError)
+				std::cout << "Problem initializing the GPU" << std::endl;
+			if(l_ErrorCode & GPUWindowCreationError)
+				std::cout << "Problem while creating the emulator window" << std::endl;
 			if(l_ErrorCode & SPUError)
 				std::cout << "SPU Error" << std::endl;
 			if(l_ErrorCode & FileError)
