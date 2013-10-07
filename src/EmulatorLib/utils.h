@@ -14,14 +14,15 @@ namespace Utils
 	* \enum
 	* \brief Masks for the possible errors that can happen during the initialization
 	*/
-	enum { NoError = 0, EmptyROMError = 1, ROMOverflowError = 2, GPUError = 4, SPUError = 8, FileError = 16 };
+	enum { NoError = 0, EmptyROMError = 1, ROMOverflowError = 2, GPUInitError = 4, 
+		GPUWindowCreationError = 8, SPUError = 16, FileError = 32 };
 
 	/**
 	* \enum
 	* \brief Masks for the possible errors that can happen during the emulation
 	*/
-	enum { ArithmeticError = 1, CallJumpError = 2, MemoryError = 4, DeviceError = 8,
-			PaletteError = 16, StackError = 32, UnknownError = 64, EmulationDone = 128 };
+	enum { ArithmeticError = 1, CallJumpError = 2, ConditionError = 4, MemoryError = 8, 
+		DeviceError = 16, PaletteError = 32, StackError = 64, UnknownError = 128, EmulationDone = 256 };
 
 	/**
 	* \struct IfElse

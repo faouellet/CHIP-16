@@ -105,6 +105,12 @@ public:
 	*/
 	unsigned InterpretOp();
 
+	/**
+	* \fn Reset
+	* \brief Restore the emulator at its pre-initialized state
+	*/
+	void Reset();
+
 private:
 	/**
 	* \fn FetchImmediateValue

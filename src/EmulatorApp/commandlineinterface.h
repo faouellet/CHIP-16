@@ -4,8 +4,7 @@
 #include <string>
 #include <vector>
 
-// TODO 1 : At least validate the input
-// TODO 2 : Change it to a GUI
+// TODO : Change it to a GUI
 
 /**
 * \class CommandLineInterface

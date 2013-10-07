@@ -1,6 +1,7 @@
 #ifndef GPU_H
 #define GPU_H
 
+#include <memory>
 #include <vector>
 
 #include "utils.h"
@@ -18,9 +19,18 @@ using Utils::UInt32;
 class GPU
 {
 private:
+	static const UInt8 M_HEIGHT;	/*!< Height of the screen */
+	static const UInt8 M_WIDTH;		/*!< Width of the screen */
+
+private:
 	// TODO : ...
 	// Most certainly a screen buffer
-	std::vector<UInt32> m_ColorIndexes;
+	Uint8 m_SpritesVerticalOrientation;		/*!< Vertical orientation of all the sprites */
+	Uint8 m_SpritesHorizontalOrientation;	/*!< Horizontal orientation of all the sprites */
+	UInt8 m_VBlankFlag;						/*!< TODO */
+	std::vector<UInt32> m_ColorIndexes;		/*!< TODO */
+
+	std::unique_ptr<SDL_Window> m_Window;	/*!< Emulator window */
 
 public:
 	/**
@@ -37,11 +47,18 @@ public:
 	
 public:
 	/**
+	* \fn VBlankFlag
+	* \brief Get the value of the vblank flag
+	* \return The value of the vblank flag
+	*/
+	Utils::UInt8 VBlankFlag();
+
+	/**
 	* \fn Init
 	* \brief Initialize the graphics processing unit
-	* \return Success or failure
+	* \return Error code
 	*/
-	bool Init();
+	unsigned Init();
 
 public:
 	/**

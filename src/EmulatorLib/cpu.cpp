@@ -4,7 +4,7 @@
 #include <iterator>
 #include <limits>
 
-CPU::CPU() : m_Dist(0U, std::numeric_limits<UInt16>::max()), m_FR(0), m_PC(0), m_SP(0)
+CPU::CPU() : m_Dist(0U, std::numeric_limits<UInt16>::max()), m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
 {
 	for(int i = 0; i < 16; ++i)
 		m_Registers[i] = 0;
@@ -60,6 +60,20 @@ unsigned CPU::Init(std::vector<UInt8> && in_ROMData)
 		l_Ret |= SPUError;
 
 	return l_Ret;
+}
+
+void CPU::Reset()
+{
+	for(int i = 0; i < HEADER_SIZE; ++i)
+		m_ROMHeader[i] = 0;
+
+	for(int i = 0; i < MEMORY_SIZE; ++i)
+		m_Memory[i] = 0;
+
+	m_ErrorCode = 0;
+	m_FR = 0;
+	m_SP = 0;
+	m_PC = 0;
 }
 
 unsigned CPU::InterpretOp()
@@ -224,7 +238,8 @@ void CPU::InterpretCallJumps()
 			if(InterpretConditions(l_CondCode))
 				m_PC = FetchImmediateValue();
 			else
-				m_PC += 2;
+				if(!(m_ErrorCode & ConditionError))
+					m_PC += 2;
 			break;
 		}
 		case 0x3:	// JME
@@ -268,7 +283,8 @@ void CPU::InterpretCallJumps()
 			}
 			else
 			{
-				m_PC += 2;
+				if(!(m_ErrorCode & ConditionError))
+					m_PC += 2;
 			}
 			break;
 		}
@@ -323,9 +339,8 @@ unsigned CPU::InterpretConditions(UInt8 in_CondCode)
 			return m_FR & 0x4 || ((m_FR & 0x40) != (m_FR & 0x80));
 		default:
 		{
-			// PANIC !!!
-			// TODO : Panic behavior
-			break;
+			m_ErrorCode |= ConditionError;
+			return 0;
 		}
 	}
 }
@@ -398,7 +413,8 @@ void CPU::InterpretMisc()
 		}
 		case 0x2:	// VBLNK
 		{
-			// TODO
+			if(!m_GPU.VBlankFlag())
+				m_PC--;
 			break;
 		}
 		case 0x3:	// BGC
@@ -517,7 +533,7 @@ void CPU::InterpretPalettes()
 		{
 			OutputUnknownOpCode(m_Memory[--m_PC]);
 			m_ErrorCode |= PaletteError;
-			break;
+			return;
 		}
 	}
 

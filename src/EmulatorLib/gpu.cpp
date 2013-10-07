@@ -2,6 +2,9 @@
 
 #include "SDL.h"
 
+const UInt8 GPU::M_HEIGHT = 240;
+const UInt8 GPU::M_WIDTH = 320;
+
 GPU::GPU() 
 {
 	m_ColorIndexes.push_back(0x000000);		// Black (Transparent in foreground layer)
@@ -27,11 +30,20 @@ GPU::~GPU()
 	SDL_Quit();
 }
 
-bool GPU::Init()
+Utils::UInt8 GPU::VBlankFlag()
 {
-	// Q : Correct condition ??
-	return true;
-	//return SDL_Init(SDL_INIT_VIDEO) > 0;
+	return m_VBlankFlag;
+}
+
+unsigned GPU::Init()
+{
+	if(SDL_Init(SDL_INIT_VIDEO) < 0)
+		return Utils::GPUInitError;
+	if((m_Window = SDL_CreateWindow("Chip16", SDL_WINDOWPOS_CENTERED, 
+		SDL_WINDOWPOS_CENTERED, M_WIDTH, M_HEIGHT, SDL_WINDOW_MAXIMIZED))
+		== nullptr)
+		return Utils::GPUWindowCreationError;
+	return Utils::NoError;
 }
 
 void GPU::ClearScreen() { /*TODO*/ }

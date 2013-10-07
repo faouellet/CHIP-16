@@ -81,6 +81,25 @@ struct CPUFixture
 		out_DataVec.push_back(in_Op4);
 	}
 
+	/**
+	* \fn ExecuteBadInstruction
+	* \brief Execute an instruction known to raise an error
+	* \param out_DataVec Data vector to be inserted into
+	* \param in_Op1 Bit[0] to bit[3] of the instruction
+	* \param in_Op2 Bit[4] to bit[7] of the instruction
+	* \param in_Op3 Bit[8] to bit[11] of the instruction
+	* \param in_Op4 Bit[12] to bit[15] of the instruction
+	* \return The error code associated with the execution of the bad instruction
+	*/
+	unsigned ExecuteBadInstruction(UInt8 in_Op1, UInt8 in_Op2, UInt8 in_Op3, UInt8 in_Op4)
+	{
+		std::vector<UInt8> l_ErrorTestData;
+		InsertInstruction(l_ErrorTestData, in_Op1, in_Op2, in_Op3, in_Op4);
+		Cpu.Reset();
+		Cpu.Init(PrepareData(l_ErrorTestData));
+		return Cpu.InterpretOp();
+	}
+
 private:
 	/**
 	* \fn SetupArithmeticData

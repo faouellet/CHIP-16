@@ -1,5 +1,4 @@
 - Add a nice GUI interface
-- Generate doc with doxygen
 - REFACTOR
 - License ??
 - Update README
