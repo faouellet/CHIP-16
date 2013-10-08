@@ -8,8 +8,22 @@ Emulator::~Emulator() { }
 
 void Emulator::Emulate()
 {
-	while(m_CPU.InterpretOp() == NoError)
-		;
+	bool l_Continue = true;
+	SDL_Event l_Controller1Event;
+	SDL_Event l_Controller2Event;
+
+	while(l_Continue)
+	{
+		// Handle IO
+		while(SDL_PollEvent(&l_Controller1Event) && 
+			(l_Controller1Event.type == SDL_KEYDOWN || l_Controller1Event.type == SDL_KEYUP))
+			m_CPU.UpdateController(1, l_Controller1Event.key);
+
+		// Sound ???
+
+		// Draw on screen
+		m_CPU.FlushGPU();
+	}
 }
 
 unsigned Emulator::Init(const std::string & in_ROMName)

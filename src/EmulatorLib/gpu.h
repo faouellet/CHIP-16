@@ -134,10 +134,10 @@ public:
 
 	/**
 	* \fn Draw
-	* \brief Draw a sprite on the screen
+	* \brief Prepare the screen buffer to draw a sprite
 	* \param in_X The X coordinate of where to draw the sprite
 	* \param in_Y The Y coordinate of where to draw the sprite
-	* \param in_Sprite The sprite to draw on the screen
+	* \param in_Sprite The sprite to be drawn on the screen
 	*/
 	UInt8 Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite);
 
@@ -148,6 +148,12 @@ public:
 	* \param in_V Verticl orientation
 	*/
 	void Flip(UInt8 in_H, UInt8 in_V);
+
+	/**
+	* \fn FlushBuffer
+	* \brief Draw a frame by flushing the current screen buffer
+	*/
+	void FlushBuffer();
 
 	/**
 	* \fn LoadPalette

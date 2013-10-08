@@ -31,6 +31,13 @@ private:
 	enum { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, 
 			SignedOverflowFlag = 64, NegativeFlag = 128 };
 
+	/**
+	* \enum
+	* \brief Masks for the controllers' bits
+	*/
+	enum { UP = 0x1, DOWN = 0x10, LEFT = 0x100, RIGHT = 0X1000, SELECT = 0x10000,
+			START = 0x100000, A = 0x1000000, A = 0x10000000 };
+
 private:
 	UInt8 m_FR;				/*!< Flag register */
 	UInt16 m_PC;			/*!< Program counter */
@@ -63,6 +70,12 @@ public:
 	~CPU();
 
 public:
+	/**
+	* \fn FlushGPU
+	* \brief Flush the screen buffer of the GPU
+	*/
+	void FlushGPU();
+
 	/**
 	* \fn DumpMemory
 	* \brief Dump the CPU memory
@@ -110,6 +123,14 @@ public:
 	* \brief Restore the central processing unit at its pre-initialized state
 	*/
 	void Reset();
+
+	/**
+	* \fn UpdateController
+	* \brief Update a controller memory mapped IO port
+	* \param in_ControllerID The ID of a controller (1 or 2)
+	* \param in_Event The event causing this update
+	*/
+	void UpdateController(UInt8 in_ControllerID, SDL_KeyboardEvent & in_Event);
 
 private:
 	/**

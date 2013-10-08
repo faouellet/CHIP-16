@@ -15,6 +15,11 @@ CPU::CPU() : m_Dist(0U, std::numeric_limits<UInt16>::max()), m_FR(0), m_PC(0), m
 
 CPU::~CPU() { }
 
+void CPU::FlushGPU()
+{
+	m_GPU.FlushBuffer();
+}
+
 std::vector<UInt8> CPU::DumpMemory() const
 {
 	return std::vector<UInt8>(std::begin(m_Memory), std::end(m_Memory));
@@ -77,6 +82,44 @@ void CPU::Reset()
 
 	m_GPU.Reset();
 	m_SPU.Reset();
+}
+
+void CPU::UpdateController(UInt8 in_ControllerID, SDL_KeyboardEvent & in_Event)
+{
+	// TODO : Validate in_ControllerID
+	UInt8 l_Addr = in_ControllerID == 1 ? 0xFFF0 : 0xFFF2;
+	switch (in_Event.keysym.sym)
+	{
+		case SDLK_UP:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | UP : m_Memory[l_Addr] & ~UP;
+			break;
+		}
+		case SDLK_DOWN:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | DOWN : m_Memory[l_Addr] & ~DOWN;
+			break;
+		}
+		case SDLK_LEFT:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | LEFT : m_Memory[l_Addr] & ~LEFT;
+			break;
+		}
+		case SDLK_RIGHT:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | RIGHT : m_Memory[l_Addr] & ~RIGHT;
+			break;
+		}
+		case SDLK_ESCAPE:
+		{
+			m_ErrorCode |= EmulationDone;
+			break;
+		}
+		default:
+		{
+			break;
+		}
+	}
 }
 
 unsigned CPU::InterpretOp()
@@ -361,7 +404,7 @@ void CPU::InterpretLoads()
 		}
 		case 0x1:	// LDI	(stack pointer)
 		{
-			// TODO : Check for stack overflow
+			// TODO : Check for stack fetch
 			m_PC++;
 			UInt16 l_IVal = FetchImmediateValue();
 			m_SP = l_IVal;
@@ -439,7 +482,7 @@ void CPU::InterpretMisc()
 			FetchRegistersValues(l_XVal, l_YVal);
 			m_PC++;
 			UInt16 l_Addr = FetchImmediateValue();
-			UInt8 l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_Memory[l_Addr]);
+			UInt8 l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
 			m_FR = l_RetVal > 0 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 			break;
 		}
@@ -673,6 +716,7 @@ void CPU::InterpretShifts()
 
 void CPU::InterpretStores()
 {
+	// TODO : Check for stack overflow
 	switch (m_Memory[m_PC++] & 0xF)
 	{
 		case 0x0:	// STM	(direct)

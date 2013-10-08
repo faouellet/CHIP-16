@@ -4,3 +4,5 @@
 - Update README
 - Allow user to choose screen resolution
 - Make a pass to check the const-correctness especially at the function level
+- Add visual debugging infos that can be optionnally turned on or off
+- Add pause option

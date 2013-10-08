@@ -1,5 +1,6 @@
 #include "gpu.h"
 
+#include <functional>
 #include <vector>
 
 // TODO : Document the usage of the SDL functions
@@ -86,17 +87,65 @@ void GPU::ClearScreen()
 
 UInt8 GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
 {
-	// TODO : Deal with the horizontal and vertical flip
+	// Validate X and Y coordinates
+	if(in_X > WIDTH - 1 || in_Y > HEIGHT -1)
+		return 0;
 
+	// Deal with the horizontal and vertical flip
+	std::function<UInt16(int)> l_XIndex;
+	std::function<UInt16(int)> l_YIndex;
+	UInt16 l_XStart, l_YStart;
+
+	if(m_Sprite.FlipHorizontal)
+	{
+		l_XStart = in_X + m_Sprite.Width;
+		l_XIndex = [l_XStart](int i){ return l_XStart - i; };
+	}
+	else
+	{
+		l_XStart = in_X;
+		l_XIndex = [l_XStart](int i){ return l_XStart + i; };
+	}
+
+	if(m_Sprite.FlipVertical)
+	{
+		l_YStart = in_Y + m_Sprite.Height;
+		l_YIndex = [l_YStart](int i){ return l_YStart - i; };
+	}
+	else
+	{
+		l_YStart = in_Y;
+		l_YIndex = [l_YStart](int i){ return l_YStart + i; };
+	}
+
+	UInt8 l_Hit = 0;
 	for(int i = 0; i < m_Sprite.Width; ++i)
+	{
 		for(int j = 0; j < m_Sprite.Height; ++j)
-			m_ScreenBuffer[in_X + i][in_Y + j] = in_Sprite[i * m_Sprite.Height + j];
+		{
+			// Test hits with other sprites
+			l_Hit += m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)];
+
+			m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] = in_Sprite[i * m_Sprite.Height + j];
+		}
+	}
+
+	return l_Hit;
 }
 
 void GPU::Flip(UInt8 in_H, UInt8 in_V) 
 {
 	m_Sprite.FlipHorizontal = (0 != (in_H & 0xF));
 	m_Sprite.FlipVertical = (0 != (in_V & 0xF));
+}
+
+void GPU::FlushBuffer()
+{
+	// Q : What to do with the current screen buffer after ???
+	SDL_UpdateTexture(m_Texture.get(), nullptr, m_ScreenBuffer, WIDTH * sizeof(UInt32));
+	SDL_RenderClear(m_Renderer.get());
+	SDL_RenderCopy(m_Renderer.get(), m_Texture.get(), nullptr, nullptr);
+	SDL_RenderPresent(m_Renderer.get());
 }
 
 void GPU::LoadPalette(const UInt8 in_Palette[16][3])  
