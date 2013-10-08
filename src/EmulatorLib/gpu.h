@@ -66,7 +66,7 @@ private:
 
 	std::unique_ptr<SDL_Window, void(*)(SDL_Window*)> m_Window;			/*!< Emulator window */
 	std::unique_ptr<SDL_Renderer, void(*)(SDL_Renderer*)> m_Renderer;	/*!< Renderer abstracting away the details of how a window is drawn */
-	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> m_Texture;		/*!< TODO */
+	std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)> m_Texture;		/*!< Abstaction over the raw s */
 
 	Sprite m_Sprite;							/*!< Abstraction of the properties of all the sprites */
 
@@ -117,6 +117,12 @@ public:
 	* \return The value of the width
 	*/
 	UInt16 SpriteWidth() const;
+
+	/**
+	* \fn TurnOffVBlankFlag
+	* \brief Set the VBlank flag to 0
+	*/
+	void TurnOffVBlankFlag();
 
 	/**
 	* \fn VBlankFlag

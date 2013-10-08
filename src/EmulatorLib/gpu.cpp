@@ -70,9 +70,14 @@ UInt16 GPU::SpriteHeight() const
 	return m_Sprite.Height;
 }
 
-UInt16 GPU::SpriteHeight() const
+UInt16 GPU::SpriteWidth() const
 {
 	return m_Sprite.Width;
+}
+
+void GPU::TurnOffVBlankFlag()
+{
+	m_VBlankFlag = 0;
 }
 
 Utils::UInt8 GPU::VBlankFlag() const
@@ -123,7 +128,7 @@ UInt8 GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 	{
 		for(int j = 0; j < m_Sprite.Height; ++j)
 		{
-			// Test hits with other sprites
+			// TODO : Test hits with other sprites
 			l_Hit += m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)];
 
 			m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] = in_Sprite[i * m_Sprite.Height + j];
@@ -146,6 +151,8 @@ void GPU::FlushBuffer()
 	SDL_RenderClear(m_Renderer.get());
 	SDL_RenderCopy(m_Renderer.get(), m_Texture.get(), nullptr, nullptr);
 	SDL_RenderPresent(m_Renderer.get());
+
+	m_VBlankFlag = 1;
 }
 
 void GPU::LoadPalette(const UInt8 in_Palette[16][3])  

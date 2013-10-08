@@ -131,30 +131,36 @@ Typedefs</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr class="memitem:ac8f605e2b1653452686f7d90aa5d8a73"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+<tr class="memitem:a5c5fc509595892f540ec74da16b85af6"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
 &#160;&#160;<b>NoError</b> = 0, 
 <b>EmptyROMError</b> = 1, 
 <b>ROMOverflowError</b> = 2, 
-<b>GPUError</b> = 4, 
+<b>GPUInitError</b> = 4, 
 <br/>
-&#160;&#160;<b>SPUError</b> = 8, 
-<b>FileError</b> = 16
+&#160;&#160;<b>GPUWindowCreationError</b> = 8, 
+<b>GPURendererError</b> = 16, 
+<b>GPUTextureError</b> = 32, 
+<b>SPUError</b> = 64, 
+<br/>
+&#160;&#160;<b>FileError</b> = 128
 <br/>
  }</td></tr>
-<tr class="separator:ac8f605e2b1653452686f7d90aa5d8a73"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afac7e91e171e578e813a65a254cf3908"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+<tr class="separator:a5c5fc509595892f540ec74da16b85af6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a598c5a83a89ba75b13469da1832c219d"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
 &#160;&#160;<b>ArithmeticError</b> = 1, 
 <b>CallJumpError</b> = 2, 
-<b>MemoryError</b> = 4, 
-<b>DeviceError</b> = 8, 
+<b>ConditionError</b> = 4, 
+<b>MemoryError</b> = 8, 
 <br/>
-&#160;&#160;<b>PaletteError</b> = 16, 
-<b>StackError</b> = 32, 
-<b>UnknownError</b> = 64, 
-<b>EmulationDone</b> = 128
+&#160;&#160;<b>DeviceError</b> = 16, 
+<b>PaletteError</b> = 32, 
+<b>StackError</b> = 64, 
+<b>UnknownError</b> = 128, 
+<br/>
+&#160;&#160;<b>EmulationDone</b> = 256
 <br/>
  }</td></tr>
-<tr class="separator:afac7e91e171e578e813a65a254cf3908"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a598c5a83a89ba75b13469da1832c219d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Contains a mix of useful templated tools. Credits goes to Patrice Roy for teaching me some of those tools His website : <a href="http://h-deb.clg.qc.ca/">h-deb</a> </p>
@@ -215,7 +221,7 @@ Enumerations</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 6 2013 10:48:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 8 2013 16:23:34 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

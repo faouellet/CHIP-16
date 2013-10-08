@@ -6,3 +6,4 @@
 - Make a pass to check the const-correctness especially at the function level
 - Add visual debugging infos that can be optionnally turned on or off
 - Add pause option
+- Make the emulator endian independant

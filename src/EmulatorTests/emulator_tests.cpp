@@ -15,11 +15,14 @@ BOOST_AUTO_TEST_CASE( InitTest )
 	BOOST_REQUIRE( true );
 
 	// Test file error
-	// BOOST_REQUIRE(Emu.Init(ROM_PATH) & Utils::FileError);
+	BOOST_REQUIRE(Emu.Init("") & Utils::FileError);
 
-	// TODO : Test CPU error
-	// TODO : Test GPU error
-	// TODO : Test SPU error
+	// TODO : Test CPU errors
+	// TODO : Test GPU errors
+	// TODO : Test SPU errors
+
+	// Test standard ROM
+	BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH+"/AdsrTest/AdsrTest.c16"), Utils::NoError);
 }
 
 BOOST_AUTO_TEST_CASE( AdsrTest )
@@ -30,8 +33,8 @@ BOOST_AUTO_TEST_CASE( AdsrTest )
 
 BOOST_AUTO_TEST_CASE( BC_TestRom )
 {
-	/*Emu.Init(ROM_PATH + "/BC_TestRom/BC_TestRom.c16");
-	Emu.Emulate();*/
+	BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/ASCII/ASCII.c16"), Utils::NoError);
+	Emu.Emulate();
 }
 
 BOOST_AUTO_TEST_CASE( CollisionTest )

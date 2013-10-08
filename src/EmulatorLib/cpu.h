@@ -36,7 +36,7 @@ private:
 	* \brief Masks for the controllers' bits
 	*/
 	enum { UP = 0x1, DOWN = 0x10, LEFT = 0x100, RIGHT = 0X1000, SELECT = 0x10000,
-			START = 0x100000, A = 0x1000000, A = 0x10000000 };
+			START = 0x100000, A = 0x1000000, B = 0x10000000 };
 
 private:
 	UInt8 m_FR;				/*!< Flag register */
@@ -198,7 +198,7 @@ private:
 	* \param in_Op1 The left hand side operand in a computation
 	* \param in_Op2 The right hand side operand in a computation
 	*/
-	void SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2) { }
+	void SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2);
 	void SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2);
 	void SetCarryOverflowFlagDiv(UInt16 in_Op1, UInt16 in_Op2);
 	void SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2);

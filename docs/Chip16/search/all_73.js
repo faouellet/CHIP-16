@@ -1,6 +1,7 @@
 var searchData=
 [
   ['setbackgroundcolor',['SetBackgroundColor',['../class_g_p_u.html#afc1d89644aeaeee535a94257e78280fe',1,'GPU']]],
+  ['setoriginalcolorpalette',['SetOriginalColorPalette',['../class_g_p_u.html#a39a3418c641398e4da591962bc3a66f3',1,'GPU']]],
   ['setsignzeroflag',['SetSignZeroFlag',['../class_c_p_u.html#a3ace29681aa63f0552c37f431ff980e0',1,'CPU']]],
   ['setspritedimensions',['SetSpriteDimensions',['../class_g_p_u.html#a379fa51e51eb623c3811cd97a418f6e1',1,'GPU']]],
   ['setupaddtestdata',['SetupAddTestData',['../struct_c_p_u_fixture.html#a1da3456a88a7e583051a5e7529b2682f',1,'CPUFixture']]],
@@ -14,6 +15,10 @@ var searchData=
   ['setupstackdata',['SetupStackData',['../struct_c_p_u_fixture.html#a17a1dc2dcd106595e885b13a8921029c',1,'CPUFixture']]],
   ['setupsubtestdata',['SetupSubTestData',['../struct_c_p_u_fixture.html#ad6f71a2c33060b78dec4e19bcc506461',1,'CPUFixture']]],
   ['setupxortestdata',['SetupXorTestData',['../struct_c_p_u_fixture.html#a212879f6fb8e31f296d4ffe65c980aa7',1,'CPUFixture']]],
+  ['sprite',['Sprite',['../struct_g_p_u_1_1_sprite.html#ad1c2e5308dfc3e3432179a4770d2bed7',1,'GPU::Sprite']]],
+  ['sprite',['Sprite',['../struct_g_p_u_1_1_sprite.html',1,'GPU']]],
+  ['spriteheight',['SpriteHeight',['../class_g_p_u.html#a7d2962aea919d2dd5b8fbd218b0e805e',1,'GPU']]],
+  ['spritewidth',['SpriteWidth',['../class_g_p_u.html#a279f02e8f6d11f83f72428e457f014bd',1,'GPU']]],
   ['spu',['SPU',['../class_s_p_u.html',1,'SPU'],['../class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8',1,'SPU::SPU()']]],
   ['stop',['Stop',['../class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5',1,'SPU']]]
 ];

@@ -109,96 +109,107 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">enum</span> { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, </div>
 <div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;            SignedOverflowFlag = 64, NegativeFlag = 128 };</div>
 <div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00035"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a044ef6a2c2623cc0a2fcb29322dc41f7">   35</a></span>&#160;    <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> <a class="code" href="class_c_p_u.html#a044ef6a2c2623cc0a2fcb29322dc41f7">m_FR</a>;             </div>
-<div class="line"><a name="l00036"></a><span class="lineno"><a class="line" href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">   36</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> <a class="code" href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">m_PC</a>;            </div>
-<div class="line"><a name="l00037"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a8126bebe5b900b45185ac7601a773844">   37</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> <a class="code" href="class_c_p_u.html#a8126bebe5b900b45185ac7601a773844">m_SP</a>;            </div>
-<div class="line"><a name="l00039"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">   39</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> <a class="code" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">m_ErrorCode</a>;     </div>
-<div class="line"><a name="l00041"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4">   41</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> m_Registers[16]; </div>
-<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a4159826f5375a1f7b7fbe7346ffff942">   43</a></span>&#160;    <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> m_ROMHeader[HEADER_SIZE]; </div>
-<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aab8d43069375512fddcda76764a2ebe2">   44</a></span>&#160;    <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> m_Memory[MEMORY_SIZE];    </div>
-<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_c_p_u.html#adb5a8ded5899b5a23682870e79261705">   46</a></span>&#160;    <a class="code" href="class_g_p_u.html">GPU</a> <a class="code" href="class_c_p_u.html#adb5a8ded5899b5a23682870e79261705">m_GPU</a>;              </div>
-<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">   47</a></span>&#160;    <a class="code" href="class_s_p_u.html">SPU</a> <a class="code" href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">m_SPU</a>;              </div>
-<div class="line"><a name="l00049"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">   49</a></span>&#160;    std::default_random_engine <a class="code" href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">m_RandEngine</a>;        </div>
-<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">   50</a></span>&#160;    std::uniform_int_distribution&lt;UInt16&gt; <a class="code" href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">m_Dist</a>;   </div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00057"></a><span class="lineno">   57</span>&#160;    <a class="code" href="class_c_p_u.html">CPU</a>();</div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;    ~<a class="code" href="class_c_p_u.html">CPU</a>();</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    std::vector&lt;UInt8&gt; DumpMemory() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> DumpProgramCounter() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    std::vector&lt;UInt16&gt; DumpRegisters() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> DumpStackPointer() <span class="keyword">const</span>;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;</div>
-<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">unsigned</span> Init(std::vector&lt;UInt8&gt; &amp;&amp; in_ROMData);</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
-<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;    <span class="keywordtype">unsigned</span> InterpretOp();</div>
-<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;</div>
-<div class="line"><a name="l00108"></a><span class="lineno">  108</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> FetchImmediateValue();</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> FetchRegisterAddress();</div>
-<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
-<div class="line"><a name="l00130"></a><span class="lineno">  130</span>&#160;    <span class="keywordtype">void</span> FetchRegistersValues(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp; out_X, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp; out_Y);</div>
-<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <span class="keywordtype">void</span> OutputUnknownOpCode(<a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Code);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> Pop();</div>
-<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;    <span class="keywordtype">void</span> Push(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Val);</div>
-<div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;    <span class="keywordtype">void</span> SetSignZeroFlag(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Result);</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;</div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlag(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2) { }</div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagAdd(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
-<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagDiv(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagMul(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagSub(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <span class="keywordtype">void</span> InterpretArithmetics(std::function&lt;<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>,<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt;<span class="keywordtype">void</span>(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>,<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH);</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;    <span class="keyword">enum</span> { UP = 0x1, DOWN = 0x10, LEFT = 0x100, RIGHT = 0X1000, SELECT = 0x10000,</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;            START = 0x100000, A = 0x1000000, B = 0x10000000 };</div>
+<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00042"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a044ef6a2c2623cc0a2fcb29322dc41f7">   42</a></span>&#160;    <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> <a class="code" href="class_c_p_u.html#a044ef6a2c2623cc0a2fcb29322dc41f7">m_FR</a>;             </div>
+<div class="line"><a name="l00043"></a><span class="lineno"><a class="line" href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">   43</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> <a class="code" href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">m_PC</a>;            </div>
+<div class="line"><a name="l00044"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a8126bebe5b900b45185ac7601a773844">   44</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> <a class="code" href="class_c_p_u.html#a8126bebe5b900b45185ac7601a773844">m_SP</a>;            </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">   46</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> <a class="code" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">m_ErrorCode</a>;     </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4">   48</a></span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> m_Registers[16]; </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a4159826f5375a1f7b7fbe7346ffff942">   50</a></span>&#160;    <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> m_ROMHeader[HEADER_SIZE]; </div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aab8d43069375512fddcda76764a2ebe2">   51</a></span>&#160;    <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> m_Memory[MEMORY_SIZE];    </div>
+<div class="line"><a name="l00053"></a><span class="lineno"><a class="line" href="class_c_p_u.html#adb5a8ded5899b5a23682870e79261705">   53</a></span>&#160;    <a class="code" href="class_g_p_u.html">GPU</a> <a class="code" href="class_c_p_u.html#adb5a8ded5899b5a23682870e79261705">m_GPU</a>;              </div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">   54</a></span>&#160;    <a class="code" href="class_s_p_u.html">SPU</a> <a class="code" href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">m_SPU</a>;              </div>
+<div class="line"><a name="l00056"></a><span class="lineno"><a class="line" href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">   56</a></span>&#160;    std::default_random_engine <a class="code" href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">m_RandEngine</a>;        </div>
+<div class="line"><a name="l00057"></a><span class="lineno"><a class="line" href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">   57</a></span>&#160;    std::uniform_int_distribution&lt;UInt16&gt; <a class="code" href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">m_Dist</a>;   </div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;    <a class="code" href="class_c_p_u.html">CPU</a>();</div>
+<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    ~<a class="code" href="class_c_p_u.html">CPU</a>();</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> FlushGPU();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    std::vector&lt;UInt8&gt; DumpMemory() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> DumpProgramCounter() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00098"></a><span class="lineno">   98</span>&#160;    std::vector&lt;UInt16&gt; DumpRegisters() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> DumpStackPointer() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    <span class="keywordtype">unsigned</span> Init(std::vector&lt;UInt8&gt; &amp;&amp; in_ROMData);</div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    <span class="keywordtype">unsigned</span> InterpretOp();</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;    <span class="keywordtype">void</span> Reset();</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;    <span class="keywordtype">void</span> UpdateController(<a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_ControllerID, SDL_KeyboardEvent &amp; in_Event);</div>
+<div class="line"><a name="l00134"></a><span class="lineno">  134</span>&#160;</div>
+<div class="line"><a name="l00135"></a><span class="lineno">  135</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> FetchImmediateValue();</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
+<div class="line"><a name="l00150"></a><span class="lineno">  150</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> FetchRegisterAddress();</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;    <span class="keywordtype">void</span> FetchRegistersValues(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp; out_X, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp; out_Y) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;    std::vector&lt;UInt8&gt; FetchSprite(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Addr) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    <span class="keywordtype">void</span> OutputUnknownOpCode(<a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Code) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;</div>
+<div class="line"><a name="l00179"></a><span class="lineno">  179</span>&#160;    <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> Pop();</div>
 <div class="line"><a name="l00180"></a><span class="lineno">  180</span>&#160;</div>
-<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <span class="keywordtype">void</span> InterpretCallJumps();</div>
-<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">unsigned</span> InterpretConditions(<a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_CondCode);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    </div>
-<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;    <span class="keywordtype">void</span> InterpretLoads();</div>
-<div class="line"><a name="l00200"></a><span class="lineno">  200</span>&#160;</div>
-<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="comment">// TODO : Find a better name</span></div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> InterpretMisc();</div>
-<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;</div>
-<div class="line"><a name="l00212"></a><span class="lineno">  212</span>&#160;    <span class="keywordtype">void</span> InterpretPalettes();</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;    <span class="keywordtype">void</span> InterpretPushPops();</div>
-<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;</div>
-<div class="line"><a name="l00224"></a><span class="lineno">  224</span>&#160;    <span class="keywordtype">void</span> InterpretShifts();</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;    <span class="keywordtype">void</span> InterpretStores();</div>
-<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;};</div>
-<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
-<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;<span class="preprocessor">#endif // CPU_H</span></div>
-<div class="ttc" id="class_c_p_u_html_aeb391801aa832ac521cd491fba2c11a5"><div class="ttname"><a href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">CPU::m_SPU</a></div><div class="ttdeci">SPU m_SPU</div><div class="ttdef"><b>Definition:</b> cpu.h:47</div></div>
-<div class="ttc" id="class_c_p_u_html_aebd5639c9022bcdebd160e46a37a50e5"><div class="ttname"><a href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">CPU::m_ErrorCode</a></div><div class="ttdeci">UInt16 m_ErrorCode</div><div class="ttdef"><b>Definition:</b> cpu.h:39</div></div>
-<div class="ttc" id="namespace_utils_html_ad4db7aab250328c742e04e4134dca44b"><div class="ttname"><a href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a></div><div class="ttdeci">UInt_&lt; 1 &gt;::type UInt8</div><div class="ttdef"><b>Definition:</b> utils.h:103</div></div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;    <span class="keywordtype">void</span> Push(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Val);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;    <span class="keywordtype">void</span> SetSignZeroFlag(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Result);</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
+<div class="line"><a name="l00201"></a><span class="lineno">  201</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlag(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagAdd(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
+<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagDiv(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
+<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagMul(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
+<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;    <span class="keywordtype">void</span> SetCarryOverflowFlagSub(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op1, <a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Op2);</div>
+<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
+<div class="line"><a name="l00207"></a><span class="lineno">  207</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;    <span class="keywordtype">void</span> InterpretArithmetics(std::function&lt;<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>,<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt;<span class="keywordtype">void</span>(<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>,<a class="code" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH);</div>
+<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <span class="keywordtype">void</span> InterpretCallJumps();</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;    <span class="keywordtype">unsigned</span> InterpretConditions(<a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_CondCode);</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    </div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;    <span class="keywordtype">void</span> InterpretLoads();</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
+<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;    <span class="comment">// TODO : Find a better name</span></div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;<span class="comment"></span>    <span class="keywordtype">void</span> InterpretMisc();</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <span class="keywordtype">void</span> InterpretPalettes();</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;    <span class="keywordtype">void</span> InterpretPushPops();</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;    <span class="keywordtype">void</span> InterpretShifts();</div>
+<div class="line"><a name="l00260"></a><span class="lineno">  260</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;    <span class="keywordtype">void</span> InterpretStores();</div>
+<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;};</div>
+<div class="line"><a name="l00267"></a><span class="lineno">  267</span>&#160;</div>
+<div class="line"><a name="l00268"></a><span class="lineno">  268</span>&#160;<span class="preprocessor">#endif // CPU_H</span></div>
+<div class="ttc" id="class_c_p_u_html_aeb391801aa832ac521cd491fba2c11a5"><div class="ttname"><a href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">CPU::m_SPU</a></div><div class="ttdeci">SPU m_SPU</div><div class="ttdef"><b>Definition:</b> cpu.h:54</div></div>
+<div class="ttc" id="class_c_p_u_html_aebd5639c9022bcdebd160e46a37a50e5"><div class="ttname"><a href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">CPU::m_ErrorCode</a></div><div class="ttdeci">UInt16 m_ErrorCode</div><div class="ttdef"><b>Definition:</b> cpu.h:46</div></div>
+<div class="ttc" id="namespace_utils_html_ad4db7aab250328c742e04e4134dca44b"><div class="ttname"><a href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a></div><div class="ttdeci">UInt_&lt; 1 &gt;::type UInt8</div><div class="ttdef"><b>Definition:</b> utils.h:105</div></div>
 <div class="ttc" id="class_c_p_u_html"><div class="ttname"><a href="class_c_p_u.html">CPU</a></div><div class="ttdoc">Emulates the Central Processing Unit (CPU) </div><div class="ttdef"><b>Definition:</b> cpu.h:18</div></div>
-<div class="ttc" id="class_c_p_u_html_a044ef6a2c2623cc0a2fcb29322dc41f7"><div class="ttname"><a href="class_c_p_u.html#a044ef6a2c2623cc0a2fcb29322dc41f7">CPU::m_FR</a></div><div class="ttdeci">UInt8 m_FR</div><div class="ttdef"><b>Definition:</b> cpu.h:35</div></div>
-<div class="ttc" id="class_c_p_u_html_a8126bebe5b900b45185ac7601a773844"><div class="ttname"><a href="class_c_p_u.html#a8126bebe5b900b45185ac7601a773844">CPU::m_SP</a></div><div class="ttdeci">UInt16 m_SP</div><div class="ttdef"><b>Definition:</b> cpu.h:37</div></div>
-<div class="ttc" id="class_c_p_u_html_aee26e52ec9b888f8f07f71ebdb7bef2e"><div class="ttname"><a href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">CPU::m_RandEngine</a></div><div class="ttdeci">std::default_random_engine m_RandEngine</div><div class="ttdef"><b>Definition:</b> cpu.h:49</div></div>
-<div class="ttc" id="class_g_p_u_html"><div class="ttname"><a href="class_g_p_u.html">GPU</a></div><div class="ttdoc">Emulates the Graphics Processing Unit (GPU) </div><div class="ttdef"><b>Definition:</b> gpu.h:18</div></div>
-<div class="ttc" id="class_c_p_u_html_a457bfec1c90381f673297e96bf2f5fb4"><div class="ttname"><a href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">CPU::m_Dist</a></div><div class="ttdeci">std::uniform_int_distribution&lt; UInt16 &gt; m_Dist</div><div class="ttdef"><b>Definition:</b> cpu.h:50</div></div>
+<div class="ttc" id="class_c_p_u_html_a044ef6a2c2623cc0a2fcb29322dc41f7"><div class="ttname"><a href="class_c_p_u.html#a044ef6a2c2623cc0a2fcb29322dc41f7">CPU::m_FR</a></div><div class="ttdeci">UInt8 m_FR</div><div class="ttdef"><b>Definition:</b> cpu.h:42</div></div>
+<div class="ttc" id="class_c_p_u_html_a8126bebe5b900b45185ac7601a773844"><div class="ttname"><a href="class_c_p_u.html#a8126bebe5b900b45185ac7601a773844">CPU::m_SP</a></div><div class="ttdeci">UInt16 m_SP</div><div class="ttdef"><b>Definition:</b> cpu.h:44</div></div>
+<div class="ttc" id="class_c_p_u_html_aee26e52ec9b888f8f07f71ebdb7bef2e"><div class="ttname"><a href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">CPU::m_RandEngine</a></div><div class="ttdeci">std::default_random_engine m_RandEngine</div><div class="ttdef"><b>Definition:</b> cpu.h:56</div></div>
+<div class="ttc" id="class_g_p_u_html"><div class="ttname"><a href="class_g_p_u.html">GPU</a></div><div class="ttdoc">Emulates the Graphics Processing Unit (GPU) </div><div class="ttdef"><b>Definition:</b> gpu.h:21</div></div>
+<div class="ttc" id="class_c_p_u_html_a457bfec1c90381f673297e96bf2f5fb4"><div class="ttname"><a href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">CPU::m_Dist</a></div><div class="ttdeci">std::uniform_int_distribution&lt; UInt16 &gt; m_Dist</div><div class="ttdef"><b>Definition:</b> cpu.h:57</div></div>
 <div class="ttc" id="class_s_p_u_html"><div class="ttname"><a href="class_s_p_u.html">SPU</a></div><div class="ttdoc">Emulates the Sound Processing Unit (SPU) </div><div class="ttdef"><b>Definition:</b> spu.h:13</div></div>
-<div class="ttc" id="class_c_p_u_html_adb5a8ded5899b5a23682870e79261705"><div class="ttname"><a href="class_c_p_u.html#adb5a8ded5899b5a23682870e79261705">CPU::m_GPU</a></div><div class="ttdeci">GPU m_GPU</div><div class="ttdef"><b>Definition:</b> cpu.h:46</div></div>
-<div class="ttc" id="namespace_utils_html_a1b80b87257b91f6cccca8a9f02296efb"><div class="ttname"><a href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">Utils::UInt16</a></div><div class="ttdeci">UInt_&lt; 2 &gt;::type UInt16</div><div class="ttdef"><b>Definition:</b> utils.h:104</div></div>
-<div class="ttc" id="class_c_p_u_html_ae23d7da0e1b35635ee7e1dec59cc996a"><div class="ttname"><a href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">CPU::m_PC</a></div><div class="ttdeci">UInt16 m_PC</div><div class="ttdef"><b>Definition:</b> cpu.h:36</div></div>
+<div class="ttc" id="class_c_p_u_html_adb5a8ded5899b5a23682870e79261705"><div class="ttname"><a href="class_c_p_u.html#adb5a8ded5899b5a23682870e79261705">CPU::m_GPU</a></div><div class="ttdeci">GPU m_GPU</div><div class="ttdef"><b>Definition:</b> cpu.h:53</div></div>
+<div class="ttc" id="namespace_utils_html_a1b80b87257b91f6cccca8a9f02296efb"><div class="ttname"><a href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">Utils::UInt16</a></div><div class="ttdeci">UInt_&lt; 2 &gt;::type UInt16</div><div class="ttdef"><b>Definition:</b> utils.h:106</div></div>
+<div class="ttc" id="class_c_p_u_html_ae23d7da0e1b35635ee7e1dec59cc996a"><div class="ttname"><a href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">CPU::m_PC</a></div><div class="ttdeci">UInt16 m_PC</div><div class="ttdef"><b>Definition:</b> cpu.h:43</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 6 2013 10:48:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 8 2013 16:23:33 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

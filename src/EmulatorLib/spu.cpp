@@ -8,7 +8,7 @@ SPU::~SPU() { }
 
 bool SPU::Init() 
 {
-	return SDL_Init(SDL_INIT_AUDIO) < 0;
+	return true; // SDL_Init(SDL_INIT_AUDIO) < 0;
 }
 
 void SPU::Reset() { }

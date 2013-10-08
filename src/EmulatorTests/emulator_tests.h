@@ -20,6 +20,10 @@ struct EmulatorTestFixture
 	EmulatorTestFixture() { }
 };
 
-const std::string EmulatorTestFixture::ROM_PATH = "../../Chip16 Program Pack/Tests";
+#ifdef _DEBUG
+const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Demos";
+#else
+const std::string EmulatorTestFixture::ROM_PATH = "../bin/Release/Tests";
+#endif
 
 #endif // EMULATOR_TESTS_H

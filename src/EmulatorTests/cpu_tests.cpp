@@ -168,7 +168,8 @@ BOOST_AUTO_TEST_CASE( XorTest )
 		BOOST_REQUIRE_EQUAL(l_XorDump[i], 0);
 }
 
-// TODO : Call/Jump tests ??
+// TODO : Call/Jump tests 
+// TODO : Flag register tests 
 
 BOOST_AUTO_TEST_CASE( MemoryTest )
 {

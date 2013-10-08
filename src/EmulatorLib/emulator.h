@@ -1,6 +1,7 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
+#include <chrono>
 #include <string>
 
 #include "cpu.h"
@@ -16,6 +17,13 @@ using Utils::UInt32;
 */
 class Emulator
 {
+private:
+	/**
+	* \enum
+	* \brief Useful constants
+	*/
+	enum { CPU_SPEED = 1000000, FPS = 60, CYCLES_PER_FRAME = CPU_SPEED/FPS };
+
 private:
 	CPU m_CPU;	/*!< The central processing unit */
 

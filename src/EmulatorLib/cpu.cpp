@@ -40,7 +40,6 @@ UInt16 CPU::DumpStackPointer() const
 	return m_SP;
 }
 
-// TODO : Ask yourself what could go wrong
 unsigned CPU::Init(std::vector<UInt8> && in_ROMData) 
 {
 	if(in_ROMData.empty())
@@ -86,7 +85,10 @@ void CPU::Reset()
 
 void CPU::UpdateController(UInt8 in_ControllerID, SDL_KeyboardEvent & in_Event)
 {
-	// TODO : Validate in_ControllerID
+	// Wrong in_ControllerID, do nothing
+	if(in_ControllerID != 1 && in_ControllerID != 2)
+		return;
+
 	UInt8 l_Addr = in_ControllerID == 1 ? 0xFFF0 : 0xFFF2;
 	switch (in_Event.keysym.sym)
 	{
@@ -460,7 +462,14 @@ void CPU::InterpretMisc()
 		case 0x2:	// VBLNK
 		{
 			if(!m_GPU.VBlankFlag())
+			{
 				m_PC--;
+			}
+			else
+			{
+				m_GPU.TurnOffVBlankFlag();
+				m_PC += 3;
+			}
 			break;
 		}
 		case 0x3:	// BGC
@@ -796,6 +805,11 @@ void CPU::SetSignZeroFlag(UInt16 in_Result)
 	m_FR = in_Result == 0 ? m_FR | ZeroFlag : m_FR & ~ZeroFlag;
 	// Set the negative flag (Bit[7])
 	m_FR = in_Result & 0x4000 ? m_FR | NegativeFlag : m_FR & ~NegativeFlag;
+}
+
+void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2)
+{
+	// TODO : ?
 }
 
 void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2) 

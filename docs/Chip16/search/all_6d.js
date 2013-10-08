@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['m_5fcolors',['m_Colors',['../class_g_p_u.html#a8b90349cefad7f3ad43a8cee164c7e31',1,'GPU']]],
   ['m_5fcpu',['m_CPU',['../class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a',1,'Emulator']]],
   ['m_5fdemochoices',['m_DemoChoices',['../class_command_line_interface.html#a65e663ff05ad2b7a3317c6e44dbded80',1,'CommandLineInterface']]],
   ['m_5fdist',['m_Dist',['../class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4',1,'CPU']]],
@@ -11,8 +12,16 @@ var searchData=
   ['m_5fpc',['m_PC',['../class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a',1,'CPU']]],
   ['m_5frandengine',['m_RandEngine',['../class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e',1,'CPU']]],
   ['m_5fregisters',['m_Registers',['../class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4',1,'CPU']]],
+  ['m_5frenderer',['m_Renderer',['../class_g_p_u.html#a43f725bf06ff03a070fe9ed097697b92',1,'GPU']]],
   ['m_5fromheader',['m_ROMHeader',['../class_c_p_u.html#a4159826f5375a1f7b7fbe7346ffff942',1,'CPU']]],
+  ['m_5fscreenbuffer',['m_ScreenBuffer',['../class_g_p_u.html#ab2533a6a62ee5d996024f6497161757d',1,'GPU']]],
   ['m_5fsp',['m_SP',['../class_c_p_u.html#a8126bebe5b900b45185ac7601a773844',1,'CPU']]],
+  ['m_5fsprite',['m_Sprite',['../class_g_p_u.html#a6e62e7694297c02cb63852627ab01259',1,'GPU']]],
+  ['m_5fspriteshorizontalorientation',['m_SpritesHorizontalOrientation',['../class_g_p_u.html#a9f04d47125622b5ce5d0416186376017',1,'GPU']]],
+  ['m_5fspritesverticalorientation',['m_SpritesVerticalOrientation',['../class_g_p_u.html#a2317f0aedac19a7402d5c41c36dd04d5',1,'GPU']]],
   ['m_5fspu',['m_SPU',['../class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5',1,'CPU']]],
-  ['m_5ftestchoices',['m_TestChoices',['../class_command_line_interface.html#a522931469c19f97b525b3333be5a6670',1,'CommandLineInterface']]]
+  ['m_5ftestchoices',['m_TestChoices',['../class_command_line_interface.html#a522931469c19f97b525b3333be5a6670',1,'CommandLineInterface']]],
+  ['m_5ftexture',['m_Texture',['../class_g_p_u.html#a5f5b5b224ffe5288ba24975b3c24ee89',1,'GPU']]],
+  ['m_5fvblankflag',['m_VBlankFlag',['../class_g_p_u.html#af06787a61f877b4ed35b46ad5d698a89',1,'GPU']]],
+  ['m_5fwindow',['m_Window',['../class_g_p_u.html#ae079fd87f004244c81391e34d231ab38',1,'GPU']]]
 ];

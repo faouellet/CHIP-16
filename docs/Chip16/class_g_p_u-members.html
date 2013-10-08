@@ -91,19 +91,37 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <p>This is the complete list of members for <a class="el" href="class_g_p_u.html">GPU</a>, including all inherited members.</p>
 <table class="directory">
   <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#ab1a402e6f1d7a6b44148ec6fef77fdaf">ClearScreen</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_g_p_u.html#aea01329763b7a858d28f4d0068d6b628">Draw</a>(Int16 in_X, Int16 in_Y, UInt16 in_Sprite)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#aaab4d2fe739270b47a99be6ec8aa2069">Draw</a>(Int16 in_X, Int16 in_Y, const std::vector&lt; UInt8 &gt; &amp;in_Sprite)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#affe45b0e9eb4fdb97add0aec91b3b6f6">Flip</a>(UInt8 in_H, UInt8 in_V)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_g_p_u.html#a2ca7973e32f63ba3472166a007419a75">GPU</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#ae9cfafb785296f73db89b6ae16c7951d">FlushBuffer</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#a2ca7973e32f63ba3472166a007419a75">GPU</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>HEIGHT</b> enum value (defined in <a class="el" href="class_g_p_u.html">GPU</a>)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#ad5cc92e27603ba7762c17750ff9741dc">Init</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_g_p_u.html#aa927c6c880a872b57fa54845fc6049a0">LoadPalette</a>(const UInt8 in_Palette[16][3])</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>m_ColorIndexes</b> (defined in <a class="el" href="class_g_p_u.html">GPU</a>)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#a8b90349cefad7f3ad43a8cee164c7e31">m_Colors</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#a43f725bf06ff03a070fe9ed097697b92">m_Renderer</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#ab2533a6a62ee5d996024f6497161757d">m_ScreenBuffer</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#a6e62e7694297c02cb63852627ab01259">m_Sprite</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#a9f04d47125622b5ce5d0416186376017">m_SpritesHorizontalOrientation</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#a2317f0aedac19a7402d5c41c36dd04d5">m_SpritesVerticalOrientation</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#a5f5b5b224ffe5288ba24975b3c24ee89">m_Texture</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#af06787a61f877b4ed35b46ad5d698a89">m_VBlankFlag</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#ae079fd87f004244c81391e34d231ab38">m_Window</a></td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>NB_COLORS</b> enum value (defined in <a class="el" href="class_g_p_u.html">GPU</a>)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#afd016fa39011859afe0ac0b7442ba815">Reset</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="class_g_p_u.html#afc1d89644aeaeee535a94257e78280fe">SetBackgroundColor</a>(UInt8 in_ColorIndex)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#a379fa51e51eb623c3811cd97a418f6e1">SetSpriteDimensions</a>(UInt8 in_Width, UInt8 in_Height)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#a39a3418c641398e4da591962bc3a66f3">SetOriginalColorPalette</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#a379fa51e51eb623c3811cd97a418f6e1">SetSpriteDimensions</a>(UInt8 in_Width, UInt8 in_Height)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#a7d2962aea919d2dd5b8fbd218b0e805e">SpriteHeight</a>() const </td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#a279f02e8f6d11f83f72428e457f014bd">SpriteWidth</a>() const </td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_g_p_u.html#ae8b0e7fc2c524e6490a3dbc8ad193bfe">TurnOffVBlankFlag</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_g_p_u.html#a048210036a29a07679532e17d9a7800e">VBlankFlag</a>() const </td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
+  <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>WIDTH</b> enum value (defined in <a class="el" href="class_g_p_u.html">GPU</a>)</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_g_p_u.html#ac4d153a08d3b9f40e5a8f1634f4a9e78">~GPU</a>()</td><td class="entry"><a class="el" href="class_g_p_u.html">GPU</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Oct 6 2013 10:48:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Oct 8 2013 16:23:34 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
