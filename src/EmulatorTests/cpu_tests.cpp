@@ -24,10 +24,13 @@ BOOST_AUTO_TEST_CASE( InitTest )
 BOOST_AUTO_TEST_CASE( AddTest )
 {
 	Cpu.Init(PrepareData(AddTestData));
+	Cpu.InterpretOp();	// ADDI : R0 += 0
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);
 	Cpu.InterpretOp();	// ADDI : R0 += 65535
 	Cpu.InterpretOp();	// ADD : R1 += R0
 	Cpu.InterpretOp();	// ADD : R2 = R0 + R3
 	Cpu.InterpretOp();	// ADD : R3 = R0 + R1	(overflow)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 64);
 	std::vector<UInt16> l_AddDump(Cpu.DumpRegisters());
 
 	BOOST_REQUIRE_EQUAL(l_AddDump[0], 65535);

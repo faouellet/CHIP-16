@@ -122,6 +122,7 @@ private:
 	*/
 	void SetupAddTestData()
 	{
+		InsertInstruction(AddTestData, 0x40, 0x00, 0x00, 0x00);	// ADDI : R0 += 0
 		InsertInstruction(AddTestData, 0x40, 0x00, 0xFF, 0xFF);	// ADDI : R0 += 65535
 		InsertInstruction(AddTestData, 0x41, 0x01, 0x00, 0x00);	// ADD : R1 += R0
 		InsertInstruction(AddTestData, 0x42, 0x03, 0x02, 0x00);	// ADD : R2 = R0 + R3

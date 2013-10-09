@@ -20,6 +20,11 @@ void CPU::FlushGPU()
 	m_GPU.FlushBuffer();
 }
 
+UInt16 CPU::DumpFlagRegister() const
+{
+	return m_FR;
+}
+
 std::vector<UInt8> CPU::DumpMemory() const
 {
 	return std::vector<UInt8>(std::begin(m_Memory), std::end(m_Memory));

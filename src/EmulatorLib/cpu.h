@@ -77,6 +77,13 @@ public:
 	void FlushGPU();
 
 	/**
+	* \fn DumpFlagRegister
+	* \brief Dump the flag register
+	* \return The content of the flag register
+	*/
+	UInt16 DumpFlagRegister() const;
+
+	/**
 	* \fn DumpMemory
 	* \brief Dump the CPU memory
 	* \return The data contained in the CPU memory
