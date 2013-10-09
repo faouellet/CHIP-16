@@ -9,7 +9,8 @@ Emulator::~Emulator() { }
 
 void Emulator::Emulate()
 {
-	// TODO : Handle errors at this level
+	// TODO1 : Handle errors at this level
+	// TODO2 : Make sure to maintain 60 FPS
 
 	bool l_Continue = true;
 	int l_NbCycles;

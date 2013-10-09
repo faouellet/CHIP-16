@@ -186,7 +186,7 @@ unsigned CPU::InterpretOp()
 		}
 		case 0xA:	// Div
 		{
-			InterpretArithmetics(std::divides<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
+			InterpretArithmetics(Divides(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
 			break;
 		}
 		case 0xB:	// Shift
@@ -226,7 +226,7 @@ void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std:
 			UInt16 l_IVal = FetchImmediateValue();
 			in_FRH(l_Addr, l_IVal);
 			m_Registers[l_Addr] = in_Ins(m_Registers[l_Addr], l_IVal);
-			SetSignZeroFlag(m_Registers[m_Memory[m_PC] & 0xF]);
+			SetSignZeroFlag(m_Registers[l_Addr]);
 			break;
 		}
 		case 0x1:	// X = F(X, Y)
@@ -823,8 +823,8 @@ void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2)
 	// Set carry flag
 	m_FR = l_Result < in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 	// Set overflow flag
-	m_FR = (l_Result >= 0 && in_Op1 < 0 && in_Op2 < 0)
-		|| (l_Result < 0 && in_Op1 >= 0 && in_Op2 >= 0) ?
+	m_FR = (l_Result >= 0 && static_cast<Int16>(in_Op1) < 0 && static_cast<Int16>(in_Op2) < 0)
+		|| (static_cast<Int16>(l_Result) < 0 && in_Op1 >= 0 && in_Op2 >= 0) ?
 		m_FR | SignedOverflowFlag : m_FR & ~SignedOverflowFlag;
 }
 

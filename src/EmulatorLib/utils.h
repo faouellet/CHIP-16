@@ -121,13 +121,25 @@ namespace Utils
 	};
 
 	/**
+	* \struct Divide
+	* \brief TODO : Explain why this and not std::divides
+	*/
+	struct Divides
+	{
+		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS) const
+		{
+			return in_RHS / in_LHS;
+		}
+	};
+
+	/**
 	* \struct ArithmeticRightShift
 	* \brief Functor wrapping the right shift operator when the value to shift doesn't
 	*        have its sign bit on. Otherwise, it uses a mask to copy the sign bit.
 	*/
 	struct ArithmeticRightShift
 	{
-		UInt16 operator()(const Int16 & in_LHS, const UInt16 & in_RHS)
+		UInt16 operator()(const Int16 & in_LHS, const UInt16 & in_RHS) const
 		{
 			// if(in_LHS < 0)
 			//	return in_LHS >> in_RHS | ~(~0U >> in_RHS);
@@ -142,7 +154,7 @@ namespace Utils
 	*/
 	struct LogicalRightShift
 	{
-		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS)
+		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS) const
 		{
 			return in_LHS >> in_RHS;
 		}
