@@ -21,22 +21,25 @@ BOOST_AUTO_TEST_CASE( InitTest )
 	BOOST_REQUIRE_EQUAL(Cpu.Init(std::vector<UInt8>(65535, 42)), ROMOverflowError);
 }
 
+// TODO : Test negative flag more
+
 BOOST_AUTO_TEST_CASE( AddTest )
 {
 	Cpu.Init(PrepareData(AddTestData));
 	Cpu.InterpretOp();	// ADDI : R0 += 0
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	// Zero flag set
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
 	Cpu.InterpretOp();	// ADDI : R0 += 65535
 	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 128);	// Negative flag set since register full
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	Cpu.InterpretOp();	// ADD : R1 += R0
 	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 128);	// Negative flag set since register full
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	Cpu.InterpretOp();	// ADD : R2 = R0 + R3
 	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 128);	// Negative flag set since register full
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	Cpu.InterpretOp();	// ADD : R3 = R0 + R1	(overflow)
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 64);		// Overflow flag set
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x40);					// Overflow flag set
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
 	std::vector<UInt16> l_AddDump(Cpu.DumpRegisters());
 
 	BOOST_REQUIRE_EQUAL(l_AddDump[0], 65535);
@@ -72,8 +75,12 @@ BOOST_AUTO_TEST_CASE( DivTest )
 	Cpu.InterpretOp();	// ADDI : R1 += 4
 	Cpu.InterpretOp();	// ADDI : R2 += 2
 	Cpu.InterpretOp();	// DIVI : R0 = 32 / R0
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	Cpu.InterpretOp();	// DIV : R1 = R2 / R1
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
 	Cpu.InterpretOp();	// DIV : R3 = R0 / R2
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	std::vector<UInt16> l_DivDump(Cpu.DumpRegisters());
 
 	// TODO : Test div by 0
@@ -82,7 +89,7 @@ BOOST_AUTO_TEST_CASE( DivTest )
 	BOOST_REQUIRE_EQUAL(l_DivDump[2], 2);
 	BOOST_REQUIRE_EQUAL(l_DivDump[3], 2);
 
-	for(int i = 5; i < NB_REGISTERS; ++i)
+	for(int i = 4; i < NB_REGISTERS; ++i)
 		BOOST_REQUIRE_EQUAL(l_DivDump[i], 0);
 }
 
@@ -113,7 +120,11 @@ BOOST_AUTO_TEST_CASE( MulTest )
 	Cpu.InterpretOp();	// MULI : R0 *= 10
 	Cpu.InterpretOp();	// MUL : R1 *= R0
 	Cpu.InterpretOp();	// MUL : R2 = R1 * R0
+	Cpu.InterpretOp();	// MUL : R3 *= 0
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
 	Cpu.InterpretOp();	// MUL : R3 = R2 * R2 (overflow)
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
 	std::vector<UInt16> l_MulDump(Cpu.DumpRegisters());
 
 	BOOST_REQUIRE_EQUAL(l_MulDump[0], 20);
@@ -128,9 +139,14 @@ BOOST_AUTO_TEST_CASE( MulTest )
 BOOST_AUTO_TEST_CASE( OrTest )
 {
 	Cpu.Init(PrepareData(OrTestData));
+	Cpu.InterpretOp();	// ORI : R0 | 0
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
 	Cpu.InterpretOp();	// ORI : R0 | 1
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	Cpu.InterpretOp();	// OR : R1 |= R0
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	Cpu.InterpretOp();	// OR : R2 = R0 | R3
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	std::vector<UInt16> l_OrDump(Cpu.DumpRegisters());
 
 	for(int i = 0; i < 3; ++i)
@@ -167,8 +183,11 @@ BOOST_AUTO_TEST_CASE( XorTest )
 {
 	Cpu.Init(PrepareData(XorTestData));
 	Cpu.InterpretOp();	// XORI : R0 ^ 1
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	Cpu.InterpretOp();	// XOR : R1 ^= R0
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	Cpu.InterpretOp();	// XOR : R2 = R0 ^ R3
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
 	std::vector<UInt16> l_XorDump(Cpu.DumpRegisters());
 
 	BOOST_REQUIRE_EQUAL(l_XorDump[0], 1);
@@ -248,14 +267,22 @@ BOOST_AUTO_TEST_CASE( ShiftTest )
 	for(int i = 0; i < NB_REGISTERS/2; ++i)
 		Cpu.InterpretOp();	// ADDI : Ri += 65535
 
-	Cpu.InterpretOp();	// SHL
-	Cpu.InterpretOp();	// SHR
-	Cpu.InterpretOp();	// SAL
-	Cpu.InterpretOp();	// SAR
-	Cpu.InterpretOp();	// SHL
-	Cpu.InterpretOp();	// SHR
-	Cpu.InterpretOp();	// SAL
-	Cpu.InterpretOp();	// SAR
+	Cpu.InterpretOp();	// SHL : R0 << 13 (Logical)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	Cpu.InterpretOp();	// SHR : R1 >> 13 (Logical)
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
+	Cpu.InterpretOp();	// SAL : R2 << 13 (Arithmetic)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	Cpu.InterpretOp();	// SAR : R3 >> 13 (Arithmetic)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	Cpu.InterpretOp();	// SHL : R4 << R1 (Logical)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	Cpu.InterpretOp();	// SHR : R5 >> R1 (Logical)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	Cpu.InterpretOp();	// SAL : R6 << R1 (Arithmetic)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	Cpu.InterpretOp();	// SAR : R7 >> R1 (Arithmetic)
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 
 	std::vector<UInt16> l_ShiftDump(Cpu.DumpRegisters());
 

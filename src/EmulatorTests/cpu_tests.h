@@ -186,6 +186,7 @@ private:
 		InsertInstruction(MulTestData, 0x90, 0x00, 0x0A, 0x00);	// MULI : R0 *= 10
 		InsertInstruction(MulTestData, 0x91, 0x01, 0x00, 0x00);	// MUL : R1 *= R0
 		InsertInstruction(MulTestData, 0x92, 0x01, 0x02, 0x00);	// MUL : R2 = R1 * R0
+		InsertInstruction(MulTestData, 0x90, 0x03, 0x00, 0x00);	// MUL : R3 *= 0
 		InsertInstruction(MulTestData, 0x92, 0x22, 0x03, 0x00);	// MUL : R3 = R2 * R2
 	}
 
@@ -195,6 +196,7 @@ private:
 	*/
 	void SetupOrTestData()
 	{
+		InsertInstruction(OrTestData, 0x70, 0x00, 0x00, 0x00);	// ORI : R0 | 0
 		InsertInstruction(OrTestData, 0x70, 0x00, 0x01, 0x00);	// ORI : R0 | 1
 		InsertInstruction(OrTestData, 0x71, 0x01, 0x00, 0x00);	// OR : R1 |= R0
 		InsertInstruction(OrTestData, 0x72, 0x03, 0x02, 0x00);	// OR : R2 = R0 | R3

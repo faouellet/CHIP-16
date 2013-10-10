@@ -224,7 +224,7 @@ void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std:
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			UInt16 l_IVal = FetchImmediateValue();
-			in_FRH(l_Addr, l_IVal);
+			in_FRH(m_Registers[l_Addr], l_IVal);
 			m_Registers[l_Addr] = in_Ins(m_Registers[l_Addr], l_IVal);
 			SetSignZeroFlag(m_Registers[l_Addr]);
 			break;
@@ -681,6 +681,7 @@ void CPU::InterpretShifts()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			SetSignZeroFlag(m_Registers[l_Addr]);
 			m_PC++;
 			break;
 		}
@@ -688,6 +689,7 @@ void CPU::InterpretShifts()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			SetSignZeroFlag(m_Registers[l_Addr]);
 			m_PC++;
 			break;
 		}
@@ -695,6 +697,7 @@ void CPU::InterpretShifts()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], m_Memory[m_PC++] & 0xF);
+			SetSignZeroFlag(m_Registers[l_Addr]);
 			m_PC++;
 			break;
 		}
@@ -709,6 +712,7 @@ void CPU::InterpretShifts()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
+			SetSignZeroFlag(m_Registers[l_Addr]);
 			m_PC++;
 			break;
 		}
@@ -716,6 +720,7 @@ void CPU::InterpretShifts()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
+			SetSignZeroFlag(m_Registers[l_Addr]);
 			m_PC++;
 			break;
 		}
@@ -831,7 +836,7 @@ void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2)
 void CPU::SetCarryOverflowFlagDiv(UInt16 in_Op1, UInt16 in_Op2) 
 {
 	// Set carry flag
-	m_FR = in_Op1 % in_Op2 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+	m_FR = in_Op2 % in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 }
 
 void CPU::SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2) 
