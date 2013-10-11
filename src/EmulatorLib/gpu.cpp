@@ -129,7 +129,7 @@ UInt8 GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 		for(int j = 0; j < m_Sprite.Height; ++j)
 		{
 			// TODO : Test hits with other sprites
-			l_Hit += m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)];
+			// l_Hit += ;
 
 			m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] = in_Sprite[i * m_Sprite.Height + j];
 		}
@@ -167,7 +167,7 @@ void GPU::SetBackgroundColor(UInt8 in_ColorIndex)
 		m_Colors[in_ColorIndex] & 0x00FF00, m_Colors[in_ColorIndex] & 0x0000FF, 255);
 }
 
-void GPU::SetSpriteDimensions(UInt8 in_Width, UInt8 in_Height) 
+void GPU::SetSpriteDimensions(UInt8 in_Height, UInt8 in_Width) 
 {
 	m_Sprite.Width = in_Width * 2;
 	m_Sprite.Height = in_Height;

@@ -162,10 +162,17 @@ BOOST_AUTO_TEST_CASE( SubTest )
 	Cpu.InterpretOp();	// ADDI : R0 += 12
 	Cpu.InterpretOp();	// SUBI : R0 -= 4
 	Cpu.InterpretOp();	// SUB : R1 -= 4
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
 	Cpu.InterpretOp();	// SUB : R0 -= R1
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 1) & 0x1, 0);	// Carry flag unset
 	Cpu.InterpretOp();	// SUB : R1 -= R0
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	Cpu.InterpretOp();	// SUB : R2 = R0 - R1
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
 	Cpu.InterpretOp();	// SUB : R3 = R1 - R0
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	//cpu.InterpretOp();	// CMPI
 	//cpu.InterpretOp();	// CMP
 	std::vector<UInt16> l_SubDump(Cpu.DumpRegisters());

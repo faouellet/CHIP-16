@@ -33,8 +33,9 @@ BOOST_AUTO_TEST_CASE( AdsrTest )
 
 BOOST_AUTO_TEST_CASE( BC_TestRom )
 {
-	/*BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/ASCII/ASCII.c16"), Utils::NoError);
-	Emu.Emulate();*/
+	BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/ASCII/ASCII.c16"), Utils::NoError);
+	//BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/BC_TestRom/BC_TestRom.c16"), Utils::NoError);
+	Emu.Emulate();
 }
 
 BOOST_AUTO_TEST_CASE( CollisionTest )

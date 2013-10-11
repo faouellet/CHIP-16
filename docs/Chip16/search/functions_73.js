@@ -3,7 +3,7 @@ var searchData=
   ['setbackgroundcolor',['SetBackgroundColor',['../class_g_p_u.html#afc1d89644aeaeee535a94257e78280fe',1,'GPU']]],
   ['setoriginalcolorpalette',['SetOriginalColorPalette',['../class_g_p_u.html#a39a3418c641398e4da591962bc3a66f3',1,'GPU']]],
   ['setsignzeroflag',['SetSignZeroFlag',['../class_c_p_u.html#a3ace29681aa63f0552c37f431ff980e0',1,'CPU']]],
-  ['setspritedimensions',['SetSpriteDimensions',['../class_g_p_u.html#a379fa51e51eb623c3811cd97a418f6e1',1,'GPU']]],
+  ['setspritedimensions',['SetSpriteDimensions',['../class_g_p_u.html#a434857b1a413826d0d8315f67af4086a',1,'GPU']]],
   ['setupaddtestdata',['SetupAddTestData',['../struct_c_p_u_fixture.html#a1da3456a88a7e583051a5e7529b2682f',1,'CPUFixture']]],
   ['setupandtestdata',['SetupAndTestData',['../struct_c_p_u_fixture.html#a26ace7215d3a8c4284dd7612283c140b',1,'CPUFixture']]],
   ['setuparithmeticdata',['SetupArithmeticData',['../struct_c_p_u_fixture.html#a37fcf8c40cec4509e0fd2be205b7a18d',1,'CPUFixture']]],

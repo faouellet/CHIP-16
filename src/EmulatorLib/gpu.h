@@ -44,7 +44,7 @@ private:
 		* \fn Sprite
 		* \brief Default constructor
 		*/
-		Sprite() : FlipHorizontal(true), FlipVertical(true), Height(0), Width(0) { }
+		Sprite() : FlipHorizontal(false), FlipVertical(false), Height(0), Width(0) { }
 		
 		/**
 		* \fn ~Sprite
@@ -178,10 +178,10 @@ public:
 	/**
 	* \fn SetSpriteDimensions
 	* \brief Set the sprite witdt and height to new dimensions
-	* \param in_Width The new sprite width
 	* \param in_Height The new sprite height
+	* \param in_Width The new sprite width
 	*/
-	void SetSpriteDimensions(UInt8 in_Width, UInt8 in_Height);
+	void SetSpriteDimensions(UInt8 in_Height, UInt8 in_Width);
 };
 
 #endif // GPU_H

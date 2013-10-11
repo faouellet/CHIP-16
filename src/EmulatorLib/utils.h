@@ -122,7 +122,7 @@ namespace Utils
 
 	/**
 	* \struct Divide
-	* \brief TODO : Explain why this and not std::divides
+	* \brief Divides the right hand side operand ... TODO
 	*/
 	struct Divides
 	{

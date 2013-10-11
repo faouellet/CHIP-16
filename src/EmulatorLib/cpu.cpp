@@ -750,8 +750,8 @@ void CPU::InterpretStores()
 		{
 			UInt16 l_XVal, l_YVal;
 			FetchRegistersValues(l_XVal, l_YVal);
-			m_Memory[m_Registers[l_YVal]] = l_XVal & 0xFF00;
-			m_Memory[m_Registers[l_YVal]+1] = l_XVal & 0x00FF;
+			m_Memory[l_YVal] = l_XVal & 0xFF00;
+			m_Memory[l_YVal+1] = l_XVal & 0x00FF;
 			m_PC += 3;
 			break;
 		}
@@ -824,6 +824,8 @@ void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2)
 
 void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2) 
 {
+	// TODO : Change static_cast to bitwise check
+
 	UInt16 l_Result = in_Op1 + in_Op2;
 	// Set carry flag
 	m_FR = l_Result < in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
@@ -849,11 +851,13 @@ void CPU::SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2)
 
 void CPU::SetCarryOverflowFlagSub(UInt16 in_Op1, UInt16 in_Op2) 
 {
+	// TODO : Change static_cast to bitwise check
+	
 	UInt16 l_Result = in_Op1 - in_Op2;
 	// Set carry flag
-	m_FR = l_Result > in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+	m_FR = l_Result > in_Op1 && static_cast<Int16>(in_Op2) > 0 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 	// Set overflow flag
-	m_FR = (l_Result >= 0 && in_Op1 < 0 && in_Op2 >= 0)
-		|| (l_Result < 0 && in_Op1 >= 0 && in_Op2 < 0) ?
+	m_FR = (l_Result >= 0 && static_cast<Int16>(in_Op1) < 0 && static_cast<Int16>(in_Op2 >= 0))
+		|| (l_Result < 0 && static_cast<Int16>(in_Op1) >= 0 && static_cast<Int16>(in_Op2 < 0)) ?
 		m_FR | SignedOverflowFlag : m_FR & ~SignedOverflowFlag;
 }
