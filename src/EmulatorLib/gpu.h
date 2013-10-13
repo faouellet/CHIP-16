@@ -56,6 +56,7 @@ private:
 private:
 	// Q : UInt32 or UInt8 for the screen buffer ???
 	UInt32 m_ScreenBuffer[WIDTH][HEIGHT];		/*!< Buffer to be drawn */
+	UInt32 m_ScreenColors[WIDTH][HEIGHT];		/*!< Actual graphics to be drawn */
 
 	UInt8 m_SpritesVerticalOrientation;			/*!< Vertical orientation of all the sprites */
 	UInt8 m_SpritesHorizontalOrientation;		/*!< Horizontal orientation of all the sprites */

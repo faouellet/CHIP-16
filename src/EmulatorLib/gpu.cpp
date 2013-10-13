@@ -11,6 +11,9 @@ GPU::GPU() : m_Window(std::unique_ptr<SDL_Window, void(*)(SDL_Window*)>(nullptr,
 	m_Texture(std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)>(nullptr, SDL_DestroyTexture))
 {
 	SetOriginalColorPalette();
+	// Paint it black
+	memset(m_ScreenBuffer, 0, sizeof(UInt32)*HEIGHT*WIDTH);
+	memset(m_ScreenColors, 0, sizeof(UInt32)*HEIGHT*WIDTH);
 }
 
 GPU::~GPU() 
@@ -92,6 +95,8 @@ void GPU::ClearScreen()
 
 UInt8 GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
 {
+	// TODO : Allow to draw to negative coordinates
+
 	// Validate X and Y coordinates
 	if(in_X > WIDTH - 1 || in_Y > HEIGHT -1)
 		return 0;
@@ -124,14 +129,20 @@ UInt8 GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 	}
 
 	UInt8 l_Hit = 0;
-	for(int i = 0; i < m_Sprite.Width; ++i)
+	for(int i = 0; i < m_Sprite.Height; ++i)
 	{
-		for(int j = 0; j < m_Sprite.Height; ++j)
+		for(int j = 0; j < m_Sprite.Width; ++j)
 		{
-			// TODO : Test hits with other sprites
-			// l_Hit += ;
+			// Draw if not transparent
+			if(in_Sprite[i * m_Sprite.Width + j])
+			{
+				auto x = l_XIndex(i);
+				auto y = l_YIndex(j);
+				// Test hits with other sprites
+				l_Hit += m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] == 0 ? 0 : 1;
 
-			m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] = in_Sprite[i * m_Sprite.Height + j];
+				m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] = in_Sprite[i * m_Sprite.Width + j];
+			}
 		}
 	}
 
@@ -147,7 +158,16 @@ void GPU::Flip(UInt8 in_H, UInt8 in_V)
 void GPU::FlushBuffer()
 {
 	// Q : What to do with the current screen buffer after ???
-	SDL_UpdateTexture(m_Texture.get(), nullptr, m_ScreenBuffer, WIDTH * sizeof(UInt32));
+	
+	for(int i = 0; i < m_Sprite.Height; ++i)
+	{
+		for(int j = 0; j < m_Sprite.Width; ++j)
+		{
+			m_ScreenColors[j][i] = m_Colors[m_ScreenBuffer[j][i]];
+		}
+	}
+
+	SDL_UpdateTexture(m_Texture.get(), nullptr, m_ScreenColors, WIDTH * sizeof(UInt32));
 	SDL_RenderClear(m_Renderer.get());
 	SDL_RenderCopy(m_Renderer.get(), m_Texture.get(), nullptr, nullptr);
 	SDL_RenderPresent(m_Renderer.get());
