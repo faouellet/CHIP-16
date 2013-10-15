@@ -45,6 +45,7 @@ private:
 
 	UInt16 m_ErrorCode;		/*!< Code used when an error happens during emulation */
 	
+	// TODO : They should be treated as signed
 	UInt16 m_Registers[16];	/*!< General purpose registers */
 
 	UInt8 m_ROMHeader[HEADER_SIZE];	/*!< The header of a .c16 file. See specs for details */

@@ -156,7 +156,7 @@ private:
 
 		InsertInstruction(DivTestData, 0xA0, 0x00, 0x20, 0x00);	// DIVI : R0 = 32 / R0
 		InsertInstruction(DivTestData, 0XA1, 0x21, 0x00, 0x00);	// DIV : R1 = R2 / R1
-		InsertInstruction(DivTestData, 0XA2, 0x02, 0x03, 0x00);	// DIV : R3 = R0 / R2
+		InsertInstruction(DivTestData, 0XA2, 0x12, 0x03, 0x00);	// DIV : R3 = R1 / R2
 	}
 
 	/**

@@ -124,13 +124,13 @@ namespace Utils
 	* \struct Divide
 	* \brief Divides the right hand side operand ... TODO
 	*/
-	struct Divides
+	/*struct Divides
 	{
 		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS) const
 		{
 			return in_RHS / in_LHS;
 		}
-	};
+	};*/
 
 	/**
 	* \struct ArithmeticRightShift

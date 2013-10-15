@@ -186,7 +186,7 @@ unsigned CPU::InterpretOp()
 		}
 		case 0xA:	// Div
 		{
-			InterpretArithmetics(Divides(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
+			InterpretArithmetics(std::divides<UInt16>(), [this](UInt16 in_Op1, UInt16 in_Op2){ this->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
 			break;
 		}
 		case 0xB:	// Shift
@@ -253,6 +253,7 @@ void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std:
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			UInt16 l_IVal = FetchImmediateValue();
+			in_FRH(m_Registers[l_Addr], l_IVal);
 			UInt16 l_Result = in_Ins(m_Registers[l_Addr], l_IVal);
 			SetSignZeroFlag(l_Result);
 			break;
@@ -261,6 +262,7 @@ void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std:
 		{
 			UInt16 l_XVal, l_YVal;
 			FetchRegistersValues(l_XVal, l_YVal);
+			in_FRH(l_XVal, l_YVal);
 			UInt16 l_Result = in_Ins(l_XVal, l_YVal);
 			SetSignZeroFlag(l_Result);
 			m_PC += 3;
@@ -363,33 +365,35 @@ unsigned CPU::InterpretConditions(UInt8 in_CondCode)
 	switch (in_CondCode & 0xF)
 	{
 		case 0x0:	// Z
-			return m_FR & 0x4;
+			return m_FR & ZeroFlag;
 		case 0x1:	// NZ
-			return !(m_FR & 0x4);
+			return m_FR ^ (m_FR | ZeroFlag);
 		case 0x2:	// N
-			return m_FR & 0x80;
+			return m_FR & NegativeFlag;
 		case 0x3:	// NN
-			return !(m_FR & 0x80);
+			return (m_FR ^ (m_FR | NegativeFlag));
 		case 0x4:	// P
-			return !(m_FR & 0x4) && !(m_FR & 0x80);
+			return !(m_FR & ZeroFlag) && (m_FR ^ (m_FR | NegativeFlag));
 		case 0x5:	// O
-		case 0x9:	// B
-			return m_FR & 0x40;
+			return m_FR & SignedOverflowFlag;
 		case 0x6:	// NO
-		case 0x8:	// AE
-			return !(m_FR & 0x40);
+			return m_FR ^ (m_FR | SignedOverflowFlag);
 		case 0x7:	// A
-			return !(m_FR & 0x4) && !(m_FR & 0x40);
+			return (m_FR ^ (m_FR | ZeroFlag)) && (m_FR ^ (m_FR | SignedOverflowFlag));
+		case 0x8:	// AE
+			return m_FR ^ (m_FR | UnsignedCarryFlag);
+		case 0x9:	// B
+			return m_FR & UnsignedCarryFlag;
 		case 0xA:	// BE
-			return (m_FR & 0x4) || (m_FR & 0x40);
+			return (m_FR & ZeroFlag) || (m_FR & UnsignedCarryFlag);
 		case 0xB:	// G
-			return (m_FR & 0x4) && ((m_FR & 0x40) == (m_FR & 0x80));
+			return (m_FR & ZeroFlag) && ((m_FR & SignedOverflowFlag) == (m_FR & NegativeFlag));
 		case 0xC:	// GE
-			return ((m_FR & 0x40) == (m_FR & 0x80));
+			return ((m_FR & SignedOverflowFlag) == (m_FR & NegativeFlag));
 		case 0xD:	// L
-			return ((m_FR & 0x40) != (m_FR & 0x80));
+			return ((m_FR & SignedOverflowFlag) != (m_FR & NegativeFlag));
 		case 0xE:	// LE
-			return m_FR & 0x4 || ((m_FR & 0x40) != (m_FR & 0x80));
+			return m_FR & ZeroFlag || ((m_FR & SignedOverflowFlag) != (m_FR & NegativeFlag));
 		default:
 		{
 			m_ErrorCode |= ConditionError;
@@ -582,7 +586,7 @@ void CPU::InterpretPalettes()
 		{
 			m_PC++;
 			l_Addr = FetchImmediateValue();
-			for(int i = 0; i < 16*3; i+=3)
+			for(int i = 0; i < 16; i+=3)
 			{
 				l_PaletteData[i][0] = m_Memory[l_Addr+i];
 				l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
@@ -593,7 +597,7 @@ void CPU::InterpretPalettes()
 		case 0x1:
 		{
 			l_Addr = m_Registers[FetchRegisterAddress()];
-			for(int i = 0; i < 16*3; i+=3)
+			for(int i = 0; i < 16; i+=3)
 			{
 				l_PaletteData[i][0] = m_Memory[l_Addr+i];
 				l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
@@ -608,13 +612,6 @@ void CPU::InterpretPalettes()
 			m_ErrorCode |= PaletteError;
 			return;
 		}
-	}
-
-	for(UInt16 i = 0; i < 16; ++i)
-	{
-		l_PaletteData[i][0] = m_Memory[l_Addr+i];
-		l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
-		l_PaletteData[i][2] = m_Memory[l_Addr+i+2];
 	}
 	m_GPU.LoadPalette(l_PaletteData);
 }
@@ -705,23 +702,24 @@ void CPU::InterpretShifts()
 		{
 			UInt16 l_Addr = m_Memory[m_PC] & 0xF;
 			m_Registers[l_Addr] = LeftShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
+			SetSignZeroFlag(m_Registers[l_Addr]);
 			m_PC += 2;
 			break;
 		}
 		case 0x4:	// SHR
 		{
-			UInt16 l_Addr = FetchRegisterAddress();
+			UInt16 l_Addr = m_Memory[m_PC] & 0xF;
 			m_Registers[l_Addr] = LogicalRightShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
 			SetSignZeroFlag(m_Registers[l_Addr]);
-			m_PC++;
+			m_PC+=2;
 			break;
 		}
 		case 0x5:	// SAR
 		{
-			UInt16 l_Addr = FetchRegisterAddress();
+			UInt16 l_Addr = m_Memory[m_PC] & 0xF;
 			m_Registers[l_Addr] = ArithmeticRightShift()(m_Registers[l_Addr], m_Registers[(m_Memory[m_PC++] & 0xF0) >> 4]);
 			SetSignZeroFlag(m_Registers[l_Addr]);
-			m_PC++;
+			m_PC+=2;
 			break;
 		}
 		default:
@@ -817,7 +815,7 @@ void CPU::SetSignZeroFlag(UInt16 in_Result)
 	// Set the zero flag (Bit[2])
 	m_FR = in_Result == 0 ? m_FR | ZeroFlag : m_FR & ~ZeroFlag;
 	// Set the negative flag (Bit[7])
-	m_FR = in_Result & 0x4000 ? m_FR | NegativeFlag : m_FR & ~NegativeFlag;
+	m_FR = in_Result & 0x8000 ? m_FR | NegativeFlag : m_FR & ~NegativeFlag;
 }
 
 void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2)
@@ -841,7 +839,7 @@ void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2)
 void CPU::SetCarryOverflowFlagDiv(UInt16 in_Op1, UInt16 in_Op2) 
 {
 	// Set carry flag
-	m_FR = in_Op2 % in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+	m_FR = in_Op1 % in_Op2 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 }
 
 void CPU::SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2) 
@@ -856,9 +854,9 @@ void CPU::SetCarryOverflowFlagSub(UInt16 in_Op1, UInt16 in_Op2)
 {
 	// TODO : Change static_cast to bitwise check
 	
-	UInt16 l_Result = in_Op1 - in_Op2;
+	UInt32 l_Result = in_Op1 - in_Op2;
 	// Set carry flag
-	m_FR = l_Result > in_Op1 && static_cast<Int16>(in_Op2) > 0 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+	m_FR = l_Result & 0x10000 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 	// Set overflow flag
 	m_FR = (l_Result >= 0 && static_cast<Int16>(in_Op1) < 0 && static_cast<Int16>(in_Op2 >= 0))
 		|| (l_Result < 0 && static_cast<Int16>(in_Op1) >= 0 && static_cast<Int16>(in_Op2 < 0)) ?

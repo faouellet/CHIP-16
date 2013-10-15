@@ -74,20 +74,18 @@ BOOST_AUTO_TEST_CASE( DivTest )
 	Cpu.InterpretOp();	// ADDI : R0 += 8
 	Cpu.InterpretOp();	// ADDI : R1 += 4
 	Cpu.InterpretOp();	// ADDI : R2 += 2
-	Cpu.InterpretOp();	// DIVI : R0 = 32 / R0
-	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
-	Cpu.InterpretOp();	// DIV : R1 = R2 / R1
+	Cpu.InterpretOp();	// DIVI : R0 /= 32
 	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
-	Cpu.InterpretOp();	// DIV : R3 = R0 / R2
+	Cpu.InterpretOp();	// DIV : R1 /= R2
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+	Cpu.InterpretOp();	// DIV : R3 = R2 / R1
 	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
 	std::vector<UInt16> l_DivDump(Cpu.DumpRegisters());
 
-	// TODO : Test div by 0
-	BOOST_REQUIRE_EQUAL(l_DivDump[0], 4);
-	BOOST_REQUIRE_EQUAL(l_DivDump[1], 0);
+	BOOST_REQUIRE_EQUAL(l_DivDump[0], 0);
+	BOOST_REQUIRE_EQUAL(l_DivDump[1], 2);
 	BOOST_REQUIRE_EQUAL(l_DivDump[2], 2);
-	BOOST_REQUIRE_EQUAL(l_DivDump[3], 2);
+	BOOST_REQUIRE_EQUAL(l_DivDump[3], 1);
 
 	for(int i = 4; i < NB_REGISTERS; ++i)
 		BOOST_REQUIRE_EQUAL(l_DivDump[i], 0);
@@ -166,7 +164,7 @@ BOOST_AUTO_TEST_CASE( SubTest )
 	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
 	Cpu.InterpretOp();	// SUB : R0 -= R1
 	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
-	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 1) & 0x1, 0);	// Carry flag unset
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
 	Cpu.InterpretOp();	// SUB : R1 -= R0
 	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	Cpu.InterpretOp();	// SUB : R2 = R0 - R1
@@ -285,7 +283,7 @@ BOOST_AUTO_TEST_CASE( ShiftTest )
 	Cpu.InterpretOp();	// SHL : R4 << R1 (Logical)
 	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	Cpu.InterpretOp();	// SHR : R5 >> R1 (Logical)
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
 	Cpu.InterpretOp();	// SAL : R6 << R1 (Arithmetic)
 	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 	Cpu.InterpretOp();	// SAR : R7 >> R1 (Arithmetic)
@@ -298,7 +296,7 @@ BOOST_AUTO_TEST_CASE( ShiftTest )
 	BOOST_REQUIRE_EQUAL(l_ShiftDump[2], 57344);
 	BOOST_REQUIRE_EQUAL(l_ShiftDump[3], 65535);
 	BOOST_REQUIRE_EQUAL(l_ShiftDump[4], 65408);
-	BOOST_REQUIRE_EQUAL(l_ShiftDump[5], 65535);
+	BOOST_REQUIRE_EQUAL(l_ShiftDump[5], 511);
 	BOOST_REQUIRE_EQUAL(l_ShiftDump[6], 65408);
 	BOOST_REQUIRE_EQUAL(l_ShiftDump[7], 65535);
 	

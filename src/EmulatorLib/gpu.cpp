@@ -3,6 +3,8 @@
 #include <functional>
 #include <vector>
 
+#include <iostream>
+
 // TODO : Document the usage of the SDL functions
 
 
@@ -26,18 +28,18 @@ void GPU::SetOriginalColorPalette()
 	m_Colors[0] = 0x000000;		// Black (Transparent in foreground layer)
 	m_Colors[1] = 0x000000;		// Black
 	m_Colors[2] = 0x888888;		// Gray
-	m_Colors[3] = 0xBF3932;		// Red
-	m_Colors[4] = 0xDE7AAE;		// Pink
-	m_Colors[5] = 0x4C3D21;		// Dark Brown
-	m_Colors[6] = 0x905F25;		// Brown
-	m_Colors[7] = 0xE49452;		// Orange
-	m_Colors[8] = 0xEAD979;		// Yellow
-	m_Colors[9] = 0x537A3B;		// Green
-	m_Colors[10] = 0xABD54A;	// Light Green
-	m_Colors[11] = 0x252E38;	// Dark Blue
-	m_Colors[12] = 0x00467F;	// Blue
-	m_Colors[13] = 0x68ABCC;	// Light Blue
-	m_Colors[14] = 0xBCDEE4;	// Sky Blue
+	m_Colors[3] = 0x3239BF;		// Red
+	m_Colors[4] = 0xAE7ADE;		// Pink
+	m_Colors[5] = 0x213D4C;		// Dark Brown
+	m_Colors[6] = 0x255F90;		// Brown
+	m_Colors[7] = 0x5294E4;		// Orange
+	m_Colors[8] = 0x79D9EA;		// Yellow
+	m_Colors[9] = 0x3B7A53;		// Green
+	m_Colors[10] = 0x4AD5AB;	// Light Green
+	m_Colors[11] = 0x382E25;	// Dark Blue
+	m_Colors[12] = 0x7F4600;	// Blue
+	m_Colors[13] = 0xCCAB68;	// Light Blue
+	m_Colors[14] = 0xE4DEBC;	// Sky Blue
 	m_Colors[15] = 0xFFFFFF;	// White
 }
 
@@ -105,7 +107,32 @@ bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 	// Deal with the horizontal and vertical flip
 	/*UInt16 l_XStart, l_YStart;
 	UInt16 l_XEnd, l_YEnd;
-	UInt16 l_XInc, l_YInc;*/
+	UInt16 l_XInc, l_YInc;
+
+	if(m_Sprite.FlipHorizontal)
+	{
+		l_XStart = 
+		l_XEnd =
+		l_XInc =
+	}
+	else
+	{
+		l_XStart = 
+		l_XEnd =
+		l_XInc =
+	}
+	if(m_Sprite.FlipVertical)
+	{
+		l_YStart = 
+		l_YEnd =
+		l_YInc =
+	}
+	else
+	{
+		l_YStart = 
+		l_YEnd =
+		l_YInc =
+	}*/
 
 	UInt8 l_Hit = 0;
 	for(int i = 0; i < m_Sprite.Height; ++i)
@@ -114,8 +141,8 @@ bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 		{
 			// Test hits with other sprites
 			l_Hit += m_ScreenBuffer[j+in_X][i+in_Y] == 0 ? 0 : 1;
-
-			m_ScreenBuffer[j+in_X][i+in_Y] = in_Sprite[i * m_Sprite.Width + j];
+			if(in_Sprite[i * m_Sprite.Width + j])
+				m_ScreenBuffer[i+in_Y][j+in_X] = in_Sprite[i * m_Sprite.Width + j];
 		}
 	}
 
@@ -136,12 +163,10 @@ void GPU::FlushBuffer()
 	{
 		for(int j = 0; j < WIDTH; ++j)
 		{
-			if(m_Colors[m_ScreenBuffer[j][i]])
-				auto x = 1;
-			m_ScreenColors[i][j] = m_Colors[m_ScreenBuffer[j][i]];
+			m_ScreenColors[i][j] = m_Colors[m_ScreenBuffer[i][j]];
 		}
 	}
-
+	
 	SDL_UpdateTexture(m_Texture.get(), nullptr, m_ScreenColors, WIDTH * sizeof(UInt32));
 	SDL_RenderClear(m_Renderer.get());
 	SDL_RenderCopy(m_Renderer.get(), m_Texture.get(), nullptr, nullptr);
@@ -158,8 +183,9 @@ void GPU::LoadPalette(const UInt8 in_Palette[16][3])
 
 void GPU::SetBackgroundColor(UInt8 in_ColorIndex) 
 {
-	SDL_SetRenderDrawColor(m_Renderer.get(), m_Colors[in_ColorIndex] & 0xFF0000,
-		m_Colors[in_ColorIndex] & 0x00FF00, m_Colors[in_ColorIndex] & 0x0000FF, 255);
+	for(int i = 0; i < HEIGHT; ++i)
+		for(int j = 0; j < WIDTH; ++j)
+			m_ScreenBuffer[i][j] = in_ColorIndex;
 }
 
 void GPU::SetSpriteDimensions(UInt8 in_Height, UInt8 in_Width) 

@@ -1,5 +1,5 @@
 - Add a nice GUI interface
-- REFACTOR
+- REFACTOR (function pointers table maybe?)
 - License ??
 - Update README
 - Allow user to choose screen resolution
