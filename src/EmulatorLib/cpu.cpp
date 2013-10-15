@@ -421,14 +421,14 @@ void CPU::InterpretLoads()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			UInt16 l_IVal = FetchImmediateValue();
-			m_Registers[l_Addr] = (m_Memory[l_IVal] << 8) | m_Memory[l_IVal+1];
+			m_Registers[l_Addr] = (m_Memory[l_IVal+1] << 8) | m_Memory[l_IVal];
 			break;
 		}
 		case 0x3:	// LDM	(indirect)
 		{
 			UInt16 l_AddrX = m_Memory[m_PC] & 0xF;
 			UInt16 l_AddrY = (m_Memory[m_PC] & 0xF0) >> 4;
-			UInt16 l_Val = (m_Memory[m_Registers[l_AddrY]] << 8) | m_Memory[m_Registers[l_AddrY]+1];
+			UInt16 l_Val = (m_Memory[m_Registers[l_AddrY]+1] << 8) | m_Memory[m_Registers[l_AddrY]];
 			m_Registers[l_AddrX] = l_Val;
 			m_PC += 3;
 			break;
@@ -496,8 +496,8 @@ void CPU::InterpretMisc()
 			FetchRegistersValues(l_XVal, l_YVal);
 			m_PC++;
 			UInt16 l_Addr = FetchImmediateValue();
-			UInt8 l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
-			m_FR = l_RetVal > 0 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+			bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
+			m_FR = l_RetVal ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 			break;
 		}
 		case 0x6:	// DRW
@@ -507,8 +507,8 @@ void CPU::InterpretMisc()
 			m_PC++;
 			UInt16 l_Addr = m_Memory[m_PC++];
 			m_PC++;
-			UInt8 l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
-			m_FR = l_RetVal > 0 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
+			bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
+			m_FR = l_RetVal ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 			break;
 		}
 		case 0x7:	// RND
@@ -742,16 +742,16 @@ void CPU::InterpretStores()
 		{
 			UInt16 l_RegAddr = FetchRegisterAddress();
 			UInt16 l_MemAddr = FetchImmediateValue();
-			m_Memory[l_MemAddr] = m_Registers[l_RegAddr] & 0xFF00;
-			m_Memory[l_MemAddr+1] = m_Registers[l_RegAddr] & 0x00FF;
+			m_Memory[l_MemAddr] = m_Registers[l_RegAddr] & 0x00FF;
+			m_Memory[l_MemAddr+1] = m_Registers[l_RegAddr] >> 8;
 			break;
 		}
 		case 0x1:	// STM	(indirect)
 		{
 			UInt16 l_XVal, l_YVal;
 			FetchRegistersValues(l_XVal, l_YVal);
-			m_Memory[l_YVal] = l_XVal & 0xFF00;
-			m_Memory[l_YVal+1] = l_XVal & 0x00FF;
+			m_Memory[l_YVal] = l_XVal & 0x00FF;
+			m_Memory[l_YVal+1] = l_XVal >> 8;
 			m_PC += 3;
 			break;
 		}
@@ -786,8 +786,11 @@ std::vector<UInt8> CPU::FetchSprite(UInt16 in_Addr) const
 	std::vector<UInt8> l_SpriteData(m_GPU.SpriteWidth() * m_GPU.SpriteHeight());
 
 	// TODO : What if the address is invalid or if part of the sprite is in the stack?
-	for(int i = 0; i < m_GPU.SpriteWidth() * m_GPU.SpriteHeight(); ++i)
-		l_SpriteData[i] = m_Memory[in_Addr + i];
+	for(int i = 0; i < (m_GPU.SpriteWidth() * m_GPU.SpriteHeight())/2; ++i)
+	{
+		l_SpriteData[2*i] = m_Memory[in_Addr + i] >> 4;
+		l_SpriteData[2*i+1] = m_Memory[in_Addr + i] & 0xF;
+	}
 
 	return l_SpriteData;
 }

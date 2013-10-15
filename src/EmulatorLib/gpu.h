@@ -145,8 +145,9 @@ public:
 	* \param in_X The X coordinate of where to draw the sprite
 	* \param in_Y The Y coordinate of where to draw the sprite
 	* \param in_Sprite The sprite to be drawn on the screen
+	* \return Any sprite hit when drawing
 	*/
-	UInt8 Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite);
+	bool Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite);
 
 	/**
 	* \fn Flip

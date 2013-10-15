@@ -168,8 +168,8 @@ private:
 		InsertInstruction(MemoryTestData, 0x20, 0x00, 0xFF, 0x00);	// LDI : R0 = 255
 		InsertInstruction(MemoryTestData, 0x31, 0x00, 0x00, 0x00);	// STM : Memory[R0] = R0
 		InsertInstruction(MemoryTestData, 0x21, 0x00, 0xF1, 0xFD);	// LDI : SP = SP + 1
-		InsertInstruction(MemoryTestData, 0x30, 0x00, 0xFF, 0x00);	// STM : Memory[FF] = R0
-		InsertInstruction(MemoryTestData, 0x22, 0x02, 0xFF, 0x00);	// LDM : R2 = Memory[FF]
+		InsertInstruction(MemoryTestData, 0x30, 0x00, 0xF0, 0x00);	// STM : Memory[F0] = R0
+		InsertInstruction(MemoryTestData, 0x22, 0x02, 0xF0, 0x00);	// LDM : R2 = Memory[F0]
 		InsertInstruction(MemoryTestData, 0x23, 0x03, 0x00, 0x00);	// LDM : R3 = Memory[R0]
 		InsertInstruction(MemoryTestData, 0x24, 0x02, 0x00, 0x00);	// MOV : R2 = R0
 	}

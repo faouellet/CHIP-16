@@ -93,60 +93,33 @@ void GPU::ClearScreen()
 	SDL_RenderClear(m_Renderer.get());
 }
 
-UInt8 GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
+bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
 {
-	// TODO : Allow to draw to negative coordinates
+	// TODO1 : Allow to draw to negative coordinates
+	// TODO2 : Flip left and right pixel when needed
 
 	// Validate X and Y coordinates
 	if(in_X > WIDTH - 1 || in_Y > HEIGHT -1)
 		return 0;
 
 	// Deal with the horizontal and vertical flip
-	std::function<UInt16(int)> l_XIndex;
-	std::function<UInt16(int)> l_YIndex;
-	UInt16 l_XStart, l_YStart;
-
-	if(m_Sprite.FlipHorizontal)
-	{
-		l_XStart = in_X + m_Sprite.Width;
-		l_XIndex = [l_XStart](int i){ return l_XStart - i; };
-	}
-	else
-	{
-		l_XStart = in_X;
-		l_XIndex = [l_XStart](int i){ return l_XStart + i; };
-	}
-
-	if(m_Sprite.FlipVertical)
-	{
-		l_YStart = in_Y + m_Sprite.Height;
-		l_YIndex = [l_YStart](int i){ return l_YStart - i; };
-	}
-	else
-	{
-		l_YStart = in_Y;
-		l_YIndex = [l_YStart](int i){ return l_YStart + i; };
-	}
+	/*UInt16 l_XStart, l_YStart;
+	UInt16 l_XEnd, l_YEnd;
+	UInt16 l_XInc, l_YInc;*/
 
 	UInt8 l_Hit = 0;
 	for(int i = 0; i < m_Sprite.Height; ++i)
 	{
 		for(int j = 0; j < m_Sprite.Width; ++j)
 		{
-			// Draw if not transparent
-			if(in_Sprite[i * m_Sprite.Width + j])
-			{
-				auto x = l_XIndex(i);
-				auto y = l_YIndex(j);
-				// Test hits with other sprites
-				l_Hit += m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] == 0 ? 0 : 1;
+			// Test hits with other sprites
+			l_Hit += m_ScreenBuffer[j+in_X][i+in_Y] == 0 ? 0 : 1;
 
-				m_ScreenBuffer[l_XIndex(i)][l_YIndex(j)] = in_Sprite[i * m_Sprite.Width + j];
-			}
+			m_ScreenBuffer[j+in_X][i+in_Y] = in_Sprite[i * m_Sprite.Width + j];
 		}
 	}
 
-	return l_Hit;
+	return l_Hit > 0;
 }
 
 void GPU::Flip(UInt8 in_H, UInt8 in_V) 
@@ -159,11 +132,13 @@ void GPU::FlushBuffer()
 {
 	// Q : What to do with the current screen buffer after ???
 	
-	for(int i = 0; i < m_Sprite.Height; ++i)
+	for(int i = 0; i < HEIGHT; ++i)
 	{
-		for(int j = 0; j < m_Sprite.Width; ++j)
+		for(int j = 0; j < WIDTH; ++j)
 		{
-			m_ScreenColors[j][i] = m_Colors[m_ScreenBuffer[j][i]];
+			if(m_Colors[m_ScreenBuffer[j][i]])
+				auto x = 1;
+			m_ScreenColors[i][j] = m_Colors[m_ScreenBuffer[j][i]];
 		}
 	}
 

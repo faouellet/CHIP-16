@@ -212,8 +212,8 @@ BOOST_AUTO_TEST_CASE( MemoryTest )
 	Cpu.InterpretOp();	// LDI : R0 = 255
 	Cpu.InterpretOp();	// STM : Memory[R0] = R0
 	Cpu.InterpretOp();	// LDI : SP = SP + 1
-	Cpu.InterpretOp();	// STM : Memory[FF] = R0
-	Cpu.InterpretOp();	// LDM : R2 = Memory[FF]
+	Cpu.InterpretOp();	// STM : Memory[F0] = R0
+	Cpu.InterpretOp();	// LDM : R2 = Memory[F0]
 	Cpu.InterpretOp();	// LDM : R3 = Memory[R0]
 	Cpu.InterpretOp();	// MOV : R2 = R0
 	std::vector<UInt16> l_RegisterDump(Cpu.DumpRegisters());
@@ -229,8 +229,8 @@ BOOST_AUTO_TEST_CASE( MemoryTest )
 	BOOST_REQUIRE_EQUAL(Cpu.DumpStackPointer(), STACK_START + 1);
 
 	std::vector<UInt8> l_MemoryDump(Cpu.DumpMemory());
-	BOOST_REQUIRE_EQUAL(l_MemoryDump[l_RegisterDump[0]], l_RegisterDump[0] & 0xFF00);
-	BOOST_REQUIRE_EQUAL(l_MemoryDump[l_RegisterDump[0]+1], l_RegisterDump[0] & 0x00FF);
+	BOOST_REQUIRE_EQUAL(l_MemoryDump[l_RegisterDump[0]], l_RegisterDump[0] & 0x00FF);
+	BOOST_REQUIRE_EQUAL(l_MemoryDump[l_RegisterDump[0]+1], l_RegisterDump[0] & 0xFF00);
 }
 
 BOOST_AUTO_TEST_CASE( StackTest )
