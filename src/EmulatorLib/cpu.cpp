@@ -4,7 +4,7 @@
 #include <iterator>
 #include <limits>
 
-CPU::CPU() : m_Dist(0U, std::numeric_limits<UInt16>::max()), m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
+CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
 {
 	for(int i = 0; i < 16; ++i)
 		m_Registers[i] = 0;
@@ -90,31 +90,62 @@ void CPU::Reset()
 
 void CPU::UpdateController(UInt8 in_ControllerID, SDL_KeyboardEvent & in_Event)
 {
+	// TODO : Could probably use some refactoring
+
 	// Wrong in_ControllerID, do nothing
 	if(in_ControllerID != 1 && in_ControllerID != 2)
 		return;
 
-	UInt8 l_Addr = in_ControllerID == 1 ? 0xFFF0 : 0xFFF2;
+	UInt16 l_Addr = in_ControllerID == 1 ? 0xFFF0 : 0xFFF2;
 	switch (in_Event.keysym.sym)
 	{
 		case SDLK_UP:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | UP : m_Memory[l_Addr] & ~UP;
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + UP : m_Memory[l_Addr] - UP;
 			break;
 		}
 		case SDLK_DOWN:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | DOWN : m_Memory[l_Addr] & ~DOWN;
+			//m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + DOWN : m_Memory[l_Addr] - DOWN;
+			if(in_Event.type == SDL_KEYDOWN)
+				m_Memory[l_Addr] += DOWN;
+			else
+				m_Memory[l_Addr] -= DOWN;
 			break;
 		}
 		case SDLK_LEFT:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | LEFT : m_Memory[l_Addr] & ~LEFT;
+			//m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + LEFT : m_Memory[l_Addr] - LEFT;
+			if(in_Event.type == SDL_KEYDOWN)
+				m_Memory[l_Addr] += LEFT;
+			else
+				m_Memory[l_Addr] -= LEFT;
 			break;
 		}
 		case SDLK_RIGHT:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] | RIGHT : m_Memory[l_Addr] & ~RIGHT;
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + RIGHT : m_Memory[l_Addr] - RIGHT;
+			break;
+		}
+		case SDLK_LSHIFT:
+		case SDLK_RSHIFT:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + SELECT : m_Memory[l_Addr] - SELECT;
+			break;
+		}
+		case SDLK_RETURN:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + START : m_Memory[l_Addr] - START;
+			break;
+		}
+		case SDLK_z:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + A : m_Memory[l_Addr] - A;
+			break;
+		}
+		case SDLK_x:
+		{
+			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + B : m_Memory[l_Addr] - B;
 			break;
 		}
 		case SDLK_ESCAPE:
@@ -509,7 +540,7 @@ void CPU::InterpretMisc()
 			UInt16 l_XVal, l_YVal;
 			FetchRegistersValues(l_XVal, l_YVal);
 			m_PC++;
-			UInt16 l_Addr = m_Memory[m_PC++];
+			UInt16 l_Addr = m_Registers[m_Memory[m_PC++]];
 			m_PC++;
 			bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
 			m_FR = l_RetVal ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
@@ -519,16 +550,15 @@ void CPU::InterpretMisc()
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
 			UInt16 l_MaxVal = FetchImmediateValue();
-			UInt16 l_RandVal = m_Dist(m_RandEngine);
-			if(l_RandVal > l_MaxVal)
-				l_RandVal -= l_MaxVal;
+			std::uniform_int_distribution<UInt16> l_Dist(0, l_MaxVal);
+			UInt16 l_RandVal = l_Dist(m_RandEngine);
 			m_Registers[l_Addr] = l_RandVal;
 			break;
 		}
 		case 0x8:	// FLIP
 		{
 			m_PC += 2;
-			m_GPU.Flip(m_Memory[m_PC], m_Memory[m_PC++]);
+			m_GPU.Flip(m_Memory[m_PC++]);
 			break;
 		}
 		case 0x9:	// SND0
@@ -801,13 +831,13 @@ void CPU::OutputUnknownOpCode(UInt8 in_Code) const
 
 UInt16 CPU::Pop()
 {
-	return UInt16(m_Memory[--m_SP] | (m_Memory[--m_SP] << 8));
+	return UInt16(m_Memory[--m_SP] << 8 | (m_Memory[--m_SP]));
 }
 
 void CPU::Push(UInt16 in_Val)
 {
-	m_Memory[m_SP++] = (in_Val & 0xFF00) >> 8;
 	m_Memory[m_SP++] = in_Val & 0x00FF;
+	m_Memory[m_SP++] = (in_Val & 0xFF00) >> 8;
 }
 
 void CPU::SetSignZeroFlag(UInt16 in_Result)
@@ -818,10 +848,7 @@ void CPU::SetSignZeroFlag(UInt16 in_Result)
 	m_FR = in_Result & 0x8000 ? m_FR | NegativeFlag : m_FR & ~NegativeFlag;
 }
 
-void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2)
-{
-	// TODO : ?
-}
+void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2) { }
 
 void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2) 
 {

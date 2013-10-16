@@ -54,12 +54,13 @@ private:
 	};
 
 private:
-	// Q : UInt32 or UInt8 for the screen buffer ???
 	UInt32 m_ScreenBuffer[HEIGHT][WIDTH];		/*!< Buffer to be drawn */
 	UInt32 m_ScreenColors[HEIGHT][WIDTH];		/*!< Actual graphics to be drawn */
 
 	UInt8 m_SpritesVerticalOrientation;			/*!< Vertical orientation of all the sprites */
 	UInt8 m_SpritesHorizontalOrientation;		/*!< Horizontal orientation of all the sprites */
+
+	UInt8 m_BGC;								/*!< Background color index */
 
 	UInt8 m_VBlankFlag;							/*!< VBlank Flag */
 	
@@ -152,10 +153,9 @@ public:
 	/**
 	* \fn Flip
 	* \brief Set the flip orientation for sprites
-	* \param in_H Horizontal orientation
-	* \param in_V Verticl orientation
+	* \param in_NewOrientation new horizontal and vertiacal orientations
 	*/
-	void Flip(UInt8 in_H, UInt8 in_V);
+	void Flip(UInt8 in_NewOrientation);
 
 	/**
 	* \fn FlushBuffer

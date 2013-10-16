@@ -1,7 +1,7 @@
 - Add a nice GUI interface
 - REFACTOR (function pointers table maybe?)
 - License ??
-- Update README
+- Update README (compile + controls)
 - Allow user to choose screen resolution
 - Make a pass to check the const-correctness especially at the function level
 - Add visual debugging infos that can be optionnally turned on or off

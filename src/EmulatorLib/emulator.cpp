@@ -17,7 +17,7 @@ void Emulator::Emulate()
 
 	SDL_Event l_Controller1Event;
 	//SDL_Event l_Controller2Event;
-
+	
 	while(l_Continue)
 	{
 		l_NbCycles = 0;
@@ -39,6 +39,7 @@ void Emulator::Emulate()
 
 		// Draw on screen
 		m_CPU.FlushGPU();
+		
 	}
 }
 

@@ -2,8 +2,8 @@
 #define CPU_H
 
 #include <functional>
-#include <random>
 #include <vector>
+#include <random>
 
 #include "gpu.h"
 #include "spu.h"
@@ -35,8 +35,8 @@ private:
 	* \enum
 	* \brief Masks for the controllers' bits
 	*/
-	enum { UP = 0x1, DOWN = 0x10, LEFT = 0x100, RIGHT = 0X1000, SELECT = 0x10000,
-			START = 0x100000, A = 0x1000000, B = 0x10000000 };
+	enum { UP = 1, DOWN = 2, LEFT = 4, RIGHT = 8, SELECT = 16,
+			START = 32, A = 64, B = 128 };
 
 private:
 	UInt8 m_FR;				/*!< Flag register */
@@ -55,7 +55,6 @@ private:
 	SPU m_SPU;				/*!< The sound processing unit */
 
 	std::default_random_engine m_RandEngine;		/*!< Random number engine */
-	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Uniform distribution */
 
 public:
 	/**

@@ -10,7 +10,8 @@
 
 GPU::GPU() : m_Window(std::unique_ptr<SDL_Window, void(*)(SDL_Window*)>(nullptr, SDL_DestroyWindow)),
 	m_Renderer(std::unique_ptr<SDL_Renderer, void(*)(SDL_Renderer*)>(nullptr, SDL_DestroyRenderer)),
-	m_Texture(std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)>(nullptr, SDL_DestroyTexture))
+	m_Texture(std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)>(nullptr, SDL_DestroyTexture)),
+	m_BGC(0)
 {
 	SetOriginalColorPalette();
 	// Paint it black
@@ -93,6 +94,9 @@ Utils::UInt8 GPU::VBlankFlag() const
 void GPU::ClearScreen() 
 {
 	SDL_RenderClear(m_Renderer.get());
+	for(int i = 0; i < HEIGHT; ++i)
+		for(int j = 0; j < WIDTH; ++j)
+			m_ScreenBuffer[i][j] = m_BGC;
 }
 
 bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
@@ -105,65 +109,67 @@ bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 		return 0;
 
 	// Deal with the horizontal and vertical flip
-	/*UInt16 l_XStart, l_YStart;
-	UInt16 l_XEnd, l_YEnd;
-	UInt16 l_XInc, l_YInc;
+	Int16 l_XStart, l_YStart;
+	Int16 l_XEnd, l_YEnd;
+	Int16 l_XInc, l_YInc;
 
 	if(m_Sprite.FlipHorizontal)
 	{
-		l_XStart = 
-		l_XEnd =
-		l_XInc =
+		l_XStart = m_Sprite.Width - 1;
+		l_XEnd = -1;
+		l_XInc = -1;
 	}
 	else
 	{
-		l_XStart = 
-		l_XEnd =
-		l_XInc =
+		l_XStart = 0;
+		l_XEnd = m_Sprite.Width;
+		l_XInc = 1;
 	}
 	if(m_Sprite.FlipVertical)
 	{
-		l_YStart = 
-		l_YEnd =
-		l_YInc =
+		l_YStart = m_Sprite.Height - 1;
+		l_YEnd = -1;
+		l_YInc = -1;
 	}
 	else
 	{
-		l_YStart = 
-		l_YEnd =
-		l_YInc =
-	}*/
+		l_YStart = 0;
+		l_YEnd = m_Sprite.Height;
+		l_YInc = 1;
+	}
 
 	UInt8 l_Hit = 0;
-	for(int i = 0; i < m_Sprite.Height; ++i)
+	for(int i = l_YStart, k = 0; i < l_YEnd, k < m_Sprite.Height; i+=l_YInc, ++k)
 	{
-		for(int j = 0; j < m_Sprite.Width; ++j)
+		for(int j = l_XStart, l = 0; j < l_XEnd, l < m_Sprite.Width; j+=l_XInc, ++l)
 		{
 			// Test hits with other sprites
 			l_Hit += m_ScreenBuffer[j+in_X][i+in_Y] == 0 ? 0 : 1;
 			if(in_Sprite[i * m_Sprite.Width + j])
-				m_ScreenBuffer[i+in_Y][j+in_X] = in_Sprite[i * m_Sprite.Width + j];
+				m_ScreenBuffer[i+in_Y][j+in_X] = in_Sprite[k * m_Sprite.Width + l];
 		}
 	}
 
 	return l_Hit > 0;
 }
 
-void GPU::Flip(UInt8 in_H, UInt8 in_V) 
+void GPU::Flip(UInt8 in_NewOrientation) 
 {
-	m_Sprite.FlipHorizontal = (0 != (in_H & 0xF));
-	m_Sprite.FlipVertical = (0 != (in_V & 0xF));
+	m_Sprite.FlipHorizontal = in_NewOrientation & 0x2;
+	m_Sprite.FlipVertical = in_NewOrientation & 0x1;
 }
 
 void GPU::FlushBuffer()
 {
-	// Q : What to do with the current screen buffer after ???
-	
 	for(int i = 0; i < HEIGHT; ++i)
 	{
 		for(int j = 0; j < WIDTH; ++j)
 		{
-			m_ScreenColors[i][j] = m_Colors[m_ScreenBuffer[i][j]];
+			UInt32 l_CI = m_ScreenBuffer[i][j];
+			if(l_CI)
+				m_ScreenColors[i][j] = m_Colors[l_CI];
+			else
+				m_ScreenColors[i][j] = m_Colors[m_BGC];
 		}
 	}
 	
@@ -183,9 +189,7 @@ void GPU::LoadPalette(const UInt8 in_Palette[16][3])
 
 void GPU::SetBackgroundColor(UInt8 in_ColorIndex) 
 {
-	for(int i = 0; i < HEIGHT; ++i)
-		for(int j = 0; j < WIDTH; ++j)
-			m_ScreenBuffer[i][j] = in_ColorIndex;
+	m_BGC = in_ColorIndex;
 }
 
 void GPU::SetSpriteDimensions(UInt8 in_Height, UInt8 in_Width) 
