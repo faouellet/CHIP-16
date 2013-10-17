@@ -16,8 +16,10 @@ void Emulator::Emulate()
 	int l_NbCycles;
 
 	SDL_Event l_Controller1Event;
-	//SDL_Event l_Controller2Event;
+	SDL_Event l_Controller2Event;
 	
+	std::chrono::duration<long, std::ratio<1, 60>> l_FrameRate;
+
 	while(l_Continue)
 	{
 		l_NbCycles = 0;
@@ -31,15 +33,18 @@ void Emulator::Emulate()
 		}
 
 		// Handle IO
-		while(SDL_PollEvent(&l_Controller1Event) && 
-			(l_Controller1Event.type == SDL_KEYDOWN || l_Controller1Event.type == SDL_KEYUP))
-			m_CPU.UpdateController(1, l_Controller1Event.key);
+		while((SDL_PollEvent(&l_Controller1Event) && 
+			(l_Controller1Event.type == SDL_KEYDOWN || l_Controller1Event.type == SDL_KEYUP)) ||
+			(SDL_PollEvent(&l_Controller2Event) && 
+			(l_Controller2Event.type == SDL_KEYDOWN || l_Controller2Event.type == SDL_KEYUP)))
+			m_CPU.UpdateController(l_Controller1Event.key);
 
 		// Sound ???
 
 		// Draw on screen
 		m_CPU.FlushGPU();
-		
+
+		// Sleep
 	}
 }
 

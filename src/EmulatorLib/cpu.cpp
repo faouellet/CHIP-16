@@ -88,73 +88,90 @@ void CPU::Reset()
 	m_SPU.Reset();
 }
 
-void CPU::UpdateController(UInt8 in_ControllerID, SDL_KeyboardEvent & in_Event)
+void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
 {
 	// TODO : Could probably use some refactoring
-
-	// Wrong in_ControllerID, do nothing
-	if(in_ControllerID != 1 && in_ControllerID != 2)
-		return;
-
-	UInt16 l_Addr = in_ControllerID == 1 ? 0xFFF0 : 0xFFF2;
+	
 	switch (in_Event.keysym.sym)
 	{
 		case SDLK_UP:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + UP : m_Memory[l_Addr] - UP;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | UP : m_Memory[CONTROLLER_1] & ~UP;
 			break;
 		}
 		case SDLK_DOWN:
 		{
-			//m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + DOWN : m_Memory[l_Addr] - DOWN;
-			if(in_Event.type == SDL_KEYDOWN)
-				m_Memory[l_Addr] += DOWN;
-			else
-				m_Memory[l_Addr] -= DOWN;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | DOWN : m_Memory[CONTROLLER_1] & ~DOWN;
 			break;
 		}
 		case SDLK_LEFT:
 		{
-			//m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + LEFT : m_Memory[l_Addr] - LEFT;
-			if(in_Event.type == SDL_KEYDOWN)
-				m_Memory[l_Addr] += LEFT;
-			else
-				m_Memory[l_Addr] -= LEFT;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | LEFT : m_Memory[CONTROLLER_1] & ~LEFT;
 			break;
 		}
 		case SDLK_RIGHT:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + RIGHT : m_Memory[l_Addr] - RIGHT;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | RIGHT : m_Memory[CONTROLLER_1] & ~RIGHT;
 			break;
 		}
-		case SDLK_LSHIFT:
 		case SDLK_RSHIFT:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + SELECT : m_Memory[l_Addr] - SELECT;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | SELECT : m_Memory[CONTROLLER_1] & ~SELECT;
 			break;
 		}
 		case SDLK_RETURN:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + START : m_Memory[l_Addr] - START;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | START : m_Memory[CONTROLLER_1] & ~START;
 			break;
 		}
-		case SDLK_z:
+		case SDLK_o:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + A : m_Memory[l_Addr] - A;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | A : m_Memory[CONTROLLER_1] & ~A;
 			break;
 		}
-		case SDLK_x:
+		case SDLK_p:
 		{
-			m_Memory[l_Addr] = in_Event.type == SDL_KEYDOWN ? m_Memory[l_Addr] + B : m_Memory[l_Addr] - B;
+			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | B : m_Memory[CONTROLLER_1] & ~B;
 			break;
 		}
-		case SDLK_ESCAPE:
+		case SDLK_w:
 		{
-			m_ErrorCode |= EmulationDone;
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | UP : m_Memory[CONTROLLER_2] & ~UP;
 			break;
 		}
-		default:
+		case SDLK_s:
 		{
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | DOWN : m_Memory[CONTROLLER_2] & ~DOWN;
+			break;
+		}
+		case SDLK_a:
+		{
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | LEFT : m_Memory[CONTROLLER_2] & ~LEFT;
+			break;
+		}
+		case SDLK_d:
+		{
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | RIGHT : m_Memory[CONTROLLER_2] & ~RIGHT;
+			break;
+		}
+		case SDLK_LSHIFT:
+		{
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | SELECT : m_Memory[CONTROLLER_2] & ~SELECT;
+			break;
+		}
+		case SDLK_SPACE:
+		{
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | START : m_Memory[CONTROLLER_2] & ~START;
+			break;
+		}
+		case SDLK_v:
+		{
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | A : m_Memory[CONTROLLER_2] & ~A;
+			break;
+		}
+		case SDLK_b:
+		{
+			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | B : m_Memory[CONTROLLER_2] & ~B;
 			break;
 		}
 	}
@@ -377,9 +394,9 @@ void CPU::InterpretCallJumps()
 		case 0x8:	// CALL	(indirect)
 		{
 			UInt16 l_Addr = FetchRegisterAddress();
-			m_PC += 3;
+			m_PC += 2;
 			Push(m_PC);
-			m_PC = m_Registers[m_PC];
+			m_PC = m_Registers[l_Addr];
 			break;
 		}
 		default:
@@ -491,6 +508,7 @@ void CPU::InterpretMisc()
 	{
 		case 0x0:	// NOP	
 		{
+			m_PC += 3;
 			break;
 		}
 		case 0x1:	// CLS
@@ -616,22 +634,22 @@ void CPU::InterpretPalettes()
 		{
 			m_PC++;
 			l_Addr = FetchImmediateValue();
-			for(int i = 0; i < 16; i+=3)
+			for(int i = 0, j = 0; i < 16, j < 16*3; ++i, j+=3)
 			{
-				l_PaletteData[i][0] = m_Memory[l_Addr+i];
-				l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
-				l_PaletteData[i][2] = m_Memory[l_Addr+i+2];
+				l_PaletteData[i][2] = m_Memory[l_Addr+j];
+				l_PaletteData[i][1] = m_Memory[l_Addr+j+1];
+				l_PaletteData[i][0] = m_Memory[l_Addr+j+2];
 			}
 			break;
 		}
 		case 0x1:
 		{
 			l_Addr = m_Registers[FetchRegisterAddress()];
-			for(int i = 0; i < 16; i+=3)
+			for(int i = 0, j = 0; i < 16, j < 16*3; ++i, j+=3)
 			{
-				l_PaletteData[i][0] = m_Memory[l_Addr+i];
-				l_PaletteData[i][1] = m_Memory[l_Addr+i+1];
-				l_PaletteData[i][2] = m_Memory[l_Addr+i+2];
+				l_PaletteData[i][2] = m_Memory[l_Addr+j];
+				l_PaletteData[i][1] = m_Memory[l_Addr+j+1];
+				l_PaletteData[i][0] = m_Memory[l_Addr+j+2];
 			}
 			m_PC += 3;
 			break;

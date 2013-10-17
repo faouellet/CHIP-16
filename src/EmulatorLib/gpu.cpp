@@ -95,8 +95,13 @@ void GPU::ClearScreen()
 {
 	SDL_RenderClear(m_Renderer.get());
 	for(int i = 0; i < HEIGHT; ++i)
+	{
 		for(int j = 0; j < WIDTH; ++j)
-			m_ScreenBuffer[i][j] = m_BGC;
+		{
+			m_ScreenColors[i][j] = m_Colors[m_BGC];
+			m_ScreenBuffer[i][j] = 0;
+		}
+	}
 }
 
 bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
@@ -144,7 +149,7 @@ bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 		for(int j = l_XStart, l = 0; j < l_XEnd, l < m_Sprite.Width; j+=l_XInc, ++l)
 		{
 			// Test hits with other sprites
-			l_Hit += m_ScreenBuffer[j+in_X][i+in_Y] == 0 ? 0 : 1;
+			l_Hit += m_ScreenBuffer[i+in_Y][j+in_X] == 0 ? 0 : 1;
 			if(in_Sprite[i * m_Sprite.Width + j])
 				m_ScreenBuffer[i+in_Y][j+in_X] = in_Sprite[k * m_Sprite.Width + l];
 		}

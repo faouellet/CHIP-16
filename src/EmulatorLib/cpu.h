@@ -134,10 +134,9 @@ public:
 	/**
 	* \fn UpdateController
 	* \brief Update a controller memory mapped IO port
-	* \param in_ControllerID The ID of a controller (1 or 2)
 	* \param in_Event The event causing this update
 	*/
-	void UpdateController(UInt8 in_ControllerID, SDL_KeyboardEvent & in_Event);
+	void UpdateController(SDL_KeyboardEvent & in_Event);
 
 private:
 	/**
