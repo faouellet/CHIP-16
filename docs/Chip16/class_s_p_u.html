@@ -84,8 +84,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- top -->
 <div class="header">
   <div class="summary">
+<a href="#nested-classes">Classes</a> &#124;
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pri-types">Private Types</a> &#124;
+<a href="#pri-static-methods">Static Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="#pri-static-attribs">Static Private Attributes</a> &#124;
 <a href="class_s_p_u-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">SPU Class Reference</div>  </div>
@@ -97,6 +101,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p><code>#include &lt;<a class="el" href="spu_8h_source.html">spu.h</a>&gt;</code></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_s_p_u_1_1_audio_smaple.html">AudioSmaple</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a3c40858a6a5dd433f711539a23563da8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c40858a6a5dd433f711539a23563da8"></a>
@@ -107,16 +116,16 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#a1c8d352137844d5d645a8ebf2b7a7055">~SPU</a> ()</td></tr>
 <tr class="memdesc:a1c8d352137844d5d645a8ebf2b7a7055"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr class="separator:a1c8d352137844d5d645a8ebf2b7a7055"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa2a23b7e9e205f220894791ec3f61d79"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">Init</a> ()</td></tr>
+<tr class="memitem:aa2a23b7e9e205f220894791ec3f61d79"><td class="memItemLeft" align="right" valign="top">UInt8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">Init</a> ()</td></tr>
 <tr class="memdesc:aa2a23b7e9e205f220894791ec3f61d79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the sound processing unit.  <a href="#aa2a23b7e9e205f220894791ec3f61d79">More...</a><br/></td></tr>
 <tr class="separator:aa2a23b7e9e205f220894791ec3f61d79"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7410554b85c54c6e8def0454df6d83db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7410554b85c54c6e8def0454df6d83db"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#a7410554b85c54c6e8def0454df6d83db">Reset</a> ()</td></tr>
 <tr class="memdesc:a7410554b85c54c6e8def0454df6d83db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore the sound processing unit at its pre-initialized state. <br/></td></tr>
 <tr class="separator:a7410554b85c54c6e8def0454df6d83db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4aa20f34e2603ecdbf04562deb31b23f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#a4aa20f34e2603ecdbf04562deb31b23f">GenerateSound</a> (UInt8 in_Attack, UInt8 in_Decay, UInt8 in_Sustain, UInt8 in_Release, UInt8 in_Volume, UInt8 in_Type)</td></tr>
-<tr class="memdesc:a4aa20f34e2603ecdbf04562deb31b23f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate the sound generator.  <a href="#a4aa20f34e2603ecdbf04562deb31b23f">More...</a><br/></td></tr>
-<tr class="separator:a4aa20f34e2603ecdbf04562deb31b23f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afeb0934fc0d3dd1ef02af0a70d0e05cb"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#afeb0934fc0d3dd1ef02af0a70d0e05cb">GenerateSound</a> (UInt32 in_Attack, UInt32 in_Decay, UInt32 in_Sustain, UInt32 in_Release, UInt32 in_Volume, UInt32 in_Type)</td></tr>
+<tr class="memdesc:afeb0934fc0d3dd1ef02af0a70d0e05cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Activate the sound generator.  <a href="#afeb0934fc0d3dd1ef02af0a70d0e05cb">More...</a><br/></td></tr>
+<tr class="separator:afeb0934fc0d3dd1ef02af0a70d0e05cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abd85975dc0107f0454b1241430b2f382"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">PlayTone</a> (unsigned in_Tone, unsigned in_Duration)</td></tr>
 <tr class="memdesc:abd85975dc0107f0454b1241430b2f382"><td class="mdescLeft">&#160;</td><td class="mdescRight">Play a given tone for a given duration.  <a href="#abd85975dc0107f0454b1241430b2f382">More...</a><br/></td></tr>
 <tr class="separator:abd85975dc0107f0454b1241430b2f382"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -133,49 +142,120 @@ Private Types</h2></td></tr>
 <b>Noise</b>
  }</td></tr>
 <tr class="separator:af6a75f47a23884c2eeda14129ff2c16d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-methods"></a>
+Static Private Member Functions</h2></td></tr>
+<tr class="memitem:a9849b365ce4894731421d17ac2265e00"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#a9849b365ce4894731421d17ac2265e00">AudioCallback</a> (void *in_UserData, Uint8 *in_Stream, int in_Length)</td></tr>
+<tr class="separator:a9849b365ce4894731421d17ac2265e00"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5d6cf774d1941c2152ebf557cd1a3fc5"><td class="memItemLeft" align="right" valign="top">static int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#a5d6cf774d1941c2152ebf557cd1a3fc5">GenerateSoundSample</a> ()</td></tr>
+<tr class="separator:a5d6cf774d1941c2152ebf557cd1a3fc5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa1a61252149f1bf7e09a96ffe1679e14"><td class="memItemLeft" align="right" valign="top">static int16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#aa1a61252149f1bf7e09a96ffe1679e14">GenerateToneSample</a> ()</td></tr>
+<tr class="separator:aa1a61252149f1bf7e09a96ffe1679e14"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:a304426289797ad354aa678cb4e527e2a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#a304426289797ad354aa678cb4e527e2a">m_AudioPaused</a></td></tr>
+<tr class="separator:a304426289797ad354aa678cb4e527e2a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afaaeb2625054701f4f1998b71af86947"><td class="memItemLeft" align="right" valign="top"><a class="el" href="struct_s_p_u_1_1_audio_smaple.html">AudioSmaple</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#afaaeb2625054701f4f1998b71af86947">m_Sample</a></td></tr>
+<tr class="separator:afaaeb2625054701f4f1998b71af86947"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa07312a22a1046481f7a9b8c703b6e11"><td class="memItemLeft" align="right" valign="top">SDL_AudioSpec&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#aa07312a22a1046481f7a9b8c703b6e11">m_AudioGen</a></td></tr>
+<tr class="separator:aa07312a22a1046481f7a9b8c703b6e11"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
+Static Private Attributes</h2></td></tr>
+<tr class="memitem:af18e442f11123cf1d30d1dd13ff2d82c"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#af18e442f11123cf1d30d1dd13ff2d82c">m_AttackValues</a> [16] = { 2, 8, 16, 24, 38, 56, 68, 80, 100, 250, 500, 800, 1000, 3000, 5000, 8000 }</td></tr>
+<tr class="separator:af18e442f11123cf1d30d1dd13ff2d82c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac2c49cbe4248f635189f1573e2e78fc2"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#ac2c49cbe4248f635189f1573e2e78fc2">m_DecayValues</a> [16] = { 6, 24, 48, 72, 114, 168, 204, 240, 300, 750, 1500, 2400, 3000, 9000, 15000, 24000 }</td></tr>
+<tr class="separator:ac2c49cbe4248f635189f1573e2e78fc2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5fd8c05986bcda0045d20fb9c158e2d1"><td class="memItemLeft" align="right" valign="top">static const int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_p_u.html#a5fd8c05986bcda0045d20fb9c158e2d1">m_ReleaseValues</a> [16] = { 6, 24, 48, 72, 114, 168, 204, 240, 300, 750, 1500, 2400, 3000, 9000, 15000, 24000 }</td></tr>
+<tr class="separator:a5fd8c05986bcda0045d20fb9c158e2d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ce0278ca185d89ff665891c8329b427"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ce0278ca185d89ff665891c8329b427"></a>
+static std::function&lt; int16_t(void)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>m_SampleGenerator</b></td></tr>
+<tr class="separator:a2ce0278ca185d89ff665891c8329b427"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Emulates the Sound Processing Unit (<a class="el" href="class_s_p_u.html" title="Emulates the Sound Processing Unit (SPU) ">SPU</a>) </p>
 <dl class="section author"><dt>Author</dt><dd>Felix-Antoine Ouellet </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a4aa20f34e2603ecdbf04562deb31b23f"></a>
+<a class="anchor" id="a9849b365ce4894731421d17ac2265e00"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SPU::AudioCallback </td>
+          <td>(</td>
+          <td class="paramtype">void *&#160;</td>
+          <td class="paramname"><em>in_UserData</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Uint8 *&#160;</td>
+          <td class="paramname"><em>in_Stream</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>in_Length</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
+<a class="anchor" id="afeb0934fc0d3dd1ef02af0a70d0e05cb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">SPU::GenerateSound </td>
           <td>(</td>
-          <td class="paramtype">UInt8&#160;</td>
+          <td class="paramtype">UInt32&#160;</td>
           <td class="paramname"><em>in_Attack</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">UInt8&#160;</td>
+          <td class="paramtype">UInt32&#160;</td>
           <td class="paramname"><em>in_Decay</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">UInt8&#160;</td>
+          <td class="paramtype">UInt32&#160;</td>
           <td class="paramname"><em>in_Sustain</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">UInt8&#160;</td>
+          <td class="paramtype">UInt32&#160;</td>
           <td class="paramname"><em>in_Release</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">UInt8&#160;</td>
+          <td class="paramtype">UInt32&#160;</td>
           <td class="paramname"><em>in_Volume</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">UInt8&#160;</td>
+          <td class="paramtype">UInt32&#160;</td>
           <td class="paramname"><em>in_Type</em>&#160;</td>
         </tr>
         <tr>
@@ -196,6 +276,54 @@ Private Types</h2></td></tr>
 
 </div>
 </div>
+<a class="anchor" id="a5d6cf774d1941c2152ebf557cd1a3fc5"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SPU::GenerateSoundSample </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
+<a class="anchor" id="aa1a61252149f1bf7e09a96ffe1679e14"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SPU::GenerateToneSample </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
 <a class="anchor" id="aa2a23b7e9e205f220894791ec3f61d79"></a>
 <div class="memitem">
 <div class="memproto">
@@ -210,7 +338,7 @@ Private Types</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Initialize the sound processing unit. </p>
-<dl class="section return"><dt>Returns</dt><dd>Success or failure </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_error.html" title="Dummy class. ">Error</a> code </dd></dl>
 
 </div>
 </div>
@@ -249,6 +377,133 @@ Private Types</h2></td></tr>
 
 </div>
 </div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="af18e442f11123cf1d30d1dd13ff2d82c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int SPU::m_AttackValues = { 2, 8, 16, 24, 38, 56, 68, 80, 100, 250, 500, 800, 1000, 3000, 5000, 8000 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Possible attack values </p>
+
+</div>
+</div>
+<a class="anchor" id="aa07312a22a1046481f7a9b8c703b6e11"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">SDL_AudioSpec SPU::m_AudioGen</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Generates the actual audio signal </p>
+
+</div>
+</div>
+<a class="anchor" id="a304426289797ad354aa678cb4e527e2a"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool SPU::m_AudioPaused</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Indicate whether the audio is paused or not. Necessary since SDL doesn't give a function to check it and it is designed in a way that a call to SDL_PauseAudio can actually resume audio playing </p>
+
+</div>
+</div>
+<a class="anchor" id="ac2c49cbe4248f635189f1573e2e78fc2"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int SPU::m_DecayValues = { 6, 24, 48, 72, 114, 168, 204, 240, 300, 750, 1500, 2400, 3000, 9000, 15000, 24000 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Possible decay values </p>
+
+</div>
+</div>
+<a class="anchor" id="a5fd8c05986bcda0045d20fb9c158e2d1"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">const int SPU::m_ReleaseValues = { 6, 24, 48, 72, 114, 168, 204, 240, 300, 750, 1500, 2400, 3000, 9000, 15000, 24000 }</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Possible release values </p>
+
+</div>
+</div>
+<a class="anchor" id="afaaeb2625054701f4f1998b71af86947"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_s_p_u_1_1_audio_smaple.html">AudioSmaple</a> SPU::m_Sample</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>TODO </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="spu_8h_source.html">spu.h</a></li>
 <li>Desktop/CHIP-16/src/EmulatorLib/spu.cpp</li>
@@ -256,7 +511,7 @@ Private Types</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 11 2013 10:26:59 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 18 2013 15:51:21 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

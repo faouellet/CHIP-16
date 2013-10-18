@@ -121,18 +121,6 @@ namespace Utils
 	};
 
 	/**
-	* \struct Divide
-	* \brief Divides the right hand side operand ... TODO
-	*/
-	/*struct Divides
-	{
-		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS) const
-		{
-			return in_RHS / in_LHS;
-		}
-	};*/
-
-	/**
 	* \struct ArithmeticRightShift
 	* \brief Functor wrapping the right shift operator when the value to shift doesn't
 	*        have its sign bit on. Otherwise, it uses a mask to copy the sign bit.

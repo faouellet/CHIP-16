@@ -92,61 +92,98 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef SPU_H</span></div>
 <div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define SPU_H</span></div>
 <div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &quot;utils.h&quot;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;functional&gt;</span></div>
 <div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;</div>
-<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="keyword">using</span> <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a>;</div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &quot;SDL.h&quot;</span></div>
 <div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
-<div class="line"><a name="l00013"></a><span class="lineno"><a class="line" href="class_s_p_u.html">   13</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_s_p_u.html">SPU</a></div>
-<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;{</div>
-<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;    <span class="keyword">enum</span> { Triangle = 0, Sawtooth, Pulse, Noise };</div>
-<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;</div>
-<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;    <span class="comment">// TODO : ...</span></div>
-<div class="line"><a name="l00024"></a><span class="lineno">   24</span>&#160;    <span class="comment">// Most certainly a current generator</span></div>
-<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;</div>
-<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;    <span class="comment">// Maybe these ... ?</span></div>
-<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;    <span class="comment">/*UInt8 m_Attack;</span></div>
-<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="comment">    UInt8 m_Decay;</span></div>
-<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;<span class="comment">    UInt8 m_Sustain;</span></div>
-<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;<span class="comment">    UInt8 m_Release;</span></div>
-<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="comment">    UInt8 m_Volume;</span></div>
-<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="comment">    UInt8 m_Type;*/</span></div>
-<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;</div>
-<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <a class="code" href="class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8">SPU</a>();</div>
-<div class="line"><a name="l00040"></a><span class="lineno">   40</span>&#160;</div>
-<div class="line"><a name="l00045"></a><span class="lineno">   45</span>&#160;    <a class="code" href="class_s_p_u.html#a1c8d352137844d5d645a8ebf2b7a7055">~SPU</a>();</div>
-<div class="line"><a name="l00046"></a><span class="lineno">   46</span>&#160;</div>
-<div class="line"><a name="l00047"></a><span class="lineno">   47</span>&#160;    <span class="comment">// TODO : Need a callback to fill the buffer in the SDL audio thread</span></div>
-<div class="line"><a name="l00048"></a><span class="lineno">   48</span>&#160;</div>
-<div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="keyword">public</span>:</div>
-<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">Init</a>();</div>
-<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;    </div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#a7410554b85c54c6e8def0454df6d83db">Reset</a>();</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="preprocessor">#include &quot;utils.h&quot;</span></div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">using</span> <a class="code" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a>;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;<span class="keyword">using</span> <a class="code" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">Utils::UInt32</a>;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;</div>
+<div class="line"><a name="l00018"></a><span class="lineno"><a class="line" href="class_s_p_u.html">   18</a></span>&#160;<span class="keyword">class </span><a class="code" href="class_s_p_u.html">SPU</a></div>
+<div class="line"><a name="l00019"></a><span class="lineno">   19</span>&#160;{</div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00021"></a><span class="lineno"><a class="line" href="struct_s_p_u_1_1_audio_smaple.html">   21</a></span>&#160;    <span class="keyword">struct </span><a class="code" href="struct_s_p_u_1_1_audio_smaple.html">AudioSmaple</a></div>
+<div class="line"><a name="l00022"></a><span class="lineno">   22</span>&#160;    {</div>
+<div class="line"><a name="l00023"></a><span class="lineno"><a class="line" href="struct_s_p_u_1_1_audio_smaple.html#add135068dcd22501b46e43c452f7cea9">   23</a></span>&#160;        UInt32 <a class="code" href="struct_s_p_u_1_1_audio_smaple.html#add135068dcd22501b46e43c452f7cea9">Attack</a>;          </div>
+<div class="line"><a name="l00024"></a><span class="lineno"><a class="line" href="struct_s_p_u_1_1_audio_smaple.html#a6e9d2c3dcc38e6f0a460906cf92a0897">   24</a></span>&#160;        UInt32 <a class="code" href="struct_s_p_u_1_1_audio_smaple.html#a6e9d2c3dcc38e6f0a460906cf92a0897">Decay</a>;           </div>
+<div class="line"><a name="l00025"></a><span class="lineno"><a class="line" href="struct_s_p_u_1_1_audio_smaple.html#a1eafc3ce6548aef8450b80e92270f877">   25</a></span>&#160;        UInt32 <a class="code" href="struct_s_p_u_1_1_audio_smaple.html#a1eafc3ce6548aef8450b80e92270f877">Sustain</a>;         </div>
+<div class="line"><a name="l00026"></a><span class="lineno"><a class="line" href="struct_s_p_u_1_1_audio_smaple.html#a672b9d43b835a4435f7132df720ce586">   26</a></span>&#160;        UInt32 <a class="code" href="struct_s_p_u_1_1_audio_smaple.html#a672b9d43b835a4435f7132df720ce586">Release</a>;         </div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="struct_s_p_u_1_1_audio_smaple.html#a8a5f0ef3b9945b80bfed41aad37577b2">   27</a></span>&#160;        UInt32 <a class="code" href="struct_s_p_u_1_1_audio_smaple.html#a8a5f0ef3b9945b80bfed41aad37577b2">Volume</a>;          </div>
+<div class="line"><a name="l00028"></a><span class="lineno"><a class="line" href="struct_s_p_u_1_1_audio_smaple.html#ac2551a1896228e5b56c3ceeba253c233">   28</a></span>&#160;        UInt32 <a class="code" href="struct_s_p_u_1_1_audio_smaple.html#ac2551a1896228e5b56c3ceeba253c233">Type</a>;            </div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    };</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">enum</span> { Triangle = 0, Sawtooth, Pulse, Noise };</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00040"></a><span class="lineno"><a class="line" href="class_s_p_u.html#a304426289797ad354aa678cb4e527e2a">   40</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="class_s_p_u.html#a304426289797ad354aa678cb4e527e2a">m_AudioPaused</a>;         </div>
+<div class="line"><a name="l00046"></a><span class="lineno"><a class="line" href="class_s_p_u.html#af18e442f11123cf1d30d1dd13ff2d82c">   46</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_s_p_u.html#af18e442f11123cf1d30d1dd13ff2d82c">m_AttackValues</a>[16];        </div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="class_s_p_u.html#ac2c49cbe4248f635189f1573e2e78fc2">   47</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_s_p_u.html#ac2c49cbe4248f635189f1573e2e78fc2">m_DecayValues</a>[16];         </div>
+<div class="line"><a name="l00048"></a><span class="lineno"><a class="line" href="class_s_p_u.html#a5fd8c05986bcda0045d20fb9c158e2d1">   48</a></span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_s_p_u.html#a5fd8c05986bcda0045d20fb9c158e2d1">m_ReleaseValues</a>[16];       </div>
+<div class="line"><a name="l00050"></a><span class="lineno"><a class="line" href="class_s_p_u.html#afaaeb2625054701f4f1998b71af86947">   50</a></span>&#160;    <a class="code" href="struct_s_p_u_1_1_audio_smaple.html">AudioSmaple</a> <a class="code" href="class_s_p_u.html#afaaeb2625054701f4f1998b71af86947">m_Sample</a>;       </div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <span class="keyword">static</span> std::function&lt;int16_t(void)&gt; m_SampleGenerator;</div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
+<div class="line"><a name="l00054"></a><span class="lineno"><a class="line" href="class_s_p_u.html#aa07312a22a1046481f7a9b8c703b6e11">   54</a></span>&#160;    SDL_AudioSpec <a class="code" href="class_s_p_u.html#aa07312a22a1046481f7a9b8c703b6e11">m_AudioGen</a>;   </div>
+<div class="line"><a name="l00056"></a><span class="lineno">   56</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8">SPU</a>();</div>
 <div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#a4aa20f34e2603ecdbf04562deb31b23f">GenerateSound</a>(UInt8 in_Attack, UInt8 in_Decay, UInt8 in_Sustain, </div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;        UInt8 in_Release, UInt8 in_Volume, UInt8 in_Type);</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;    <a class="code" href="class_s_p_u.html#a1c8d352137844d5d645a8ebf2b7a7055">~SPU</a>();</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="comment">// TODO : Need a callback to fill the buffer in the SDL audio thread</span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">PlayTone</a>(<span class="keywordtype">unsigned</span> in_Tone, <span class="keywordtype">unsigned</span> in_Duration);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5">Stop</a>();</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;};</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;<span class="preprocessor">#endif // SPU_H</span></div>
-<div class="ttc" id="class_s_p_u_html_a1c8d352137844d5d645a8ebf2b7a7055"><div class="ttname"><a href="class_s_p_u.html#a1c8d352137844d5d645a8ebf2b7a7055">SPU::~SPU</a></div><div class="ttdeci">~SPU()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> spu.cpp:7</div></div>
-<div class="ttc" id="class_s_p_u_html_aa2a23b7e9e205f220894791ec3f61d79"><div class="ttname"><a href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">SPU::Init</a></div><div class="ttdeci">bool Init()</div><div class="ttdoc">Initialize the sound processing unit. </div><div class="ttdef"><b>Definition:</b> spu.cpp:9</div></div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;    UInt8 <a class="code" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">Init</a>();</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;    </div>
+<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#a7410554b85c54c6e8def0454df6d83db">Reset</a>();</div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#afeb0934fc0d3dd1ef02af0a70d0e05cb">GenerateSound</a>(UInt32 in_Attack, UInt32 in_Decay, UInt32 in_Sustain, </div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        UInt32 in_Release, UInt32 in_Volume, UInt32 in_Type);</div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">PlayTone</a>(<span class="keywordtype">unsigned</span> in_Tone, <span class="keywordtype">unsigned</span> in_Duration);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5">Stop</a>();</div>
+<div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
+<div class="line"><a name="l00107"></a><span class="lineno">  107</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#a9849b365ce4894731421d17ac2265e00">AudioCallback</a>(<span class="keywordtype">void</span>* in_UserData, Uint8* in_Stream, <span class="keywordtype">int</span> in_Length);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;    </div>
+<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;    <span class="keyword">static</span> int16_t <a class="code" href="class_s_p_u.html#a5d6cf774d1941c2152ebf557cd1a3fc5">GenerateSoundSample</a>();</div>
+<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;    </div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;    <span class="keyword">static</span> int16_t <a class="code" href="class_s_p_u.html#aa1a61252149f1bf7e09a96ffe1679e14">GenerateToneSample</a>();</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;};</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;<span class="preprocessor">#endif // SPU_H</span></div>
+<div class="ttc" id="class_s_p_u_html_a1c8d352137844d5d645a8ebf2b7a7055"><div class="ttname"><a href="class_s_p_u.html#a1c8d352137844d5d645a8ebf2b7a7055">SPU::~SPU</a></div><div class="ttdeci">~SPU()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> spu.cpp:11</div></div>
+<div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_a6e9d2c3dcc38e6f0a460906cf92a0897"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#a6e9d2c3dcc38e6f0a460906cf92a0897">SPU::AudioSmaple::Decay</a></div><div class="ttdeci">UInt32 Decay</div><div class="ttdef"><b>Definition:</b> spu.h:24</div></div>
+<div class="ttc" id="class_s_p_u_html_ac2c49cbe4248f635189f1573e2e78fc2"><div class="ttname"><a href="class_s_p_u.html#ac2c49cbe4248f635189f1573e2e78fc2">SPU::m_DecayValues</a></div><div class="ttdeci">static const int m_DecayValues[16]</div><div class="ttdef"><b>Definition:</b> spu.h:47</div></div>
+<div class="ttc" id="class_s_p_u_html_afaaeb2625054701f4f1998b71af86947"><div class="ttname"><a href="class_s_p_u.html#afaaeb2625054701f4f1998b71af86947">SPU::m_Sample</a></div><div class="ttdeci">AudioSmaple m_Sample</div><div class="ttdef"><b>Definition:</b> spu.h:50</div></div>
+<div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_a672b9d43b835a4435f7132df720ce586"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#a672b9d43b835a4435f7132df720ce586">SPU::AudioSmaple::Release</a></div><div class="ttdeci">UInt32 Release</div><div class="ttdef"><b>Definition:</b> spu.h:26</div></div>
+<div class="ttc" id="class_s_p_u_html_a304426289797ad354aa678cb4e527e2a"><div class="ttname"><a href="class_s_p_u.html#a304426289797ad354aa678cb4e527e2a">SPU::m_AudioPaused</a></div><div class="ttdeci">bool m_AudioPaused</div><div class="ttdef"><b>Definition:</b> spu.h:40</div></div>
+<div class="ttc" id="class_s_p_u_html_aa2a23b7e9e205f220894791ec3f61d79"><div class="ttname"><a href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">SPU::Init</a></div><div class="ttdeci">UInt8 Init()</div><div class="ttdoc">Initialize the sound processing unit. </div><div class="ttdef"><b>Definition:</b> spu.cpp:16</div></div>
+<div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_add135068dcd22501b46e43c452f7cea9"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#add135068dcd22501b46e43c452f7cea9">SPU::AudioSmaple::Attack</a></div><div class="ttdeci">UInt32 Attack</div><div class="ttdef"><b>Definition:</b> spu.h:23</div></div>
 <div class="ttc" id="namespace_utils_html_ad4db7aab250328c742e04e4134dca44b"><div class="ttname"><a href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a></div><div class="ttdeci">UInt_&lt; 1 &gt;::type UInt8</div><div class="ttdef"><b>Definition:</b> utils.h:105</div></div>
-<div class="ttc" id="class_s_p_u_html_a4aa20f34e2603ecdbf04562deb31b23f"><div class="ttname"><a href="class_s_p_u.html#a4aa20f34e2603ecdbf04562deb31b23f">SPU::GenerateSound</a></div><div class="ttdeci">void GenerateSound(UInt8 in_Attack, UInt8 in_Decay, UInt8 in_Sustain, UInt8 in_Release, UInt8 in_Volume, UInt8 in_Type)</div><div class="ttdoc">Activate the sound generator. </div><div class="ttdef"><b>Definition:</b> spu.cpp:16</div></div>
-<div class="ttc" id="class_s_p_u_html_a7410554b85c54c6e8def0454df6d83db"><div class="ttname"><a href="class_s_p_u.html#a7410554b85c54c6e8def0454df6d83db">SPU::Reset</a></div><div class="ttdeci">void Reset()</div><div class="ttdoc">Restore the sound processing unit at its pre-initialized state. </div><div class="ttdef"><b>Definition:</b> spu.cpp:14</div></div>
-<div class="ttc" id="class_s_p_u_html_acc85c85d4f84eb5d6627962194975de5"><div class="ttname"><a href="class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5">SPU::Stop</a></div><div class="ttdeci">void Stop()</div><div class="ttdoc">Stop the sound generator. </div><div class="ttdef"><b>Definition:</b> spu.cpp:21</div></div>
-<div class="ttc" id="class_s_p_u_html"><div class="ttname"><a href="class_s_p_u.html">SPU</a></div><div class="ttdoc">Emulates the Sound Processing Unit (SPU) </div><div class="ttdef"><b>Definition:</b> spu.h:13</div></div>
-<div class="ttc" id="class_s_p_u_html_a3c40858a6a5dd433f711539a23563da8"><div class="ttname"><a href="class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8">SPU::SPU</a></div><div class="ttdeci">SPU()</div><div class="ttdoc">Default constructor. </div><div class="ttdef"><b>Definition:</b> spu.cpp:5</div></div>
-<div class="ttc" id="class_s_p_u_html_abd85975dc0107f0454b1241430b2f382"><div class="ttname"><a href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">SPU::PlayTone</a></div><div class="ttdeci">void PlayTone(unsigned in_Tone, unsigned in_Duration)</div><div class="ttdoc">Play a given tone for a given duration. </div><div class="ttdef"><b>Definition:</b> spu.cpp:19</div></div>
+<div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_a8a5f0ef3b9945b80bfed41aad37577b2"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#a8a5f0ef3b9945b80bfed41aad37577b2">SPU::AudioSmaple::Volume</a></div><div class="ttdeci">UInt32 Volume</div><div class="ttdef"><b>Definition:</b> spu.h:27</div></div>
+<div class="ttc" id="class_s_p_u_html_a7410554b85c54c6e8def0454df6d83db"><div class="ttname"><a href="class_s_p_u.html#a7410554b85c54c6e8def0454df6d83db">SPU::Reset</a></div><div class="ttdeci">void Reset()</div><div class="ttdoc">Restore the sound processing unit at its pre-initialized state. </div><div class="ttdef"><b>Definition:</b> spu.cpp:31</div></div>
+<div class="ttc" id="class_s_p_u_html_a9849b365ce4894731421d17ac2265e00"><div class="ttname"><a href="class_s_p_u.html#a9849b365ce4894731421d17ac2265e00">SPU::AudioCallback</a></div><div class="ttdeci">static void AudioCallback(void *in_UserData, Uint8 *in_Stream, int in_Length)</div><div class="ttdef"><b>Definition:</b> spu.cpp:97</div></div>
+<div class="ttc" id="class_s_p_u_html_acc85c85d4f84eb5d6627962194975de5"><div class="ttname"><a href="class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5">SPU::Stop</a></div><div class="ttdeci">void Stop()</div><div class="ttdoc">Stop the sound generator. </div><div class="ttdef"><b>Definition:</b> spu.cpp:91</div></div>
+<div class="ttc" id="namespace_utils_html_aecceb3ba56f11c34022303f8b3a100af"><div class="ttname"><a href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">Utils::UInt32</a></div><div class="ttdeci">UInt_&lt; 4 &gt;::type UInt32</div><div class="ttdef"><b>Definition:</b> utils.h:107</div></div>
+<div class="ttc" id="class_s_p_u_html_af18e442f11123cf1d30d1dd13ff2d82c"><div class="ttname"><a href="class_s_p_u.html#af18e442f11123cf1d30d1dd13ff2d82c">SPU::m_AttackValues</a></div><div class="ttdeci">static const int m_AttackValues[16]</div><div class="ttdef"><b>Definition:</b> spu.h:46</div></div>
+<div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_ac2551a1896228e5b56c3ceeba253c233"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#ac2551a1896228e5b56c3ceeba253c233">SPU::AudioSmaple::Type</a></div><div class="ttdeci">UInt32 Type</div><div class="ttdef"><b>Definition:</b> spu.h:28</div></div>
+<div class="ttc" id="class_s_p_u_html_a5d6cf774d1941c2152ebf557cd1a3fc5"><div class="ttname"><a href="class_s_p_u.html#a5d6cf774d1941c2152ebf557cd1a3fc5">SPU::GenerateSoundSample</a></div><div class="ttdeci">static int16_t GenerateSoundSample()</div><div class="ttdef"><b>Definition:</b> spu.cpp:101</div></div>
+<div class="ttc" id="class_s_p_u_html_a5fd8c05986bcda0045d20fb9c158e2d1"><div class="ttname"><a href="class_s_p_u.html#a5fd8c05986bcda0045d20fb9c158e2d1">SPU::m_ReleaseValues</a></div><div class="ttdeci">static const int m_ReleaseValues[16]</div><div class="ttdef"><b>Definition:</b> spu.h:48</div></div>
+<div class="ttc" id="class_s_p_u_html"><div class="ttname"><a href="class_s_p_u.html">SPU</a></div><div class="ttdoc">Emulates the Sound Processing Unit (SPU) </div><div class="ttdef"><b>Definition:</b> spu.h:18</div></div>
+<div class="ttc" id="class_s_p_u_html_afeb0934fc0d3dd1ef02af0a70d0e05cb"><div class="ttname"><a href="class_s_p_u.html#afeb0934fc0d3dd1ef02af0a70d0e05cb">SPU::GenerateSound</a></div><div class="ttdeci">void GenerateSound(UInt32 in_Attack, UInt32 in_Decay, UInt32 in_Sustain, UInt32 in_Release, UInt32 in_Volume, UInt32 in_Type)</div><div class="ttdoc">Activate the sound generator. </div><div class="ttdef"><b>Definition:</b> spu.cpp:37</div></div>
+<div class="ttc" id="class_s_p_u_html_aa07312a22a1046481f7a9b8c703b6e11"><div class="ttname"><a href="class_s_p_u.html#aa07312a22a1046481f7a9b8c703b6e11">SPU::m_AudioGen</a></div><div class="ttdeci">SDL_AudioSpec m_AudioGen</div><div class="ttdef"><b>Definition:</b> spu.h:54</div></div>
+<div class="ttc" id="class_s_p_u_html_a3c40858a6a5dd433f711539a23563da8"><div class="ttname"><a href="class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8">SPU::SPU</a></div><div class="ttdeci">SPU()</div><div class="ttdoc">Default constructor. </div><div class="ttdef"><b>Definition:</b> spu.cpp:9</div></div>
+<div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html">SPU::AudioSmaple</a></div><div class="ttdef"><b>Definition:</b> spu.h:21</div></div>
+<div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_a1eafc3ce6548aef8450b80e92270f877"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#a1eafc3ce6548aef8450b80e92270f877">SPU::AudioSmaple::Sustain</a></div><div class="ttdeci">UInt32 Sustain</div><div class="ttdef"><b>Definition:</b> spu.h:25</div></div>
+<div class="ttc" id="class_s_p_u_html_aa1a61252149f1bf7e09a96ffe1679e14"><div class="ttname"><a href="class_s_p_u.html#aa1a61252149f1bf7e09a96ffe1679e14">SPU::GenerateToneSample</a></div><div class="ttdeci">static int16_t GenerateToneSample()</div><div class="ttdef"><b>Definition:</b> spu.cpp:106</div></div>
+<div class="ttc" id="class_s_p_u_html_abd85975dc0107f0454b1241430b2f382"><div class="ttname"><a href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">SPU::PlayTone</a></div><div class="ttdeci">void PlayTone(unsigned in_Tone, unsigned in_Duration)</div><div class="ttdoc">Play a given tone for a given duration. </div><div class="ttdef"><b>Definition:</b> spu.cpp:79</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 11 2013 10:26:58 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 18 2013 15:51:21 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

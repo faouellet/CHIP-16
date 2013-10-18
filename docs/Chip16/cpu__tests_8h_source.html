@@ -192,7 +192,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;        InsertInstruction(DivTestData, 0xA0, 0x00, 0x20, 0x00); <span class="comment">// DIVI : R0 = 32 / R0</span></div>
 <div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;        InsertInstruction(DivTestData, 0XA1, 0x21, 0x00, 0x00); <span class="comment">// DIV : R1 = R2 / R1</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        InsertInstruction(DivTestData, 0XA2, 0x02, 0x03, 0x00); <span class="comment">// DIV : R3 = R0 / R2</span></div>
+<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;        InsertInstruction(DivTestData, 0XA2, 0x12, 0x03, 0x00); <span class="comment">// DIV : R3 = R1 / R2</span></div>
 <div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;    }</div>
 <div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
 <div class="line"><a name="l00166"></a><span class="lineno"><a class="line" href="struct_c_p_u_fixture.html#a8539308df1c9963096b9db5574c624ea">  166</a></span>&#160;    <span class="keywordtype">void</span> <a class="code" href="struct_c_p_u_fixture.html#a8539308df1c9963096b9db5574c624ea">SetupLoadStoreData</a>()</div>
@@ -200,8 +200,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;        InsertInstruction(MemoryTestData, 0x20, 0x00, 0xFF, 0x00);  <span class="comment">// LDI : R0 = 255</span></div>
 <div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;        InsertInstruction(MemoryTestData, 0x31, 0x00, 0x00, 0x00);  <span class="comment">// STM : Memory[R0] = R0</span></div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;        InsertInstruction(MemoryTestData, 0x21, 0x00, 0xF1, 0xFD);  <span class="comment">// LDI : SP = SP + 1</span></div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        InsertInstruction(MemoryTestData, 0x30, 0x00, 0xFF, 0x00);  <span class="comment">// STM : Memory[FF] = R0</span></div>
-<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        InsertInstruction(MemoryTestData, 0x22, 0x02, 0xFF, 0x00);  <span class="comment">// LDM : R2 = Memory[FF]</span></div>
+<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;        InsertInstruction(MemoryTestData, 0x30, 0x00, 0xF0, 0x00);  <span class="comment">// STM : Memory[F0] = R0</span></div>
+<div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;        InsertInstruction(MemoryTestData, 0x22, 0x02, 0xF0, 0x00);  <span class="comment">// LDM : R2 = Memory[F0]</span></div>
 <div class="line"><a name="l00173"></a><span class="lineno">  173</span>&#160;        InsertInstruction(MemoryTestData, 0x23, 0x03, 0x00, 0x00);  <span class="comment">// LDM : R3 = Memory[R0]</span></div>
 <div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;        InsertInstruction(MemoryTestData, 0x24, 0x02, 0x00, 0x00);  <span class="comment">// MOV : R2 = R0</span></div>
 <div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;    }</div>
@@ -284,11 +284,11 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;};</div>
 <div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
 <div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;<span class="preprocessor">#endif // CPU_TESTS_H</span></div>
-<div class="ttc" id="class_c_p_u_html_a0ffcfad93f90ec9fefb15eed04258931"><div class="ttname"><a href="class_c_p_u.html#a0ffcfad93f90ec9fefb15eed04258931">CPU::Reset</a></div><div class="ttdeci">void Reset()</div><div class="ttdoc">Restore the central processing unit at its pre-initialized state. </div><div class="ttdef"><b>Definition:</b> cpu.cpp:74</div></div>
+<div class="ttc" id="class_c_p_u_html_a0ffcfad93f90ec9fefb15eed04258931"><div class="ttname"><a href="class_c_p_u.html#a0ffcfad93f90ec9fefb15eed04258931">CPU::Reset</a></div><div class="ttdeci">void Reset()</div><div class="ttdoc">Restore the central processing unit at its pre-initialized state. </div><div class="ttdef"><b>Definition:</b> cpu.cpp:73</div></div>
 <div class="ttc" id="struct_c_p_u_fixture_html_a8539308df1c9963096b9db5574c624ea"><div class="ttname"><a href="struct_c_p_u_fixture.html#a8539308df1c9963096b9db5574c624ea">CPUFixture::SetupLoadStoreData</a></div><div class="ttdeci">void SetupLoadStoreData()</div><div class="ttdoc">Fills a vector with load/store opcodes. </div><div class="ttdef"><b>Definition:</b> cpu_tests.h:166</div></div>
 <div class="ttc" id="struct_c_p_u_fixture_html_afb65cb20607bcc90834cca583498a1f1"><div class="ttname"><a href="struct_c_p_u_fixture.html#afb65cb20607bcc90834cca583498a1f1">CPUFixture::SetupMulTestData</a></div><div class="ttdeci">void SetupMulTestData()</div><div class="ttdoc">Fills a vector with multiplication opcodes. </div><div class="ttdef"><b>Definition:</b> cpu_tests.h:181</div></div>
 <div class="ttc" id="struct_c_p_u_fixture_html_ac3bc7e2ec2b9b32bb638cde9c2a0e22a"><div class="ttname"><a href="struct_c_p_u_fixture.html#ac3bc7e2ec2b9b32bb638cde9c2a0e22a">CPUFixture::Header</a></div><div class="ttdeci">std::vector&lt; Utils::UInt8 &gt; Header</div><div class="ttdef"><b>Definition:</b> cpu_tests.h:19</div></div>
-<div class="ttc" id="class_c_p_u_html_a6c9bd7de90e4fad06b6d4ac0942d73e4"><div class="ttname"><a href="class_c_p_u.html#a6c9bd7de90e4fad06b6d4ac0942d73e4">CPU::InterpretOp</a></div><div class="ttdeci">unsigned InterpretOp()</div><div class="ttdoc">Read an opcode from the ROM and execute it. </div><div class="ttdef"><b>Definition:</b> cpu.cpp:132</div></div>
+<div class="ttc" id="class_c_p_u_html_a6c9bd7de90e4fad06b6d4ac0942d73e4"><div class="ttname"><a href="class_c_p_u.html#a6c9bd7de90e4fad06b6d4ac0942d73e4">CPU::InterpretOp</a></div><div class="ttdeci">unsigned InterpretOp()</div><div class="ttdoc">Read an opcode from the ROM and execute it. </div><div class="ttdef"><b>Definition:</b> cpu.cpp:179</div></div>
 <div class="ttc" id="struct_c_p_u_fixture_html_ad6f71a2c33060b78dec4e19bcc506461"><div class="ttname"><a href="struct_c_p_u_fixture.html#ad6f71a2c33060b78dec4e19bcc506461">CPUFixture::SetupSubTestData</a></div><div class="ttdeci">void SetupSubTestData()</div><div class="ttdoc">Fills a vector with subtraction opcodes. </div><div class="ttdef"><b>Definition:</b> cpu_tests.h:209</div></div>
 <div class="ttc" id="struct_c_p_u_fixture_html"><div class="ttname"><a href="struct_c_p_u_fixture.html">CPUFixture</a></div><div class="ttdoc">Fixture containing data to test the CPU specific instructions. That means the arithmetic, bitwise, call, jump, load, pop, push, shift and store instructions. </div><div class="ttdef"><b>Definition:</b> cpu_tests.h:15</div></div>
 <div class="ttc" id="namespace_utils_html_ad4db7aab250328c742e04e4134dca44b"><div class="ttname"><a href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a></div><div class="ttdeci">UInt_&lt; 1 &gt;::type UInt8</div><div class="ttdef"><b>Definition:</b> utils.h:105</div></div>
@@ -308,7 +308,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 11 2013 10:26:58 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 18 2013 15:51:21 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

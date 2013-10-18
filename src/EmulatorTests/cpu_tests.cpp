@@ -21,8 +21,6 @@ BOOST_AUTO_TEST_CASE( InitTest )
 	BOOST_REQUIRE_EQUAL(Cpu.Init(std::vector<UInt8>(65535, 42)), ROMOverflowError);
 }
 
-// TODO : Test negative flag more
-
 BOOST_AUTO_TEST_CASE( AddTest )
 {
 	Cpu.Init(PrepareData(AddTestData));

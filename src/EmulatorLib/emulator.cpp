@@ -1,7 +1,8 @@
 #include "emulator.h"
 
-#include <chrono>
 #include <fstream>
+
+const float Emulator::FRAME_TIME = (1.f/60.f)*1000.f;
 
 Emulator::Emulator() { }
 
@@ -9,20 +10,19 @@ Emulator::~Emulator() { }
 
 void Emulator::Emulate()
 {
-	// TODO1 : Handle errors at this level
-	// TODO2 : Make sure to maintain 60 FPS
+	// TODO : Handle errors at this level
 
 	bool l_Continue = true;
 	int l_NbCycles;
 
 	SDL_Event l_ControllerEvent;
-	
-	std::chrono::duration<long, std::ratio<1, 60>> l_FrameRate;
+	Uint32 l_StartTime;
 
 	while(l_Continue)
 	{
 		l_NbCycles = 0;
-		
+		l_StartTime = SDL_GetTicks();
+
 		// Each instruction takes exactly 1 cycle to execute.
 		// Therefore, the emulator can interpret a precise number of instructions per video frame
 		while(l_NbCycles < CYCLES_PER_FRAME)
@@ -37,11 +37,14 @@ void Emulator::Emulate()
 			m_CPU.UpdateController(l_ControllerEvent.key);
 
 		// Sound ???
-
+		
 		// Draw on screen
 		m_CPU.FlushGPU();
-
+		
 		// Sleep
+		Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));
+		if(static_cast<int>(l_Delay) > 0)
+			SDL_Delay(l_Delay);
 	}
 }
 
@@ -66,7 +69,7 @@ std::vector<UInt8> Emulator::ReadROM(const std::string & in_ROMName)
 			std::istream_iterator<unsigned char>());*/
 			
 		l_FileStream.seekg(0, std::ios::end);
-		int size = l_FileStream.tellg();
+		auto size = l_FileStream.tellg();
 		l_FileStream.seekg(0, std::ios::beg);
 
 		l_ROMData.resize(size);

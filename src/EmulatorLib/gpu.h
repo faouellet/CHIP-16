@@ -37,8 +37,8 @@ private:
 	{
 		bool FlipHorizontal;	/*!< True = Sprite oriented right \n False = Sprite oriented left */
 		bool FlipVertical;		/*!< True = Sprite oriented upward \n False = Sprite oriented downward */
-		UInt8 Height;			/*!< Height of the sprite in number of pixels */
-		UInt8 Width;			/*!< Width of the sprite in number of pixels */
+		UInt16 Height;			/*!< Height of the sprite in number of pixels */
+		UInt16 Width;			/*!< Width of the sprite in number of pixels */
 
 		/**
 		* \fn Sprite

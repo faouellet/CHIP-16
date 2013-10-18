@@ -1,6 +1,8 @@
 #ifndef SPU_H
 #define SPU_H
 
+#include <functional>
+
 #include "SDL.h"
 
 #include "utils.h"
@@ -15,7 +17,17 @@ using Utils::UInt32;
 */
 class SPU
 {
-	// IDEA : Maybe a struct to encapsulate what a audio sample is supposed to be
+private:
+	struct AudioSmaple
+	{
+		UInt32 Attack;			/*!< Duration it takes to go from intensity 0 to max volume */
+		UInt32 Decay;			/*!< Duration it takes to go from max intensity to sustain intensity */
+		UInt32 Sustain;			/*!< Volume the sound will sustain after decay, until release */
+		UInt32 Release;			/*!< Duration it takes to go from sustain intensity to intensity 0 */
+		UInt32 Volume;			/*!< Peak volume of the sound */
+		UInt32 Type;			/*!< Type of audio signal chosen between :
+									 triangle wave, sawtooth wave, noise*/
+	};
 
 private:
 	/**
@@ -30,17 +42,14 @@ private:
 									 and it is designed in a way that a call to SDL_PauseAudio
 									 can actually resume audio playing */
 
-	UInt32 m_Attack;			/*!< Duration it takes to go from intensity 0 to max volume */
-	UInt32 m_Decay;				/*!< Duration it takes to go from max intensity to sustain intensity */
-	UInt32 m_Sustain;			/*!< Volume the sound will sustain after decay, until release */
-	UInt32 m_Release;			/*!< Duration it takes to go from sustain intensity to intensity 0 */
-	UInt32 m_Volume;			/*!< Peak volume of the sound */
-	UInt32 m_Type;				/*!< Type of audio signal chosen between :
-								     triangle wave, sawtooth wave, noise*/
 
-	static const UInt8 m_AttackValues[16];		/*!< Possible attack values */
-	static const UInt8 m_DecayValues[16];		/*!< Possible decay values */
-	static const UInt8 m_ReleaseValues[16];		/*!< Possible release values */
+	static const int m_AttackValues[16];		/*!< Possible attack values */
+	static const int m_DecayValues[16];			/*!< Possible decay values */
+	static const int m_ReleaseValues[16];		/*!< Possible release values */
+	
+	AudioSmaple m_Sample;		/*!< TODO */
+
+	static std::function<int16_t(void)> m_SampleGenerator;
 
 	SDL_AudioSpec m_AudioGen;	/*!< Generates the actual audio signal */
 
@@ -63,9 +72,9 @@ public:
 	/**
 	* \fn Init
 	* \brief Initialize the sound processing unit
-	* \return Success or failure
+	* \return Error code
 	*/
-	bool Init();
+	UInt8 Init();
 	
 	/**
 	* \fn Reset
@@ -96,8 +105,23 @@ public:
 	void Stop();
 
 private:
-	void AudioCallback(void* in_UserData, Uint8* in_Stream, int in_Length);
-	int16_t GenerateSample();
+	/**
+	* \fn AudioCallback
+	* TODO
+	*/
+	static void AudioCallback(void* in_UserData, Uint8* in_Stream, int in_Length);
+	
+	/**
+	* \fn GenerateSoundSample
+	* TODO
+	*/
+	static int16_t GenerateSoundSample();
+	
+	/**
+	* \fn GenerateToneSample
+	* TODO
+	*/
+	static int16_t GenerateToneSample();
 };
 
 #endif // SPU_H

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['divide',['Divide',['../struct_divide.html',1,'']]],
-  ['divides',['Divides',['../struct_utils_1_1_divides.html',1,'Utils']]],
+  ['decay',['Decay',['../struct_s_p_u_1_1_audio_smaple.html#a6e9d2c3dcc38e6f0a460906cf92a0897',1,'SPU::AudioSmaple']]],
   ['draw',['Draw',['../class_g_p_u.html#aaab4d2fe739270b47a99be6ec8aa2069',1,'GPU']]],
   ['dumpflagregister',['DumpFlagRegister',['../class_c_p_u.html#a462e5765305dc46268b901a15e86cff1',1,'CPU']]],
   ['dumpmemory',['DumpMemory',['../class_c_p_u.html#a45a27bad4c8927e9ae9df46b447a8c11',1,'CPU']]],

@@ -1,0 +1,10 @@
+Trucs faits cette semaine:
+- Restriction de l'émulation à 60 FPS
+- Progression dans le nombre de ROMs que l'émulateur peut rouler parfaitment
+- Début de l'émulation du SPU
+
+Trucs à faire dans la semaine à venir:
+- Fixer les problèmes d'affichage détectées dans quelques ROMs
+- Continuer l'émulation du SPU
+- Lire les articles trouvés sur les interpréteurs
+- Choisir un second article à critiquer

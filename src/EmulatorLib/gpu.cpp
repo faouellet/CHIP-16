@@ -106,11 +106,13 @@ void GPU::ClearScreen()
 
 bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
 {
-	// TODO1 : Allow to draw to negative coordinates
-	// TODO2 : Flip left and right pixel when needed
+	// FIXME : Sprite appears at the opposite Y coordinate
+	// Allow to draw to negative coordinates
+	UInt16 l_X = std::abs(in_X);
+	UInt16 l_Y = std::abs(in_Y);
 
 	// Validate X and Y coordinates
-	if(in_X > WIDTH - 1 || in_Y > HEIGHT -1)
+	if(l_X > WIDTH - 1 || l_Y > HEIGHT -1)
 		return 0;
 
 	// Deal with the horizontal and vertical flip
@@ -149,9 +151,9 @@ bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite)
 		for(int j = l_XStart, l = 0; j < l_XEnd, l < m_Sprite.Width; j+=l_XInc, ++l)
 		{
 			// Test hits with other sprites
-			l_Hit += m_ScreenBuffer[i+in_Y][j+in_X] == 0 ? 0 : 1;
+			l_Hit += m_ScreenBuffer[i+l_Y][j+l_X] == 0 ? 0 : 1;
 			if(in_Sprite[i * m_Sprite.Width + j])
-				m_ScreenBuffer[i+in_Y][j+in_X] = in_Sprite[k * m_Sprite.Width + l];
+				m_ScreenBuffer[i+l_Y][j+l_X] = in_Sprite[k * m_Sprite.Width + l];
 		}
 	}
 

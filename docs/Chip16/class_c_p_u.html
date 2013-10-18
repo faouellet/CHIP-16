@@ -139,9 +139,9 @@ unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a0ffcfad93f90ec9fefb15eed04258931">Reset</a> ()</td></tr>
 <tr class="memdesc:a0ffcfad93f90ec9fefb15eed04258931"><td class="mdescLeft">&#160;</td><td class="mdescRight">Restore the central processing unit at its pre-initialized state. <br/></td></tr>
 <tr class="separator:a0ffcfad93f90ec9fefb15eed04258931"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ff7ab7ff4751a45eda89b7276b67a90"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a8ff7ab7ff4751a45eda89b7276b67a90">UpdateController</a> (<a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_ControllerID, SDL_KeyboardEvent &amp;in_Event)</td></tr>
-<tr class="memdesc:a8ff7ab7ff4751a45eda89b7276b67a90"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a controller memory mapped IO port.  <a href="#a8ff7ab7ff4751a45eda89b7276b67a90">More...</a><br/></td></tr>
-<tr class="separator:a8ff7ab7ff4751a45eda89b7276b67a90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93c2093460a2b46c541a2482213530bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a93c2093460a2b46c541a2482213530bd">UpdateController</a> (SDL_KeyboardEvent &amp;in_Event)</td></tr>
+<tr class="memdesc:a93c2093460a2b46c541a2482213530bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a controller memory mapped IO port.  <a href="#a93c2093460a2b46c541a2482213530bd">More...</a><br/></td></tr>
+<tr class="separator:a93c2093460a2b46c541a2482213530bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -166,15 +166,15 @@ Private Types</h2></td></tr>
  }</td></tr>
 <tr class="separator:a53d44f23ee5b706dc9eb102d1dd7da3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:adee2a94087dfd373dc95450184986564"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
-&#160;&#160;<b>UP</b> = 0x1, 
-<b>DOWN</b> = 0x10, 
-<b>LEFT</b> = 0x100, 
-<b>RIGHT</b> = 0X1000, 
+&#160;&#160;<b>UP</b> = 1, 
+<b>DOWN</b> = 2, 
+<b>LEFT</b> = 4, 
+<b>RIGHT</b> = 8, 
 <br/>
-&#160;&#160;<b>SELECT</b> = 0x10000, 
-<b>START</b> = 0x100000, 
-<b>A</b> = 0x1000000, 
-<b>B</b> = 0x10000000
+&#160;&#160;<b>SELECT</b> = 16, 
+<b>START</b> = 32, 
+<b>A</b> = 64, 
+<b>B</b> = 128
 <br/>
  }</td></tr>
 <tr class="separator:adee2a94087dfd373dc95450184986564"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -277,8 +277,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:adb5a8ded5899b5a23682870e79261705"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb391801aa832ac521cd491fba2c11a5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_p_u.html">SPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">m_SPU</a></td></tr>
 <tr class="separator:aeb391801aa832ac521cd491fba2c11a5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aee26e52ec9b888f8f07f71ebdb7bef2e"><td class="memItemLeft" align="right" valign="top">std::default_random_engine&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aee26e52ec9b888f8f07f71ebdb7bef2e">m_RandEngine</a></td></tr>
-<tr class="separator:aee26e52ec9b888f8f07f71ebdb7bef2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5735718698e6ec253f0f452a40d210cc"><td class="memItemLeft" align="right" valign="top">std::mt19937&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a5735718698e6ec253f0f452a40d210cc">m_RandEngine</a></td></tr>
+<tr class="separator:a5735718698e6ec253f0f452a40d210cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a457bfec1c90381f673297e96bf2f5fb4"><td class="memItemLeft" align="right" valign="top">std::uniform_int_distribution<br class="typebreak"/>
 &lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">m_Dist</a></td></tr>
 <tr class="separator:a457bfec1c90381f673297e96bf2f5fb4"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -653,26 +653,16 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a8ff7ab7ff4751a45eda89b7276b67a90"></a>
+<a class="anchor" id="a93c2093460a2b46c541a2482213530bd"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">CPU::UpdateController </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td>
-          <td class="paramname"><em>in_ControllerID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
           <td class="paramtype">SDL_KeyboardEvent &amp;&#160;</td>
-          <td class="paramname"><em>in_Event</em>&#160;</td>
-        </tr>
-        <tr>
+          <td class="paramname"><em>in_Event</em></td><td>)</td>
           <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -680,7 +670,6 @@ Private Attributes</h2></td></tr>
 <p>Update a controller memory mapped IO port. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">in_ControllerID</td><td>The ID of a controller (1 or 2) </td></tr>
     <tr><td class="paramname">in_Event</td><td>The event causing this update </td></tr>
   </table>
   </dd>
@@ -706,7 +695,7 @@ Private Attributes</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<p>Uniform distribution </p>
+<p>Distribution of the random numbers </p>
 
 </div>
 </div>
@@ -815,7 +804,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="aee26e52ec9b888f8f07f71ebdb7bef2e"></a>
+<a class="anchor" id="a5735718698e6ec253f0f452a40d210cc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -823,7 +812,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::default_random_engine CPU::m_RandEngine</td>
+          <td class="memname">std::mt19937 CPU::m_RandEngine</td>
         </tr>
       </table>
   </td>
@@ -927,7 +916,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 11 2013 10:26:58 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 18 2013 15:51:21 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

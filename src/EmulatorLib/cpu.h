@@ -2,8 +2,8 @@
 #define CPU_H
 
 #include <functional>
-#include <vector>
 #include <random>
+#include <vector>
 
 #include "gpu.h"
 #include "spu.h"
@@ -39,22 +39,22 @@ private:
 			START = 32, A = 64, B = 128 };
 
 private:
-	UInt8 m_FR;				/*!< Flag register */
-	UInt16 m_PC;			/*!< Program counter */
-	UInt16 m_SP;			/*!< Stack pointer */
+	UInt8 m_FR;										/*!< Flag register */
+	UInt16 m_PC;									/*!< Program counter */
+	UInt16 m_SP;									/*!< Stack pointer */
 
-	UInt16 m_ErrorCode;		/*!< Code used when an error happens during emulation */
+	UInt16 m_ErrorCode;								/*!< Code used when an error happens during emulation */
 	
-	// TODO : They should be treated as signed
-	UInt16 m_Registers[16];	/*!< General purpose registers */
+	UInt16 m_Registers[16];							/*!< General purpose registers */
 
-	UInt8 m_ROMHeader[HEADER_SIZE];	/*!< The header of a .c16 file. See specs for details */
-	UInt8 m_Memory[MEMORY_SIZE];	/*!< Memory of the CPU. See specs for layout details */
+	UInt8 m_ROMHeader[HEADER_SIZE];					/*!< The header of a .c16 file. See specs for details */
+	UInt8 m_Memory[MEMORY_SIZE];					/*!< Memory of the CPU. See specs for layout details */
 
-	GPU m_GPU;				/*!< The graphics processing unit */
-	SPU m_SPU;				/*!< The sound processing unit */
+	GPU m_GPU;										/*!< The graphics processing unit */
+	SPU m_SPU;										/*!< The sound processing unit */
 
-	std::default_random_engine m_RandEngine;		/*!< Random number engine */
+	std::mt19937 m_RandEngine;						/*!< Random number engine */
+	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Distribution of the random numbers */
 
 public:
 	/**
@@ -239,7 +239,6 @@ private:
 	*/
 	void InterpretLoads();
 
-	// TODO : Find a better name
 	/**
 	* \fn InterpretMisc
 	* \brief Decode and execute a misc opcode

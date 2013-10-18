@@ -1,7 +1,6 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
-#include <chrono>
 #include <string>
 
 #include "cpu.h"
@@ -20,9 +19,12 @@ class Emulator
 private:
 	/**
 	* \enum
-	* \brief Useful constants
+	* \brief Useful integral constants
 	*/
 	enum { CPU_SPEED = 1000000, FPS = 60, CYCLES_PER_FRAME = CPU_SPEED/FPS };
+
+private:
+	static const float FRAME_TIME;
 
 private:
 	CPU m_CPU;	/*!< The central processing unit */

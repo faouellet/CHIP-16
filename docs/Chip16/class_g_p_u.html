@@ -139,12 +139,12 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#ab1a402e6f1d7a6b44148ec6fef77fdaf">ClearScreen</a> ()</td></tr>
 <tr class="memdesc:ab1a402e6f1d7a6b44148ec6fef77fdaf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Erase foreground layer and set background to black. <br/></td></tr>
 <tr class="separator:ab1a402e6f1d7a6b44148ec6fef77fdaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaab4d2fe739270b47a99be6ec8aa2069"><td class="memItemLeft" align="right" valign="top">UInt8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#aaab4d2fe739270b47a99be6ec8aa2069">Draw</a> (Int16 in_X, Int16 in_Y, const std::vector&lt; UInt8 &gt; &amp;in_Sprite)</td></tr>
+<tr class="memitem:aaab4d2fe739270b47a99be6ec8aa2069"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#aaab4d2fe739270b47a99be6ec8aa2069">Draw</a> (Int16 in_X, Int16 in_Y, const std::vector&lt; UInt8 &gt; &amp;in_Sprite)</td></tr>
 <tr class="memdesc:aaab4d2fe739270b47a99be6ec8aa2069"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prepare the screen buffer to draw a sprite.  <a href="#aaab4d2fe739270b47a99be6ec8aa2069">More...</a><br/></td></tr>
 <tr class="separator:aaab4d2fe739270b47a99be6ec8aa2069"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:affe45b0e9eb4fdb97add0aec91b3b6f6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#affe45b0e9eb4fdb97add0aec91b3b6f6">Flip</a> (UInt8 in_H, UInt8 in_V)</td></tr>
-<tr class="memdesc:affe45b0e9eb4fdb97add0aec91b3b6f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the flip orientation for sprites.  <a href="#affe45b0e9eb4fdb97add0aec91b3b6f6">More...</a><br/></td></tr>
-<tr class="separator:affe45b0e9eb4fdb97add0aec91b3b6f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a286602f54cb789c9004bce86bb832466"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#a286602f54cb789c9004bce86bb832466">Flip</a> (UInt8 in_NewOrientation)</td></tr>
+<tr class="memdesc:a286602f54cb789c9004bce86bb832466"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the flip orientation for sprites.  <a href="#a286602f54cb789c9004bce86bb832466">More...</a><br/></td></tr>
+<tr class="separator:a286602f54cb789c9004bce86bb832466"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9cfafb785296f73db89b6ae16c7951d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae9cfafb785296f73db89b6ae16c7951d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#ae9cfafb785296f73db89b6ae16c7951d">FlushBuffer</a> ()</td></tr>
 <tr class="memdesc:ae9cfafb785296f73db89b6ae16c7951d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Draw a frame by flushing the current screen buffer. <br/></td></tr>
@@ -176,12 +176,16 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
-<tr class="memitem:ab2533a6a62ee5d996024f6497161757d"><td class="memItemLeft" align="right" valign="top">UInt32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#ab2533a6a62ee5d996024f6497161757d">m_ScreenBuffer</a> [WIDTH][HEIGHT]</td></tr>
-<tr class="separator:ab2533a6a62ee5d996024f6497161757d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af4fd0753709ae3d017b856a708560e5f"><td class="memItemLeft" align="right" valign="top">UInt32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#af4fd0753709ae3d017b856a708560e5f">m_ScreenBuffer</a> [HEIGHT][WIDTH]</td></tr>
+<tr class="separator:af4fd0753709ae3d017b856a708560e5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1dd48f20a8b26df248ae55a92972d1b0"><td class="memItemLeft" align="right" valign="top">UInt32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#a1dd48f20a8b26df248ae55a92972d1b0">m_ScreenColors</a> [HEIGHT][WIDTH]</td></tr>
+<tr class="separator:a1dd48f20a8b26df248ae55a92972d1b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2317f0aedac19a7402d5c41c36dd04d5"><td class="memItemLeft" align="right" valign="top">UInt8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#a2317f0aedac19a7402d5c41c36dd04d5">m_SpritesVerticalOrientation</a></td></tr>
 <tr class="separator:a2317f0aedac19a7402d5c41c36dd04d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9f04d47125622b5ce5d0416186376017"><td class="memItemLeft" align="right" valign="top">UInt8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#a9f04d47125622b5ce5d0416186376017">m_SpritesHorizontalOrientation</a></td></tr>
 <tr class="separator:a9f04d47125622b5ce5d0416186376017"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf9c1853c7fa163d4b66cd8bfb298585"><td class="memItemLeft" align="right" valign="top">UInt8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#abf9c1853c7fa163d4b66cd8bfb298585">m_BGC</a></td></tr>
+<tr class="separator:abf9c1853c7fa163d4b66cd8bfb298585"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af06787a61f877b4ed35b46ad5d698a89"><td class="memItemLeft" align="right" valign="top">UInt8&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#af06787a61f877b4ed35b46ad5d698a89">m_VBlankFlag</a></td></tr>
 <tr class="separator:af06787a61f877b4ed35b46ad5d698a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b90349cefad7f3ad43a8cee164c7e31"><td class="memItemLeft" align="right" valign="top">UInt32&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_g_p_u.html#a8b90349cefad7f3ad43a8cee164c7e31">m_Colors</a> [NB_COLORS]</td></tr>
@@ -241,10 +245,11 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>Any sprite hit when drawing </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="affe45b0e9eb4fdb97add0aec91b3b6f6"></a>
+<a class="anchor" id="a286602f54cb789c9004bce86bb832466"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -252,18 +257,8 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
           <td class="memname">GPU::Flip </td>
           <td>(</td>
           <td class="paramtype">UInt8&#160;</td>
-          <td class="paramname"><em>in_H</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
+          <td class="paramname"><em>in_NewOrientation</em></td><td>)</td>
           <td></td>
-          <td class="paramtype">UInt8&#160;</td>
-          <td class="paramname"><em>in_V</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -271,8 +266,7 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
 <p>Set the flip orientation for sprites. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">in_H</td><td>Horizontal orientation </td></tr>
-    <tr><td class="paramname">in_V</td><td>Verticl orientation </td></tr>
+    <tr><td class="paramname">in_NewOrientation</td><td>new horizontal and vertiacal orientations </td></tr>
   </table>
   </dd>
 </dl>
@@ -435,6 +429,27 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="abf9c1853c7fa163d4b66cd8bfb298585"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">UInt8 GPU::m_BGC</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Background color index </p>
+
+</div>
+</div>
 <a class="anchor" id="a8b90349cefad7f3ad43a8cee164c7e31"></a>
 <div class="memitem">
 <div class="memproto">
@@ -477,7 +492,7 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
 
 </div>
 </div>
-<a class="anchor" id="ab2533a6a62ee5d996024f6497161757d"></a>
+<a class="anchor" id="af4fd0753709ae3d017b856a708560e5f"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -485,7 +500,7 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">UInt32 GPU::m_ScreenBuffer[WIDTH][HEIGHT]</td>
+          <td class="memname">UInt32 GPU::m_ScreenBuffer[HEIGHT][WIDTH]</td>
         </tr>
       </table>
   </td>
@@ -495,6 +510,27 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
 </table>
 </div><div class="memdoc">
 <p>Buffer to be drawn </p>
+
+</div>
+</div>
+<a class="anchor" id="a1dd48f20a8b26df248ae55a92972d1b0"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">UInt32 GPU::m_ScreenColors[HEIGHT][WIDTH]</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Actual graphics to be drawn </p>
 
 </div>
 </div>
@@ -631,7 +667,7 @@ void(*)(SDL_Texture *)&gt;&#160;</td><td class="memItemRight" valign="bottom"><a
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 11 2013 10:26:59 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 18 2013 15:51:21 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

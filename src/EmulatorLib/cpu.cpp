@@ -4,7 +4,7 @@
 #include <iterator>
 #include <limits>
 
-CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
+CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0), m_Dist(0, std::numeric_limits<UInt16>::max())
 {
 	for(int i = 0; i < 16; ++i)
 		m_Registers[i] = 0;
@@ -65,8 +65,7 @@ unsigned CPU::Init(std::vector<UInt8> && in_ROMData)
 	
 	l_Ret |= m_GPU.Init();
 		
-	if(!m_SPU.Init())
-		l_Ret |= SPUError;
+	l_Ret |= m_SPU.Init();
 
 	return l_Ret;
 }
@@ -261,6 +260,7 @@ unsigned CPU::InterpretOp()
 	}
 	if(m_PC > m_ROMHeader[6])	// TODO : make sure with the test ROMs
 		m_ErrorCode |= EmulationDone;
+	
 	return m_ErrorCode;
 }
 
@@ -274,6 +274,7 @@ void CPU::InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std:
 			UInt16 l_IVal = FetchImmediateValue();
 			in_FRH(m_Registers[l_Addr], l_IVal);
 			m_Registers[l_Addr] = in_Ins(m_Registers[l_Addr], l_IVal);
+			
 			SetSignZeroFlag(m_Registers[l_Addr]);
 			break;
 		}
@@ -549,6 +550,7 @@ void CPU::InterpretMisc()
 			FetchRegistersValues(l_XVal, l_YVal);
 			m_PC++;
 			UInt16 l_Addr = FetchImmediateValue();
+			auto x = FetchSprite(l_Addr);
 			bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, FetchSprite(l_Addr));
 			m_FR = l_RetVal ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 			break;
@@ -566,10 +568,12 @@ void CPU::InterpretMisc()
 		}
 		case 0x7:	// RND
 		{
+			// FIXME : Not so random
 			UInt16 l_Addr = FetchRegisterAddress();
 			UInt16 l_MaxVal = FetchImmediateValue();
-			std::uniform_int_distribution<UInt16> l_Dist(0, l_MaxVal);
-			UInt16 l_RandVal = l_Dist(m_RandEngine);
+			UInt16 l_RandVal = m_Dist(m_RandEngine);
+			while(l_RandVal > l_MaxVal)
+				l_RandVal= m_Dist(m_RandEngine);
 			m_Registers[l_Addr] = l_RandVal;
 			break;
 		}
@@ -870,14 +874,12 @@ void CPU::SetCarryOverflowFlag(UInt16 in_Op1, UInt16 in_Op2) { }
 
 void CPU::SetCarryOverflowFlagAdd(UInt16 in_Op1, UInt16 in_Op2) 
 {
-	// TODO : Change static_cast to bitwise check
-
 	UInt16 l_Result = in_Op1 + in_Op2;
 	// Set carry flag
 	m_FR = l_Result < in_Op1 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 	// Set overflow flag
-	m_FR = (l_Result >= 0 && static_cast<Int16>(in_Op1) < 0 && static_cast<Int16>(in_Op2) < 0)
-		|| (static_cast<Int16>(l_Result) < 0 && in_Op1 >= 0 && in_Op2 >= 0) ?
+	m_FR = (l_Result >= 0 && in_Op1 & 0x8000 && in_Op2 & 0x8000)
+		|| (l_Result & 0x8000 && in_Op1 >= 0 && in_Op2 >= 0) ?
 		m_FR | SignedOverflowFlag : m_FR & ~SignedOverflowFlag;
 }
 
@@ -897,13 +899,11 @@ void CPU::SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2)
 
 void CPU::SetCarryOverflowFlagSub(UInt16 in_Op1, UInt16 in_Op2) 
 {
-	// TODO : Change static_cast to bitwise check
-	
 	UInt32 l_Result = in_Op1 - in_Op2;
 	// Set carry flag
 	m_FR = l_Result & 0x10000 ? m_FR | UnsignedCarryFlag : m_FR & ~UnsignedCarryFlag;
 	// Set overflow flag
-	m_FR = (l_Result >= 0 && static_cast<Int16>(in_Op1) < 0 && static_cast<Int16>(in_Op2 >= 0))
-		|| (l_Result < 0 && static_cast<Int16>(in_Op1) >= 0 && static_cast<Int16>(in_Op2 < 0)) ?
+	m_FR = (l_Result >= 0 && in_Op1 & 0x8000 && in_Op2 >= 0)
+		|| (l_Result & 0x8000 && in_Op1 >= 0 && in_Op2 & 0x8000) ?
 		m_FR | SignedOverflowFlag : m_FR & ~SignedOverflowFlag;
 }

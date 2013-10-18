@@ -90,8 +90,18 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <p>This is the complete list of members for <a class="el" href="class_s_p_u.html">SPU</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_s_p_u.html#a4aa20f34e2603ecdbf04562deb31b23f">GenerateSound</a>(UInt8 in_Attack, UInt8 in_Decay, UInt8 in_Sustain, UInt8 in_Release, UInt8 in_Volume, UInt8 in_Type)</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">Init</a>()</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_s_p_u.html#a9849b365ce4894731421d17ac2265e00">AudioCallback</a>(void *in_UserData, Uint8 *in_Stream, int in_Length)</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_s_p_u.html#afeb0934fc0d3dd1ef02af0a70d0e05cb">GenerateSound</a>(UInt32 in_Attack, UInt32 in_Decay, UInt32 in_Sustain, UInt32 in_Release, UInt32 in_Volume, UInt32 in_Type)</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_s_p_u.html#a5d6cf774d1941c2152ebf557cd1a3fc5">GenerateSoundSample</a>()</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_s_p_u.html#aa1a61252149f1bf7e09a96ffe1679e14">GenerateToneSample</a>()</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">Init</a>()</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="class_s_p_u.html#af18e442f11123cf1d30d1dd13ff2d82c">m_AttackValues</a></td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_s_p_u.html#aa07312a22a1046481f7a9b8c703b6e11">m_AudioGen</a></td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_s_p_u.html#a304426289797ad354aa678cb4e527e2a">m_AudioPaused</a></td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_s_p_u.html#ac2c49cbe4248f635189f1573e2e78fc2">m_DecayValues</a></td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="class_s_p_u.html#a5fd8c05986bcda0045d20fb9c158e2d1">m_ReleaseValues</a></td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="class_s_p_u.html#afaaeb2625054701f4f1998b71af86947">m_Sample</a></td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
+  <tr bgcolor="#f0f0f0"><td class="entry"><b>m_SampleGenerator</b> (defined in <a class="el" href="class_s_p_u.html">SPU</a>)</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Noise</b> enum value (defined in <a class="el" href="class_s_p_u.html">SPU</a>)</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
   <tr><td class="entry"><a class="el" href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">PlayTone</a>(unsigned in_Tone, unsigned in_Duration)</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"></td></tr>
   <tr bgcolor="#f0f0f0" class="even"><td class="entry"><b>Pulse</b> enum value (defined in <a class="el" href="class_s_p_u.html">SPU</a>)</td><td class="entry"><a class="el" href="class_s_p_u.html">SPU</a></td><td class="entry"><span class="mlabel">private</span></td></tr>
@@ -104,7 +114,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </table></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 11 2013 10:26:59 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Fri Oct 18 2013 15:51:21 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
