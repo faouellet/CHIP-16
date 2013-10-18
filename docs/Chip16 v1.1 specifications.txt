@@ -83,6 +83,25 @@ Two options are available:
 - Playing one of 3 fixed tones (500 Hz, 1000 Hz, 1500 Hz) for a given number of milliseconds, OR
 - Using sound generation options (SNG instruction), play a tone from memory for a given number of milliseconds.
 
+Total time = Attack + Decay + (Duration - Attack - Decay) + Release
+
+Attack is the duration it takes to go from intensity 0 to max intensity (volume).
+- Duration values:  2, 8, 16, 24, 38, 56, 68, 80, 100, 250, 500, 800, 1000, 3000, 5000, 8000
+
+Decay is the duration it takes to go from max intensity to sustain intensity.
+- Duration values:   6, 24, 48, 72, 114, 168, 204, 240, 300, 750, 1500, 2400, 3000, 9000, 15000, 24000
+
+Release is the duration it takes to go from sustain intensity to intensity 0.
+- Duration values: 6, 24, 48, 72, 114, 168, 204, 240, 300, 750, 1500, 2400, 3000, 9000, 15000, 24000
+
+Volume is the peak volume of the sound.
+Sustain is the volume the sound will sustain after decay, until release.
+
+Sounds may be of 4 types, which affects the sound's wave pattern:
+- Triangle: Slope up and down linearly between negative and positive amplitude at the given frequency.
+- Sawtooth: Slope up from negative to positive amplitude, then fall back to negative, at the given frequency.
+- Pulse (Square): Alternate between negative and positive amplitude in a binary fashion, at the given frequency.
+
 Sound generator options are detailed in the SNG opcode description.
 
 Color indexes (0xRRGGBB):
