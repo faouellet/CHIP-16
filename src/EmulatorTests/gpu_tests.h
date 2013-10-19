@@ -11,7 +11,7 @@
 */
 struct GPUFixture
 {
-	GPU gpu;
+	GPU Gpu;
 
 	GPUFixture() { }
 };

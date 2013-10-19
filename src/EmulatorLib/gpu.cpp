@@ -44,6 +44,22 @@ void GPU::SetOriginalColorPalette()
 	m_Colors[15] = 0xFFFFFF;	// White
 }
 
+std::vector<UInt32> GPU::DumpColors() const
+{
+	return std::vector<UInt32>(std::begin(m_Colors), std::end(m_Colors));
+}
+
+std::vector<UInt32> GPU::DumpScreenBuffer() const
+{
+	std::vector<UInt32> l_Return(HEIGHT * WIDTH);
+
+	for(int i = 0; i < HEIGHT; ++i)
+		for(int j = 0; j < WIDTH; ++j)
+			l_Return[i * HEIGHT + j] = m_ScreenBuffer[i][j];
+
+	return l_Return;
+}
+
 unsigned GPU::Init()
 {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)

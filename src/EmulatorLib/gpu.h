@@ -94,6 +94,20 @@ private:
 
 public:
 	/**
+	* \fn DumpColors
+	* \brief Dump the color palette
+	* \return The colors used to draw the current frame
+	*/
+	std::vector<UInt32> DumpColors() const;
+
+	/**
+	* \fn DumpScreenBuffer
+	* \brief Dump the screen buffer
+	* \return The color indexes used to draw the current frame
+	*/
+	std::vector<UInt32> DumpScreenBuffer() const;
+
+	/**
 	* \fn Init
 	* \brief Initialize the graphics processing unit
 	* \return Error code
