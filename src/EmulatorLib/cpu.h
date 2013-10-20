@@ -2,6 +2,7 @@
 #define CPU_H
 
 #include <functional>
+#include <map>
 #include <random>
 #include <vector>
 
@@ -55,6 +56,8 @@ private:
 
 	std::mt19937 m_RandEngine;						/*!< Random number engine */
 	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Distribution of the random numbers */
+
+	std::map<UInt8, std::function<void(void)>> m_Ops;	/*!< Interpretations of the opcodes */
 
 public:
 	/**
@@ -138,7 +141,48 @@ public:
 	*/
 	void UpdateController(SDL_KeyboardEvent & in_Event);
 
-private:
+private:	// Arithmetic helpers
+	/**
+	* \fn BasicArithmetic
+	* \brief Apply an instruction to two registers and store the result in a third register
+	* \param in_Ins The instruction to apply 
+	* \param in_FRH Handler responsible for updating the flag register
+	*/
+	void BasicArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+
+	/**
+	* \fn DiscardArithmetic
+	* \brief Apply an instruction to two registers and discard the result
+	* \param in_Ins The instruction to apply 
+	* \param in_FRH Handler responsible for updating the flag register
+	*/
+	void DiscardArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+
+	/**
+	* \fn DiscardImmediateArithmetic
+	* \brief Apply an instruction to a register and an immediate value and discard the result
+	* \param in_Ins The instruction to apply 
+	* \param in_FRH Handler responsible for updating the flag register
+	*/
+	void DiscardImmediateArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+
+	/**
+	* \fn ImmediateArithmetic
+	* \brief Apply an instruction to a register and an immediate value and store the result in the first register
+	* \param in_Ins The instruction to apply 
+	* \param in_FRH Handler responsible for updating the flag register
+	*/
+	void ImmediateArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+
+	/**
+	* \fn InplaceArithmetic
+	* \brief Apply an instruction to two registers and store the result in the first register
+	* \param in_Ins The instruction to apply 
+	* \param in_FRH Handler responsible for updating the flag register
+	*/
+	void InplaceArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+	
+private:	// Memory helpers
 	/**
 	* \fn FetchImmediateValue
 	* \brief Concatenate the value pointed by the PC with the one the PC is going
@@ -170,13 +214,7 @@ private:
 	*/
 	std::vector<UInt8> FetchSprite(UInt16 in_Addr) const;
 
-	/**
-	* \fn OutputUnknownOpCode
-	* \brief Output an unknown/problematic opcode to the console
-	* \param in_Code The instruction opcode
-	*/
-	void OutputUnknownOpCode(UInt8 in_Code) const;
-
+private:	// Stack helpers
 	/**
 	* \fn Pop
 	* \brief Pop a value from the stack of the emulator and decrement the SP by 2
@@ -191,6 +229,7 @@ private:
 	*/
 	void Push(UInt16 in_Val);
 
+private:	// Flag register helpers
 	/**
 	* \fn SetSignZeroFlag
 	* \brief Set the sign flag if the bit[15] of the result is lit
@@ -211,63 +250,91 @@ private:
 	void SetCarryOverflowFlagSub(UInt16 in_Op1, UInt16 in_Op2);
 
 private:
-	/**
-	* \fn InterpretArithmetics
-	* \brief Decode and execute an arithmetic opcode
-	* \param The function to apply to the operand pointed by the PC
-	* \param The function to apply to the flag register
-	*/
-	void InterpretArithmetics(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+	 /**
+    * \fn InterpretConditions
+    * \brief Decode and execute a condition
+    * \param in_CondCode A byte containing the condition to be evaluated
+    * \return Condition evalution result
+    */
+    unsigned InterpretConditions(UInt8 in_CondCode);
 
-	/**
-	* \fn InterpretCallJumps
-	* \brief Decode and execute a call or jump opcode
-	*/
-	void InterpretCallJumps();
+private:	// Opcodes
+	void ADDI();
+	void InplaceADD();
+	void ADD();
+	void SUBI();
+	void InplaceSUB();
+	void SUB();
+	void CMPI();
+	void CMP();
+	void ANDI();
+	void InplaceAND();
+	void AND();
+	void TSTI();
+	void TST();
+	void ORI();
+	void InplaceOR();
+	void OR();
+	void XORI();
+	void InplaceXOR();
+	void XOR();
+	void MULI();
+	void InplaceMUL();
+	void MUL();
+	void DIVI();
+	void InplaceDIV();
+	void DIV();
 
-	/**
-	* \fn InterpretConditions
-	* \brief Decode and execute a condition
-	* \param in_CondCode A byte containing the condition to be evaluated
-	* \return Condition evalution result
-	*/
-	unsigned InterpretConditions(UInt8 in_CondCode);
-	
-	/**
-	* \fn InterpretLoads
-	* \brief Decode and execute a load opcode
-	*/
-	void InterpretLoads();
+	void DirectJMP();
+	void Jx();
+	void JME();
+	void DirectCALL();
+	void RET();
+	void IndirectJMP();
+	void Cx();
+	void IndirectCALL();
 
-	/**
-	* \fn InterpretMisc
-	* \brief Decode and execute a misc opcode
-	*/
-	void InterpretMisc();
+	void RegisterLDI();
+	void StackLDI();
+	void DirectLDM();
+	void IndirectLDM();
+	void MOV();
 
-	/**
-	* \fn InterpretPalettes
-	* \brief Decode and execute a palette opcode
-	*/
-	void InterpretPalettes();
+	void NOP();
+	void CLS();
+	void VBLNK();
+	void BGC();
+	void SPR();
+	void ImmediateDRW();
+	void RegisterDRW();
+	void RND();
+	void FLIP();
+	void SND0();
+	void SND1();
+	void SND2();
+	void SND3();
+	void SNP();
+	void SNG();
 
-	/**
-	* \fn InterpretPushPops
-	* \brief Decode and execute a push or pop opcode
-	*/
-	void InterpretPushPops();
+	void ImmediatePalette();
+	void RegisterPalette();
 
-	/**
-	* \fn InterpretShifts
-	* \brief Decode and execute a shift opcode
-	*/
-	void InterpretShifts();
+	void PUSH();
+	void POP();
+	void PUSHALL();
+	void POPALL();
+	void PUSHF();
+	void POPF();
 
-	/**
-	* \fn InterpretStores
-	* \brief Decode and execute a store  opcode
-	*/
-	void InterpretStores();
+	void NSHL();
+	void NSHR();
+	void NSAR();
+	void RegisterSHL();
+	void RegisterSHR();
+	void RegisterSAR();
+
+	void DirectSTM();
+	void IndirectSTM();
 };
 
 #endif // CPU_H
