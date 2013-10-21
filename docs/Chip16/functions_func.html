@@ -77,6 +77,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow4" class="tabs3">
     <ul class="tablist">
       <li><a href="#index_a"><span>a</span></a></li>
+      <li><a href="#index_b"><span>b</span></a></li>
       <li><a href="#index_c"><span>c</span></a></li>
       <li><a href="#index_d"><span>d</span></a></li>
       <li><a href="#index_e"><span>e</span></a></li>
@@ -84,7 +85,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_g"><span>g</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_l"><span>l</span></a></li>
-      <li><a href="#index_o"><span>o</span></a></li>
       <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
@@ -119,6 +119,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 
 
+<h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
+<li>BasicArithmetic()
+: <a class="el" href="class_c_p_u.html#acb31d4ff3d081e01dea0424a7e10db99">CPU</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>Choose()
 : <a class="el" href="class_command_line_interface.html#a9727deb86a0fc49c2ac7a2615ba5f464">CommandLineInterface</a>
@@ -139,8 +146,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
+<li>DiscardArithmetic()
+: <a class="el" href="class_c_p_u.html#a38022904a3da8e7c915f7913ba08544a">CPU</a>
+</li>
+<li>DiscardImmediateArithmetic()
+: <a class="el" href="class_c_p_u.html#aed3df517832d44dc58775fc7960c20a0">CPU</a>
+</li>
 <li>Draw()
 : <a class="el" href="class_g_p_u.html#aaab4d2fe739270b47a99be6ec8aa2069">GPU</a>
+</li>
+<li>DumpColors()
+: <a class="el" href="class_g_p_u.html#a6b1b41069a3190d33416e7c2a0a36d8b">GPU</a>
 </li>
 <li>DumpFlagRegister()
 : <a class="el" href="class_c_p_u.html#a462e5765305dc46268b901a15e86cff1">CPU</a>
@@ -153,6 +169,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>DumpRegisters()
 : <a class="el" href="class_c_p_u.html#ad4177070564e07a4afb175ad4a25761e">CPU</a>
+</li>
+<li>DumpScreenBuffer()
+: <a class="el" href="class_g_p_u.html#a86b57f412b979bcb9bcb34023fb85ada">GPU</a>
 </li>
 <li>DumpStackPointer()
 : <a class="el" href="class_c_p_u.html#a4c583309a62e94b0311a38a73cccfd69">CPU</a>
@@ -218,41 +237,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
+<li>ImmediateArithmetic()
+: <a class="el" href="class_c_p_u.html#ac6e2a8ea45831e2cb0f3e8a9a52acd4a">CPU</a>
+</li>
 <li>Init()
 : <a class="el" href="class_c_p_u.html#ad1442d889ce7ab4a1e871ecd8cf2c52d">CPU</a>
-, <a class="el" href="class_emulator.html#a66f2e9657706f445882cd1bbf08052aa">Emulator</a>
-, <a class="el" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">SPU</a>
 , <a class="el" href="class_g_p_u.html#ad5cc92e27603ba7762c17750ff9741dc">GPU</a>
+, <a class="el" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">SPU</a>
+, <a class="el" href="class_emulator.html#a66f2e9657706f445882cd1bbf08052aa">Emulator</a>
 </li>
-<li>InterpretArithmetics()
-: <a class="el" href="class_c_p_u.html#a4d5adf6a8ff655cb5f8c94cddb1c0786">CPU</a>
-</li>
-<li>InterpretCallJumps()
-: <a class="el" href="class_c_p_u.html#a11d8fd1d5252859a4d03252f0cf3e5ad">CPU</a>
+<li>InplaceArithmetic()
+: <a class="el" href="class_c_p_u.html#aa6a325a8e8ebd51700b663f130660395">CPU</a>
 </li>
 <li>InterpretConditions()
 : <a class="el" href="class_c_p_u.html#ab8f8a6f3c7794ef3bd24aa9f8cfc0b1a">CPU</a>
 </li>
-<li>InterpretLoads()
-: <a class="el" href="class_c_p_u.html#a2157edd94f98ec201e4a59376df995af">CPU</a>
-</li>
-<li>InterpretMisc()
-: <a class="el" href="class_c_p_u.html#a37a1148532f35ce4f67aa1ddbca86cbb">CPU</a>
-</li>
 <li>InterpretOp()
 : <a class="el" href="class_c_p_u.html#a6c9bd7de90e4fad06b6d4ac0942d73e4">CPU</a>
-</li>
-<li>InterpretPalettes()
-: <a class="el" href="class_c_p_u.html#a5ef35c7e0886a15b1fb8cef25cdfbf7b">CPU</a>
-</li>
-<li>InterpretPushPops()
-: <a class="el" href="class_c_p_u.html#a1a862fdf99fe0117e083b9b2b239ae74">CPU</a>
-</li>
-<li>InterpretShifts()
-: <a class="el" href="class_c_p_u.html#ac0324de166f49ca1009f2e5252dd6e5c">CPU</a>
-</li>
-<li>InterpretStores()
-: <a class="el" href="class_c_p_u.html#a69158e4113baa574c0595e5c26d188ae">CPU</a>
 </li>
 </ul>
 
@@ -260,13 +261,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
 <li>LoadPalette()
 : <a class="el" href="class_g_p_u.html#aa927c6c880a872b57fa54845fc6049a0">GPU</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
-<li>OutputUnknownOpCode()
-: <a class="el" href="class_c_p_u.html#ac4084d5e98800e13b9b4079a16f81449">CPU</a>
 </li>
 </ul>
 
@@ -407,7 +401,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 18 2013 15:51:22 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Oct 21 2013 13:36:25 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

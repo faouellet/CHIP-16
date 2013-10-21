@@ -12,92 +12,92 @@ CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0), m_Dist(0, std::numeric_l
 	for(int i = 0; i < MEMORY_SIZE; ++i)
 		m_Memory[i] = 0;
 
-	m_Ops[0x00] = std::bind(&CPU::NOP, this); 
-	m_Ops[0x01] = std::bind(&CPU::CLS, this);
-	m_Ops[0x02] = std::bind(&CPU::VBLNK, this); 
-	m_Ops[0x03] = std::bind(&CPU::BGC, this); 
-	m_Ops[0x04] = std::bind(&CPU::SPR, this); 
-	m_Ops[0x05] = std::bind(&CPU::ImmediateDRW, this); 
-	m_Ops[0x06] = std::bind(&CPU::RegisterDRW, this); 
-	m_Ops[0x07] = std::bind(&CPU::RND, this);
+	m_Ops[0x00] = &CPU::NOP; 
+	m_Ops[0x01] = &CPU::CLS;
+	m_Ops[0x02] = &CPU::VBLNK; 
+	m_Ops[0x03] = &CPU::BGC; 
+	m_Ops[0x04] = &CPU::SPR; 
+	m_Ops[0x05] = &CPU::ImmediateDRW; 
+	m_Ops[0x06] = &CPU::RegisterDRW; 
+	m_Ops[0x07] = &CPU::RND;
 	
-	m_Ops[0x08] = std::bind(&CPU::FLIP, this); 
+	m_Ops[0x08] = &CPU::FLIP; 
 	
-	m_Ops[0x09] = std::bind(&CPU::SND0, this); 
-	m_Ops[0x0A] = std::bind(&CPU::SND1, this);
-	m_Ops[0x0B] = std::bind(&CPU::SND2, this);
-	m_Ops[0x0C] = std::bind(&CPU::SND3, this);
-	m_Ops[0x0D] = std::bind(&CPU::SNP, this); 
-	m_Ops[0x0E] = std::bind(&CPU::SNG, this);
+	m_Ops[0x09] = &CPU::SND0; 
+	m_Ops[0x0A] = &CPU::SND1;
+	m_Ops[0x0B] = &CPU::SND2;
+	m_Ops[0x0C] = &CPU::SND3;
+	m_Ops[0x0D] = &CPU::SNP; 
+	m_Ops[0x0E] = &CPU::SNG;
 
-	m_Ops[0x10] = std::bind(&CPU::DirectJMP, this); 
-	m_Ops[0x12] = std::bind(&CPU::Jx, this);
-	m_Ops[0x13] = std::bind(&CPU::JME, this); 
-	m_Ops[0x14] = std::bind(&CPU::DirectCALL, this); 
-	m_Ops[0x15] = std::bind(&CPU::RET, this); 
-	m_Ops[0x16] = std::bind(&CPU::IndirectJMP, this); 
-	m_Ops[0x17] = std::bind(&CPU::Cx, this); 
-	m_Ops[0x18] = std::bind(&CPU::IndirectCALL, this);
+	m_Ops[0x10] = &CPU::DirectJMP; 
+	m_Ops[0x12] = &CPU::Jx;
+	m_Ops[0x13] = &CPU::JME; 
+	m_Ops[0x14] = &CPU::DirectCALL; 
+	m_Ops[0x15] = &CPU::RET; 
+	m_Ops[0x16] = &CPU::IndirectJMP; 
+	m_Ops[0x17] = &CPU::Cx; 
+	m_Ops[0x18] = &CPU::IndirectCALL;
 
-	m_Ops[0x20] = std::bind(&CPU::RegisterLDI, this);
-	m_Ops[0x21] = std::bind(&CPU::StackLDI, this);
-	m_Ops[0x22] = std::bind(&CPU::DirectLDM, this);
-	m_Ops[0x23] = std::bind(&CPU::IndirectLDM, this); 
-	m_Ops[0x24] = std::bind(&CPU::MOV, this);
+	m_Ops[0x20] = &CPU::RegisterLDI;
+	m_Ops[0x21] = &CPU::StackLDI;
+	m_Ops[0x22] = &CPU::DirectLDM;
+	m_Ops[0x23] = &CPU::IndirectLDM; 
+	m_Ops[0x24] = &CPU::MOV;
 
-	m_Ops[0x30] = std::bind(&CPU::DirectSTM, this); 
-	m_Ops[0x31] = std::bind(&CPU::IndirectSTM, this);
+	m_Ops[0x30] = &CPU::DirectSTM; 
+	m_Ops[0x31] = &CPU::IndirectSTM;
 
-	m_Ops[0x40] = std::bind(&CPU::ADDI, this);
-	m_Ops[0x41] = std::bind(&CPU::InplaceADD, this);
-	m_Ops[0x42] = std::bind(&CPU::ADD, this);
+	m_Ops[0x40] = &CPU::ADDI;
+	m_Ops[0x41] = &CPU::InplaceADD;
+	m_Ops[0x42] = &CPU::ADD;
 
-	m_Ops[0x50] = std::bind(&CPU::SUBI, this);
-	m_Ops[0x51] = std::bind(&CPU::InplaceSUB, this);
-	m_Ops[0x52] = std::bind(&CPU::SUB, this);
+	m_Ops[0x50] = &CPU::SUBI;
+	m_Ops[0x51] = &CPU::InplaceSUB;
+	m_Ops[0x52] = &CPU::SUB;
 
-	m_Ops[0x53] = std::bind(&CPU::CMPI, this);
-	m_Ops[0x54] = std::bind(&CPU::CMP, this);
+	m_Ops[0x53] = &CPU::CMPI;
+	m_Ops[0x54] = &CPU::CMP;
 
-	m_Ops[0x60] = std::bind(&CPU::ANDI, this);
-	m_Ops[0x61] = std::bind(&CPU::InplaceAND, this);
-	m_Ops[0x62] = std::bind(&CPU::AND, this);
+	m_Ops[0x60] = &CPU::ANDI;
+	m_Ops[0x61] = &CPU::InplaceAND;
+	m_Ops[0x62] = &CPU::AND;
 	
-	m_Ops[0x63] = std::bind(&CPU::TSTI, this);
-	m_Ops[0x64] = std::bind(&CPU::TST, this);
+	m_Ops[0x63] = &CPU::TSTI;
+	m_Ops[0x64] = &CPU::TST;
 
-	m_Ops[0x70] = std::bind(&CPU::ORI, this);
-	m_Ops[0x71] = std::bind(&CPU::InplaceOR, this);
-	m_Ops[0x72] = std::bind(&CPU::OR, this);
+	m_Ops[0x70] = &CPU::ORI;
+	m_Ops[0x71] = &CPU::InplaceOR;
+	m_Ops[0x72] = &CPU::OR;
 
-	m_Ops[0x80] = std::bind(&CPU::XORI, this);
-	m_Ops[0x81] = std::bind(&CPU::InplaceXOR, this);
-	m_Ops[0x82] = std::bind(&CPU::XOR, this);
+	m_Ops[0x80] = &CPU::XORI;
+	m_Ops[0x81] = &CPU::InplaceXOR;
+	m_Ops[0x82] = &CPU::XOR;
 
-	m_Ops[0x90] = std::bind(&CPU::MULI, this);
-	m_Ops[0x91] = std::bind(&CPU::InplaceMUL, this);
-	m_Ops[0x92] = std::bind(&CPU::MUL, this);
+	m_Ops[0x90] = &CPU::MULI;
+	m_Ops[0x91] = &CPU::InplaceMUL;
+	m_Ops[0x92] = &CPU::MUL;
 	
-	m_Ops[0xA0] = std::bind(&CPU::DIVI, this);
-	m_Ops[0xA1] = std::bind(&CPU::InplaceDIV, this);
-	m_Ops[0xA2] = std::bind(&CPU::DIV, this);
+	m_Ops[0xA0] = &CPU::DIVI;
+	m_Ops[0xA1] = &CPU::InplaceDIV;
+	m_Ops[0xA2] = &CPU::DIV;
 	
-	m_Ops[0xB0] = std::bind(&CPU::NSHL, this);
-	m_Ops[0xB1] = std::bind(&CPU::NSHR, this);
-	m_Ops[0xB2] = std::bind(&CPU::NSAR, this);
-	m_Ops[0xB3] = std::bind(&CPU::RegisterSHL, this);
-	m_Ops[0xB4] = std::bind(&CPU::RegisterSHR, this);
-	m_Ops[0xB5] = std::bind(&CPU::RegisterSAR, this);
+	m_Ops[0xB0] = &CPU::NSHL;
+	m_Ops[0xB1] = &CPU::NSHR;
+	m_Ops[0xB2] = &CPU::NSAR;
+	m_Ops[0xB3] = &CPU::RegisterSHL;
+	m_Ops[0xB4] = &CPU::RegisterSHR;
+	m_Ops[0xB5] = &CPU::RegisterSAR;
 
-	m_Ops[0xC0] = std::bind(&CPU::PUSH, this);
-	m_Ops[0xC1] = std::bind(&CPU::POP, this);
-	m_Ops[0xC2] = std::bind(&CPU::PUSHALL, this);
-	m_Ops[0xC3] = std::bind(&CPU::POPALL, this);
-	m_Ops[0xC4] = std::bind(&CPU::PUSHF, this);
-	m_Ops[0xC5] = std::bind(&CPU::POPF, this);
+	m_Ops[0xC0] = &CPU::PUSH;
+	m_Ops[0xC1] = &CPU::POP;
+	m_Ops[0xC2] = &CPU::PUSHALL;
+	m_Ops[0xC3] = &CPU::POPALL;
+	m_Ops[0xC4] = &CPU::PUSHF;
+	m_Ops[0xC5] = &CPU::POPF;
 
-	m_Ops[0xD0] = std::bind(&CPU::ImmediatePalette, this);
-	m_Ops[0xD1] = std::bind(&CPU::RegisterPalette, this);
+	m_Ops[0xD0] = &CPU::ImmediatePalette;
+	m_Ops[0xD1] = &CPU::RegisterPalette;
 }
 
 CPU::~CPU() { }
@@ -265,11 +265,13 @@ void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
 
 unsigned CPU::InterpretOp()
 {
-	// TODO : Deal with unknown opcodes
-
-	m_Ops[m_Memory[m_PC++]]();
+	Instruction l_Func = m_Ops[m_Memory[m_PC++]];
+	if(l_Func)
+		(this->*l_Func)();
+	else
+		std::cout << "Unknown opcode" << std::endl;
 	
-	if(m_PC > m_ROMHeader[6])	// TODO : make sure with the test ROMs
+	if(m_PC > m_ROMHeader[6])
 		m_ErrorCode |= EmulationDone;
 	
 	return m_ErrorCode;
@@ -362,13 +364,11 @@ void CPU::DirectJMP()
 
 void CPU::Jx()
 {
-	++m_PC;
-	UInt8 l_CondCode = m_Memory[m_PC];
+	UInt8 l_CondCode = m_Memory[m_PC++];
 	if(InterpretConditions(l_CondCode))
 		m_PC = FetchImmediateValue();
 	else
-		if(!(m_ErrorCode & ConditionError))
-			m_PC += 2;
+		m_PC += 2;
 }
 
 void CPU::JME()
@@ -411,8 +411,7 @@ void CPU::Cx()
 	}
 	else
 	{
-		if(!(m_ErrorCode & ConditionError))
-			m_PC += 2;
+		m_PC += 2;
 	}
 }
 
@@ -459,10 +458,7 @@ unsigned CPU::InterpretConditions(UInt8 in_CondCode)
 		case 0xE:	// LE
 			return m_FR & ZeroFlag || ((m_FR & SignedOverflowFlag) != (m_FR & NegativeFlag));
 		default:
-		{
-			m_ErrorCode |= ConditionError;
 			return 0;
-		}
 	}
 }
 

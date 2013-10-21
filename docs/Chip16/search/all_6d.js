@@ -14,6 +14,7 @@ var searchData=
   ['m_5fgamechoices',['m_GameChoices',['../class_command_line_interface.html#afcaf6271a1230a749ccd5797ab829205',1,'CommandLineInterface']]],
   ['m_5fgpu',['m_GPU',['../class_c_p_u.html#adb5a8ded5899b5a23682870e79261705',1,'CPU']]],
   ['m_5fmemory',['m_Memory',['../class_c_p_u.html#aab8d43069375512fddcda76764a2ebe2',1,'CPU']]],
+  ['m_5fops',['m_Ops',['../class_c_p_u.html#a8ea0a361639c51a3b8f3fc7ec8b4a432',1,'CPU']]],
   ['m_5fpc',['m_PC',['../class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a',1,'CPU']]],
   ['m_5frandengine',['m_RandEngine',['../class_c_p_u.html#a5735718698e6ec253f0f452a40d210cc',1,'CPU']]],
   ['m_5fregisters',['m_Registers',['../class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4',1,'CPU']]],

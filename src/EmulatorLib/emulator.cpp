@@ -42,9 +42,9 @@ void Emulator::Emulate()
 		m_CPU.FlushGPU();
 		
 		// Sleep
-		Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));
+		/*Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));
 		if(static_cast<int>(l_Delay) > 0)
-			SDL_Delay(l_Delay);
+			SDL_Delay(l_Delay);*/
 	}
 }
 

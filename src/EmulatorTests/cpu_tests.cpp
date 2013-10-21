@@ -91,21 +91,7 @@ BOOST_AUTO_TEST_CASE( DivTest )
 
 BOOST_AUTO_TEST_CASE( ErrorTest )
 {
-	BOOST_REQUIRE(ExecuteBadInstruction(0x0F, 0x00, 0x00, 0x00) & DeviceError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x1F, 0x00, 0x00, 0x00) & CallJumpError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x2F, 0x00, 0x00, 0x00) & MemoryError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x3F, 0x00, 0x00, 0x00) & MemoryError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x4F, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x5F, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x6F, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x7F, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x8F, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0x9F, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0xAF, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0xBF, 0x00, 0x00, 0x00) & ArithmeticError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0xCF, 0x00, 0x00, 0x00) & StackError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0xDF, 0x00, 0x00, 0x00) & PaletteError);
-	BOOST_REQUIRE(ExecuteBadInstruction(0xEF, 0x00, 0x00, 0x00) & UnknownError);
+	// TODO : Redo
 }
 
 BOOST_AUTO_TEST_CASE( MulTest )

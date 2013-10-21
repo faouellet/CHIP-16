@@ -118,18 +118,20 @@ void GPU::ClearScreen()
 			m_ScreenBuffer[i][j] = 0;
 		}
 	}
+	m_BGC = 0;
 }
 
 bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
 {
-	// FIXME : Sprite appears at the opposite Y coordinate
+	// FIXME : Sprite appears at the opposite Y coordinate / or are they bouncing? 
+	
+	// Validate X and Y coordinates
+	if(in_X > WIDTH - 1 || in_Y > HEIGHT -1 || in_X < -1 || in_Y < -1)
+		return 0;
+
 	// Allow to draw to negative coordinates
 	UInt16 l_X = std::abs(in_X);
 	UInt16 l_Y = std::abs(in_Y);
-
-	// Validate X and Y coordinates
-	if(l_X > WIDTH - 1 || l_Y > HEIGHT -1)
-		return 0;
 
 	// Deal with the horizontal and vertical flip
 	Int16 l_XStart, l_YStart;
@@ -185,16 +187,8 @@ void GPU::Flip(UInt8 in_NewOrientation)
 void GPU::FlushBuffer()
 {
 	for(int i = 0; i < HEIGHT; ++i)
-	{
 		for(int j = 0; j < WIDTH; ++j)
-		{
-			UInt32 l_CI = m_ScreenBuffer[i][j];
-			if(l_CI)
-				m_ScreenColors[i][j] = m_Colors[l_CI];
-			else
-				m_ScreenColors[i][j] = m_Colors[m_BGC];
-		}
-	}
+			m_ScreenColors[i][j] = m_ScreenBuffer[i][j] ? m_Colors[m_ScreenBuffer[i][j]] : m_Colors[m_BGC];
 	
 	SDL_UpdateTexture(m_Texture.get(), nullptr, m_ScreenColors, WIDTH * sizeof(UInt32));
 	SDL_RenderClear(m_Renderer.get());

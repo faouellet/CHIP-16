@@ -3,6 +3,7 @@
 
 #include <functional>
 #include <map>
+#include <memory>
 #include <random>
 #include <vector>
 
@@ -18,6 +19,9 @@ using namespace Utils;
 */
 class CPU
 {
+private:
+	typedef void (CPU::*Instruction) ();
+
 private:
 	/**
 	* \enum
@@ -57,7 +61,7 @@ private:
 	std::mt19937 m_RandEngine;						/*!< Random number engine */
 	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Distribution of the random numbers */
 
-	std::map<UInt8, std::function<void(void)>> m_Ops;	/*!< Interpretations of the opcodes */
+	std::map<UInt8, Instruction> m_Ops;	/*!< Interpretations of the opcodes */
 
 public:
 	/**
@@ -258,7 +262,7 @@ private:
     */
     unsigned InterpretConditions(UInt8 in_CondCode);
 
-private:	// Opcodes
+private:	// Opcodes : See specs for more information
 	void ADDI();
 	void InplaceADD();
 	void ADD();

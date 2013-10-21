@@ -22,8 +22,7 @@ namespace Utils
 	* \enum
 	* \brief Masks for the possible errors that can happen during the emulation
 	*/
-	enum { ArithmeticError = 1, CallJumpError = 2, ConditionError = 4, MemoryError = 8, 
-		DeviceError = 16, PaletteError = 32, StackError = 64, UnknownError = 128, EmulationDone = 256 };
+	enum { StackError = 1, UnknownOpError = 2, EmulationDone = 4 };
 
 	/**
 	* \struct IfElse
