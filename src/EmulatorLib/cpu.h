@@ -61,6 +61,7 @@ private:
 	std::mt19937 m_RandEngine;						/*!< Random number engine */
 	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Distribution of the random numbers */
 
+	// TODO : Replace by array
 	std::map<UInt8, Instruction> m_Ops;	/*!< Interpretations of the opcodes */
 
 public:
