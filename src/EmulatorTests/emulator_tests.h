@@ -26,6 +26,7 @@ const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Demos";
 //const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Games";
 #else
 //const std::string EmulatorTestFixture::ROM_PATH = "../bin/Release/Tests";
+const std::string EmulatorTestFixture::ROM_PATH = "../bin/Release/Demos";
 #endif
 
 #endif // EMULATOR_TESTS_H
