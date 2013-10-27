@@ -176,88 +176,92 @@ void CPU::Reset()
 
 void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
 {
-	// TODO : Could probably use some refactoring
-	
+	std::function<void(const UInt16 in_ControllerID, const UInt16 in_Mask)> l_UpdateControllerData;
+	if(in_Event.type == SDL_KEYDOWN)
+		l_UpdateControllerData = [this](const UInt16 in_ControllerID, const UInt16 in_Mask){ m_Memory[in_ControllerID] |= in_Mask; };
+	else
+		l_UpdateControllerData = [this](const UInt16 in_ControllerID, const UInt16 in_Mask){ m_Memory[in_ControllerID] &= ~in_Mask; };
+
 	switch (in_Event.keysym.sym)
 	{
 		case SDLK_UP:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | UP : m_Memory[CONTROLLER_1] & ~UP;
+			l_UpdateControllerData(CONTROLLER_1, UP);
 			break;
 		}
 		case SDLK_DOWN:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | DOWN : m_Memory[CONTROLLER_1] & ~DOWN;
+			l_UpdateControllerData(CONTROLLER_1, DOWN);
 			break;
 		}
 		case SDLK_LEFT:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | LEFT : m_Memory[CONTROLLER_1] & ~LEFT;
+			l_UpdateControllerData(CONTROLLER_1, LEFT);
 			break;
 		}
 		case SDLK_RIGHT:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | RIGHT : m_Memory[CONTROLLER_1] & ~RIGHT;
+			l_UpdateControllerData(CONTROLLER_1, RIGHT);
 			break;
 		}
 		case SDLK_RSHIFT:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | SELECT : m_Memory[CONTROLLER_1] & ~SELECT;
+			l_UpdateControllerData(CONTROLLER_1, SELECT);
 			break;
 		}
 		case SDLK_RETURN:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | START : m_Memory[CONTROLLER_1] & ~START;
+			l_UpdateControllerData(CONTROLLER_1, START);
 			break;
 		}
 		case SDLK_o:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | A : m_Memory[CONTROLLER_1] & ~A;
+			l_UpdateControllerData(CONTROLLER_1, A);
 			break;
 		}
 		case SDLK_p:
 		{
-			m_Memory[CONTROLLER_1] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_1] | B : m_Memory[CONTROLLER_1] & ~B;
+			l_UpdateControllerData(CONTROLLER_1, B);
 			break;
 		}
 		case SDLK_w:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | UP : m_Memory[CONTROLLER_2] & ~UP;
+			l_UpdateControllerData(CONTROLLER_2, UP);
 			break;
 		}
 		case SDLK_s:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | DOWN : m_Memory[CONTROLLER_2] & ~DOWN;
+			l_UpdateControllerData(CONTROLLER_2, DOWN);
 			break;
 		}
 		case SDLK_a:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | LEFT : m_Memory[CONTROLLER_2] & ~LEFT;
+			l_UpdateControllerData(CONTROLLER_2, LEFT);
 			break;
 		}
 		case SDLK_d:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | RIGHT : m_Memory[CONTROLLER_2] & ~RIGHT;
+			l_UpdateControllerData(CONTROLLER_2, RIGHT);
 			break;
 		}
 		case SDLK_LSHIFT:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | SELECT : m_Memory[CONTROLLER_2] & ~SELECT;
+			l_UpdateControllerData(CONTROLLER_2, SELECT);
 			break;
 		}
 		case SDLK_SPACE:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | START : m_Memory[CONTROLLER_2] & ~START;
+			l_UpdateControllerData(CONTROLLER_2, START);
 			break;
 		}
 		case SDLK_v:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | A : m_Memory[CONTROLLER_2] & ~A;
+			l_UpdateControllerData(CONTROLLER_2, A);
 			break;
 		}
 		case SDLK_b:
 		{
-			m_Memory[CONTROLLER_2] = in_Event.type == SDL_KEYDOWN ? m_Memory[CONTROLLER_2] | B : m_Memory[CONTROLLER_2] & ~B;
+			l_UpdateControllerData(CONTROLLER_2, B);
 			break;
 		}
 	}

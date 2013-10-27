@@ -63,11 +63,6 @@ std::vector<UInt8> Emulator::ReadROM(const std::string & in_ROMName)
 
 	if(l_FileStream.is_open())
 	{
-		// TODO : Find what kind of wizardry prevents the following from working
-		/*l_ROMData.insert(l_ROMData.begin(), 
-			std::istream_iterator<unsigned char>(l_FileStream), 
-			std::istream_iterator<unsigned char>());*/
-			
 		l_FileStream.seekg(0, std::ios::end);
 		auto size = l_FileStream.tellg();
 		l_FileStream.seekg(0, std::ios::beg);

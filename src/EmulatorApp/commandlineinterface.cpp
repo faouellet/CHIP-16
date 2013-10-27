@@ -9,22 +9,28 @@ CommandLineInterface::CommandLineInterface()
 	m_DemoChoices.push_back("Anim");
 	m_DemoChoices.push_back("ASCII");
 	m_DemoChoices.push_back("Ball");
+	m_DemoChoices.push_back("boing");
+	m_DemoChoices.push_back("dots2");
 	m_DemoChoices.push_back("GB16");
 	m_DemoChoices.push_back("Intro");
 	m_DemoChoices.push_back("Mandel");
 	m_DemoChoices.push_back("Maze");
-	m_DemoChoices.push_back("SongOfStorms");
 	m_DemoChoices.push_back("Starfield");
 	m_DemoChoices.push_back("Static");
 	m_DemoChoices.push_back("Stopwatch");
 	m_DemoChoices.push_back("Triangle");
+	m_DemoChoices.push_back("Water");
+	m_DemoChoices.push_back("XOR");
 
+	m_DemoChoices.push_back("Alien");
 	m_GameChoices.push_back("Herdle");
 	m_GameChoices.push_back("MusicMaker");
 	m_GameChoices.push_back("Ninja");
+	m_DemoChoices.push_back("Pacman");
 	m_GameChoices.push_back("Pong");
 	m_GameChoices.push_back("Reflection");
 	m_GameChoices.push_back("Snafu");
+	m_DemoChoices.push_back("Tetris");
 
 	m_TestChoices.push_back("AdsrTest");
 	m_TestChoices.push_back("BC_TestRom");
@@ -34,46 +40,30 @@ CommandLineInterface::CommandLineInterface()
 	m_TestChoices.push_back("PaleteTest");
 	m_TestChoices.push_back("PaletteFlip");
 	m_TestChoices.push_back("SoundTest");
+
+	m_Choices.push_back(std::make_pair("demo", m_DemoChoices));
+	m_Choices.push_back(std::make_pair("game", m_GameChoices));
+	m_Choices.push_back(std::make_pair("test", m_TestChoices));
 }
 
 CommandLineInterface::~CommandLineInterface() { }
 
 std::string CommandLineInterface::ChooseROM()
 {
-	// TODO : Could probably still be refactored
 	std::cout << "Choose between 1- Demos 2- Games 3- Tests" << std::endl;
 	unsigned l_Choice = 0;
 	std::cin >> l_Choice;
 
 	std::string l_ROM;
 
-	switch (l_Choice)
+	if(0 < l_Choice && l_Choice < 3)
 	{
-		case 1:
-		{
-			std::cout << "Choose a demo to run" << std::endl;
-			l_Choice = Choose(m_DemoChoices);
-			if(0 <= l_Choice && l_Choice < m_DemoChoices.size())
-				l_ROM = FormatChoice("Demos", m_DemoChoices[l_Choice]);
-			break;
-		}
-		case 2:
-		{
-			std::cout << "Choose a game to run" << std::endl;
-			l_Choice = Choose(m_GameChoices);
-			if(0 <= l_Choice && l_Choice < m_GameChoices.size())
-				l_ROM = FormatChoice("Games", m_GameChoices[l_Choice]);
-			break;
-		}
-		case 3:
-		{
-			std::cout << "Choose a test to run" << std::endl;
-			l_Choice = Choose(m_TestChoices);
-			if(0 <= l_Choice && l_Choice < m_TestChoices.size())
-				l_ROM = FormatChoice("Tests", m_TestChoices[l_Choice]);
-			break;
-		}
+		std::cout << "Choose a" << m_Choices[l_Choice].first << " to run" << std::endl;
+		l_Choice = Choose(m_Choices[l_Choice].second);
+		if(0 <= l_Choice && l_Choice < m_Choices[l_Choice].second.size())
+			l_ROM = FormatChoice(m_Choices[l_Choice].first, m_Choices[l_Choice].second[l_Choice]);
 	}
+
 	return l_ROM;
 }
 

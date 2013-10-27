@@ -17,6 +17,7 @@ private:
 	std::vector<std::string> m_DemoChoices;	/*!< Names of the demo ROMs  */
 	std::vector<std::string> m_GameChoices;	/*!< Names of the game ROMs  */
 	std::vector<std::string> m_TestChoices;	/*!< Names of the test ROMs  */
+	std::vector<std::pair<std::string, std::vector<std::string>>> m_Choices;	/*!< Possible user choices */
 
 public:
 	/**
