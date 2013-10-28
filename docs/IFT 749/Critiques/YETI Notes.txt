@@ -1,0 +1,17 @@
+0 - ABSTRACT
+** Système mixte -> Système combinant l'interprétation et la compilation juste-à-temps dans le but de gagner en vitesse
+** Règle générale, un interpréteur c'est lent comparé à un système mixte
+** Règle générale, un système mixte est énormément plus dur à mettre en place qu'un interpréteur (VRAI!)
+** But du papier est de montrer comment un compilateur juste-à-temps 
+
+I - INTRODUCTION
+
+II - INTERPRETER AND JIT BACKGROUND
+
+III DESIGN AND IMPLEMENTATION
+
+IV - EXPERIMENTAL RESULTS
+
+V - RELATED WORK
+
+VI - CONCLUSIONS AND FUTURE WORK

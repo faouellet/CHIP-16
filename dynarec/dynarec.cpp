@@ -2,7 +2,9 @@
 #include <map>
 #include <vector>
 
-// IDEA : Use a memory arena dor the translation cache
+#if defined(_WIN32)
+#include "windows.h"	// For executable memory allocation on Windows
+#endif
 
 class Dynarec
 {
@@ -29,12 +31,22 @@ private:
         ~CPUState() { }
     };
 
+	struct X86Code
+	{
+		unsigned char* Code;
+		int Size;
+
+		X86Code(unsigned char* in_Code = nullptr, int in_Size = 0) : Code(in_Code), Size(in_Size) { }
+	};
+
 private:
     typedef void (Dynarec::*CompileFunc)();
         
 private:
+	void* m_CodeBuffer;
+	unsigned char* m_CodePtr;
     std::map<unsigned char, CompileFunc> m_CompileTable;
-    std::map<unsigned char, unsigned char*> m_TranslationCache;
+    std::map<unsigned char, X86Code> m_TranslationCache;
     CPUState m_CPU;
     
 private:
@@ -54,23 +66,27 @@ private:
     
     void Execute(const unsigned char * in_Ins)
     {
-        // Cast to function pointer and execute
-		((void(*)())in_Ins)();
+		__asm{
+			pushad;
+			call in_Ins;
+			popad;
+		}
     }
     
 private:
     void addimm()
 	{
-		unsigned char * l_TranslatedBlock = new unsigned char;
+		unsigned char* l_TranslatedBlock = m_CodePtr;
 
-		*l_TranslatedBlock++ = 0x80;
-		*l_TranslatedBlock++ = 0xC0;
-		*l_TranslatedBlock++ = m_CPU.Memory[m_CPU.PC+2];
-		m_TranslationCache[m_CPU.PC] = l_TranslatedBlock;
+		*m_CodePtr++ = 0x80;
+		*m_CodePtr++ = 0xC0;
+		*m_CodePtr++ = m_CPU.Memory[m_CPU.PC+2];
+		*m_CodePtr++ = 0xC3;	// ret, should be moved to the end of a block
+		m_TranslationCache[m_CPU.PC] = X86Code(l_TranslatedBlock, 4);
 	}
-        
+	        
 public:
-	Dynarec()
+	Dynarec() : m_CodeBuffer(nullptr), m_CodePtr(nullptr)
 	{
 		m_CompileTable[0x40] = &Dynarec::addimm;
 	}
@@ -82,21 +98,30 @@ public:
 
 	~Dynarec()
 	{
-		for(auto l_IDCache : m_TranslationCache)
-			delete l_IDCache.second;
+		VirtualFree(m_CodeBuffer, 0x400, MEM_DECOMMIT | MEM_RELEASE);
+	}
+
+	void InitCodeBuffer()
+	{
+#if defined(_WIN32)
+		m_CodeBuffer = VirtualAlloc(0, 0x400, MEM_COMMIT, PAGE_EXECUTE_READWRITE);
+#else
+		// TODO : POSIX
+#endif
+		m_CodePtr = reinterpret_cast<unsigned char*>(m_CodeBuffer);
 	}
 
     void ExecuteOp()
     {
         auto & l_NativeIns = m_TranslationCache[m_CPU.PC];
-        if(l_NativeIns)
+		if(l_NativeIns.Code)
         {
-            Execute(l_NativeIns);
+			Execute(l_NativeIns.Code);
         }
         else
         {
             Compile();
-            Execute(m_TranslationCache[m_CPU.Memory[m_CPU.PC]]);
+			Execute(m_TranslationCache[m_CPU.Memory[m_CPU.PC]].Code);
         }
     }
 };
@@ -111,5 +136,6 @@ int main()
 	l_ROM.push_back(0x00);
 
 	Dynarec l_Dynarec(l_ROM);
+	l_Dynarec.InitCodeBuffer();
 	l_Dynarec.ExecuteOp();
 }
