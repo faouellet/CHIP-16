@@ -1,15 +1,11 @@
 #ifndef CPU_H
 #define CPU_H
 
-#include <array>
-#include <functional>
-#include <memory>
-#include <random>
 #include <vector>
-#include <unordered_map>
 
-#include "gpu.h"
-#include "spu.h"
+#include "SDL.h"
+
+#include "utils.h"
 
 using namespace Utils;
 
@@ -20,9 +16,6 @@ using namespace Utils;
 */
 class CPU
 {
-private:
-	typedef void (CPU::*Instruction) ();
-
 private:
 	/**
 	* \enum
@@ -55,15 +48,7 @@ private:
 
 	UInt8 m_ROMHeader[HEADER_SIZE];					/*!< The header of a .c16 file. See specs for details */
 	UInt8 m_Memory[MEMORY_SIZE];					/*!< Memory of the CPU. See specs for layout details */
-
-	GPU m_GPU;										/*!< The graphics processing unit */
-	SPU m_SPU;										/*!< The sound processing unit */
-
-	std::mt19937 m_RandEngine;						/*!< Random number engine */
-	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Distribution of the random numbers */
-
-	std::unordered_map<UInt8, Instruction> m_Ops;	/*!< Interpretations of the opcodes */
-
+	
 public:
 	/**
 	* \fn CPU
@@ -78,12 +63,6 @@ public:
 	~CPU();
 
 public:
-	/**
-	* \fn FlushGPU
-	* \brief Flush the screen buffer of the GPU
-	*/
-	void FlushGPU();
-
 	/**
 	* \fn DumpFlagRegister
 	* \brief Dump the flag register
@@ -128,12 +107,6 @@ public:
 	unsigned Init(std::vector<UInt8> && in_ROMData);
 
 	/**
-	* \fn InterpretOp
-	* \brief Read an opcode from the ROM and execute it
-	*/
-	unsigned InterpretOp();
-
-	/**
 	* \fn Reset
 	* \brief Restore the central processing unit at its pre-initialized state
 	*/
@@ -146,63 +119,14 @@ public:
 	*/
 	void UpdateController(SDL_KeyboardEvent & in_Event);
 
-private:	// Arithmetic helpers
+public:	// Memory helpers
 	/**
-	* \fn BasicArithmetic
-	* \brief Apply an instruction to two registers and store the result in a third register
-	* \param in_Ins The instruction to apply 
-	* \param in_FRH Handler responsible for updating the flag register
+	* \fn FetchInstruction
+	* \brief Read the current instruction and its operands as pointed by the PC.
+	*        Note that it increases the PC by 4 i.e. to the next instruction.
+	* \return An instruction and its operands
 	*/
-	void BasicArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
-
-	/**
-	* \fn DiscardArithmetic
-	* \brief Apply an instruction to two registers and discard the result
-	* \param in_Ins The instruction to apply 
-	* \param in_FRH Handler responsible for updating the flag register
-	*/
-	void DiscardArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
-
-	/**
-	* \fn DiscardImmediateArithmetic
-	* \brief Apply an instruction to a register and an immediate value and discard the result
-	* \param in_Ins The instruction to apply 
-	* \param in_FRH Handler responsible for updating the flag register
-	*/
-	void DiscardImmediateArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
-
-	/**
-	* \fn ImmediateArithmetic
-	* \brief Apply an instruction to a register and an immediate value and store the result in the first register
-	* \param in_Ins The instruction to apply 
-	* \param in_FRH Handler responsible for updating the flag register
-	*/
-	void ImmediateArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
-
-	/**
-	* \fn InplaceArithmetic
-	* \brief Apply an instruction to two registers and store the result in the first register
-	* \param in_Ins The instruction to apply 
-	* \param in_FRH Handler responsible for updating the flag register
-	*/
-	void InplaceArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
-	
-private:	// Memory helpers
-	/**
-	* \fn FetchImmediateValue
-	* \brief Concatenate the value pointed by the PC with the one the PC is going
-	*        to point next. Note that this function will increment the PC by 2.
-	* \return The immediate value at the end of the opcode
-	*/
-	UInt16 FetchImmediateValue();
-
-	/**
-	* \fn FetchRegisterAddress
-	* \brief Extract the address given at where the PC is pointed.
-	*        This function increment the PC by 1.
-	* \return A register address
-	*/
-	UInt16 FetchRegisterAddress();
+	UInt32 FetchInstruction();
 
 	/**
 	* \fn FetchRegistersValues
@@ -219,7 +143,7 @@ private:	// Memory helpers
 	*/
 	std::vector<UInt8> FetchSprite(UInt16 in_Addr) const;
 
-private:	// Stack helpers
+public:	// Stack helpers
 	/**
 	* \fn Pop
 	* \brief Pop a value from the stack of the emulator and decrement the SP by 2
@@ -234,7 +158,7 @@ private:	// Stack helpers
 	*/
 	void Push(UInt16 in_Val);
 
-private:	// Flag register helpers
+public:	// Flag register helpers
 	/**
 	* \fn SetSignZeroFlag
 	* \brief Set the sign flag if the bit[15] of the result is lit
@@ -253,93 +177,6 @@ private:	// Flag register helpers
 	void SetCarryOverflowFlagDiv(UInt16 in_Op1, UInt16 in_Op2);
 	void SetCarryOverflowFlagMul(UInt16 in_Op1, UInt16 in_Op2);
 	void SetCarryOverflowFlagSub(UInt16 in_Op1, UInt16 in_Op2);
-
-private:
-	 /**
-    * \fn InterpretConditions
-    * \brief Decode and execute a condition
-    * \param in_CondCode A byte containing the condition to be evaluated
-    * \return Condition evalution result
-    */
-    unsigned InterpretConditions(UInt8 in_CondCode);
-
-private:	// Opcodes : See specs for more information
-	void ADDI();
-	void InplaceADD();
-	void ADD();
-	void SUBI();
-	void InplaceSUB();
-	void SUB();
-	void CMPI();
-	void CMP();
-	void ANDI();
-	void InplaceAND();
-	void AND();
-	void TSTI();
-	void TST();
-	void ORI();
-	void InplaceOR();
-	void OR();
-	void XORI();
-	void InplaceXOR();
-	void XOR();
-	void MULI();
-	void InplaceMUL();
-	void MUL();
-	void DIVI();
-	void InplaceDIV();
-	void DIV();
-
-	void DirectJMP();
-	void Jx();
-	void JME();
-	void DirectCALL();
-	void RET();
-	void IndirectJMP();
-	void Cx();
-	void IndirectCALL();
-
-	void RegisterLDI();
-	void StackLDI();
-	void DirectLDM();
-	void IndirectLDM();
-	void MOV();
-
-	void NOP();
-	void CLS();
-	void VBLNK();
-	void BGC();
-	void SPR();
-	void ImmediateDRW();
-	void RegisterDRW();
-	void RND();
-	void FLIP();
-	void SND0();
-	void SND1();
-	void SND2();
-	void SND3();
-	void SNP();
-	void SNG();
-
-	void ImmediatePalette();
-	void RegisterPalette();
-
-	void PUSH();
-	void POP();
-	void PUSHALL();
-	void POPALL();
-	void PUSHF();
-	void POPF();
-
-	void NSHL();
-	void NSHR();
-	void NSAR();
-	void RegisterSHL();
-	void RegisterSHR();
-	void RegisterSAR();
-
-	void DirectSTM();
-	void IndirectSTM();
 };
 
 #endif // CPU_H

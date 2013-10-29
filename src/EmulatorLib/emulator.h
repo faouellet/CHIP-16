@@ -4,6 +4,8 @@
 #include <string>
 
 #include "cpu.h"
+#include "dynarec.h"
+#include "interpreter.h"
 
 using Utils::UInt8;
 using Utils::UInt16;
@@ -27,7 +29,9 @@ private:
 	static const float FRAME_TIME;
 
 private:
-	CPU m_CPU;	/*!< The central processing unit */
+	CPU m_CPU;					/*!< Central processing unit state */
+	Dynarec m_Dynarec;			/*!< Recompiler engine */
+	Interpreter m_Interpreter;	/*!< Interpreter engine */
 
 public:
 	/**
@@ -54,8 +58,9 @@ public:
 	/**
 	* \fn Emulate
 	* \brief Emulate the Chip16 by interpreting opcodes one at the time
+	* \param in_UseDynarec Run the emulator in mixed mode or not 
 	*/
-	void Emulate();
+	void Emulate(bool in_UseMixedMode);
 
 private:
 	/**
@@ -65,6 +70,18 @@ private:
 	* \return Success or failure
 	*/
 	std::vector<UInt8> ReadROM(const std::string & in_ROMName);
+
+	/**
+	* \fn Interpret
+	* \brief Run the emulator in pure interpretive mode
+	*/
+	void Interpret();
+
+	/**
+	* \fn JIT
+	* \brief Run the emulator using a a mix of interpretation and dynamic recompilation
+	*/
+	void JIT();
 };
 
 #endif // EMULATOR_H

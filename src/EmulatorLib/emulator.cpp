@@ -8,7 +8,23 @@ Emulator::Emulator() { }
 
 Emulator::~Emulator() { }
 
-void Emulator::Emulate()
+unsigned Emulator::Init(const std::string & in_ROMName)
+{
+	auto l_ROMData = ReadROM(in_ROMName);
+	if(!l_ROMData.empty())
+		return m_CPU.Init(std::move(l_ROMData));
+	else return FileError;
+}
+
+void Emulator::Emulate(bool in_UseMixedMode)
+{
+	if(in_UseMixedMode)
+		JIT();
+	else
+		Interpret();
+}
+
+void Emulator::Interpret()
 {
 	// TODO : Handle errors at this level
 
@@ -36,7 +52,7 @@ void Emulator::Emulate()
 			(l_ControllerEvent.type == SDL_KEYDOWN || l_ControllerEvent.type == SDL_KEYUP))
 			m_CPU.UpdateController(l_ControllerEvent.key);
 
-		// Sound ???
+		// TODO : Sound, later...
 		
 		// Draw on screen
 		m_CPU.FlushGPU();
@@ -48,12 +64,9 @@ void Emulator::Emulate()
 	}
 }
 
-unsigned Emulator::Init(const std::string & in_ROMName)
+void Emulator::JIT()
 {
-	auto l_ROMData = ReadROM(in_ROMName);
-	if(!l_ROMData.empty())
-		return m_CPU.Init(std::move(l_ROMData));
-	else return FileError;
+	// TODO : Black magic
 }
 
 std::vector<UInt8> Emulator::ReadROM(const std::string & in_ROMName)

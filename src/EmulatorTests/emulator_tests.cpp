@@ -41,8 +41,8 @@ BOOST_AUTO_TEST_CASE( BC_TestRom )
 BOOST_AUTO_TEST_CASE( CollisionTest )
 {
 	//Emu.Init(ROM_PATH + "/CollisionTest/CollisionTest.c16");
-	/*Emu.Init(ROM_PATH + "/Starfield/Starfield.c16");
-	Emu.Emulate();*/
+	Emu.Init(ROM_PATH + "/alien/alien.c16");
+	Emu.Emulate();
 }
 
 BOOST_AUTO_TEST_CASE( flip_test )
