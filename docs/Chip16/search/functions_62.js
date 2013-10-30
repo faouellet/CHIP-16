@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['basicarithmetic',['BasicArithmetic',['../class_c_p_u.html#acb31d4ff3d081e01dea0424a7e10db99',1,'CPU']]]
+  ['basicarithmetic',['BasicArithmetic',['../class_interpreter.html#a5fd17d608cf7b0f4a9b6cd07890b8b05',1,'Interpreter']]]
 ];

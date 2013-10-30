@@ -197,10 +197,10 @@ void GPU::FlushBuffer()
 	m_VBlankFlag = 1;
 }
 
-void GPU::LoadPalette(const UInt8 in_Palette[16][3])  
+void GPU::LoadPalette(const std::vector<UInt8> in_Palette)  
 {
-	for(int i = 0; i < 16; ++i)
-		m_Colors[i] = in_Palette[i][0] << 16 | in_Palette[i][1] << 8 | in_Palette[i][2]; 
+	for(int i = 0; i < 16*3; i+=3)
+		m_Colors[i] = in_Palette[i] << 16 | in_Palette[i+1] << 8 | in_Palette[i+2]; 
 }
 
 void GPU::SetBackgroundColor(UInt8 in_ColorIndex) 

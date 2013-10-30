@@ -182,7 +182,7 @@ public:
 	* \brief Load a palette
 	* \param in_Palette 16*3 bytes representing the palette data
 	*/
-	void LoadPalette(const UInt8 in_Palette[16][3]);
+	void LoadPalette(const std::vector<UInt8> in_Palette);
 
 	/**
 	* \fn SetBackgroundColor

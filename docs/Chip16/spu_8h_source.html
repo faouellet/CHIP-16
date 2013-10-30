@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>Chip16: Desktop/CHIP-16/src/EmulatorLib/spu.h Source File</title>
+<title>Chip16: EmulatorLib/spu.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_e04ae2849dfa520b4ee2c9f7e9ff15de.html">Desktop</a></li><li class="navelem"><a class="el" href="dir_bbec0803f040a9be2799c8590458b408.html">CHIP-16</a></li><li class="navelem"><a class="el" href="dir_0ad498a2ae55e18f92b6e3312339f5b2.html">src</a></li><li class="navelem"><a class="el" href="dir_00a9b90e2e294d10b9470ff1b4da0d04.html">EmulatorLib</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_c9f3d7d9bd88905f17d2c42cfd35d020.html">EmulatorLib</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -141,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#afeb0934fc0d3dd1ef02af0a70d0e05cb">GenerateSound</a>(UInt32 in_Attack, UInt32 in_Decay, UInt32 in_Sustain, </div>
 <div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;        UInt32 in_Release, UInt32 in_Volume, UInt32 in_Type);</div>
 <div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;</div>
-<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">PlayTone</a>(<span class="keywordtype">unsigned</span> in_Tone, <span class="keywordtype">unsigned</span> in_Duration);</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#af8ac3adfa1aeea016a5f87831c1103a7">PlayTone</a>(UInt8 in_Tone, <span class="keywordtype">unsigned</span> in_Duration);</div>
 <div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
 <div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5">Stop</a>();</div>
 <div class="line"><a name="l00106"></a><span class="lineno">  106</span>&#160;</div>
@@ -168,6 +168,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="class_s_p_u_html_a9849b365ce4894731421d17ac2265e00"><div class="ttname"><a href="class_s_p_u.html#a9849b365ce4894731421d17ac2265e00">SPU::AudioCallback</a></div><div class="ttdeci">static void AudioCallback(void *in_UserData, Uint8 *in_Stream, int in_Length)</div><div class="ttdef"><b>Definition:</b> spu.cpp:97</div></div>
 <div class="ttc" id="class_s_p_u_html_acc85c85d4f84eb5d6627962194975de5"><div class="ttname"><a href="class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5">SPU::Stop</a></div><div class="ttdeci">void Stop()</div><div class="ttdoc">Stop the sound generator. </div><div class="ttdef"><b>Definition:</b> spu.cpp:91</div></div>
 <div class="ttc" id="namespace_utils_html_aecceb3ba56f11c34022303f8b3a100af"><div class="ttname"><a href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">Utils::UInt32</a></div><div class="ttdeci">UInt_&lt; 4 &gt;::type UInt32</div><div class="ttdef"><b>Definition:</b> utils.h:106</div></div>
+<div class="ttc" id="class_s_p_u_html_af8ac3adfa1aeea016a5f87831c1103a7"><div class="ttname"><a href="class_s_p_u.html#af8ac3adfa1aeea016a5f87831c1103a7">SPU::PlayTone</a></div><div class="ttdeci">void PlayTone(UInt8 in_Tone, unsigned in_Duration)</div><div class="ttdoc">Play a given tone for a given duration. </div><div class="ttdef"><b>Definition:</b> spu.cpp:79</div></div>
 <div class="ttc" id="class_s_p_u_html_af18e442f11123cf1d30d1dd13ff2d82c"><div class="ttname"><a href="class_s_p_u.html#af18e442f11123cf1d30d1dd13ff2d82c">SPU::m_AttackValues</a></div><div class="ttdeci">static const int m_AttackValues[16]</div><div class="ttdef"><b>Definition:</b> spu.h:46</div></div>
 <div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_ac2551a1896228e5b56c3ceeba253c233"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#ac2551a1896228e5b56c3ceeba253c233">SPU::AudioSmaple::Type</a></div><div class="ttdeci">UInt32 Type</div><div class="ttdef"><b>Definition:</b> spu.h:28</div></div>
 <div class="ttc" id="class_s_p_u_html_a5d6cf774d1941c2152ebf557cd1a3fc5"><div class="ttname"><a href="class_s_p_u.html#a5d6cf774d1941c2152ebf557cd1a3fc5">SPU::GenerateSoundSample</a></div><div class="ttdeci">static int16_t GenerateSoundSample()</div><div class="ttdef"><b>Definition:</b> spu.cpp:101</div></div>
@@ -179,11 +180,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html">SPU::AudioSmaple</a></div><div class="ttdef"><b>Definition:</b> spu.h:21</div></div>
 <div class="ttc" id="struct_s_p_u_1_1_audio_smaple_html_a1eafc3ce6548aef8450b80e92270f877"><div class="ttname"><a href="struct_s_p_u_1_1_audio_smaple.html#a1eafc3ce6548aef8450b80e92270f877">SPU::AudioSmaple::Sustain</a></div><div class="ttdeci">UInt32 Sustain</div><div class="ttdef"><b>Definition:</b> spu.h:25</div></div>
 <div class="ttc" id="class_s_p_u_html_aa1a61252149f1bf7e09a96ffe1679e14"><div class="ttname"><a href="class_s_p_u.html#aa1a61252149f1bf7e09a96ffe1679e14">SPU::GenerateToneSample</a></div><div class="ttdeci">static int16_t GenerateToneSample()</div><div class="ttdef"><b>Definition:</b> spu.cpp:106</div></div>
-<div class="ttc" id="class_s_p_u_html_abd85975dc0107f0454b1241430b2f382"><div class="ttname"><a href="class_s_p_u.html#abd85975dc0107f0454b1241430b2f382">SPU::PlayTone</a></div><div class="ttdeci">void PlayTone(unsigned in_Tone, unsigned in_Duration)</div><div class="ttdoc">Play a given tone for a given duration. </div><div class="ttdef"><b>Definition:</b> spu.cpp:79</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 21 2013 13:36:24 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 30 2013 15:27:28 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

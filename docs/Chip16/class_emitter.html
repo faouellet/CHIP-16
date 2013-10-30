@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>Chip16: Utils::Divides Struct Reference</title>
+<title>Chip16: Emitter Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,33 +81,94 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespace_utils.html">Utils</a></li><li class="navelem"><a class="el" href="struct_utils_1_1_divides.html">Divides</a></li>  </ul>
-</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="struct_utils_1_1_divides-members.html">List of all members</a>  </div>
+<a href="#pri-attribs">Private Attributes</a> &#124;
+<a href="class_emitter-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">Utils::Divides Struct Reference</div>  </div>
+<div class="title">Emitter Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
+
+<p>Emit x86 instructions to a memory buffer.  
+ <a href="class_emitter.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="emitter_8h_source.html">emitter.h</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a40590f58329caa197e5ecdcaa12c19f7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40590f58329caa197e5ecdcaa12c19f7"></a>
-<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator()</b> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;in_LHS, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;in_RHS) const </td></tr>
-<tr class="separator:a40590f58329caa197e5ecdcaa12c19f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abf64c2bcea8e7f44d41998c63dd17445"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf64c2bcea8e7f44d41998c63dd17445"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emitter.html#abf64c2bcea8e7f44d41998c63dd17445">Emitter</a> ()</td></tr>
+<tr class="memdesc:abf64c2bcea8e7f44d41998c63dd17445"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br/></td></tr>
+<tr class="separator:abf64c2bcea8e7f44d41998c63dd17445"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0af9a50316daf2580cde9b99fe7c6f96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0af9a50316daf2580cde9b99fe7c6f96"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emitter.html#a0af9a50316daf2580cde9b99fe7c6f96">~Emitter</a> ()</td></tr>
+<tr class="memdesc:a0af9a50316daf2580cde9b99fe7c6f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
+<tr class="separator:a0af9a50316daf2580cde9b99fe7c6f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:adf40f93993322e41e90991083648243c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emitter.html#adf40f93993322e41e90991083648243c">m_BufferPtr</a></td></tr>
+<tr class="separator:adf40f93993322e41e90991083648243c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3abf74629dc8c7773a2e06183e534fc4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_memory_arena.html">MemoryArena</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emitter.html#a3abf74629dc8c7773a2e06183e534fc4">m_Arena</a></td></tr>
+<tr class="separator:a3abf74629dc8c7773a2e06183e534fc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following file:<ul>
-<li>Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="utils_8h_source.html">utils.h</a></li>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Emit x86 instructions to a memory buffer. </p>
+<dl class="section author"><dt>Author</dt><dd>Felix-Antoine Ouellet </dd></dl>
+</div><h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a3abf74629dc8c7773a2e06183e534fc4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_memory_arena.html">MemoryArena</a> Emitter::m_Arena</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Memory arena of executable code </p>
+
+</div>
+</div>
+<a class="anchor" id="adf40f93993322e41e90991083648243c"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a>* Emitter::m_BufferPtr</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Pointer to a buffer of executable memory </p>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following files:<ul>
+<li>EmulatorLib/<a class="el" href="emitter_8h_source.html">emitter.h</a></li>
+<li>EmulatorLib/emitter.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Oct 11 2013 10:26:59 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 30 2013 15:27:29 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

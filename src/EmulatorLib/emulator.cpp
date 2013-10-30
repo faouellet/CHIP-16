@@ -55,7 +55,7 @@ void Emulator::Interpret()
 		// TODO : Sound, later...
 		
 		// Draw on screen
-		m_GPU.FlushBuffer();
+		m_Interpreter.Show();
 		
 		// Sleep
 		Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));

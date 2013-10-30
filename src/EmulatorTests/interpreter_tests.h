@@ -2,6 +2,7 @@
 #define CPU_TESTS_H
 
 #include "cpu.h"
+#include "interpreter.h"
 
 using Utils::UInt8;
 
@@ -12,12 +13,16 @@ using Utils::UInt8;
 *        shift and store instructions.
 * \author Felix-Antoine Ouellet
 */
-struct CPUFixture
+struct InterpreterFixture
 {
-	CPU Cpu;	/*!< CPU implementation */
-
+	std::shared_ptr<CPU> Cpu;			/*!< CPU implementation */
 	std::vector<Utils::UInt8> Header;	/*!< The header of a .c16 file. See specs for details */
+	Interpreter Interpret;				/*!< Interpretive emulator */
 
+	/**
+	* \enum
+	* \brief Uself constants
+	*/
 	enum { NB_REGISTERS = 16, STACK_START = 0xFDF0 };
 
 	// Data for the arithmetic tests
@@ -42,7 +47,7 @@ struct CPUFixture
 	* \fn Constructor
 	* \brief Setup the data for the cpu instructions tests
 	*/
-	CPUFixture() : Header(NB_REGISTERS,0) 
+	InterpreterFixture() : Header(NB_REGISTERS,0), Cpu(std::make_shared<CPU>(new CPU)), Interpret(Cpu)
 	{
 		SetupArithmeticData();
 		SetupLoadStoreData();
@@ -95,9 +100,9 @@ struct CPUFixture
 	{
 		std::vector<UInt8> l_ErrorTestData;
 		InsertInstruction(l_ErrorTestData, in_Op1, in_Op2, in_Op3, in_Op4);
-		Cpu.Reset();
-		Cpu.Init(PrepareData(l_ErrorTestData));
-		return Cpu.InterpretOp();
+		Cpu->Reset();
+		Cpu->Init(PrepareData(l_ErrorTestData));
+		return Interpret.InterpretOp();
 	}
 
 private:

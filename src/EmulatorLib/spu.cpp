@@ -76,7 +76,7 @@ void SPU::GenerateSound(UInt32 in_Attack, UInt32 in_Decay, UInt32 in_Sustain,
 	SDL_PauseAudio(0);
 }
 
-void SPU::PlayTone(unsigned in_Tone, unsigned in_Duration) 
+void SPU::PlayTone(UInt8 in_Tone, unsigned in_Duration) 
 {
 	// Stop audio to prepare new signal
 	if(!m_AudioPaused)

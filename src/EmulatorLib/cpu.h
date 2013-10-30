@@ -25,17 +25,18 @@ private:
 
 	/**
 	* \enum
-	* \brief Masks for the flag register
-	*/
-	enum { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, 
-			SignedOverflowFlag = 64, NegativeFlag = 128 };
-
-	/**
-	* \enum
 	* \brief Masks for the controllers' bits
 	*/
 	enum { UP = 1, DOWN = 2, LEFT = 4, RIGHT = 8, SELECT = 16,
 			START = 32, A = 64, B = 128 };
+
+public:
+	/**
+	* \enum
+	* \brief Masks for the flag register
+	*/
+	enum { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, 
+			SignedOverflowFlag = 64, NegativeFlag = 128 };
 
 private:
 	UInt8 m_FR;										/*!< Flag register */
@@ -55,6 +56,20 @@ public:
 	* \brief Default constructor
 	*/
 	CPU();
+
+	/**
+	* \fn CPU
+	* \brief Copy constructor
+	* \param in_CPU The CPU to copy
+	*/
+	CPU(const CPU & in_CPU);
+
+	/**
+	* \fn CPU
+	* \brief Copy constructor
+	* \param in_CPU The CPU to copy
+	*/
+	CPU(const CPU * in_CPU);
 
 	/**
 	* \fn ~CPU
@@ -121,6 +136,27 @@ public:
 	void Reset();
 
 	/**
+	* \fn SetFlagRegister
+	* \brief Set the value of the flag register
+	* \param in_Value The new value of the PC
+	*/
+	void SetFlagRegister(const UInt16 in_Value);
+
+	/**
+	* \fn SetFlagRegister
+	* \brief Set a flag within the flag register
+	* \param in_Value The flag to set
+	*/
+	void SetFlag(const UInt16 in_Value);
+
+	/**
+	* \fn UnsetFlagRegister
+	* \brief Unset a flag within the flag register
+	* \param in_Value The flag to unset
+	*/
+	void UnsetFlag(const UInt16 in_Value);
+
+	/**
 	* \fn SetProgramCounter
 	* \brief Set the value of the PC
 	* \param in_Value The new value of the PC
@@ -143,6 +179,12 @@ public:
 	void SetStackPointer(const UInt16 in_Value);
 
 	/**
+	* \fn StepBack
+	* \brief Make the PC go back to the previous instruction
+	*/
+	void StepBack();
+
+	/**
 	* \fn UpdateController
 	* \brief Update a controller memory mapped IO port
 	* \param in_Event The event causing this update
@@ -159,6 +201,14 @@ public:	// Memory helpers
 	UInt32 FetchInstruction();
 
 	/**
+	* \fn FetchPalette
+	* \brief Read a number of bytes from memory which corresponds to a palette data
+	* \param in_Address Address in memory where the palette is stored
+	* \return The palette data
+	*/
+	std::vector<UInt8> FetchPalette(const UInt16 in_Address);
+
+	/**
 	* \fn FetchRegistersValues
 	* \brief Extract the values contained within the registers whose addresses
 	*        are in the byte pointed by the PC
@@ -169,9 +219,26 @@ public:	// Memory helpers
 	* \fn FetchSprite
 	* \brief Read a number of bytes from memory which corresponds to a sprite data
 	* \param in_Addr Address in memory where the sprite is stored
+	* \param in_Width The horizontal dimension of the sprite
+	* \param in_Height The vertical dimension of the sprite
 	* \return The sprite data
 	*/
-	std::vector<UInt8> FetchSprite(UInt16 in_Addr) const;
+	std::vector<UInt8> FetchSprite(const UInt16 in_Addr, const UInt16 in_Width, const UInt16 in_Height) const;
+	
+	/**
+	* \fn Load
+	* \brief Load a value from memory
+	* \param in_Address Memory address of the value to fetch
+	*/
+	UInt16 Load(const UInt16 in_Address) const;
+
+	/**
+	* \fn Store
+	* \brief Store a value in memory
+	* \param in_Address Memory address of the value to fetch
+	* \param in_Value The value to store
+	*/
+	void Store(const UInt16 in_Address, const UInt16 in_Value);
 
 public:	// Stack helpers
 	/**

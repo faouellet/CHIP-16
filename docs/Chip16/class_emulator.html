@@ -113,10 +113,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a66f2e9657706f445882cd1bbf08052aa"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#a66f2e9657706f445882cd1bbf08052aa">Init</a> (const std::string &amp;in_ROMName)</td></tr>
 <tr class="memdesc:a66f2e9657706f445882cd1bbf08052aa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the processing units after reading a ROM from disk.  <a href="#a66f2e9657706f445882cd1bbf08052aa">More...</a><br/></td></tr>
 <tr class="separator:a66f2e9657706f445882cd1bbf08052aa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5e42664956149cc074729f73a5c20f73"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5e42664956149cc074729f73a5c20f73"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#a5e42664956149cc074729f73a5c20f73">Emulate</a> ()</td></tr>
-<tr class="memdesc:a5e42664956149cc074729f73a5c20f73"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emulate the Chip16 by interpreting opcodes one at the time. <br/></td></tr>
-<tr class="separator:a5e42664956149cc074729f73a5c20f73"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0e133d1b165e3089c26092f5e1ecc202"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#a0e133d1b165e3089c26092f5e1ecc202">Emulate</a> (bool in_UseMixedMode)</td></tr>
+<tr class="memdesc:a0e133d1b165e3089c26092f5e1ecc202"><td class="mdescLeft">&#160;</td><td class="mdescRight">Emulate the Chip16 by interpreting opcodes one at the time.  <a href="#a0e133d1b165e3089c26092f5e1ecc202">More...</a><br/></td></tr>
+<tr class="separator:a0e133d1b165e3089c26092f5e1ecc202"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
@@ -131,11 +130,23 @@ Private Member Functions</h2></td></tr>
 <tr class="memitem:acd94cc80b61d0e787d789c5efb666b1c"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#acd94cc80b61d0e787d789c5efb666b1c">ReadROM</a> (const std::string &amp;in_ROMName)</td></tr>
 <tr class="memdesc:acd94cc80b61d0e787d789c5efb666b1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a ROM from disk.  <a href="#acd94cc80b61d0e787d789c5efb666b1c">More...</a><br/></td></tr>
 <tr class="separator:acd94cc80b61d0e787d789c5efb666b1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af56cbeb84fad42b762ff424e898fbd5f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af56cbeb84fad42b762ff424e898fbd5f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#af56cbeb84fad42b762ff424e898fbd5f">Interpret</a> ()</td></tr>
+<tr class="memdesc:af56cbeb84fad42b762ff424e898fbd5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the emulator in pure interpretive mode. <br/></td></tr>
+<tr class="separator:af56cbeb84fad42b762ff424e898fbd5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afcf7aafa3116d71588b671253cb55973"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afcf7aafa3116d71588b671253cb55973"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#afcf7aafa3116d71588b671253cb55973">JIT</a> ()</td></tr>
+<tr class="memdesc:afcf7aafa3116d71588b671253cb55973"><td class="mdescLeft">&#160;</td><td class="mdescRight">Run the emulator using a a mix of interpretation and dynamic recompilation. <br/></td></tr>
+<tr class="separator:afcf7aafa3116d71588b671253cb55973"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:aac5fe6fa9370c20b5a2ccbdb9a19d44a"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_c_p_u.html">CPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a">m_CPU</a></td></tr>
 <tr class="separator:aac5fe6fa9370c20b5a2ccbdb9a19d44a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38dbcea166b3c3d03f597165009d9d3d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_dynarec.html">Dynarec</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">m_Dynarec</a></td></tr>
+<tr class="separator:a38dbcea166b3c3d03f597165009d9d3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1391d0715dbe5f38815068a3dfd7302"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_interpreter.html">Interpreter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">m_Interpreter</a></td></tr>
+<tr class="separator:ac1391d0715dbe5f38815068a3dfd7302"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
@@ -147,6 +158,30 @@ static const float&#160;</td><td class="memItemRight" valign="bottom"><b>FRAME_T
 <div class="textblock"><p>Emulate the Chip16 architecture. </p>
 <dl class="section author"><dt>Author</dt><dd>Felix-Antoine Ouellet </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
+<a class="anchor" id="a0e133d1b165e3089c26092f5e1ecc202"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Emulator::Emulate </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>in_UseMixedMode</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Emulate the Chip16 by interpreting opcodes one at the time. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_UseDynarec</td><td>Run the emulator in mixed mode or not </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a66f2e9657706f445882cd1bbf08052aa"></a>
 <div class="memitem">
 <div class="memproto">
@@ -223,18 +258,60 @@ static const float&#160;</td><td class="memItemRight" valign="bottom"><b>FRAME_T
   </tr>
 </table>
 </div><div class="memdoc">
-<p>The central processing unit </p>
+<p>Central processing unit state </p>
+
+</div>
+</div>
+<a class="anchor" id="a38dbcea166b3c3d03f597165009d9d3d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_dynarec.html">Dynarec</a> Emulator::m_Dynarec</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Recompiler engine </p>
+
+</div>
+</div>
+<a class="anchor" id="ac1391d0715dbe5f38815068a3dfd7302"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_interpreter.html">Interpreter</a> Emulator::m_Interpreter</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p><a class="el" href="class_interpreter.html" title="Interpret Chip16 instructions. ">Interpreter</a> engine </p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="emulator_8h_source.html">emulator.h</a></li>
-<li>Desktop/CHIP-16/src/EmulatorLib/emulator.cpp</li>
+<li>EmulatorLib/<a class="el" href="emulator_8h_source.html">emulator.h</a></li>
+<li>EmulatorLib/emulator.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 21 2013 13:36:24 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 30 2013 15:27:29 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

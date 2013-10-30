@@ -81,6 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_d"><span>d</span></a></li>
       <li><a href="#index_f"><span>f</span></a></li>
       <li><a href="#index_h"><span>h</span></a></li>
+      <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
@@ -116,7 +117,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
 <li>Cpu
-: <a class="el" href="struct_c_p_u_fixture.html#a5d4774039047e51c31ff69f318d24c21">CPUFixture</a>
+: <a class="el" href="struct_interpreter_fixture.html#a991290ac66554d84a47eeb7c5a212d34">InterpreterFixture</a>
 </li>
 </ul>
 
@@ -140,7 +141,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
 <li>Header
-: <a class="el" href="struct_c_p_u_fixture.html#ac3bc7e2ec2b9b32bb638cde9c2a0e22a">CPUFixture</a>
+: <a class="el" href="struct_interpreter_fixture.html#ab44c2bba549e32fc44e047584c27ed95">InterpreterFixture</a>
 </li>
 <li>Height
 : <a class="el" href="struct_g_p_u_1_1_sprite.html#ac8bde1327a0ef907ce662969f8893afa">GPU::Sprite</a>
@@ -148,7 +149,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </ul>
 
 
+<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
+<li>Interpret
+: <a class="el" href="struct_interpreter_fixture.html#aba496f57f397258c93e94967a1d2a6d5">InterpreterFixture</a>
+</li>
+</ul>
+
+
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>m_Arena
+: <a class="el" href="class_emitter.html#a3abf74629dc8c7773a2e06183e534fc4">Emitter</a>
+</li>
 <li>m_AttackValues
 : <a class="el" href="class_s_p_u.html#af18e442f11123cf1d30d1dd13ff2d82c">SPU</a>
 </li>
@@ -161,11 +172,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>m_BGC
 : <a class="el" href="class_g_p_u.html#abf9c1853c7fa163d4b66cd8bfb298585">GPU</a>
 </li>
+<li>m_BufferPtr
+: <a class="el" href="class_emitter.html#adf40f93993322e41e90991083648243c">Emitter</a>
+</li>
+<li>m_Choices
+: <a class="el" href="class_command_line_interface.html#abb685030ff69fcd434998840ae78cc46">CommandLineInterface</a>
+</li>
+<li>m_ChunkSize
+: <a class="el" href="class_memory_arena.html#a2c0b309474a1b485681daa60b31393ee">MemoryArena</a>
+</li>
 <li>m_Colors
 : <a class="el" href="class_g_p_u.html#a8b90349cefad7f3ad43a8cee164c7e31">GPU</a>
 </li>
 <li>m_CPU
 : <a class="el" href="class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a">Emulator</a>
+, <a class="el" href="class_interpreter.html#a8767197f88567abf37605fdc3047d3cd">Interpreter</a>
 </li>
 <li>m_DecayValues
 : <a class="el" href="class_s_p_u.html#ac2c49cbe4248f635189f1573e2e78fc2">SPU</a>
@@ -174,7 +195,13 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_command_line_interface.html#a65e663ff05ad2b7a3317c6e44dbded80">CommandLineInterface</a>
 </li>
 <li>m_Dist
-: <a class="el" href="class_c_p_u.html#a457bfec1c90381f673297e96bf2f5fb4">CPU</a>
+: <a class="el" href="class_interpreter.html#aba0f7ccc8c952d60beb6f995eafd8cb1">Interpreter</a>
+</li>
+<li>m_Dynarec
+: <a class="el" href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">Emulator</a>
+</li>
+<li>m_Emitter
+: <a class="el" href="class_dynarec.html#acb38dfe290dc0c02941b8c915c47ac76">Dynarec</a>
 </li>
 <li>m_ErrorCode
 : <a class="el" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">CPU</a>
@@ -186,19 +213,23 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_command_line_interface.html#afcaf6271a1230a749ccd5797ab829205">CommandLineInterface</a>
 </li>
 <li>m_GPU
-: <a class="el" href="class_c_p_u.html#adb5a8ded5899b5a23682870e79261705">CPU</a>
+: <a class="el" href="class_interpreter.html#acd13cfca53c0a855de6e1284a992e358">Interpreter</a>
+</li>
+<li>m_Interpreter
+: <a class="el" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">Emulator</a>
 </li>
 <li>m_Memory
 : <a class="el" href="class_c_p_u.html#aab8d43069375512fddcda76764a2ebe2">CPU</a>
+, <a class="el" href="class_memory_arena.html#a6dc1e82b14d9b6f60dd8b007709448a3">MemoryArena</a>
 </li>
 <li>m_Ops
-: <a class="el" href="class_c_p_u.html#a8ea0a361639c51a3b8f3fc7ec8b4a432">CPU</a>
+: <a class="el" href="class_interpreter.html#a2bfedfd268949151ddf52c877e4e1c44">Interpreter</a>
 </li>
 <li>m_PC
 : <a class="el" href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">CPU</a>
 </li>
 <li>m_RandEngine
-: <a class="el" href="class_c_p_u.html#a5735718698e6ec253f0f452a40d210cc">CPU</a>
+: <a class="el" href="class_interpreter.html#acbbf883a36109b5928cfd963fb36c626">Interpreter</a>
 </li>
 <li>m_Registers
 : <a class="el" href="class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4">CPU</a>
@@ -234,7 +265,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_g_p_u.html#a2317f0aedac19a7402d5c41c36dd04d5">GPU</a>
 </li>
 <li>m_SPU
-: <a class="el" href="class_c_p_u.html#aeb391801aa832ac521cd491fba2c11a5">CPU</a>
+: <a class="el" href="class_interpreter.html#ac8b180f9897ffa566ab009f10fe0f3e0">Interpreter</a>
 </li>
 <li>m_TestChoices
 : <a class="el" href="class_command_line_interface.html#a522931469c19f97b525b3333be5a6670">CommandLineInterface</a>
@@ -287,7 +318,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Oct 21 2013 13:36:25 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Oct 30 2013 15:27:30 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

@@ -1,6 +1,7 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
+#include <memory>
 #include <random>
 #include <unordered_map>
 
@@ -16,11 +17,11 @@ class Interpreter
 {
 private:
 	typedef void (Interpreter::*Instruction) (const UInt32 in_Instruction);
-
+	
 private:
-	CPU m_CPU;										/*!< The central processing unit */
-	GPU m_GPU;										/*!< The graphics processing unit */
-	SPU m_SPU;										/*!< The sound processing unit */
+	std::shared_ptr<CPU> m_CPU;						/*!< The central processing unit */
+	std::unique_ptr<GPU> m_GPU;						/*!< The graphics processing unit */
+	std::unique_ptr<SPU> m_SPU;						/*!< The sound processing unit */
 
 	std::mt19937 m_RandEngine;						/*!< Random number engine */
 	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Distribution of the random numbers */
@@ -31,8 +32,9 @@ public:
 	/**
 	* \fn Interpreter
 	* \brief Default constructor
+	* \param in_CPU Pointer to a central processing unit implementation
 	*/
-	Interpreter();
+	Interpreter(const std::shared_ptr<CPU> & in_CPU = nullptr);
 	
 	/**
 	* \fn ~Interpreter
@@ -40,12 +42,25 @@ public:
 	*/
 	~Interpreter();
 
+private:
+	/**
+	* \fn InitOpcodesTable
+	* \brief Setup the opcode interpretation table
+	*/
+	void InitOpcodesTable();
+
 public:
 	/**
 	* \fn InterpretOp
 	* \brief Read an opcode from the ROM and execute it
 	*/
 	unsigned InterpretOp();
+
+	/**
+	* \fn Show
+	* \brief Show a frame on screen
+	*/
+	void Show();
 
 private:	// Arithmetic helpers
 	/**
@@ -95,12 +110,13 @@ private:	// Arithmetic helpers
 	
 private: // Instruction helper
 	/**
-	* \fn FetchRegisterAddress
-	* \brief Fetch the high part of the second instruction byte
+	* \fn FetchHalfByte
+	* \brief Fetch half of an instruction byte
 	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
-	* \return A register ID
+	* \param in_Pos 0-based position of the half-byte within the instruction starting from the right
+	* \return A 4 bits value
 	*/
-	UInt16 FetchRegisterAddress(const UInt32 in_Instruction) const;
+	UInt8 FetchHalfByte(const UInt32 in_Instruction, const UInt8 in_Pos) const;
 
 	/**
 	* \fn FetchImmediateValue
@@ -109,6 +125,7 @@ private: // Instruction helper
 	* \return A constant value
 	*/
 	UInt16 FetchImmediateValue(const UInt32 in_Instruction) const;
+
 private:
 	 /**
     * \fn InterpretConditions

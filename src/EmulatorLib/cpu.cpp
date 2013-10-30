@@ -9,6 +9,38 @@ CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
 	memset(m_Memory, 0, sizeof(UInt8)*MEMORY_SIZE);
 }
 
+CPU::CPU(const CPU & in_CPU) : m_FR(in_CPU.m_FR), m_PC(in_CPU.m_PC), 
+	m_SP(in_CPU.m_SP), m_ErrorCode(in_CPU.m_ErrorCode)
+{
+	int i = 0;
+	for(auto in_Val : in_CPU.DumpRegisters())
+		m_Registers[i++] = in_Val;
+
+	i = 0;
+	for(auto in_Val : in_CPU.m_ROMHeader)
+		m_ROMHeader[i++] = in_Val;
+
+	i = 0;
+	for(auto in_Val : in_CPU.DumpMemory())
+		m_Memory[i++] = in_Val;
+}
+
+CPU::CPU(const CPU * in_CPU) : m_FR(in_CPU->m_FR), m_PC(in_CPU->m_PC), 
+	m_SP(in_CPU->m_SP), m_ErrorCode(in_CPU->m_ErrorCode)
+{
+	int i = 0;
+	for(auto in_Val : in_CPU->DumpRegisters())
+		m_Registers[i++] = in_Val;
+
+	i = 0;
+	for(auto in_Val : in_CPU->m_ROMHeader)
+		m_ROMHeader[i++] = in_Val;
+
+	i = 0;
+	for(auto in_Val : in_CPU->DumpMemory())
+		m_Memory[i++] = in_Val;
+}
+
 CPU::~CPU() { }
 
 UInt16 CPU::DumpFlagRegister() const
@@ -75,6 +107,22 @@ void CPU::Reset()
 	m_PC = 0;
 }
 
+void CPU::SetFlagRegister(const UInt16 in_Value)
+{
+	// Discarding unused bits
+	m_FR = in_Value & 0xFF;
+}
+
+void CPU::SetFlag(const UInt16 in_Value)
+{
+	m_FR |= in_Value;
+}
+
+void CPU::UnsetFlag(const UInt16 in_Value)
+{
+	m_FR &= ~in_Value;
+}
+
 void CPU::SetProgramCounter(const UInt16 in_Value)
 {
 	// TODO : Check for correct PC value
@@ -91,6 +139,11 @@ void CPU::SetStackPointer(const UInt16 in_Value)
 {
 	// TODO : Check for correct SP value
 	m_SP = in_Value;
+}
+
+void CPU::StepBack()
+{
+	m_PC -= 4;
 }
 
 void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
@@ -191,9 +244,26 @@ UInt32 CPU::FetchInstruction()
 	UInt32 l_Instruction = 0;
 
 	for(int i = 0; i < 4; ++i)
-		l_Instruction = (l_Instruction << (i*4)) | m_Memory[m_PC++];
+	{
+		l_Instruction <<= 8;
+		l_Instruction |= m_Memory[m_PC++];
+	}
 
 	return l_Instruction;
+}
+
+std::vector<UInt8> CPU::FetchPalette(const UInt16 in_Address)
+{
+	std::vector<UInt8> l_PaletteData(16*3);	// Per specifications
+
+	for(int i = 0, j = 0; i < 16, j < 16*3; ++i, j+=3)
+	{
+		l_PaletteData[i+2] = m_Memory[in_Address+j];
+		l_PaletteData[i+1] = m_Memory[in_Address+j+1];
+		l_PaletteData[i] = m_Memory[in_Address+j+2];
+	}
+
+	return l_PaletteData;
 }
 
 void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y) const
@@ -202,12 +272,12 @@ void CPU::FetchRegistersValues(UInt16 & out_X, UInt16 & out_Y) const
 	out_Y = m_Registers[(m_Memory[m_PC] & 0xF0) >> 4];
 }
 
-std::vector<UInt8> CPU::FetchSprite(UInt16 in_Addr) const
+std::vector<UInt8> CPU::FetchSprite(const UInt16 in_Addr, const UInt16 in_Width, const UInt16 in_Height) const
 {
-	std::vector<UInt8> l_SpriteData(m_GPU.SpriteWidth() * m_GPU.SpriteHeight());
+	std::vector<UInt8> l_SpriteData(in_Width * in_Height);
 
 	// TODO : What if the address is invalid or if part of the sprite is in the stack?
-	for(int i = 0; i < (m_GPU.SpriteWidth() * m_GPU.SpriteHeight())/2; ++i)
+	for(int i = 0; i < (in_Width * in_Height)/2; ++i)
 	{
 		l_SpriteData[2*i] = m_Memory[in_Addr + i] >> 4;
 		l_SpriteData[2*i+1] = m_Memory[in_Addr + i] & 0xF;
@@ -216,19 +286,35 @@ std::vector<UInt8> CPU::FetchSprite(UInt16 in_Addr) const
 	return l_SpriteData;
 }
 
+UInt16 CPU::Load(const UInt16 in_Address) const
+{
+	// TODO : Check address
+	return (m_Memory[in_Address+1] << 8) | m_Memory[in_Address];
+}
+
+void CPU::Store(const UInt16 in_Address, const UInt16 in_Value)
+{
+	// TODO : Check address
+	m_Memory[in_Address] = in_Value & 0x00FF;
+	m_Memory[in_Address+1] = in_Value >> 8;
+}
+
 UInt16 CPU::Pop()
 {
+	// TODO : Stop it from going into main memory
 	return UInt16(m_Memory[--m_SP] << 8 | (m_Memory[--m_SP]));
 }
 
 void CPU::Push(UInt16 in_Val)
 {
+	// TODO : Check stack overflow
 	m_Memory[m_SP++] = in_Val & 0x00FF;
 	m_Memory[m_SP++] = (in_Val & 0xFF00) >> 8;
 }
 
 void CPU::PushPC()
 {
+	// TODO : Check stack overflow
 	m_Memory[m_SP++] = m_PC & 0x00FF;
 	m_Memory[m_SP++] = (m_PC & 0xFF00) >> 8;
 }

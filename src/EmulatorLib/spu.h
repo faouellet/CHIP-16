@@ -96,7 +96,7 @@ public:
 	* \param in_Tone The frequency in Hertz of the tone to play
 	* \param in_Duration The duration in milliseconds of the tone to play
 	*/
-	void PlayTone(unsigned in_Tone, unsigned in_Duration);
+	void PlayTone(UInt8 in_Tone, unsigned in_Duration);
 
 	/**
 	* \fn Stop
