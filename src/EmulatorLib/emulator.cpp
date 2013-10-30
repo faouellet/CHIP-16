@@ -43,7 +43,7 @@ void Emulator::Interpret()
 		// Therefore, the emulator can interpret a precise number of instructions per video frame
 		while(l_NbCycles < CYCLES_PER_FRAME)
 		{
-			m_CPU.InterpretOp();
+			m_Interpreter.InterpretOp();
 			++l_NbCycles;
 		}
 
@@ -55,7 +55,7 @@ void Emulator::Interpret()
 		// TODO : Sound, later...
 		
 		// Draw on screen
-		m_CPU.FlushGPU();
+		m_GPU.FlushBuffer();
 		
 		// Sleep
 		Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));

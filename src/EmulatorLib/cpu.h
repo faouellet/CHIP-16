@@ -85,6 +85,14 @@ public:
 	UInt16 DumpProgramCounter() const;
 
 	/**
+	* \fn DumpRegister
+	* \brief Dump the value contained in a register
+	* \param in_RegID The ID of the register
+	* \return The value contained in the register
+	*/
+	UInt16 DumpRegister(const UInt8 in_RegID) const;
+
+	/**
 	* \fn DumpRegisters
 	* \brief Dump the CPU registers
 	* \return The data contained in the CPU registers
@@ -111,6 +119,28 @@ public:
 	* \brief Restore the central processing unit at its pre-initialized state
 	*/
 	void Reset();
+
+	/**
+	* \fn SetProgramCounter
+	* \brief Set the value of the PC
+	* \param in_Value The new value of the PC
+	*/
+	void SetProgramCounter(const UInt16 in_Value);
+
+	/**
+	* \fn SetRegister
+	* \brief Set the value of a register
+	* \param in_RegID The ID of the register to update
+	* \param in_Value The new value of the register
+	*/
+	void SetRegister(const UInt8 in_RegID, const UInt16 in_Value);
+
+	/**
+	* \fn SetStackPointer
+	* \brief Set the value of the SP
+	* \param in_Value The new value of the SP
+	*/
+	void SetStackPointer(const UInt16 in_Value);
 
 	/**
 	* \fn UpdateController
@@ -153,10 +183,16 @@ public:	// Stack helpers
 
 	/**
 	* \fn Push
-	* \brief Push a value on the stack of the emulator and increment the SP by 2
+	* \brief Push a value on the stack and increment the SP by 2
 	* \param in_Val The value to be pushed
 	*/
 	void Push(UInt16 in_Val);
+
+	/**
+	* \fn PushPC
+	* \brief Push the PC on the stack and increment the SP by 2
+	*/
+	void PushPC();
 
 public:	// Flag register helpers
 	/**

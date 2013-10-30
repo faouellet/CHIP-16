@@ -51,43 +51,64 @@ private:	// Arithmetic helpers
 	/**
 	* \fn BasicArithmetic
 	* \brief Apply an instruction to two registers and store the result in a third register
+	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply 
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void BasicArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+	void BasicArithmetic(const UInt32 in_Instruction, std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
 
 	/**
 	* \fn DiscardArithmetic
 	* \brief Apply an instruction to two registers and discard the result
+	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply 
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void DiscardArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+	void DiscardArithmetic(const UInt32 in_Instruction, std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
 
 	/**
 	* \fn DiscardImmediateArithmetic
 	* \brief Apply an instruction to a register and an immediate value and discard the result
+	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply 
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void DiscardImmediateArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+	void DiscardImmediateArithmetic(const UInt32 in_Instruction, std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
 
 	/**
 	* \fn ImmediateArithmetic
 	* \brief Apply an instruction to a register and an immediate value and store the result in the first register
+	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply 
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void ImmediateArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+	void ImmediateArithmetic(const UInt32 in_Instruction, std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
 
 	/**
 	* \fn InplaceArithmetic
 	* \brief Apply an instruction to two registers and store the result in the first register
+	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply 
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void InplaceArithmetic(std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
+	void InplaceArithmetic(const UInt32 in_Instruction, std::function<UInt16(UInt16,UInt16)> in_Ins, std::function<void(UInt16,UInt16)> in_FRH);
 	
+private: // Instruction helper
+	/**
+	* \fn FetchRegisterAddress
+	* \brief Fetch the high part of the second instruction byte
+	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
+	* \return A register ID
+	*/
+	UInt16 FetchRegisterAddress(const UInt32 in_Instruction) const;
+
+	/**
+	* \fn FetchImmediateValue
+	* \brief Fetch and concatenate the last two instruction byte
+	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
+	* \return A constant value
+	*/
+	UInt16 FetchImmediateValue(const UInt32 in_Instruction) const;
 private:
 	 /**
     * \fn InterpretConditions

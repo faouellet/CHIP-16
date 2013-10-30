@@ -1,5 +1,6 @@
 #include "cpu.h"
 
+#include <functional>
 #include <iterator>
 
 CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
@@ -23,6 +24,12 @@ std::vector<UInt8> CPU::DumpMemory() const
 UInt16 CPU::DumpProgramCounter() const
 {
 	return m_PC;
+}
+
+UInt16 CPU::DumpRegister(const UInt8 in_RegID) const
+{
+	// TODO : Check for correct register ID
+	return m_Registers[in_RegID];
 }
 
 std::vector<UInt16> CPU::DumpRegisters() const
@@ -66,6 +73,24 @@ void CPU::Reset()
 	m_FR = 0;
 	m_SP = 0;
 	m_PC = 0;
+}
+
+void CPU::SetProgramCounter(const UInt16 in_Value)
+{
+	// TODO : Check for correct PC value
+	m_PC = in_Value;
+}
+
+void CPU::SetRegister(const UInt8 in_RegID, const UInt16 in_Value)
+{
+	// TODO : Check for correct register ID
+	m_Registers[in_RegID] = in_Value;
+}
+
+void CPU::SetStackPointer(const UInt16 in_Value)
+{
+	// TODO : Check for correct SP value
+	m_SP = in_Value;
 }
 
 void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
@@ -200,6 +225,12 @@ void CPU::Push(UInt16 in_Val)
 {
 	m_Memory[m_SP++] = in_Val & 0x00FF;
 	m_Memory[m_SP++] = (in_Val & 0xFF00) >> 8;
+}
+
+void CPU::PushPC()
+{
+	m_Memory[m_SP++] = m_PC & 0x00FF;
+	m_Memory[m_SP++] = (m_PC & 0xFF00) >> 8;
 }
 
 void CPU::SetSignZeroFlag(UInt16 in_Result)
