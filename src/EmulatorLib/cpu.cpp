@@ -256,11 +256,11 @@ std::vector<UInt8> CPU::FetchPalette(const UInt16 in_Address)
 {
 	std::vector<UInt8> l_PaletteData(16*3);	// Per specifications
 
-	for(int i = 0, j = 0; i < 16, j < 16*3; ++i, j+=3)
+	for(int j = 0; j < 16*3; j+=3)
 	{
-		l_PaletteData[i+2] = m_Memory[in_Address+j];
-		l_PaletteData[i+1] = m_Memory[in_Address+j+1];
-		l_PaletteData[i] = m_Memory[in_Address+j+2];
+		l_PaletteData[j+2] = m_Memory[in_Address+j];
+		l_PaletteData[j+1] = m_Memory[in_Address+j+1];
+		l_PaletteData[j] = m_Memory[in_Address+j+2];
 	}
 
 	return l_PaletteData;

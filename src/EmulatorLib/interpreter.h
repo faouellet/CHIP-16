@@ -19,9 +19,9 @@ private:
 	typedef void (Interpreter::*Instruction) (const UInt32 in_Instruction);
 	
 private:
-	std::shared_ptr<CPU> m_CPU;						/*!< The central processing unit */
-	std::unique_ptr<GPU> m_GPU;						/*!< The graphics processing unit */
-	std::unique_ptr<SPU> m_SPU;						/*!< The sound processing unit */
+	std::shared_ptr<CPU> m_CPU;		/*!< The central processing unit */
+	GPU m_GPU;						/*!< The graphics processing unit */
+	SPU m_SPU;						/*!< The sound processing unit */
 
 	std::mt19937 m_RandEngine;						/*!< Random number engine */
 	std::uniform_int_distribution<UInt16> m_Dist;	/*!< Distribution of the random numbers */
@@ -51,8 +51,16 @@ private:
 
 public:
 	/**
+	* \fn InitDevices
+	* \brief Initialize the GPU and the SPU
+	* \return An error code
+	*/
+	unsigned InitDevices();
+
+	/**
 	* \fn InterpretOp
 	* \brief Read an opcode from the ROM and execute it
+	* \return An error code
 	*/
 	unsigned InterpretOp();
 

@@ -10,7 +10,7 @@
 GPU::GPU() : m_Window(std::unique_ptr<SDL_Window, void(*)(SDL_Window*)>(nullptr, SDL_DestroyWindow)),
 	m_Renderer(std::unique_ptr<SDL_Renderer, void(*)(SDL_Renderer*)>(nullptr, SDL_DestroyRenderer)),
 	m_Texture(std::unique_ptr<SDL_Texture, void(*)(SDL_Texture*)>(nullptr, SDL_DestroyTexture)),
-	m_BGC(0)
+	m_BGC(0), m_VBlankFlag(1)
 {
 	SetOriginalColorPalette();
 	// Paint it black
@@ -122,8 +122,6 @@ void GPU::ClearScreen()
 
 bool GPU::Draw(Int16 in_X, Int16 in_Y, const std::vector<UInt8> & in_Sprite) 
 {
-	// FIXME : Sprite appears at the opposite Y coordinate / or are they bouncing? 
-	
 	// Validate X and Y coordinates
 	if(in_X > WIDTH - 1 || in_Y > HEIGHT -1 || in_X < -1 || in_Y < -1)
 		return 0;
@@ -199,8 +197,8 @@ void GPU::FlushBuffer()
 
 void GPU::LoadPalette(const std::vector<UInt8> in_Palette)  
 {
-	for(int i = 0; i < 16*3; i+=3)
-		m_Colors[i] = in_Palette[i] << 16 | in_Palette[i+1] << 8 | in_Palette[i+2]; 
+	for(int i = 0, j = 0; i < 16*3, j < 16; i+=3, ++j)
+		m_Colors[j] = in_Palette[i] << 16 | in_Palette[i+1] << 8 | in_Palette[i+2]; 
 }
 
 void GPU::SetBackgroundColor(UInt8 in_ColorIndex) 
@@ -208,7 +206,7 @@ void GPU::SetBackgroundColor(UInt8 in_ColorIndex)
 	m_BGC = in_ColorIndex;
 }
 
-void GPU::SetSpriteDimensions(UInt8 in_Height, UInt8 in_Width) 
+void GPU::SetSpriteDimensions(UInt8 in_Width, UInt8 in_Height) 
 {
 	m_Sprite.Width = in_Width * 2;
 	m_Sprite.Height = in_Height;

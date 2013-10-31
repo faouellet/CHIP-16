@@ -4,7 +4,7 @@
 
 const float Emulator::FRAME_TIME = (1.f/60.f)*1000.f;
 
-Emulator::Emulator() { }
+Emulator::Emulator() : m_CPU(std::make_shared<CPU>(new CPU)), m_Interpreter(m_CPU) { }
 
 Emulator::~Emulator() { }
 
@@ -12,7 +12,12 @@ unsigned Emulator::Init(const std::string & in_ROMName)
 {
 	auto l_ROMData = ReadROM(in_ROMName);
 	if(!l_ROMData.empty())
-		return m_CPU.Init(std::move(l_ROMData));
+	{
+		unsigned l_ErrorCode = NoError;
+		l_ErrorCode |= m_CPU->Init(std::move(l_ROMData));
+		l_ErrorCode |= m_Interpreter.InitDevices();
+		return l_ErrorCode;
+	}
 	else return FileError;
 }
 
@@ -50,7 +55,7 @@ void Emulator::Interpret()
 		// Handle IO
 		while(SDL_PollEvent(&l_ControllerEvent) && 
 			(l_ControllerEvent.type == SDL_KEYDOWN || l_ControllerEvent.type == SDL_KEYUP))
-			m_CPU.UpdateController(l_ControllerEvent.key);
+			m_CPU->UpdateController(l_ControllerEvent.key);
 
 		// TODO : Sound, later...
 		

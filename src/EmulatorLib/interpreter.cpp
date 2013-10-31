@@ -94,6 +94,14 @@ Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m
 
 Interpreter::~Interpreter() { }
 
+unsigned Interpreter::InitDevices()
+{
+	unsigned l_ErrorCode = NoError;
+	l_ErrorCode |= m_GPU.Init();
+	l_ErrorCode |= m_SPU.Init();
+	return l_ErrorCode;
+}
+
 unsigned Interpreter::InterpretOp()
 {
 	UInt32 l_Instruction = m_CPU->FetchInstruction();
@@ -108,7 +116,7 @@ unsigned Interpreter::InterpretOp()
 
 void Interpreter::Show()
 {
-	m_GPU->FlushBuffer();
+	m_GPU.FlushBuffer();
 }
 
 /////////////// Arithmetic ///////////////
@@ -272,7 +280,7 @@ void Interpreter::DirectJMP(const UInt32 in_Instruction)
 
 void Interpreter::Jx(const UInt32 in_Instruction)
 {
-	UInt8 l_CondCode = FetchHalfByte(in_Instruction, 5);
+	UInt8 l_CondCode = FetchHalfByte(in_Instruction, 4);
 	if(InterpretConditions(l_CondCode))
 		m_CPU->SetProgramCounter(FetchImmediateValue(in_Instruction));
 }
@@ -380,14 +388,14 @@ void Interpreter::IndirectLDM(const UInt32 in_Instruction)
 {
 	UInt8 l_AddrX = FetchHalfByte(in_Instruction, 4);
 	UInt8 l_AddrY = FetchHalfByte(in_Instruction, 5);
-	m_CPU->SetRegister(l_AddrX, m_CPU->Load(l_AddrY));
+	m_CPU->SetRegister(l_AddrX, m_CPU->Load(m_CPU->DumpRegister(l_AddrY)));
 }
 
 void Interpreter::MOV(const UInt32 in_Instruction)
 {
 	UInt8 l_AddrX = FetchHalfByte(in_Instruction, 4);
-	UInt8 l_AddrY = FetchHalfByte(in_Instruction, 4); 
-	m_CPU->SetRegister(l_AddrX, m_CPU->DumpRegister(l_AddrY));
+	UInt8 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5)); 
+	m_CPU->SetRegister(l_AddrX, l_YVal);
 }
 
 /////////////// Misc ///////////////
@@ -396,25 +404,25 @@ void Interpreter::NOP(const UInt32 in_Instruction) {  }
 
 void Interpreter::CLS(const UInt32 in_Instruction)
 {
-	m_GPU->ClearScreen();
+	m_GPU.ClearScreen();
 }
 
 void Interpreter::VBLNK(const UInt32 in_Instruction)
 {
-	if(!m_GPU->VBlankFlag())
+	if(!m_GPU.VBlankFlag())
 		m_CPU->StepBack();
 	else
-		m_GPU->TurnOffVBlankFlag();
+		m_GPU.TurnOffVBlankFlag();
 }
 
 void Interpreter::BGC(const UInt32 in_Instruction)
 {
-	m_GPU->SetBackgroundColor((in_Instruction >> 8) & 0xF);
+	m_GPU.SetBackgroundColor((in_Instruction >> 8) & 0xF);
 }
 
 void Interpreter::SPR(const UInt32 in_Instruction)
 {
-	m_GPU->SetSpriteDimensions(in_Instruction & 0xFF00, in_Instruction & 0xFF);
+	m_GPU.SetSpriteDimensions((in_Instruction >> 8) & 0xFF, in_Instruction & 0xFF);
 }
 
 void Interpreter::ImmediateDRW(const UInt32 in_Instruction)
@@ -422,7 +430,7 @@ void Interpreter::ImmediateDRW(const UInt32 in_Instruction)
 	UInt16 l_XVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4));
 	UInt16 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5));
 	UInt16 l_Addr = FetchImmediateValue(in_Instruction);
-	bool l_RetVal = m_GPU->Draw(l_XVal, l_YVal, m_CPU->FetchSprite(l_Addr, m_GPU->SpriteWidth(), m_GPU->SpriteHeight()));
+	bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_CPU->FetchSprite(l_Addr, m_GPU.SpriteWidth(), m_GPU.SpriteHeight()));
 	if(l_RetVal)
 		m_CPU->SetFlag(CPU::UnsignedCarryFlag);
 	else m_CPU->UnsetFlag(CPU::UnsignedCarryFlag);
@@ -432,8 +440,8 @@ void Interpreter::RegisterDRW(const UInt32 in_Instruction)
 {
 	UInt16 l_XVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4));
 	UInt16 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5));
-	UInt16 l_Addr = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 3));
-	bool l_RetVal = m_GPU->Draw(l_XVal, l_YVal, m_CPU->FetchSprite(l_Addr, m_GPU->SpriteWidth(), m_GPU->SpriteHeight()));
+	UInt16 l_Addr = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 2));
+	bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_CPU->FetchSprite(l_Addr, m_GPU.SpriteWidth(), m_GPU.SpriteHeight()));
 	if(l_RetVal)
 		m_CPU->SetFlag(CPU::UnsignedCarryFlag);
 	else m_CPU->UnsetFlag(CPU::UnsignedCarryFlag);
@@ -451,32 +459,32 @@ void Interpreter::RND(const UInt32 in_Instruction)
 
 void Interpreter::FLIP(const UInt32 in_Instruction)
 {
-	m_GPU->Flip(in_Instruction & 0xF);
+	m_GPU.Flip(in_Instruction & 0xF);
 }
 
 void Interpreter::SND0(const UInt32 in_Instruction)
 {
-	m_SPU->Stop();
+	m_SPU.Stop();
 }
 
 void Interpreter::SND1(const UInt32 in_Instruction)
 {
-	m_SPU->PlayTone(UInt8(500), FetchImmediateValue(in_Instruction));
+	m_SPU.PlayTone(UInt8(500), FetchImmediateValue(in_Instruction));
 }
 
 void Interpreter::SND2(const UInt32 in_Instruction)
 {
-	m_SPU->PlayTone(UInt8(1000), FetchImmediateValue(in_Instruction));
+	m_SPU.PlayTone(UInt8(1000), FetchImmediateValue(in_Instruction));
 }
 
 void Interpreter::SND3(const UInt32 in_Instruction)
 {
-	m_SPU->PlayTone(UInt8(1500), FetchImmediateValue(in_Instruction));
+	m_SPU.PlayTone(UInt8(1500), FetchImmediateValue(in_Instruction));
 }
 
 void Interpreter::SNP(const UInt32 in_Instruction)
 {
-	m_SPU->PlayTone(FetchHalfByte(in_Instruction, 4), FetchImmediateValue(in_Instruction));
+	m_SPU.PlayTone(FetchHalfByte(in_Instruction, 4), FetchImmediateValue(in_Instruction));
 }
 
 void Interpreter::SNG(const UInt32 in_Instruction)
@@ -491,12 +499,12 @@ void Interpreter::SNG(const UInt32 in_Instruction)
 
 void Interpreter::ImmediatePalette(const UInt32 in_Instruction)
 {
-	m_GPU->LoadPalette(m_CPU->FetchPalette(FetchImmediateValue(in_Instruction)));
+	m_GPU.LoadPalette(m_CPU->FetchPalette(FetchImmediateValue(in_Instruction)));
 }
 
 void Interpreter::RegisterPalette(const UInt32 in_Instruction)
 {
-	m_GPU->LoadPalette(m_CPU->FetchPalette(m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4))));
+	m_GPU.LoadPalette(m_CPU->FetchPalette(m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4))));
 }
 
 /////////////// Push/Pop ///////////////
@@ -519,7 +527,7 @@ void Interpreter::PUSHALL(const UInt32 in_Instruction)
 
 void Interpreter::POPALL(const UInt32 in_Instruction)
 {
-	for(UInt8 i = 15; i > -1; --i)
+	for(int i = 15; i > -1; --i)
 		m_CPU->SetRegister(i, m_CPU->Pop());
 }
 
@@ -588,9 +596,9 @@ void Interpreter::DirectSTM(const UInt32 in_Instruction)
 
 void Interpreter::IndirectSTM(const UInt32 in_Instruction)
 {
-	UInt8 l_XVal = FetchHalfByte(in_Instruction, 4);
-	UInt8 l_YVal = FetchHalfByte(in_Instruction, 5);
-	m_CPU->Store(m_CPU->DumpRegister(l_YVal), m_CPU->DumpRegister(l_XVal));
+	UInt16 l_XVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4));
+	UInt16 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5));
+	m_CPU->Store(l_YVal, l_XVal);
 }
 
 /////////////// ArtihmeticHelpers ///////////////
@@ -599,7 +607,7 @@ void Interpreter::BasicArithmetic(const UInt32 in_Instruction,
 								  std::function<UInt16(UInt16,UInt16)> in_Ins, 
 								  std::function<void(UInt16,UInt16)> in_FRH)
 {
-	UInt8 l_XVal = FetchHalfByte(in_Instruction, 4);
+	UInt16 l_XVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4));
 	UInt16 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5));
 	in_FRH(l_XVal, l_YVal);
 	UInt8 l_ZReg = FetchHalfByte(in_Instruction, 2);
