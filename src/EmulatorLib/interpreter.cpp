@@ -511,12 +511,12 @@ void Interpreter::RegisterPalette(const UInt32 in_Instruction)
 
 void Interpreter::PUSH(const UInt32 in_Instruction)
 {
-	m_CPU->Push(m_CPU->DumpRegister((in_Instruction >> 16) & 0xF));
+	m_CPU->Push(m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4)));
 }
 
 void Interpreter::POP(const UInt32 in_Instruction)
 {
-	m_CPU->SetRegister((in_Instruction >> 16) & 0xF, m_CPU->Pop());
+	m_CPU->SetRegister(FetchHalfByte(in_Instruction, 4), m_CPU->Pop());
 }
 
 void Interpreter::PUSHALL(const UInt32 in_Instruction)
