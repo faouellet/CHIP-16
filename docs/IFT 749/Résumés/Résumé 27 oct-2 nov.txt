@@ -1,0 +1,8 @@
+Trucs faits cette semaine:
+- Refactoring pour séparer l'interpréteur et le CPU
+- Recompilateur dynamique de test est maintenant fonctionnel
+
+Trucs à faire dans la semaine à venir:
+- Critique du second article
+- Bugfix suite au refactoring
+- Commencer l'intégration du recompilateur dynamique
