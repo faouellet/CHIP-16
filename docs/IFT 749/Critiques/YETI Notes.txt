@@ -1,17 +1,38 @@
 0 - ABSTRACT
-** Système mixte -> Système combinant l'interprétation et la compilation juste-à-temps dans le but de gagner en vitesse
+** Système mixte -> Système combinant l'interprétation et la compilation juste-à-temps (JIT) dans le but de gagner en vitesse
 ** Règle générale, un interpréteur c'est lent comparé à un système mixte
 ** Règle générale, un système mixte est énormément plus dur à mettre en place qu'un interpréteur (VRAI!)
-** But du papier est de montrer comment un compilateur juste-à-temps 
+** But du papier est de montrer comment un JIT peut être intégré à un interpréteur
 
 I - INTRODUCTION
+** On ne discute que d'interpréteurs type machine virtuel, c'est-à-dire ceux qui prennent en entrée une représentation intermédiaire
+   d'un programme (pensons bytecode). (NOTE: Devrait décrire un peu plus ce qu'est une bonne représentation intermédiaire pour
+   un interpréteur (flat). Les compilateurs modernes utilisent aussi une représentation intermédiaire (AST), mais elle ne se prête
+   pas du tout à l'interprétation)
+** Gros problème 1: Big Bang
+   -> En gros, l'intégration d'un JIT est longue et ardue.
+** Gros problème 2: Compilation de régions "froides"
+   -> On pose la question: Comment discriminer les régions "chaude" et "froides" d'un programme pour ne pas avoir à compiler
+      du code qui pourrait ne jamais rouler? (Ajoutons qu'en plus de la perte de temps en compilation, si l'espace est limité,
+      il risque d'avoir un gaspillement au niveau de l'espace utilisé.)
+** Définition: Trace = Chemin (suite d'instructions/de blocs de base) fréquemment exécuté
+
 
 II - INTERPRETER AND JIT BACKGROUND
+** Interpreter Dispatch
+** Direct Threading
+** Direct Call Threading
+** Subroutine Threading
+** Selective Inlining
+** Traces
+** JIT Compilation
 
 III DESIGN AND IMPLEMENTATION
 
 IV - EXPERIMENTAL RESULTS
 
 V - RELATED WORK
+** Système similaire : Hotpath
+   -> Se concentre plus sur l'optimisation que l'intégration
 
 VI - CONCLUSIONS AND FUTURE WORK
