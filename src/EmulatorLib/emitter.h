@@ -29,6 +29,10 @@ public:
 	~Emitter();
 
 public:	// Arithmetic instructions
+	void ADD(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2);
+	void DIV(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2);
+	void MUL(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2);
+	void SUB(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2);
 };
 
 #endif // EMITTER_H

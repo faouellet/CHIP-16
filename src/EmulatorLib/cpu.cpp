@@ -239,6 +239,23 @@ void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
 	}
 }
 
+std::vector<UInt32> CPU::FetchBasicBlock()
+{
+	UInt32 l_Instruction = 0;
+	std::vector<UInt32> l_BasicBlock;
+
+	do
+	{
+		// Q : Should the PC be modified ??
+		l_Instruction = FetchInstruction();
+
+		l_BasicBlock.push_back(l_Instruction);
+	} 
+	while((l_Instruction >> 24) & 0xF0 != 0x10);
+
+	return l_BasicBlock;
+}
+
 UInt32 CPU::FetchInstruction()
 {
 	UInt32 l_Instruction = 0;

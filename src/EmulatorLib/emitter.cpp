@@ -9,3 +9,19 @@ Emitter::~Emitter()
 {
 	m_BufferPtr = nullptr;
 }
+
+void Emitter::ADD(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2)
+{
+}
+
+void Emitter::DIV(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2)
+{
+}
+
+void Emitter::MUL(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2)
+{
+}
+
+void Emitter::SUB(const Utils::UInt16 in_Arg1, const Utils::UInt16 in_Arg2)
+{
+}

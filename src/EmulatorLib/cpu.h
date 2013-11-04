@@ -193,6 +193,13 @@ public:
 
 public:	// Memory helpers
 	/**
+	* \fn FetchBasicBlock
+	* \brief Fetch a contiguous block of sequential instruction
+	* \return A block of instructions
+	*/
+	std::vector<UInt32> FetchBasicBlock();
+	
+	/**
 	* \fn FetchInstruction
 	* \brief Read the current instruction and its operands as pointed by the PC.
 	*        Note that it increases the PC by 4 i.e. to the next instruction.

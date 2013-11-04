@@ -10,22 +10,59 @@ I - INTRODUCTION
    un interpréteur (flat). Les compilateurs modernes utilisent aussi une représentation intermédiaire (AST), mais elle ne se prête
    pas du tout à l'interprétation)
 ** Gros problème 1: Big Bang
-   -> En gros, l'intégration d'un JIT est longue et ardue.
+	-> En gros, l'intégration d'un JIT est longue et ardue.
 ** Gros problème 2: Compilation de régions "froides"
-   -> On pose la question: Comment discriminer les régions "chaude" et "froides" d'un programme pour ne pas avoir à compiler
+	-> On pose la question: Comment discriminer les régions "chaude" et "froides" d'un programme pour ne pas avoir à compiler
       du code qui pourrait ne jamais rouler? (Ajoutons qu'en plus de la perte de temps en compilation, si l'espace est limité,
       il risque d'avoir un gaspillement au niveau de l'espace utilisé.)
 ** Définition: Trace = Chemin (suite d'instructions/de blocs de base) fréquemment exécuté
-
-
+** Le système proposé se base sur les traces et non les méthodes d'un programme
+** Développement (les auteurs ont modifiés une implémentation de la JVM, JamVM):
+	-> Chaque exécution d'instructions virtuelles devient une fonction
+	-> Identification d'une approximation de ce qu'est un bloc de base
+	-> Implémentation d'un identificateur et "dispatcher" de traces
+	-> Ajout de fonctionnalités pour lier les traces ensemble
+	-> Implémentation d'un compilateur de traces
+	-> (On voit ici qu'ils ont travaillé à un niveau bien plus élevé que le mien)
+	-> (l'idée d'un système orienté trace est, par contre, très intéressante)
+   
 II - INTERPRETER AND JIT BACKGROUND
 ** Interpreter Dispatch
+	* Def : Un monstrueux switch...case
+	+ Facile et rapide à implémenter
+	+ Portable
+	- LENT (trop d'overhead)
+	
 ** Direct Threading
+	* Def : Chaque instruction virtuelle est représentée par une adresse dans une table (nommée DTT).
+			On initialise un PC virtuelau début du DTT et on saute à cette adresse. À la fin de 
+			l'instruction virtuelle: goto *vPC++ (Eeewwwwww!)
+	+ Un peu plus rapide que l'approche précédente
+	- Ne peut être fait qu'à l'aide de GNU C, donc non portable
+
 ** Direct Call Threading
+	* Def : Utiliser un tableau de pointeur de fonctions. Par contre, il semble que cette approche
+			requiert un peu de magie pour que le retour d'une fonction soit rapide...
+	+ Rapide
+	- Non portable
+
 ** Subroutine Threading
+	* Def : 
+	
 ** Selective Inlining
+	* Def : Construction de "superinstructions"... (Lire référence, car rien n'est expliqué)
+
 ** Traces
+	* On présente plus quelque chose qui existe que l'idée générale
+	* NET : Découvre une trace en suivant le chemin inverse d'un branchement à partir de sa destination
+
 ** JIT Compilation
+	* Def : Commence par interpréter une représentation intermédiaire et, par la suite, compile
+			en code natif.
+	=> La compilation de régions "froides" peut nuire à l'analyse du flux de données
+	=> Idéalement, couplé à un profiler qui détecte les méthodes les plus "chaudes", celles à compiler en premier
+	=> Changer un JIT basé sur les méthodes pour un JIT basé sur les traces est une tâche colossale, car une trace
+	   ne débute pas et ne finit par nécessairement au début et à la fin d'une méthode.
 
 III DESIGN AND IMPLEMENTATION
 
@@ -33,6 +70,6 @@ IV - EXPERIMENTAL RESULTS
 
 V - RELATED WORK
 ** Système similaire : Hotpath
-   -> Se concentre plus sur l'optimisation que l'intégration
+	-> Se concentre plus sur l'optimisation que l'intégration
 
 VI - CONCLUSIONS AND FUTURE WORK

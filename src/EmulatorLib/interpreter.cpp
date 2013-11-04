@@ -287,8 +287,8 @@ void Interpreter::Jx(const UInt32 in_Instruction)
 
 void Interpreter::JME(const UInt32 in_Instruction)
 {
-	UInt16 l_XVal = FetchHalfByte(in_Instruction, 4);
-	UInt16 l_YVal = FetchHalfByte(in_Instruction, 5);
+	UInt16 l_XVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 4));
+	UInt16 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5));
 	if(l_XVal == l_YVal)
 		m_CPU->SetProgramCounter(FetchImmediateValue(in_Instruction));
 }
@@ -394,7 +394,7 @@ void Interpreter::IndirectLDM(const UInt32 in_Instruction)
 void Interpreter::MOV(const UInt32 in_Instruction)
 {
 	UInt8 l_AddrX = FetchHalfByte(in_Instruction, 4);
-	UInt8 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5)); 
+	UInt16 l_YVal = m_CPU->DumpRegister(FetchHalfByte(in_Instruction, 5)); 
 	m_CPU->SetRegister(l_AddrX, l_YVal);
 }
 
@@ -601,7 +601,7 @@ void Interpreter::IndirectSTM(const UInt32 in_Instruction)
 	m_CPU->Store(l_YVal, l_XVal);
 }
 
-/////////////// ArtihmeticHelpers ///////////////
+/////////////// Artihmetic Helpers ///////////////
 
 void Interpreter::BasicArithmetic(const UInt32 in_Instruction, 
 								  std::function<UInt16(UInt16,UInt16)> in_Ins, 

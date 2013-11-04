@@ -24,6 +24,8 @@ public:
 	* \brief Destructor
 	*/
 	~Dynarec();
+
+	// ...
 };
 
 #endif // DYNAREC_H
