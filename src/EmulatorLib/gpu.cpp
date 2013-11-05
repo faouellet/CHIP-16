@@ -109,6 +109,8 @@ Utils::UInt8 GPU::VBlankFlag() const
 void GPU::ClearScreen() 
 {
 	SDL_RenderClear(m_Renderer.get());
+
+
 	for(int i = 0; i < HEIGHT; ++i)
 	{
 		for(int j = 0; j < WIDTH; ++j)

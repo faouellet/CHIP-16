@@ -71,7 +71,28 @@ void Emulator::Interpret()
 
 void Emulator::JIT()
 {
-	// TODO : Black magic
+	bool l_Continue = true;
+	SDL_Event l_ControllerEvent;
+
+	while(l_Continue)
+	{
+		// TODO : Black magic
+		
+		// Handle IO
+		while(SDL_PollEvent(&l_ControllerEvent) && 
+			(l_ControllerEvent.type == SDL_KEYDOWN || l_ControllerEvent.type == SDL_KEYUP))
+			m_CPU->UpdateController(l_ControllerEvent.key);
+
+
+		// TODO : Sound, later...
+		
+		// TODO : Draw on screen
+
+		// Sleep
+		Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));
+		if(static_cast<int>(l_Delay) > 0)
+			SDL_Delay(l_Delay);
+	}
 }
 
 std::vector<UInt8> Emulator::ReadROM(const std::string & in_ROMName)

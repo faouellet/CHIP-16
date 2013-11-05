@@ -1,6 +1,8 @@
 #ifndef MEMORY_ARENA
 #define MEMORY_ARENA
 
+// TODO : Make memory writable or executable, not both i.e. manage potential secury problem
+
 /**
 * \class MemoryArena
 * \brief Manager over a memory pool

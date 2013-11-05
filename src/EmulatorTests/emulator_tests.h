@@ -22,8 +22,8 @@ struct EmulatorTestFixture
 
 #ifdef _DEBUG
 //const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Tests";
-const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Demos";
-//const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Games";
+//const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Demos";
+const std::string EmulatorTestFixture::ROM_PATH = "../bin/Debug/Games";
 #else
 //const std::string EmulatorTestFixture::ROM_PATH = "../bin/Release/Tests";
 const std::string EmulatorTestFixture::ROM_PATH = "../bin/Release/Demos";
