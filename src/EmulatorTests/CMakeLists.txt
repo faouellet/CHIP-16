@@ -7,6 +7,8 @@ cmake_minimum_required (VERSION 2.8)
 set( SOURCES 
 	main.cpp 
 	utils_tests.cpp 
+	dynarec_tests.cpp
+	emitter_tests.cpp
 	emulator_tests.cpp 
 	emulator_tests.h 
 	interpreter_tests.cpp 

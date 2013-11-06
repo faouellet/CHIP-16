@@ -63,18 +63,44 @@ private:
 	void Write16Bits(const UInt16 in_Value);
 
 public:	// Arithmetic instructions
+	void ANDIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void ANDREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+
 	void ADDIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
 	void ADDREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+
+	void CMPIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void CMPREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
 
 	void DIVIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
 	void DIVREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
 
 	void MULIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
 	void MULREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	
+	void ORIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void ORREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+
+	void SHLIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void SHLREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+
+	void SHRIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void SHLREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+
+	void SARIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void SARREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
 
 	void SUBIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
 	void SUBREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
 
+	void TSTIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+
+	void XORIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void XORREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+
+public:	// Control flow instructions
+	void CALL();
+	void CX();
 	void RET();
 };
 
