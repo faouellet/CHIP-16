@@ -47,7 +47,10 @@ II - INTERPRETER AND JIT BACKGROUND
 	- Non portable
 
 ** Subroutine Threading
-	* Def : 
+	* Def : Semble augmenter l'approche direct call threading en insérant des informations sur le contexte dans
+            la table de dispatch. Ceci permet d'améliorer les performances au niveau des branchements
+            indirects étant donné que le code généré fera dorénavant toujours les bonnes prédictions, 
+            il n'aura donc plus à vider le pipeline lorsqu'il se trompe dans sa prédiction de branche
 	
 ** Selective Inlining
 	* Def : Construction de "superinstructions"... (Lire référence, car rien n'est expliqué)
@@ -65,11 +68,40 @@ II - INTERPRETER AND JIT BACKGROUND
 	   ne débute pas et ne finit par nécessairement au début et à la fin d'une méthode.
 
 III DESIGN AND IMPLEMENTATION
-
+    * Ils instrumentent JamVM en utilisant une variante de Direct Call Threading/Subroutine Threading
+        -> Tableau de pointeurs de "dispatcher"
+        - Dispatcher contient : Corps de région (possiblement fonction, mais pas nécessairement dans l'optique de traces)
+                                "Preworker" : Addresse de la routine d'instrumentation à appeler avant l'exécution de la région
+                                "Postworker" : Addresse de la routine d'instrumentation à appeler après l'exécution de la région
+                                "Payload" : Données utiles pour le profilage
+    * Stratégie pour réduire la latence lors de chargement de fonction :
+        -> Avoir un dispatcher global pour chaque type d'instruction au départ, puis, après l'instrumentation initiale, 
+           le postworker crée une instance spécifique d'un "block discovery dispatcher" 
+           (bien pensé, mais agit à un niveau trop haut pour que ça me soit utile)
+    * Fait une détection de blocs linéaires c.-à.-d. bloc se terminant sur des branchements (un bloc de base peut aussi se terminer sur des étiquettes)
+        # L'idée est intéressante et très certainement à adopter si je décide de basé mon dynarec sur les traces. Par
+          contre, je ne suis pas sûr que c'est quelque chose que je veux faire. À ce point-ci de ma lecture, ma grande crainte est de
+          savoir comment marche l'allcation de registres dans un tel modèle. Les traces ont l'air beaucoup plus chargées en contenu que
+          les blocs de base. L'allocation de registres pour des blocs de bases est déjà assez NP-complet!
+    * Trace détectée quand : - Suite de 100+ instructions (à penser pour mon projet...)
+                             - Cycle trouvé
+    * Code généré pour une trace quand elle a roulée au moins 5 fois (encore une fois, c'est une bonne idée à intégrer dans mon projet)
+    * À la fin d'une trace, le postworker tente de "linker" cette trace avec celle qui la suit dans l'exécution pour ne pas
+      avoir à repasser par l'interpréteur
+    # À ce point-ci, je commence à penser que le modèle présenté s'apparente à du "profile-guided optimization". Tout du moins, il
+      bénéficirait sûrement d'une période d'entraînement.
+    * Ils mentionnent que leur système génère un mapping simple de registres... 
+        -> Leur sytème génère de l'assembleur PowerPC, il semble donc qu'ils on assez de registres pour leurs besoins
+    * Ils mentionnent que les boucles sont optimisés, car elles forment des traces faciles à détecter. 
+        #(L'idée de faire des optimisations entre blocs de base est intéressante, mais je n'aurais pas assez de temps pour me rendre à ce point dans mon projet)
+    * Ils mentionnent des optimisations possibles pour des fonctions polymorphiques (trop haut niveau pour mon projet)
+           
 IV - EXPERIMENTAL RESULTS
+    * En gros, on voit que ça marche bien vu que le système passe plus de temps à exécuter du code natif
 
 V - RELATED WORK
 ** Système similaire : Hotpath
 	-> Se concentre plus sur l'optimisation que l'intégration
 
 VI - CONCLUSIONS AND FUTURE WORK
+    * Rien de vraiment inspirant
