@@ -8,9 +8,8 @@ Dynarec::~Dynarec() { }
 
 void Dynarec::CompileBasicBlock()
 {
-	std::vector<UInt32> l_BasicBlock(m_CPU->FetchBasicBlock());
-
-
+	std::vector<Instruction> l_BasicBlock(m_CPU->FetchBasicBlock());
+	
 }
 
 UInt8* Dynarec::ExecuteBlock() const

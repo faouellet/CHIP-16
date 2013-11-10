@@ -5,7 +5,7 @@
 
 #include "SDL.h"
 
-#include "utils.h"
+#include "instruction.h"
 
 using namespace Utils;
 
@@ -197,7 +197,7 @@ public:	// Memory helpers
 	* \brief Fetch a contiguous block of sequential instruction
 	* \return A block of instructions
 	*/
-	std::vector<UInt32> FetchBasicBlock();
+	std::vector<Instruction> FetchBasicBlock();
 	
 	/**
 	* \fn FetchInstruction
@@ -205,7 +205,7 @@ public:	// Memory helpers
 	*        Note that it increases the PC by 4 i.e. to the next instruction.
 	* \return An instruction and its operands
 	*/
-	UInt32 FetchInstruction();
+	Instruction FetchInstruction();
 
 	/**
 	* \fn FetchPalette

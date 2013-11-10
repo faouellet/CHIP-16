@@ -239,10 +239,10 @@ void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
 	}
 }
 
-std::vector<UInt32> CPU::FetchBasicBlock()
+std::vector<Instruction> CPU::FetchBasicBlock()
 {
-	UInt32 l_Instruction = 0;
-	std::vector<UInt32> l_BasicBlock;
+	Instruction l_Instruction = 0;
+	std::vector<Instruction> l_BasicBlock;
 
 	do
 	{
@@ -256,7 +256,7 @@ std::vector<UInt32> CPU::FetchBasicBlock()
 	return l_BasicBlock;
 }
 
-UInt32 CPU::FetchInstruction()
+Instruction CPU::FetchInstruction()
 {
 	UInt32 l_Instruction = 0;
 
@@ -266,7 +266,7 @@ UInt32 CPU::FetchInstruction()
 		l_Instruction |= m_Memory[m_PC++];
 	}
 
-	return l_Instruction;
+	return Instruction(l_Instruction);
 }
 
 std::vector<UInt8> CPU::FetchPalette(const UInt16 in_Address)

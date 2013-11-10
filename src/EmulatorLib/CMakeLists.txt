@@ -1,12 +1,12 @@
 cmake_minimum_required (VERSION 2.8)
 
 add_library( EmulatorLib STATIC
-		allocator.h
-		allocator.cpp
 		dynarec.cpp
 		dynarec.h
 		emitter.cpp
 		emitter.h
+		instruction.cpp
+		instruction.h
 		interpreter.cpp
 		interpreter.h
 		emulator.cpp 
