@@ -38,6 +38,12 @@ public:
 	enum { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, 
 			SignedOverflowFlag = 64, NegativeFlag = 128 };
 
+	/**
+	* \enum
+	* \brief Number of registers
+	*/
+	enum { NB_REGISTERS = 16 };
+
 private:
 	UInt8 m_FR;										/*!< Flag register */
 	UInt16 m_PC;									/*!< Program counter */
@@ -45,7 +51,7 @@ private:
 
 	UInt16 m_ErrorCode;								/*!< Code used when an error happens during emulation */
 	
-	UInt16 m_Registers[16];							/*!< General purpose registers */
+	UInt16 m_Registers[NB_REGISTERS];							/*!< General purpose registers */
 
 	UInt8 m_ROMHeader[HEADER_SIZE];					/*!< The header of a .c16 file. See specs for details */
 	UInt8 m_Memory[MEMORY_SIZE];					/*!< Memory of the CPU. See specs for layout details */

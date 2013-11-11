@@ -251,7 +251,7 @@ std::vector<Instruction> CPU::FetchBasicBlock()
 
 		l_BasicBlock.push_back(l_Instruction);
 	} 
-	while((l_Instruction >> 24) & 0xF0 != 0x10);
+	while((l_Instruction.GetOpcode() & 0xF0) != 0x10);
 
 	return l_BasicBlock;
 }

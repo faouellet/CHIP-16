@@ -19,14 +19,14 @@ private:
 	* \brief x86 registers
 	*/
 	enum { 
-		EAX = 0, 
-		EDX = 2, 
-		ECX = 1, 
-		EDI = 7, 
-		ESI = 6, 
-		ESP = 4, 
-		EBP = 5, 
-		EBX = 3 
+		EAX = 0,
+		ECX = 1,
+		EDX = 2,
+		EBX = 3,
+		ESP = 4,
+		EBP = 5,
+		ESI = 6,
+		EDI = 7 
 	};
 
 private:
@@ -54,11 +54,25 @@ public:
 	*/
 	~Dynarec();
 
-	// TODO : Analyse the content of an instruction
-
+	/**
+	* \fn CompileBasicBlock
+	* \brief TODO
+	*/
 	void CompileBasicBlock();
 
+	/**
+	* \fn ExecuteBlock
+	* \brief TODO
+	*/
 	UInt8* ExecuteBlock() const;
+
+private:
+	/**
+	* \fn AnalyzeRegisterLiveness
+	* \brief TODO
+	* TODO : Add ref to Dragon book
+	*/
+	std::vector<std::vector<bool>> AnalyzeRegisterLiveness(const std::vector<Instruction> & in_BasicBlock) const;
 };
 
 #endif // DYNAREC_H
