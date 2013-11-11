@@ -15,12 +15,16 @@ class Instruction
 {
 private:
 	UInt32 m_Value;	/*!< 4 byte value of the instruction */
+	
 	UInt16 m_ImmediateValue;
+	
 	UInt8 m_Op1;
 	UInt8 m_Op2;
 	UInt8 m_Op3;
 	UInt8 m_Opcode;
 	UInt8 m_Type;
+
+	bool m_UseImm;
 
 public:
 	/**
@@ -74,6 +78,8 @@ public: // TODO : Document these functions
 	UInt8 GetThirdOperand() const;
 	UInt16 GetImmediateValue() const;
 	UInt8 GetType() const;
+
+	bool UseImmediateValue() const;
 };
 
 #endif // INSTRUCTION_H

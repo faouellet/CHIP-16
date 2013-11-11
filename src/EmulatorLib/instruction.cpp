@@ -9,6 +9,7 @@ Instruction::Instruction(const Utils::UInt32 in_Value) : m_Value(in_Value)
 	m_Op3 = FetchHalfByte(2);
 	UInt16 l_IVal = (m_Value >> 8) & 0xFF;
 	m_ImmediateValue = l_IVal | ((m_Value & 0xFF) << 8);
+	m_UseImm = !(m_Opcode & 0xF);
 }
 
 Instruction::~Instruction() { }
@@ -46,4 +47,9 @@ UInt16 Instruction::GetImmediateValue() const
 UInt8 Instruction::GetType() const
 {
 	return m_Type;
+}
+
+bool Instruction::UseImmediateValue() const
+{
+	return m_UseImm;
 }
