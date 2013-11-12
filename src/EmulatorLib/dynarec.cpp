@@ -87,6 +87,11 @@ void Dynarec::CompileBasicBlock()
 
 UInt8* Dynarec::ExecuteBlock() const
 {
+	__asm{
+		pushad;
+		call 
+		popad;
+	}
 }
 
 UInt8 Dynarec::GetAvailableRegister()
