@@ -226,3 +226,14 @@ void Emitter::RET()
 {
 	Write8Bits(0xC3);
 }
+
+/////////////// Data Transfer ///////////////
+
+void Emitter::MOV(const UInt16 in_Source, const UInt16 in_Dest)
+{
+
+}
+
+void Emitter::MOVToStack(const UInt16 in_Source, const UInt16 in_StackOffset)
+{
+}

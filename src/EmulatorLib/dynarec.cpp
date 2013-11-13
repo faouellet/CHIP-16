@@ -1,13 +1,9 @@
 #include "dynarec.h"
 
 #include <algorithm>
-#include <set>
-#include <vector>
 
-Dynarec::Dynarec(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m_Emitter(Emitter()) 
+Dynarec::Dynarec(const std::shared_ptr<CPU> & in_CPU) : m_Allocator(16,6), m_CPU(in_CPU), m_Emitter(Emitter()) 
 {
-	memset(m_RegUsed, false, sizeof(bool)*16);
-
 	m_EmitTable[0x40] = m_Emitter.ADDIMM;
 	m_EmitTable[0x41] = m_Emitter.ADDREG;
 
@@ -21,7 +17,7 @@ Dynarec::Dynarec(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m_Emitter
 	m_EmitTable[0x61] = m_Emitter.ANDREG;
 
 	m_EmitTable[0x63] = m_Emitter.TSTIMM;
-	//m_EmitTable[0x64] = m_Emitter.;
+	// TODO : Deal with TST RX RY
 	
 	m_EmitTable[0x70] = m_Emitter.ORIMM;
 	m_EmitTable[0x71] = m_Emitter.ORREG;
@@ -42,45 +38,44 @@ Dynarec::~Dynarec() { }
 
 void Dynarec::CompileBasicBlock()
 {
-	std::vector<Instruction> l_BasicBlock(m_CPU->FetchBasicBlock());
+	std::vector<Instruction> l_BasicBlock = m_CPU->FetchBasicBlock();
 
-	// IDEA : This is where peephole optimization of a basic block should go
+	m_Allocator.AllocateRegisters(l_BasicBlock);
 
-	std::vector<std::vector<bool>> l_LiveIntervals(AnalyzeRegisterLiveness(l_BasicBlock));
-	Instruction l_Instruction;
-	UInt8 l_Opcode;
+	// Allocate some space on the stack
+	m_Emitter.SUBIMM(ESP, 8);
 
 	for(UInt16 i = 0; i < l_BasicBlock.size(); ++i)
 	{
-		l_Instruction = l_BasicBlock[i]; 
-		l_Opcode = l_Instruction.GetOpcode();
-
-		// TODO : Deal with the shifts
-		if((l_Opcode & 0xF) == 2)
+		Instruction l_Ins = l_BasicBlock[i];
+		LocalAllocator::GPRStatus l_Op1 = m_Allocator.GetPhysicalRegister(l_Ins.GetFirstOperand());
+		if(l_Ins.UseImmediateValue())
 		{
-			// TODO : Deal with 3 registers instructions
+			if(l_Op1.IsDirty)
+			{
+				m_Emitter.MOV(l_Op1.PRegID, l_Op1.StackOffset);
+			}
+			(m_Emitter.*m_EmitTable[l_Ins.GetType()])(l_Op1.PRegID, l_Ins.GetImmediateValue());
+			if(l_Op1.IsDirty)
+			{
+				m_Emitter.MOVToStack(l_Op1.PRegID, l_Op1.StackOffset); 
+			}
 		}
 		else
 		{
-			UInt8 l_Op1Reg = GetAvailableRegister();
-			m_VRegsToNRegs[l_Instruction.GetFirstOperand()] = l_Op1Reg;
+			LocalAllocator::GPRStatus l_Op2 = m_Allocator.GetPhysicalRegister(l_Ins.GetFirstOperand());
 			
-			UInt8 l_Op2Reg = l_Op1Reg;
-			if(!l_Instruction.UseImmediateValue())
+			if(l_Ins.IsInplace())
 			{
-				l_Op2Reg = GetAvailableRegister();
-				m_VRegsToNRegs[l_Instruction.GetSecondOperand()] = l_Op2Reg;
+				if(l_Op2.IsDirty)
+				{
+					m_Emitter.MOV(l_Op2.PRegID, l_Op2.StackOffset);
+				}
 			}
-
-			(m_Emitter.*m_EmitTable[l_Instruction.GetOpcode()])(l_Op1Reg, l_Op1Reg);
+			else
+			{
+			}
 		}
-
-		// Free dead registers
-		for(UInt8 j = 0; j < 16; ++j)
-		{
-
-		}
-
 	}
 	m_Emitter.RET();
 }
@@ -94,72 +89,3 @@ UInt8* Dynarec::ExecuteBlock() const
 	}
 }
 
-UInt8 Dynarec::GetAvailableRegister()
-{
-
-}
-
-std::vector<std::vector<bool>> Dynarec::AnalyzeRegisterLiveness(const std::vector<Instruction> & in_BasicBlock) const
-{
-	std::vector<std::set<UInt8>> l_Def;
-	std::vector<std::set<UInt8>> l_Use;
-
-	// Construct the Def and Use set
-	for(UInt16 i = 0; i < in_BasicBlock.size(); ++i)
-	{
-		Instruction l_Instruction = in_BasicBlock[i];
-		UInt8 l_Opcode = l_Instruction.GetOpcode();
-
-		l_Use[i].insert(l_Instruction.GetFirstOperand());
-
-		if(l_Instruction.GetType() == Instruction::Shift)
-			if((l_Opcode & 0xF) > 2)
-				l_Use[i].insert(l_Instruction.GetSecondOperand());
-		else if(l_Opcode & 0xF)
-			l_Use[i].insert(l_Instruction.GetSecondOperand());
-
-		if((l_Opcode & 0xF) == 2)
-			l_Def[i].insert(l_Instruction.GetThirdOperand());
-	}
-
-	std::vector<std::set<UInt8>> l_LiveIn;
-	std::vector<std::set<UInt8>> l_LiveOut;
-
-	std::vector<std::set<UInt8>> l_NewLiveIn;
-	std::vector<std::set<UInt8>> l_NewLiveOut;
-
-	std::set<UInt8> l_Diff;
-
-	// Construct the In and Out set
-	do
-	{
-		for(Int16 i = in_BasicBlock.size()-1; i > -1; --i)
-		{
-			l_NewLiveIn[i] = l_LiveIn[i];
-			l_NewLiveOut[i] = l_LiveOut[i];
-
-			std::set_difference(l_LiveOut[i].begin(), l_LiveOut[i].end(), 
-				l_Def[i].begin(), l_Def[i].end(), l_Diff.begin());
-
-			std::set_union(l_Use[i].begin(), l_Use[i].end(), l_Diff.begin(), l_Diff.end(), 
-				l_LiveIn[i].begin());
-
-			if(i < in_BasicBlock.size()-1)
-				l_LiveOut[i] = l_LiveIn[i]; 
-		}
-	}
-	while((l_NewLiveIn != l_LiveIn) && (l_NewLiveOut != l_LiveOut));
-
-	// Construct de the live intervals
-	std::vector<std::vector<bool>> l_LiveIntervals(in_BasicBlock.size(), std::vector<bool>(16, false));
-
-	for(UInt16 i = 0; i < in_BasicBlock.size(); ++i)
-	{
-		for(auto l_LiveVar : l_LiveIn)
-			l_LiveIntervals[i][l_LiveVar] = true;
-
-		// Q : Should l_LiveOut be used here ??
-	}
-
-	return l_LiveIntervals;
-}

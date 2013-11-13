@@ -25,6 +25,7 @@ private:
 	UInt8 m_Type;
 
 	bool m_UseImm;
+	bool m_IsInplace;
 
 public:
 	/**
@@ -80,6 +81,7 @@ public: // TODO : Document these functions
 	UInt8 GetType() const;
 
 	bool UseImmediateValue() const;
+	bool IsInplace() const;
 };
 
 #endif // INSTRUCTION_H

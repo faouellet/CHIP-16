@@ -1,6 +1,10 @@
 cmake_minimum_required (VERSION 2.8)
 
 add_library( EmulatorLib STATIC
+		globalallocator.h
+		globalallocator.cpp
+		localallocator.h
+		localallocator.cpp
 		dynarec.cpp
 		dynarec.h
 		emitter.cpp

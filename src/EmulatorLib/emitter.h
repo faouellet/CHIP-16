@@ -102,6 +102,10 @@ public:	// Control flow instructions
 	void CALL();
 	void CX();
 	void RET();
+
+public: // Data transfer instructions
+	void MOV(const UInt16 in_Source, const UInt16 in_Dest);
+	void MOVToStack(const UInt16 in_Source, const UInt16 in_StackOffset);
 };
 
 #endif // EMITTER_H
