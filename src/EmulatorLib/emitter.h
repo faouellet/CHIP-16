@@ -85,7 +85,7 @@ public:	// Arithmetic instructions
 	void SHLREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
 
 	void SHRIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
-	void SHLREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
+	void SHRREG(const UInt16 in_Arg1, const UInt16 in_Arg2);
 
 	void SARIMM(const UInt16 in_Arg1, const UInt16 in_Arg2);
 	void SARREG(const UInt16 in_Arg1, const UInt16 in_Arg2);

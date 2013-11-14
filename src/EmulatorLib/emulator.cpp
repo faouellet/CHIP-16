@@ -73,6 +73,7 @@ void Emulator::JIT()
 {
 	bool l_Continue = true;
 	SDL_Event l_ControllerEvent;
+	Uint32 l_StartTime;
 
 	while(l_Continue)
 	{

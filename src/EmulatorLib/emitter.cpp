@@ -148,7 +148,7 @@ void Emitter::SHRIMM(const UInt16 in_Arg1, const UInt16 in_Arg2)
 	Write16Bits(in_Arg2);
 }
 
-void Emitter::SHLREG(const UInt16 in_Arg1, const UInt16 in_Arg2)
+void Emitter::SHRREG(const UInt16 in_Arg1, const UInt16 in_Arg2)
 {
 	Write8Bits(0x66);
 }
