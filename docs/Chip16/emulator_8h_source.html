@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.5"/>
-<title>Chip16: EmulatorLib/emulator.h Source File</title>
+<title>Chip16: Desktop/CHIP-16/src/EmulatorLib/emulator.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -81,7 +81,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="dir_c9f3d7d9bd88905f17d2c42cfd35d020.html">EmulatorLib</a></li>  </ul>
+<li class="navelem"><a class="el" href="dir_e04ae2849dfa520b4ee2c9f7e9ff15de.html">Desktop</a></li><li class="navelem"><a class="el" href="dir_bbec0803f040a9be2799c8590458b408.html">CHIP-16</a></li><li class="navelem"><a class="el" href="dir_0ad498a2ae55e18f92b6e3312339f5b2.html">src</a></li><li class="navelem"><a class="el" href="dir_00a9b90e2e294d10b9470ff1b4da0d04.html">EmulatorLib</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -111,9 +111,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">float</span> FRAME_TIME;</div>
 <div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;</div>
 <div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;<span class="keyword">private</span>:</div>
-<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a">   32</a></span>&#160;    <a class="code" href="class_c_p_u.html">CPU</a> <a class="code" href="class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a">m_CPU</a>;                  </div>
-<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">   33</a></span>&#160;    <a class="code" href="class_dynarec.html">Dynarec</a> <a class="code" href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">m_Dynarec</a>;          </div>
-<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">   34</a></span>&#160;    <a class="code" href="class_interpreter.html">Interpreter</a> <a class="code" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">m_Interpreter</a>;  </div>
+<div class="line"><a name="l00032"></a><span class="lineno"><a class="line" href="class_emulator.html#a903e6feed55adc6c8b1b3628a9220935">   32</a></span>&#160;    std::shared_ptr&lt;CPU&gt; <a class="code" href="class_emulator.html#a903e6feed55adc6c8b1b3628a9220935">m_CPU</a>;     </div>
+<div class="line"><a name="l00033"></a><span class="lineno"><a class="line" href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">   33</a></span>&#160;    <a class="code" href="class_dynarec.html">Dynarec</a> <a class="code" href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">m_Dynarec</a>;              </div>
+<div class="line"><a name="l00034"></a><span class="lineno"><a class="line" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">   34</a></span>&#160;    <a class="code" href="class_interpreter.html">Interpreter</a> <a class="code" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">m_Interpreter</a>;      </div>
 <div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;<span class="keyword">public</span>:</div>
 <div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;    <a class="code" href="class_emulator.html#ad0ddfc7c60f5cfbbe377154e25cb6cfc">Emulator</a>();</div>
 <div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;</div>
@@ -134,26 +134,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
 <div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;<span class="preprocessor">#endif // EMULATOR_H</span></div>
 <div class="ttc" id="class_emulator_html_ac1391d0715dbe5f38815068a3dfd7302"><div class="ttname"><a href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">Emulator::m_Interpreter</a></div><div class="ttdeci">Interpreter m_Interpreter</div><div class="ttdef"><b>Definition:</b> emulator.h:34</div></div>
-<div class="ttc" id="class_emulator_html_afcf7aafa3116d71588b671253cb55973"><div class="ttname"><a href="class_emulator.html#afcf7aafa3116d71588b671253cb55973">Emulator::JIT</a></div><div class="ttdeci">void JIT()</div><div class="ttdoc">Run the emulator using a a mix of interpretation and dynamic recompilation. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:67</div></div>
-<div class="ttc" id="class_emulator_html_aac5fe6fa9370c20b5a2ccbdb9a19d44a"><div class="ttname"><a href="class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a">Emulator::m_CPU</a></div><div class="ttdeci">CPU m_CPU</div><div class="ttdef"><b>Definition:</b> emulator.h:32</div></div>
+<div class="ttc" id="class_emulator_html_afcf7aafa3116d71588b671253cb55973"><div class="ttname"><a href="class_emulator.html#afcf7aafa3116d71588b671253cb55973">Emulator::JIT</a></div><div class="ttdeci">void JIT()</div><div class="ttdoc">Run the emulator using a a mix of interpretation and dynamic recompilation. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:72</div></div>
 <div class="ttc" id="namespace_utils_html_ad4db7aab250328c742e04e4134dca44b"><div class="ttname"><a href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">Utils::UInt8</a></div><div class="ttdeci">UInt_&lt; 1 &gt;::type UInt8</div><div class="ttdef"><b>Definition:</b> utils.h:104</div></div>
 <div class="ttc" id="class_emulator_html_a57bf3e602724d4ac35ca45e9ddc0c9aa"><div class="ttname"><a href="class_emulator.html#a57bf3e602724d4ac35ca45e9ddc0c9aa">Emulator::~Emulator</a></div><div class="ttdeci">~Emulator()</div><div class="ttdoc">Destructor. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:9</div></div>
-<div class="ttc" id="class_c_p_u_html"><div class="ttname"><a href="class_c_p_u.html">CPU</a></div><div class="ttdoc">Emulates the Central Processing Unit (CPU) </div><div class="ttdef"><b>Definition:</b> cpu.h:17</div></div>
 <div class="ttc" id="class_emulator_html_a38dbcea166b3c3d03f597165009d9d3d"><div class="ttname"><a href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">Emulator::m_Dynarec</a></div><div class="ttdeci">Dynarec m_Dynarec</div><div class="ttdef"><b>Definition:</b> emulator.h:33</div></div>
 <div class="ttc" id="class_emulator_html_ad0ddfc7c60f5cfbbe377154e25cb6cfc"><div class="ttname"><a href="class_emulator.html#ad0ddfc7c60f5cfbbe377154e25cb6cfc">Emulator::Emulator</a></div><div class="ttdeci">Emulator()</div><div class="ttdoc">Default constructor. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:7</div></div>
 <div class="ttc" id="namespace_utils_html_aecceb3ba56f11c34022303f8b3a100af"><div class="ttname"><a href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">Utils::UInt32</a></div><div class="ttdeci">UInt_&lt; 4 &gt;::type UInt32</div><div class="ttdef"><b>Definition:</b> utils.h:106</div></div>
 <div class="ttc" id="class_emulator_html"><div class="ttname"><a href="class_emulator.html">Emulator</a></div><div class="ttdoc">Emulate the Chip16 architecture. </div><div class="ttdef"><b>Definition:</b> emulator.h:19</div></div>
-<div class="ttc" id="class_emulator_html_af56cbeb84fad42b762ff424e898fbd5f"><div class="ttname"><a href="class_emulator.html#af56cbeb84fad42b762ff424e898fbd5f">Emulator::Interpret</a></div><div class="ttdeci">void Interpret()</div><div class="ttdoc">Run the emulator in pure interpretive mode. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:27</div></div>
-<div class="ttc" id="class_dynarec_html"><div class="ttname"><a href="class_dynarec.html">Dynarec</a></div><div class="ttdoc">Dynamically recompile Chip16 instructions to x86 instructions. </div><div class="ttdef"><b>Definition:</b> dynarec.h:10</div></div>
-<div class="ttc" id="class_emulator_html_a0e133d1b165e3089c26092f5e1ecc202"><div class="ttname"><a href="class_emulator.html#a0e133d1b165e3089c26092f5e1ecc202">Emulator::Emulate</a></div><div class="ttdeci">void Emulate(bool in_UseMixedMode)</div><div class="ttdoc">Emulate the Chip16 by interpreting opcodes one at the time. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:19</div></div>
+<div class="ttc" id="class_emulator_html_af56cbeb84fad42b762ff424e898fbd5f"><div class="ttname"><a href="class_emulator.html#af56cbeb84fad42b762ff424e898fbd5f">Emulator::Interpret</a></div><div class="ttdeci">void Interpret()</div><div class="ttdoc">Run the emulator in pure interpretive mode. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:32</div></div>
+<div class="ttc" id="class_dynarec_html"><div class="ttname"><a href="class_dynarec.html">Dynarec</a></div><div class="ttdoc">Dynamically recompile Chip16 instructions to x86 instructions. </div><div class="ttdef"><b>Definition:</b> dynarec.h:17</div></div>
+<div class="ttc" id="class_emulator_html_a903e6feed55adc6c8b1b3628a9220935"><div class="ttname"><a href="class_emulator.html#a903e6feed55adc6c8b1b3628a9220935">Emulator::m_CPU</a></div><div class="ttdeci">std::shared_ptr&lt; CPU &gt; m_CPU</div><div class="ttdef"><b>Definition:</b> emulator.h:32</div></div>
+<div class="ttc" id="class_emulator_html_a0e133d1b165e3089c26092f5e1ecc202"><div class="ttname"><a href="class_emulator.html#a0e133d1b165e3089c26092f5e1ecc202">Emulator::Emulate</a></div><div class="ttdeci">void Emulate(bool in_UseMixedMode)</div><div class="ttdoc">Emulate the Chip16 by interpreting opcodes one at the time. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:24</div></div>
 <div class="ttc" id="class_interpreter_html"><div class="ttname"><a href="class_interpreter.html">Interpreter</a></div><div class="ttdoc">Interpret Chip16 instructions. </div><div class="ttdef"><b>Definition:</b> interpreter.h:16</div></div>
 <div class="ttc" id="namespace_utils_html_a1b80b87257b91f6cccca8a9f02296efb"><div class="ttname"><a href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">Utils::UInt16</a></div><div class="ttdeci">UInt_&lt; 2 &gt;::type UInt16</div><div class="ttdef"><b>Definition:</b> utils.h:105</div></div>
-<div class="ttc" id="class_emulator_html_acd94cc80b61d0e787d789c5efb666b1c"><div class="ttname"><a href="class_emulator.html#acd94cc80b61d0e787d789c5efb666b1c">Emulator::ReadROM</a></div><div class="ttdeci">std::vector&lt; UInt8 &gt; ReadROM(const std::string &amp;in_ROMName)</div><div class="ttdoc">Read a ROM from disk. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:72</div></div>
+<div class="ttc" id="class_emulator_html_acd94cc80b61d0e787d789c5efb666b1c"><div class="ttname"><a href="class_emulator.html#acd94cc80b61d0e787d789c5efb666b1c">Emulator::ReadROM</a></div><div class="ttdeci">std::vector&lt; UInt8 &gt; ReadROM(const std::string &amp;in_ROMName)</div><div class="ttdoc">Read a ROM from disk. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:101</div></div>
 <div class="ttc" id="class_emulator_html_a66f2e9657706f445882cd1bbf08052aa"><div class="ttname"><a href="class_emulator.html#a66f2e9657706f445882cd1bbf08052aa">Emulator::Init</a></div><div class="ttdeci">unsigned Init(const std::string &amp;in_ROMName)</div><div class="ttdoc">Initialize the processing units after reading a ROM from disk. </div><div class="ttdef"><b>Definition:</b> emulator.cpp:11</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 30 2013 15:27:28 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Nov 14 2013 16:11:16 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

@@ -97,7 +97,7 @@ void Dynarec::CompileBasicBlock()
 	m_Emitter.RET();
 }
 
-UInt8* Dynarec::ExecuteBlock() const
+void Dynarec::ExecuteBlock() const
 {
 	// TODO : Well shit, this is not portable
 	/*__asm{
@@ -105,6 +105,5 @@ UInt8* Dynarec::ExecuteBlock() const
 		call 
 		popad;
 	}*/
-	return nullptr;
 }
 

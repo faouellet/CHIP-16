@@ -225,7 +225,7 @@ BOOST_AUTO_TEST_CASE( StackTest )
 
 	std::vector<Utils::UInt8> l_MemoryDump(Cpu->DumpMemory());
 	for(int i = 0; i < NB_REGISTERS; ++i)
-		BOOST_REQUIRE_EQUAL(l_MemoryDump[i * 2 + STACK_START + 1], i * 2);
+		BOOST_REQUIRE_EQUAL(l_MemoryDump[i * 2 + STACK_START], i * 2);
 	BOOST_REQUIRE_EQUAL(Cpu->DumpStackPointer(), STACK_START + 32);
 
 	for(int i = 0; i < NB_REGISTERS; ++i)

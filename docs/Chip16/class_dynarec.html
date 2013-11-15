@@ -85,6 +85,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-types">Private Types</a> &#124;
 <a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="class_dynarec-members.html">List of all members</a>  </div>
   <div class="headertitle">
@@ -99,23 +100,166 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a7623ef0b976cf42552c6b05183e84b46"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7623ef0b976cf42552c6b05183e84b46"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#a7623ef0b976cf42552c6b05183e84b46">Dynarec</a> ()</td></tr>
-<tr class="memdesc:a7623ef0b976cf42552c6b05183e84b46"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor. <br/></td></tr>
-<tr class="separator:a7623ef0b976cf42552c6b05183e84b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa455d627f2299e9505bbad15b2c8cf85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#aa455d627f2299e9505bbad15b2c8cf85">Dynarec</a> (const std::shared_ptr&lt; <a class="el" href="class_c_p_u.html">CPU</a> &gt; &amp;in_CPU=nullptr)</td></tr>
+<tr class="memdesc:aa455d627f2299e9505bbad15b2c8cf85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Default constructor.  <a href="#aa455d627f2299e9505bbad15b2c8cf85">More...</a><br/></td></tr>
+<tr class="separator:aa455d627f2299e9505bbad15b2c8cf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a734d79bd8d6fced93d3a8f0037d7b4c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a734d79bd8d6fced93d3a8f0037d7b4c1"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#a734d79bd8d6fced93d3a8f0037d7b4c1">~Dynarec</a> ()</td></tr>
 <tr class="memdesc:a734d79bd8d6fced93d3a8f0037d7b4c1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr class="separator:a734d79bd8d6fced93d3a8f0037d7b4c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8c46a109cea1d6ed470526959afb96ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8c46a109cea1d6ed470526959afb96ee"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#a8c46a109cea1d6ed470526959afb96ee">CompileBasicBlock</a> ()</td></tr>
+<tr class="memdesc:a8c46a109cea1d6ed470526959afb96ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Recompile a Chip16 basic block to an x86 basic block. <br/></td></tr>
+<tr class="separator:a8c46a109cea1d6ed470526959afb96ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a662efe7e23106263bb151f27f090fa59"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a662efe7e23106263bb151f27f090fa59"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#a662efe7e23106263bb151f27f090fa59">ExecuteBlock</a> () const </td></tr>
+<tr class="memdesc:a662efe7e23106263bb151f27f090fa59"><td class="mdescLeft">&#160;</td><td class="mdescRight">Execute a block of x86 assembly. <br/></td></tr>
+<tr class="separator:a662efe7e23106263bb151f27f090fa59"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
+Private Types</h2></td></tr>
+<tr class="memitem:a2d3e536bfb70a60f08f590661c1f45fc"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<b>EAX</b> = 0, 
+<b>ECX</b> = 1, 
+<b>EDX</b> = 2, 
+<b>EBX</b> = 3, 
+<br/>
+&#160;&#160;<b>ESP</b> = 4, 
+<b>EBP</b> = 5, 
+<b>ESI</b> = 6, 
+<b>EDI</b> = 7
+<br/>
+ }</td></tr>
+<tr class="separator:a2d3e536bfb70a60f08f590661c1f45fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a54f386097c145487ce5b8eb102aa80e4"><td class="memItemLeft" align="right" valign="top">typedef void(Emitter::*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#a54f386097c145487ce5b8eb102aa80e4">EmitFunc</a> )(const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Arg1, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Arg2)</td></tr>
+<tr class="separator:a54f386097c145487ce5b8eb102aa80e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr class="memitem:a6e4a63dcf40a2af5181b54ddb744fe3b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_local_allocator.html">LocalAllocator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#a6e4a63dcf40a2af5181b54ddb744fe3b">m_Allocator</a></td></tr>
+<tr class="separator:a6e4a63dcf40a2af5181b54ddb744fe3b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae526e9cddcb37af4c75be15dafc7435d"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_c_p_u.html">CPU</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#ae526e9cddcb37af4c75be15dafc7435d">m_CPU</a></td></tr>
+<tr class="separator:ae526e9cddcb37af4c75be15dafc7435d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9c7a7ca8026d1107ec4300eb0bdb9808"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <br class="typebreak"/>
+<a class="el" href="class_dynarec.html#a54f386097c145487ce5b8eb102aa80e4">EmitFunc</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#a9c7a7ca8026d1107ec4300eb0bdb9808">m_EmitTable</a></td></tr>
+<tr class="separator:a9c7a7ca8026d1107ec4300eb0bdb9808"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acb38dfe290dc0c02941b8c915c47ac76"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_emitter.html">Emitter</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_dynarec.html#acb38dfe290dc0c02941b8c915c47ac76">m_Emitter</a></td></tr>
 <tr class="separator:acb38dfe290dc0c02941b8c915c47ac76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Dynamically recompile Chip16 instructions to x86 instructions. </p>
-</div><h2 class="groupheader">Member Data Documentation</h2>
+<dl class="section author"><dt>Author</dt><dd>Felix-Antoine Ouellet </dd></dl>
+</div><h2 class="groupheader">Member Typedef Documentation</h2>
+<a class="anchor" id="a54f386097c145487ce5b8eb102aa80e4"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef void(Emitter::* Dynarec::EmitFunc)(const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Arg1, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Arg2)</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Assembly emission function </p>
+
+</div>
+</div>
+<h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="aa455d627f2299e9505bbad15b2c8cf85"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Dynarec::Dynarec </td>
+          <td>(</td>
+          <td class="paramtype">const std::shared_ptr&lt; <a class="el" href="class_c_p_u.html">CPU</a> &gt; &amp;&#160;</td>
+          <td class="paramname"><em>in_CPU</em> = <code>nullptr</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Default constructor. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_CPU</td><td>Pointer to an abstraction of a central processing unit </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a class="anchor" id="a6e4a63dcf40a2af5181b54ddb744fe3b"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_local_allocator.html">LocalAllocator</a> Dynarec::m_Allocator</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Register allocator operating at the level of a single basic block </p>
+
+</div>
+</div>
+<a class="anchor" id="ae526e9cddcb37af4c75be15dafc7435d"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::shared_ptr&lt;<a class="el" href="class_c_p_u.html">CPU</a>&gt; Dynarec::m_CPU</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>The central processing unit </p>
+
+</div>
+</div>
+<a class="anchor" id="a9c7a7ca8026d1107ec4300eb0bdb9808"></a>
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="class_dynarec.html#a54f386097c145487ce5b8eb102aa80e4">EmitFunc</a>&gt; Dynarec::m_EmitTable</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<p>Mapping of Chip16 opcodes to assembly emission methods </p>
+
+</div>
+</div>
 <a class="anchor" id="acb38dfe290dc0c02941b8c915c47ac76"></a>
 <div class="memitem">
 <div class="memproto">
@@ -138,13 +282,13 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>EmulatorLib/<a class="el" href="dynarec_8h_source.html">dynarec.h</a></li>
-<li>EmulatorLib/dynarec.cpp</li>
+<li>Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="dynarec_8h_source.html">dynarec.h</a></li>
+<li>Desktop/CHIP-16/src/EmulatorLib/dynarec.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 30 2013 15:27:29 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Nov 14 2013 16:11:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

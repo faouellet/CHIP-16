@@ -111,6 +111,9 @@ Public Types</h2></td></tr>
 <br/>
  }</td></tr>
 <tr class="separator:adee2a94087dfd373dc95450184986564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ef7bac420d9cdc90880c9c155942da9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>NB_REGISTERS</b> = 16
+ }</td></tr>
+<tr class="separator:a0ef7bac420d9cdc90880c9c155942da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -177,7 +180,10 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:a93c2093460a2b46c541a2482213530bd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a93c2093460a2b46c541a2482213530bd">UpdateController</a> (SDL_KeyboardEvent &amp;in_Event)</td></tr>
 <tr class="memdesc:a93c2093460a2b46c541a2482213530bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Update a controller memory mapped IO port.  <a href="#a93c2093460a2b46c541a2482213530bd">More...</a><br/></td></tr>
 <tr class="separator:a93c2093460a2b46c541a2482213530bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8a700f09dd58308cba66e4ae8d877aaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a8a700f09dd58308cba66e4ae8d877aaa">FetchInstruction</a> ()</td></tr>
+<tr class="memitem:acd40cd9dc04bbd4304893b63a00ea1cf"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="class_instruction.html">Instruction</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#acd40cd9dc04bbd4304893b63a00ea1cf">FetchBasicBlock</a> ()</td></tr>
+<tr class="memdesc:acd40cd9dc04bbd4304893b63a00ea1cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch a contiguous block of sequential instruction.  <a href="#acd40cd9dc04bbd4304893b63a00ea1cf">More...</a><br/></td></tr>
+<tr class="separator:acd40cd9dc04bbd4304893b63a00ea1cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8a700f09dd58308cba66e4ae8d877aaa"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_instruction.html">Instruction</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a8a700f09dd58308cba66e4ae8d877aaa">FetchInstruction</a> ()</td></tr>
 <tr class="memdesc:a8a700f09dd58308cba66e4ae8d877aaa"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the current instruction and its operands as pointed by the PC. Note that it increases the PC by 4 i.e. to the next instruction.  <a href="#a8a700f09dd58308cba66e4ae8d877aaa">More...</a><br/></td></tr>
 <tr class="separator:a8a700f09dd58308cba66e4ae8d877aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a67b87c75d0f7ccc7d6810f5caf84c5ef"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a67b87c75d0f7ccc7d6810f5caf84c5ef">FetchPalette</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Address)</td></tr>
@@ -262,8 +268,8 @@ Private Attributes</h2></td></tr>
 <tr class="separator:a8126bebe5b900b45185ac7601a773844"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebd5639c9022bcdebd160e46a37a50e5"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">m_ErrorCode</a></td></tr>
 <tr class="separator:aebd5639c9022bcdebd160e46a37a50e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6e41c1cbae173c2eb7180b374d48c8d4"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4">m_Registers</a> [16]</td></tr>
-<tr class="separator:a6e41c1cbae173c2eb7180b374d48c8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a45c1c61a605ad4f50a6ae5f8ec3f4154"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a45c1c61a605ad4f50a6ae5f8ec3f4154">m_Registers</a> [NB_REGISTERS]</td></tr>
+<tr class="separator:a45c1c61a605ad4f50a6ae5f8ec3f4154"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4159826f5375a1f7b7fbe7346ffff942"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a4159826f5375a1f7b7fbe7346ffff942">m_ROMHeader</a> [HEADER_SIZE]</td></tr>
 <tr class="separator:a4159826f5375a1f7b7fbe7346ffff942"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aab8d43069375512fddcda76764a2ebe2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aab8d43069375512fddcda76764a2ebe2">m_Memory</a> [MEMORY_SIZE]</td></tr>
@@ -410,6 +416,24 @@ Private Attributes</h2></td></tr>
 
 <p>Dump the stack pointer. </p>
 <dl class="section return"><dt>Returns</dt><dd>The memory address pointed by the SP </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="acd40cd9dc04bbd4304893b63a00ea1cf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPU::FetchBasicBlock </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Fetch a contiguous block of sequential instruction. </p>
+<dl class="section return"><dt>Returns</dt><dd>A block of instructions </dd></dl>
 
 </div>
 </div>
@@ -843,7 +867,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="a6e41c1cbae173c2eb7180b374d48c8d4"></a>
+<a class="anchor" id="a45c1c61a605ad4f50a6ae5f8ec3f4154"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -851,7 +875,7 @@ Private Attributes</h2></td></tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> CPU::m_Registers[16]</td>
+          <td class="memname"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> CPU::m_Registers[NB_REGISTERS]</td>
         </tr>
       </table>
   </td>
@@ -907,13 +931,13 @@ Private Attributes</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>EmulatorLib/<a class="el" href="cpu_8h_source.html">cpu.h</a></li>
-<li>EmulatorLib/cpu.cpp</li>
+<li>Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="cpu_8h_source.html">cpu.h</a></li>
+<li>Desktop/CHIP-16/src/EmulatorLib/cpu.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 30 2013 15:27:28 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Nov 14 2013 16:11:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>
