@@ -6,6 +6,7 @@ Trucs faits cette semaine:
 
 Trucs à faire dans la semaine à venir:
 - Travailler sur l'émission des MOV
+- Travailler sur l'émission des shifts
 - Continuer le travail sur le recompilateur dynamique
 - Commencer l'écriture du rapport sous forme d'article
 - Si le temps le permet, mettre en place des tests pour l'émetteur de code

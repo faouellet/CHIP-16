@@ -31,7 +31,12 @@ Dynarec::Dynarec(const std::shared_ptr<CPU> & in_CPU) : m_Allocator(16,6), m_CPU
 	m_EmitTable[0xA1] = &Emitter::DIVIMM;
 	m_EmitTable[0xA2] = &Emitter::DIVREG;
 
-	// TODO : Deal with the shifts
+	m_EmitTable[0xB0] = &Emitter::SHLIMM;
+	m_EmitTable[0xB1] = &Emitter::SHRIMM;
+	m_EmitTable[0xB2] = &Emitter::SARIMM;
+	m_EmitTable[0xB3] = &Emitter::SHLREG;
+	m_EmitTable[0xB4] = &Emitter::SHRREG;
+	m_EmitTable[0xB5] = &Emitter::SARREG;
 }
 
 Dynarec::~Dynarec() { }
