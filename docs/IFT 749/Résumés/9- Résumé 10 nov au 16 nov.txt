@@ -1,0 +1,30 @@
+Trucs faits cette semaine:
+- Fin du travail sur l'émission d'instructions arithmétiques en x86
+- Mise en place d'un algorithme d'allocation de registres local
+- Apprentissage sur le backend d'un compilateur
+- Bugfix pour faire marcher les tests unitaires à nouveau
+
+Trucs à faire dans la semaine à venir:
+- Travailler sur l'émission des MOV
+- Continuer le travail sur le recompilateur dynamique
+- Commencer l'écriture du rapport sous forme d'article
+- Si le temps le permet, mettre en place des tests pour l'émetteur de code
+
+Un not sur la recompilation dynamique
+Tout d'abord, une note technique sur l'exécution de bloc recompilé. J'ai eu vent que l'inline assembly était
+quelque chose de très spécifique à chaque compilateur. Dans l'optique de rester le plus portable possible, 
+j'ai donc décidé de laisser tomber l'inline assembly. À la place, je vais convertir le pointeur de début d'un
+bloc de base en un pointeur de fonction et l'exécuter. Ceci implique possiblement l'émission d'instructions
+supplémentaires pour préserver l'état des registres x86 avant et après l'exécution d'un bloc recompilé.
+
+Un mot sur l'allocation de registres (local vs global)
+Pour ce qui est de l'allocation de registres, j'ai décidé de laisser tomber les approches classiques qui 
+s'attarde plus à l'allocation global de registres et d'utiliser une approche plus locale. La classe LocalAllocator
+comporte les détails de l'algorithme utilisé et je ne les répéterai pas ici. Je vais par contre discuter des
+implications d'un tel choix de design. Le plus grand défaut de cette approche est qu'elle va m'empêcher de
+lier les blocs recompilés ensemble. Ainsi, les registres sont toujours vierges à l'entrée et à la sortie d'un bloc
+recompilé; aucune information ne circule entre les blocs. Par conséquent, le recompilateur dynamique risque de faire
+énormément d'aller retour entre le code natif et le code émulé ce qui va très certainement occasionner beaucoup de
+perte de temps de calcul. Sur une note plus positive, l'allocation de registres à un niveau local est de loin
+plus facile à implémenter que l'approche globale étant donné qu'elle ne nécessite pas de conserver et de manipuler
+de l'information sur une multitude de blocs de base. 
