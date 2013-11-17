@@ -29,24 +29,25 @@ private:
 
 public:
 	/**
-	* TODO : Doc
+	* \enum
+	* \brief Leading byte for the different types of instruction
 	*/
 	enum 
 	{
-		Misc  = 0x0, 
-		Jump  = 0x1, 
-		Call  = 0x2, 
-		Load  = 0x3, 
-		Store = 0x4, 
-		Add   = 0x5,
-		And   = 0x6,
-		Or    = 0x7,
-		Xor   = 0x8,
-		Mul   = 0x9,
-		Div   = 0xA,
-		Shift = 0xB,
-		Stack = 0xC,
-		Pal   = 0xD
+		Misc  = 0x00, 
+		Jump  = 0x10, 
+		Load  = 0x20, 
+		Store = 0x30, 
+		Add   = 0x40,
+		Sub   = 0x50,
+		And   = 0x60,
+		Or    = 0x70,
+		Xor   = 0x80,
+		Mul   = 0x90,
+		Div   = 0xA0,
+		Shift = 0xB0,
+		Stack = 0xC0,
+		Pal   = 0xD0
 	};
 
 public:
@@ -72,15 +73,64 @@ private:
 	*/
 	UInt8 FetchHalfByte(const UInt8 in_Pos) const;
 
-public: // TODO : Document these functions
+public:
+	/**
+	* \fn GetOpcode
+	* \brief Fetch the instruction opcode
+	* \return The instruction opcode
+	*/
 	UInt8 GetOpcode() const;
+
+	/**
+	* \fn GetFirstOperand
+	* \brief Fetch the first operand of the instruction
+	* \return The first operand of the instruction
+	*/
 	UInt8 GetFirstOperand() const;
+	
+	/**
+	* \fn GetSecondOperand
+	* \brief Fetch the second operand of the instruction when the instruction 
+	*        doesn't use an immediate value
+	* \return The second operand of the instruction or pure garbage
+	*/
 	UInt8 GetSecondOperand() const;
+	
+	/**
+	* \fn GetThirdOperand
+	* \brief Fetch the third operand of the instruction when the instruction 
+	*        doesn't use an immediate value or isn't inplace
+	* \return The third operand of the instruction or pure garbage
+	*/
 	UInt8 GetThirdOperand() const;
+	
+	/**
+	* \fn GetImmediateValue
+	* \brief Fetch the immediate value contained in the instruction
+	* \return The immediate value contained in the instruction
+	*/
 	UInt16 GetImmediateValue() const;
+	
+	/**
+	* \fn GetType
+	* \brief Fetch the type of the instruction
+	* \return The type of the instruction
+	*/
 	UInt8 GetType() const;
 
+public:
+	/**
+	* \fn UseImmediateValue
+	* \brief Indicate if the instruction make use of an immediate value
+	* \return Boolean indicating the use of an immediate value
+	*/
 	bool UseImmediateValue() const;
+	
+	/**
+	* \fn IsInplace
+	* \brief Indicate if the instruction is an inplace operation
+	* \return Boolean indicating if the instruction us an inplace operation
+	*/
 	bool IsInplace() const;
 };
 

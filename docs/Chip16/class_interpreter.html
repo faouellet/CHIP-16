@@ -108,9 +108,11 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a0f96b57f8126e2b5bc63390121e4b5b1">~Interpreter</a> ()</td></tr>
 <tr class="memdesc:a0f96b57f8126e2b5bc63390121e4b5b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Destructor. <br/></td></tr>
 <tr class="separator:a0f96b57f8126e2b5bc63390121e4b5b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab77f4a0fd0e15f808a45580a20d48bcf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab77f4a0fd0e15f808a45580a20d48bcf"></a>
-unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#ab77f4a0fd0e15f808a45580a20d48bcf">InterpretOp</a> ()</td></tr>
-<tr class="memdesc:ab77f4a0fd0e15f808a45580a20d48bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an opcode from the ROM and execute it. <br/></td></tr>
+<tr class="memitem:acb0def8785b4313e24832a3c30e57eb9"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#acb0def8785b4313e24832a3c30e57eb9">InitDevices</a> ()</td></tr>
+<tr class="memdesc:acb0def8785b4313e24832a3c30e57eb9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the <a class="el" href="class_g_p_u.html" title="Emulates the Graphics Processing Unit (GPU) ">GPU</a> and the <a class="el" href="class_s_p_u.html" title="Emulates the Sound Processing Unit (SPU) ">SPU</a>.  <a href="#acb0def8785b4313e24832a3c30e57eb9">More...</a><br/></td></tr>
+<tr class="separator:acb0def8785b4313e24832a3c30e57eb9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab77f4a0fd0e15f808a45580a20d48bcf"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#ab77f4a0fd0e15f808a45580a20d48bcf">InterpretOp</a> ()</td></tr>
+<tr class="memdesc:ab77f4a0fd0e15f808a45580a20d48bcf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read an opcode from the ROM and execute it.  <a href="#ab77f4a0fd0e15f808a45580a20d48bcf">More...</a><br/></td></tr>
 <tr class="separator:ab77f4a0fd0e15f808a45580a20d48bcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a155f15d2215de89ef7a050124cfe8105"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a155f15d2215de89ef7a050124cfe8105"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a155f15d2215de89ef7a050124cfe8105">Show</a> ()</td></tr>
@@ -119,9 +121,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-types"></a>
 Private Types</h2></td></tr>
-<tr class="memitem:acb487bcce62d474b3bae119e0ad38c2e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb487bcce62d474b3bae119e0ad38c2e"></a>
-typedef void(Interpreter::*&#160;</td><td class="memItemRight" valign="bottom"><b>Instruction</b> )(const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:acb487bcce62d474b3bae119e0ad38c2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99540559c139153a3def280133b18192"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99540559c139153a3def280133b18192"></a>
+typedef void(Interpreter::*&#160;</td><td class="memItemRight" valign="bottom"><b>InstructionExec</b> )(const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a99540559c139153a3def280133b18192"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
@@ -129,254 +131,254 @@ Private Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a81fd953f9f728edc658ae74b83d9b0a8">InitOpcodesTable</a> ()</td></tr>
 <tr class="memdesc:a81fd953f9f728edc658ae74b83d9b0a8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Setup the opcode interpretation table. <br/></td></tr>
 <tr class="separator:a81fd953f9f728edc658ae74b83d9b0a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5fd17d608cf7b0f4a9b6cd07890b8b05"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a5fd17d608cf7b0f4a9b6cd07890b8b05">BasicArithmetic</a> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
-<tr class="memdesc:a5fd17d608cf7b0f4a9b6cd07890b8b05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to two registers and store the result in a third register.  <a href="#a5fd17d608cf7b0f4a9b6cd07890b8b05">More...</a><br/></td></tr>
-<tr class="separator:a5fd17d608cf7b0f4a9b6cd07890b8b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a370949e31ec494ce122102646fd204c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a370949e31ec494ce122102646fd204c7">DiscardArithmetic</a> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
-<tr class="memdesc:a370949e31ec494ce122102646fd204c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to two registers and discard the result.  <a href="#a370949e31ec494ce122102646fd204c7">More...</a><br/></td></tr>
-<tr class="separator:a370949e31ec494ce122102646fd204c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae71760ae1ffb5bc87ab0214dbc21ed5e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#ae71760ae1ffb5bc87ab0214dbc21ed5e">DiscardImmediateArithmetic</a> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
-<tr class="memdesc:ae71760ae1ffb5bc87ab0214dbc21ed5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to a register and an immediate value and discard the result.  <a href="#ae71760ae1ffb5bc87ab0214dbc21ed5e">More...</a><br/></td></tr>
-<tr class="separator:ae71760ae1ffb5bc87ab0214dbc21ed5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4d7a44dc389a6b02a6141f7de39c329e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a4d7a44dc389a6b02a6141f7de39c329e">ImmediateArithmetic</a> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
-<tr class="memdesc:a4d7a44dc389a6b02a6141f7de39c329e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to a register and an immediate value and store the result in the first register.  <a href="#a4d7a44dc389a6b02a6141f7de39c329e">More...</a><br/></td></tr>
-<tr class="separator:a4d7a44dc389a6b02a6141f7de39c329e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ace74309bcfe6faabc8dd67752f3c4002"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#ace74309bcfe6faabc8dd67752f3c4002">InplaceArithmetic</a> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
-<tr class="memdesc:ace74309bcfe6faabc8dd67752f3c4002"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to two registers and store the result in the first register.  <a href="#ace74309bcfe6faabc8dd67752f3c4002">More...</a><br/></td></tr>
-<tr class="separator:ace74309bcfe6faabc8dd67752f3c4002"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6f2d02374d1cf39fae986018787603e1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a6f2d02374d1cf39fae986018787603e1">FetchHalfByte</a> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction, const <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Pos) const </td></tr>
-<tr class="memdesc:a6f2d02374d1cf39fae986018787603e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch half of an instruction byte.  <a href="#a6f2d02374d1cf39fae986018787603e1">More...</a><br/></td></tr>
-<tr class="separator:a6f2d02374d1cf39fae986018787603e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adee2fd13cb8b75e1056ba2231c66e3c2"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#adee2fd13cb8b75e1056ba2231c66e3c2">FetchImmediateValue</a> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction) const </td></tr>
-<tr class="memdesc:adee2fd13cb8b75e1056ba2231c66e3c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch and concatenate the last two instruction byte.  <a href="#adee2fd13cb8b75e1056ba2231c66e3c2">More...</a><br/></td></tr>
-<tr class="separator:adee2fd13cb8b75e1056ba2231c66e3c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99bcf7b7dcd0027808896b1531fcc2c9"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a99bcf7b7dcd0027808896b1531fcc2c9">BasicArithmetic</a> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
+<tr class="memdesc:a99bcf7b7dcd0027808896b1531fcc2c9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to two registers and store the result in a third register.  <a href="#a99bcf7b7dcd0027808896b1531fcc2c9">More...</a><br/></td></tr>
+<tr class="separator:a99bcf7b7dcd0027808896b1531fcc2c9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acdf61530286a3216f49c1b6492db13fd"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#acdf61530286a3216f49c1b6492db13fd">DiscardArithmetic</a> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
+<tr class="memdesc:acdf61530286a3216f49c1b6492db13fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to two registers and discard the result.  <a href="#acdf61530286a3216f49c1b6492db13fd">More...</a><br/></td></tr>
+<tr class="separator:acdf61530286a3216f49c1b6492db13fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0f708a1817057be454713113f1020e0b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a0f708a1817057be454713113f1020e0b">DiscardImmediateArithmetic</a> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
+<tr class="memdesc:a0f708a1817057be454713113f1020e0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to a register and an immediate value and discard the result.  <a href="#a0f708a1817057be454713113f1020e0b">More...</a><br/></td></tr>
+<tr class="separator:a0f708a1817057be454713113f1020e0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af3ac5acca96ff252f18d5876a05e1896"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#af3ac5acca96ff252f18d5876a05e1896">ImmediateArithmetic</a> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
+<tr class="memdesc:af3ac5acca96ff252f18d5876a05e1896"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to a register and an immediate value and store the result in the first register.  <a href="#af3ac5acca96ff252f18d5876a05e1896">More...</a><br/></td></tr>
+<tr class="separator:af3ac5acca96ff252f18d5876a05e1896"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a27741329a0fa980fda3e2c2b6fb91bee"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a27741329a0fa980fda3e2c2b6fb91bee">InplaceArithmetic</a> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction, std::function&lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_Ins, std::function&lt; void(<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>)&gt; in_FRH)</td></tr>
+<tr class="memdesc:a27741329a0fa980fda3e2c2b6fb91bee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Apply an instruction to two registers and store the result in the first register.  <a href="#a27741329a0fa980fda3e2c2b6fb91bee">More...</a><br/></td></tr>
+<tr class="separator:a27741329a0fa980fda3e2c2b6fb91bee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a02720f155a72547690cbf01af95ed5fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a02720f155a72547690cbf01af95ed5fc">FetchHalfByte</a> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction, const <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_Pos) const </td></tr>
+<tr class="memdesc:a02720f155a72547690cbf01af95ed5fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch half of an instruction byte.  <a href="#a02720f155a72547690cbf01af95ed5fc">More...</a><br/></td></tr>
+<tr class="separator:a02720f155a72547690cbf01af95ed5fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefb4242fd74a70fcb459c73884a3fc8c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#aefb4242fd74a70fcb459c73884a3fc8c">FetchImmediateValue</a> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction) const </td></tr>
+<tr class="memdesc:aefb4242fd74a70fcb459c73884a3fc8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fetch and concatenate the last two instruction byte.  <a href="#aefb4242fd74a70fcb459c73884a3fc8c">More...</a><br/></td></tr>
+<tr class="separator:aefb4242fd74a70fcb459c73884a3fc8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4aec31c09012695c8fa1b3cc3661aeea"><td class="memItemLeft" align="right" valign="top">unsigned&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a4aec31c09012695c8fa1b3cc3661aeea">InterpretConditions</a> (<a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_CondCode)</td></tr>
 <tr class="memdesc:a4aec31c09012695c8fa1b3cc3661aeea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Decode and execute a condition.  <a href="#a4aec31c09012695c8fa1b3cc3661aeea">More...</a><br/></td></tr>
 <tr class="separator:a4aec31c09012695c8fa1b3cc3661aeea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72a61d827f8966a8750c31b310890183"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a72a61d827f8966a8750c31b310890183"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ADDI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a72a61d827f8966a8750c31b310890183"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc14f5b059bc296216162be6d0db3769"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acc14f5b059bc296216162be6d0db3769"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceADD</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:acc14f5b059bc296216162be6d0db3769"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa3cc2751a7c6a5db9d96a46275c960b2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3cc2751a7c6a5db9d96a46275c960b2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ADD</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:aa3cc2751a7c6a5db9d96a46275c960b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a15842dab730332386f0a20b4bd601ece"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a15842dab730332386f0a20b4bd601ece"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SUBI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a15842dab730332386f0a20b4bd601ece"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3945e4065a05e7af78a4b0fb50d0c14"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3945e4065a05e7af78a4b0fb50d0c14"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceSUB</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ac3945e4065a05e7af78a4b0fb50d0c14"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6ca7b016b3f649fb0a26c20dd26ef965"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ca7b016b3f649fb0a26c20dd26ef965"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SUB</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a6ca7b016b3f649fb0a26c20dd26ef965"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0d8f33136570baf2fe330653ae3f8187"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d8f33136570baf2fe330653ae3f8187"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CMPI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a0d8f33136570baf2fe330653ae3f8187"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac890ddaa27224847f01bb302705d87a3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac890ddaa27224847f01bb302705d87a3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CMP</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ac890ddaa27224847f01bb302705d87a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa07021b0a42d167c75db0f46374ddebd"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa07021b0a42d167c75db0f46374ddebd"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ANDI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:aa07021b0a42d167c75db0f46374ddebd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3c81511baf27e1eac8708276a18c06cc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c81511baf27e1eac8708276a18c06cc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceAND</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a3c81511baf27e1eac8708276a18c06cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aaad021f85198a2ab825f4a50449bd9c1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaad021f85198a2ab825f4a50449bd9c1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>AND</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:aaad021f85198a2ab825f4a50449bd9c1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aac0b5845fa79763596bf5e1f4e3d3d53"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aac0b5845fa79763596bf5e1f4e3d3d53"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TSTI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:aac0b5845fa79763596bf5e1f4e3d3d53"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1285228fc7f693e902ba3f855a6b7a71"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1285228fc7f693e902ba3f855a6b7a71"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>TST</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a1285228fc7f693e902ba3f855a6b7a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac245e9af174fe3ddcd760af7711b3daf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac245e9af174fe3ddcd760af7711b3daf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ORI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ac245e9af174fe3ddcd760af7711b3daf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a13be882b4c053fab13c8502cfc948bc9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a13be882b4c053fab13c8502cfc948bc9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceOR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a13be882b4c053fab13c8502cfc948bc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1bbebb6e0a8330df88a0d32113fe550"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1bbebb6e0a8330df88a0d32113fe550"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>OR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:af1bbebb6e0a8330df88a0d32113fe550"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a673985a6a4df616133a6d60d4f87caf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a673985a6a4df616133a6d60d4f87caf3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>XORI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a673985a6a4df616133a6d60d4f87caf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7249b2654bbe22e58d1f0b14919b6142"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7249b2654bbe22e58d1f0b14919b6142"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceXOR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a7249b2654bbe22e58d1f0b14919b6142"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99111eb4b70e544bdaa8d0a30576a9b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a99111eb4b70e544bdaa8d0a30576a9b7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>XOR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a99111eb4b70e544bdaa8d0a30576a9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af19af86439f8d8a6a10661589895cf48"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af19af86439f8d8a6a10661589895cf48"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MULI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:af19af86439f8d8a6a10661589895cf48"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3302a6432ccc69bca3db7bc97fffb9ef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3302a6432ccc69bca3db7bc97fffb9ef"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceMUL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a3302a6432ccc69bca3db7bc97fffb9ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7ee9c4eda530eee44e206bce5484efc6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ee9c4eda530eee44e206bce5484efc6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MUL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a7ee9c4eda530eee44e206bce5484efc6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a53a70b26410c3ce2e8d01b65e804ba66"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a53a70b26410c3ce2e8d01b65e804ba66"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>DIVI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a53a70b26410c3ce2e8d01b65e804ba66"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3df3e67494504eb73307041509b6fbef"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3df3e67494504eb73307041509b6fbef"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceDIV</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a3df3e67494504eb73307041509b6fbef"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6da457aef3f8f61e3b357bb54b7d90ac"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6da457aef3f8f61e3b357bb54b7d90ac"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>DIV</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a6da457aef3f8f61e3b357bb54b7d90ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4e6e493f9c84ce92a017c657e982995"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac4e6e493f9c84ce92a017c657e982995"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectJMP</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ac4e6e493f9c84ce92a017c657e982995"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a47bdec6ca482b76ce85b47115d3d4b38"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a47bdec6ca482b76ce85b47115d3d4b38"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Jx</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a47bdec6ca482b76ce85b47115d3d4b38"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ed476927b23c84edfc0f7c734e4bd84"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ed476927b23c84edfc0f7c734e4bd84"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>JME</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a8ed476927b23c84edfc0f7c734e4bd84"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35b8f8ef6a8ce437aeeebbc7c4722a0b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35b8f8ef6a8ce437aeeebbc7c4722a0b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectCALL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a35b8f8ef6a8ce437aeeebbc7c4722a0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7c286a4e1a849fee878098bb81ef5b68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7c286a4e1a849fee878098bb81ef5b68"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RET</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a7c286a4e1a849fee878098bb81ef5b68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fc0eefe497d73858b47126d7093ca29"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6fc0eefe497d73858b47126d7093ca29"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectJMP</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a6fc0eefe497d73858b47126d7093ca29"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af25217be558161c02c24f36e9b4c643d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af25217be558161c02c24f36e9b4c643d"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>Cx</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:af25217be558161c02c24f36e9b4c643d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a73eea2deb13bedecec7ec83aef91de68"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a73eea2deb13bedecec7ec83aef91de68"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectCALL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a73eea2deb13bedecec7ec83aef91de68"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a01debe96db1ab7565a5b614cfbbced2f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a01debe96db1ab7565a5b614cfbbced2f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterLDI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a01debe96db1ab7565a5b614cfbbced2f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8bfd5e423a7b89c1fafb529c6c023eaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8bfd5e423a7b89c1fafb529c6c023eaa"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>StackLDI</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a8bfd5e423a7b89c1fafb529c6c023eaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03c5f5136dfda6e31fa70a76ccd233f1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a03c5f5136dfda6e31fa70a76ccd233f1"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectLDM</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a03c5f5136dfda6e31fa70a76ccd233f1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a70ca2661c9eceb219c07dff4f0f388a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a70ca2661c9eceb219c07dff4f0f388a9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectLDM</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a70ca2661c9eceb219c07dff4f0f388a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e7c1584bc5a312998436aa46a1aa63e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e7c1584bc5a312998436aa46a1aa63e"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>MOV</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a7e7c1584bc5a312998436aa46a1aa63e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa8c45378f7454f122cfe0119591ee805"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa8c45378f7454f122cfe0119591ee805"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>NOP</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:aa8c45378f7454f122cfe0119591ee805"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a83944361706a77ede90019f90706b3b7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a83944361706a77ede90019f90706b3b7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>CLS</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a83944361706a77ede90019f90706b3b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a63bae0a522ba733b858e446f12fa7b9c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a63bae0a522ba733b858e446f12fa7b9c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>VBLNK</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a63bae0a522ba733b858e446f12fa7b9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab9ef8968662b58aa90f654d7563e8266"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab9ef8968662b58aa90f654d7563e8266"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>BGC</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ab9ef8968662b58aa90f654d7563e8266"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a682bf08abc4e077b6f3e9e39c4bfc3d6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a682bf08abc4e077b6f3e9e39c4bfc3d6"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SPR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a682bf08abc4e077b6f3e9e39c4bfc3d6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a635eec1c2ef69ce26d098b951526410f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a635eec1c2ef69ce26d098b951526410f"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ImmediateDRW</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a635eec1c2ef69ce26d098b951526410f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab50975d8d94fb6dd1d78ae800ea5b637"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab50975d8d94fb6dd1d78ae800ea5b637"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterDRW</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ab50975d8d94fb6dd1d78ae800ea5b637"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32f56161350a609873ba9193268d4e51"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a32f56161350a609873ba9193268d4e51"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RND</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a32f56161350a609873ba9193268d4e51"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6188270c1daa482b088fe1867693cecc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6188270c1daa482b088fe1867693cecc"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>FLIP</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a6188270c1daa482b088fe1867693cecc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2cf4fa3b0a424296485ea4c07e8c471c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2cf4fa3b0a424296485ea4c07e8c471c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SND0</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a2cf4fa3b0a424296485ea4c07e8c471c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2db51e544ea416d690f6fc0073b39d58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2db51e544ea416d690f6fc0073b39d58"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SND1</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a2db51e544ea416d690f6fc0073b39d58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad7d1ef45448141adaa5f8133ea9df1a9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7d1ef45448141adaa5f8133ea9df1a9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SND2</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ad7d1ef45448141adaa5f8133ea9df1a9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a914af8a8325b7c0ec24e78dbce0b7182"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a914af8a8325b7c0ec24e78dbce0b7182"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SND3</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a914af8a8325b7c0ec24e78dbce0b7182"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab172a9d09473a6bd11cf9b01132c40e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab172a9d09473a6bd11cf9b01132c40e0"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SNP</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ab172a9d09473a6bd11cf9b01132c40e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adbfd7026840b22cc3978002caa8a5ad4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="adbfd7026840b22cc3978002caa8a5ad4"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SNG</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:adbfd7026840b22cc3978002caa8a5ad4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad954b964ff0176562ea226d0f0f0e2db"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad954b964ff0176562ea226d0f0f0e2db"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>ImmediatePalette</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ad954b964ff0176562ea226d0f0f0e2db"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9cc54574bcc66c4e0306a91e54217e75"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cc54574bcc66c4e0306a91e54217e75"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterPalette</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a9cc54574bcc66c4e0306a91e54217e75"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4f9738878025e459aea740d6f5f80be9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4f9738878025e459aea740d6f5f80be9"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>PUSH</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a4f9738878025e459aea740d6f5f80be9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab64a2e2f7d520e3ff09628d320027984"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab64a2e2f7d520e3ff09628d320027984"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>POP</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:ab64a2e2f7d520e3ff09628d320027984"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7bc41535aa54cfdf0f2fbdeeffeae961"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7bc41535aa54cfdf0f2fbdeeffeae961"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>PUSHALL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a7bc41535aa54cfdf0f2fbdeeffeae961"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3359e08c20d3f2fbef119feb880c4973"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3359e08c20d3f2fbef119feb880c4973"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>POPALL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a3359e08c20d3f2fbef119feb880c4973"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a45a804b728a78a04d7283ee9b48e8ae2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45a804b728a78a04d7283ee9b48e8ae2"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>PUSHF</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a45a804b728a78a04d7283ee9b48e8ae2"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a90a9591e0bf911adaadab93fbec93e85"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a90a9591e0bf911adaadab93fbec93e85"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>POPF</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a90a9591e0bf911adaadab93fbec93e85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abafa10a84ebae8ba0412432a424e84e8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abafa10a84ebae8ba0412432a424e84e8"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>NSHL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:abafa10a84ebae8ba0412432a424e84e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a295983833b12a13b0285253011777f49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a295983833b12a13b0285253011777f49"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>NSHR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a295983833b12a13b0285253011777f49"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a35da3cf1702c489d18b64bff401cc98c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a35da3cf1702c489d18b64bff401cc98c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>NSAR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a35da3cf1702c489d18b64bff401cc98c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a792d0aaf88ff98e87a0b70c5e5429825"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a792d0aaf88ff98e87a0b70c5e5429825"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterSHL</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a792d0aaf88ff98e87a0b70c5e5429825"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a43445b745cd1489405a15a08b5295254"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a43445b745cd1489405a15a08b5295254"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterSHR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a43445b745cd1489405a15a08b5295254"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a537e283387fe08857573ef287bcc4037"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a537e283387fe08857573ef287bcc4037"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterSAR</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a537e283387fe08857573ef287bcc4037"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aad312d9dd9cbbf979003e7c13d052143"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aad312d9dd9cbbf979003e7c13d052143"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectSTM</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:aad312d9dd9cbbf979003e7c13d052143"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a66972c879abcdbd25eb086caf7123540"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a66972c879abcdbd25eb086caf7123540"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectSTM</b> (const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a> in_Instruction)</td></tr>
-<tr class="separator:a66972c879abcdbd25eb086caf7123540"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a79b568a4c1a51545425e9d978ef74511"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a79b568a4c1a51545425e9d978ef74511"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ADDI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a79b568a4c1a51545425e9d978ef74511"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa9ebed966c51e2776c0b5191005360a4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa9ebed966c51e2776c0b5191005360a4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceADD</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:aa9ebed966c51e2776c0b5191005360a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a009806163c1905860d967a0ac3bae00d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a009806163c1905860d967a0ac3bae00d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ADD</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a009806163c1905860d967a0ac3bae00d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a280989abcacb5552ba2901017ccbe311"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a280989abcacb5552ba2901017ccbe311"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SUBI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a280989abcacb5552ba2901017ccbe311"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7d77d7f386cf725b423a4965455f4caf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7d77d7f386cf725b423a4965455f4caf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceSUB</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a7d77d7f386cf725b423a4965455f4caf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac1e29a77b0ce9a4db8e4821f2f06e2ce"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac1e29a77b0ce9a4db8e4821f2f06e2ce"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SUB</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ac1e29a77b0ce9a4db8e4821f2f06e2ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae234e453c4b82e2ea64ff2bfb226e42a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae234e453c4b82e2ea64ff2bfb226e42a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CMPI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ae234e453c4b82e2ea64ff2bfb226e42a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae273a3b40e5770022523f70680310082"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae273a3b40e5770022523f70680310082"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CMP</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ae273a3b40e5770022523f70680310082"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3bfd12dd90923d5baec32ede6f552790"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3bfd12dd90923d5baec32ede6f552790"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ANDI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a3bfd12dd90923d5baec32ede6f552790"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0864dd44fd9aebcfd1a1b1e25ccd5aaa"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0864dd44fd9aebcfd1a1b1e25ccd5aaa"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceAND</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a0864dd44fd9aebcfd1a1b1e25ccd5aaa"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1a65ca4e12c962c79f5795f311a92c57"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1a65ca4e12c962c79f5795f311a92c57"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>AND</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a1a65ca4e12c962c79f5795f311a92c57"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a04cfd594c24225ccc804e05d0aa63e62"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a04cfd594c24225ccc804e05d0aa63e62"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TSTI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a04cfd594c24225ccc804e05d0aa63e62"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7ffb0d6c68e86bcff0bdfb756d56f31f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7ffb0d6c68e86bcff0bdfb756d56f31f"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>TST</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a7ffb0d6c68e86bcff0bdfb756d56f31f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ebe25d69289d1bb280054fb799e2cad"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ebe25d69289d1bb280054fb799e2cad"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ORI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a8ebe25d69289d1bb280054fb799e2cad"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:accd529074b72b16b1b6ddf80784d4ecf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="accd529074b72b16b1b6ddf80784d4ecf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceOR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:accd529074b72b16b1b6ddf80784d4ecf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e31018e16803cbabbd6f9f764aed6a8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e31018e16803cbabbd6f9f764aed6a8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>OR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a7e31018e16803cbabbd6f9f764aed6a8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8ffd35d79f8f5c49ad68c1a2a421bc07"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ffd35d79f8f5c49ad68c1a2a421bc07"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>XORI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a8ffd35d79f8f5c49ad68c1a2a421bc07"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a76316fae17d1133528a2d20cdba1d107"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a76316fae17d1133528a2d20cdba1d107"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceXOR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a76316fae17d1133528a2d20cdba1d107"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acbcc93b5b8eb4b511aa1d3cd2baf53c4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acbcc93b5b8eb4b511aa1d3cd2baf53c4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>XOR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:acbcc93b5b8eb4b511aa1d3cd2baf53c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a427eacce0b232b19e8c74e893e0a8587"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a427eacce0b232b19e8c74e893e0a8587"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>MULI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a427eacce0b232b19e8c74e893e0a8587"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2dce7c61ab63292fca64c4edf4d05da8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2dce7c61ab63292fca64c4edf4d05da8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceMUL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a2dce7c61ab63292fca64c4edf4d05da8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3bd48665ab9e7f4a978071b13c5cd49"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac3bd48665ab9e7f4a978071b13c5cd49"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>MUL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ac3bd48665ab9e7f4a978071b13c5cd49"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8fd89820b99180e89ed72e089fccd8ab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8fd89820b99180e89ed72e089fccd8ab"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DIVI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a8fd89820b99180e89ed72e089fccd8ab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1d1b47a9a8b08a9c2b8664259f408eb8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1d1b47a9a8b08a9c2b8664259f408eb8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>InplaceDIV</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a1d1b47a9a8b08a9c2b8664259f408eb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8eee1ea8ee22a0697e53bf45333bd0d3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8eee1ea8ee22a0697e53bf45333bd0d3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DIV</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a8eee1ea8ee22a0697e53bf45333bd0d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae0740614f90e1ba600a3ad2344d9208c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae0740614f90e1ba600a3ad2344d9208c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectJMP</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ae0740614f90e1ba600a3ad2344d9208c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cecb7d41d53afc117347cbe71788b61"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8cecb7d41d53afc117347cbe71788b61"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Jx</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a8cecb7d41d53afc117347cbe71788b61"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a628ed5f60516b8e34a66eb79e4e15d24"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a628ed5f60516b8e34a66eb79e4e15d24"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>JME</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a628ed5f60516b8e34a66eb79e4e15d24"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa295a47cd490c8c49485221c43864b4a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa295a47cd490c8c49485221c43864b4a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectCALL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:aa295a47cd490c8c49485221c43864b4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7be8a556777bd41742aed8b9835134e7"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7be8a556777bd41742aed8b9835134e7"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RET</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a7be8a556777bd41742aed8b9835134e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad85a2afaa945c6ad1eb82267a62ebc8d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad85a2afaa945c6ad1eb82267a62ebc8d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectJMP</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ad85a2afaa945c6ad1eb82267a62ebc8d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8f0b29eb4fc8e9fe9084660422a5cba8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8f0b29eb4fc8e9fe9084660422a5cba8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>Cx</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a8f0b29eb4fc8e9fe9084660422a5cba8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2adbb6944843d3ac59ec3a8544e75cf0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2adbb6944843d3ac59ec3a8544e75cf0"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectCALL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a2adbb6944843d3ac59ec3a8544e75cf0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5b3c6d05a6be2a47d41f0ff8213feaf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b3c6d05a6be2a47d41f0ff8213feaf3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterLDI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a5b3c6d05a6be2a47d41f0ff8213feaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af73768d9f0e39fb9c2d08fca58162267"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af73768d9f0e39fb9c2d08fca58162267"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>StackLDI</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:af73768d9f0e39fb9c2d08fca58162267"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5957f5dd8abf43d2722702a48446575c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5957f5dd8abf43d2722702a48446575c"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectLDM</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a5957f5dd8abf43d2722702a48446575c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a93020ad62c5484eca7e711bb80695eab"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a93020ad62c5484eca7e711bb80695eab"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectLDM</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a93020ad62c5484eca7e711bb80695eab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a22410c8ca18d42f1a575c976c5647f08"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a22410c8ca18d42f1a575c976c5647f08"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>MOV</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a22410c8ca18d42f1a575c976c5647f08"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a619b8353c90fc38fd14834d4fbeaf5de"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a619b8353c90fc38fd14834d4fbeaf5de"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>NOP</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a619b8353c90fc38fd14834d4fbeaf5de"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a78fe548ac196741666002c743cdb92bf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a78fe548ac196741666002c743cdb92bf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>CLS</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a78fe548ac196741666002c743cdb92bf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1b5f720b262016c96d9b295639f4308"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab1b5f720b262016c96d9b295639f4308"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>VBLNK</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ab1b5f720b262016c96d9b295639f4308"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4fae1bd53877481c8197146145db8fa1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4fae1bd53877481c8197146145db8fa1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>BGC</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a4fae1bd53877481c8197146145db8fa1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaf3ff7b7bc41bbc1f16e024862e357be"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aaf3ff7b7bc41bbc1f16e024862e357be"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SPR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:aaf3ff7b7bc41bbc1f16e024862e357be"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a74da994f881f19ce14bb7b98d4f465ee"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a74da994f881f19ce14bb7b98d4f465ee"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ImmediateDRW</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a74da994f881f19ce14bb7b98d4f465ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa461204e6165ec8b3a850ee666839e96"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa461204e6165ec8b3a850ee666839e96"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterDRW</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:aa461204e6165ec8b3a850ee666839e96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75899570320d091b33e1343d5e6d3bb1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a75899570320d091b33e1343d5e6d3bb1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RND</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a75899570320d091b33e1343d5e6d3bb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab7cff1a793008be99670feadeddbaaf3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab7cff1a793008be99670feadeddbaaf3"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>FLIP</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ab7cff1a793008be99670feadeddbaaf3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeb8374731ed4aabf6400997508b70cbc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb8374731ed4aabf6400997508b70cbc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SND0</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:aeb8374731ed4aabf6400997508b70cbc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a466a18ffcd77763b2e70bd174db33004"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a466a18ffcd77763b2e70bd174db33004"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SND1</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a466a18ffcd77763b2e70bd174db33004"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad7b5a93e71732ee2b8651658ed0c926e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad7b5a93e71732ee2b8651658ed0c926e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SND2</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ad7b5a93e71732ee2b8651658ed0c926e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a598c3a7a274fc49031a1c13a16d2eba2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a598c3a7a274fc49031a1c13a16d2eba2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SND3</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a598c3a7a274fc49031a1c13a16d2eba2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64a9b68a175fb60265ff9b9668c3f040"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64a9b68a175fb60265ff9b9668c3f040"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SNP</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a64a9b68a175fb60265ff9b9668c3f040"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2719dc0860e1ae0060fa6c3298aa39d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab2719dc0860e1ae0060fa6c3298aa39d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>SNG</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ab2719dc0860e1ae0060fa6c3298aa39d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b2a8fe9bec82a342f64aadf312874fc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b2a8fe9bec82a342f64aadf312874fc"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>ImmediatePalette</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a0b2a8fe9bec82a342f64aadf312874fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1488a6008be9530ceb48bfa752a20bec"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1488a6008be9530ceb48bfa752a20bec"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterPalette</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a1488a6008be9530ceb48bfa752a20bec"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa3981029ea165ac9dae4b575774402e4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa3981029ea165ac9dae4b575774402e4"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PUSH</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:aa3981029ea165ac9dae4b575774402e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0afe64641d4afff0a21ed63052fdcda1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0afe64641d4afff0a21ed63052fdcda1"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>POP</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a0afe64641d4afff0a21ed63052fdcda1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a881bb8a6d4588ebec19ca4d930e77581"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a881bb8a6d4588ebec19ca4d930e77581"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PUSHALL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a881bb8a6d4588ebec19ca4d930e77581"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5799311aa9eefdcd22fb40ccdeddc545"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5799311aa9eefdcd22fb40ccdeddc545"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>POPALL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a5799311aa9eefdcd22fb40ccdeddc545"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a170232b87ec9f556383a96e3642b37f6"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a170232b87ec9f556383a96e3642b37f6"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>PUSHF</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a170232b87ec9f556383a96e3642b37f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5ec6de90470375937e14216e7d8f3fd9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5ec6de90470375937e14216e7d8f3fd9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>POPF</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a5ec6de90470375937e14216e7d8f3fd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3fb488c52c4e2cceb0e1fa8c265a94e5"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3fb488c52c4e2cceb0e1fa8c265a94e5"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>NSHL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a3fb488c52c4e2cceb0e1fa8c265a94e5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0db2531b6f58a6cd0a520482fb050dd2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0db2531b6f58a6cd0a520482fb050dd2"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>NSHR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a0db2531b6f58a6cd0a520482fb050dd2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a06bd1eb5e620655a93aba39d6e29dd7a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a06bd1eb5e620655a93aba39d6e29dd7a"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>NSAR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a06bd1eb5e620655a93aba39d6e29dd7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab367484df783d434bcfc53df193d45b9"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab367484df783d434bcfc53df193d45b9"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterSHL</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:ab367484df783d434bcfc53df193d45b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a122b8627de8f881a99e79a99f2cad63d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a122b8627de8f881a99e79a99f2cad63d"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterSHR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a122b8627de8f881a99e79a99f2cad63d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7886108de26126c4bf8ad4fa34fbdd8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa7886108de26126c4bf8ad4fa34fbdd8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>RegisterSAR</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:aa7886108de26126c4bf8ad4fa34fbdd8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b6da4794b536a1cde472452d37aa96b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0b6da4794b536a1cde472452d37aa96b"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>DirectSTM</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:a0b6da4794b536a1cde472452d37aa96b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acb7044ee4a0975320ca96cb7c8a61a27"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acb7044ee4a0975320ca96cb7c8a61a27"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>IndirectSTM</b> (const <a class="el" href="class_instruction.html">Instruction</a> in_Instruction)</td></tr>
+<tr class="separator:acb7044ee4a0975320ca96cb7c8a61a27"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr class="memitem:a8767197f88567abf37605fdc3047d3cd"><td class="memItemLeft" align="right" valign="top">std::shared_ptr&lt; <a class="el" href="class_c_p_u.html">CPU</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a8767197f88567abf37605fdc3047d3cd">m_CPU</a></td></tr>
 <tr class="separator:a8767197f88567abf37605fdc3047d3cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acd13cfca53c0a855de6e1284a992e358"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_g_p_u.html">GPU</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#acd13cfca53c0a855de6e1284a992e358">m_GPU</a></td></tr>
-<tr class="separator:acd13cfca53c0a855de6e1284a992e358"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac8b180f9897ffa566ab009f10fe0f3e0"><td class="memItemLeft" align="right" valign="top">std::unique_ptr&lt; <a class="el" href="class_s_p_u.html">SPU</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#ac8b180f9897ffa566ab009f10fe0f3e0">m_SPU</a></td></tr>
-<tr class="separator:ac8b180f9897ffa566ab009f10fe0f3e0"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2c1cf37c0b54e8e9553a8e03baccd632"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_g_p_u.html">GPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a2c1cf37c0b54e8e9553a8e03baccd632">m_GPU</a></td></tr>
+<tr class="separator:a2c1cf37c0b54e8e9553a8e03baccd632"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70cad5b216683abe218c7a3c48efcf85"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_s_p_u.html">SPU</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a70cad5b216683abe218c7a3c48efcf85">m_SPU</a></td></tr>
+<tr class="separator:a70cad5b216683abe218c7a3c48efcf85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbbf883a36109b5928cfd963fb36c626"><td class="memItemLeft" align="right" valign="top">std::mt19937&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#acbbf883a36109b5928cfd963fb36c626">m_RandEngine</a></td></tr>
 <tr class="separator:acbbf883a36109b5928cfd963fb36c626"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aba0f7ccc8c952d60beb6f995eafd8cb1"><td class="memItemLeft" align="right" valign="top">std::uniform_int_distribution<br class="typebreak"/>
 &lt; <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#aba0f7ccc8c952d60beb6f995eafd8cb1">m_Dist</a></td></tr>
 <tr class="separator:aba0f7ccc8c952d60beb6f995eafd8cb1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bfedfd268949151ddf52c877e4e1c44"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>, <br class="typebreak"/>
-Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a2bfedfd268949151ddf52c877e4e1c44">m_Ops</a></td></tr>
-<tr class="separator:a2bfedfd268949151ddf52c877e4e1c44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6abf7019eee08dbc171650bdd1935a95"><td class="memItemLeft" align="right" valign="top">std::unordered_map&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>, <br class="typebreak"/>
+InstructionExec &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_interpreter.html#a6abf7019eee08dbc171650bdd1935a95">m_Ops</a></td></tr>
+<tr class="separator:a6abf7019eee08dbc171650bdd1935a95"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interpret Chip16 instructions. </p>
@@ -406,7 +408,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a class="anchor" id="a5fd17d608cf7b0f4a9b6cd07890b8b05"></a>
+<a class="anchor" id="a99bcf7b7dcd0027808896b1531fcc2c9"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -416,7 +418,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">Interpreter::BasicArithmetic </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_instruction.html">Instruction</a>&#160;</td>
           <td class="paramname"><em>in_Instruction</em>, </td>
         </tr>
         <tr>
@@ -456,7 +458,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="a370949e31ec494ce122102646fd204c7"></a>
+<a class="anchor" id="acdf61530286a3216f49c1b6492db13fd"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -466,7 +468,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">Interpreter::DiscardArithmetic </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_instruction.html">Instruction</a>&#160;</td>
           <td class="paramname"><em>in_Instruction</em>, </td>
         </tr>
         <tr>
@@ -506,7 +508,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="ae71760ae1ffb5bc87ab0214dbc21ed5e"></a>
+<a class="anchor" id="a0f708a1817057be454713113f1020e0b"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -516,7 +518,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">Interpreter::DiscardImmediateArithmetic </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_instruction.html">Instruction</a>&#160;</td>
           <td class="paramname"><em>in_Instruction</em>, </td>
         </tr>
         <tr>
@@ -556,7 +558,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="a6f2d02374d1cf39fae986018787603e1"></a>
+<a class="anchor" id="a02720f155a72547690cbf01af95ed5fc"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -566,7 +568,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">Interpreter::FetchHalfByte </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_instruction.html">Instruction</a>&#160;</td>
           <td class="paramname"><em>in_Instruction</em>, </td>
         </tr>
         <tr>
@@ -600,7 +602,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="adee2fd13cb8b75e1056ba2231c66e3c2"></a>
+<a class="anchor" id="aefb4242fd74a70fcb459c73884a3fc8c"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -610,7 +612,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">Interpreter::FetchImmediateValue </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_instruction.html">Instruction</a>&#160;</td>
           <td class="paramname"><em>in_Instruction</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -633,7 +635,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="a4d7a44dc389a6b02a6141f7de39c329e"></a>
+<a class="anchor" id="af3ac5acca96ff252f18d5876a05e1896"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -643,7 +645,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">Interpreter::ImmediateArithmetic </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_instruction.html">Instruction</a>&#160;</td>
           <td class="paramname"><em>in_Instruction</em>, </td>
         </tr>
         <tr>
@@ -683,7 +685,25 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="ace74309bcfe6faabc8dd67752f3c4002"></a>
+<a class="anchor" id="acb0def8785b4313e24832a3c30e57eb9"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Interpreter::InitDevices </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Initialize the <a class="el" href="class_g_p_u.html" title="Emulates the Graphics Processing Unit (GPU) ">GPU</a> and the <a class="el" href="class_s_p_u.html" title="Emulates the Sound Processing Unit (SPU) ">SPU</a>. </p>
+<dl class="section return"><dt>Returns</dt><dd>An error code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a27741329a0fa980fda3e2c2b6fb91bee"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -693,7 +713,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
         <tr>
           <td class="memname">Interpreter::InplaceArithmetic </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_utils.html#aecceb3ba56f11c34022303f8b3a100af">UInt32</a>&#160;</td>
+          <td class="paramtype">const <a class="el" href="class_instruction.html">Instruction</a>&#160;</td>
           <td class="paramname"><em>in_Instruction</em>, </td>
         </tr>
         <tr>
@@ -766,6 +786,24 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
+<a class="anchor" id="ab77f4a0fd0e15f808a45580a20d48bcf"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Interpreter::InterpretOp </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read an opcode from the ROM and execute it. </p>
+<dl class="section return"><dt>Returns</dt><dd>An error code </dd></dl>
+
+</div>
+</div>
 <h2 class="groupheader">Member Data Documentation</h2>
 <a class="anchor" id="a8767197f88567abf37605fdc3047d3cd"></a>
 <div class="memitem">
@@ -809,7 +847,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="acd13cfca53c0a855de6e1284a992e358"></a>
+<a class="anchor" id="a2c1cf37c0b54e8e9553a8e03baccd632"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -817,7 +855,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="class_g_p_u.html">GPU</a>&gt; Interpreter::m_GPU</td>
+          <td class="memname"><a class="el" href="class_g_p_u.html">GPU</a> Interpreter::m_GPU</td>
         </tr>
       </table>
   </td>
@@ -830,7 +868,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="a2bfedfd268949151ddf52c877e4e1c44"></a>
+<a class="anchor" id="a6abf7019eee08dbc171650bdd1935a95"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -838,7 +876,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unordered_map&lt;<a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>, Instruction&gt; Interpreter::m_Ops</td>
+          <td class="memname">std::unordered_map&lt;<a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>, InstructionExec&gt; Interpreter::m_Ops</td>
         </tr>
       </table>
   </td>
@@ -872,7 +910,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 
 </div>
 </div>
-<a class="anchor" id="ac8b180f9897ffa566ab009f10fe0f3e0"></a>
+<a class="anchor" id="a70cad5b216683abe218c7a3c48efcf85"></a>
 <div class="memitem">
 <div class="memproto">
 <table class="mlabels">
@@ -880,7 +918,7 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">std::unique_ptr&lt;<a class="el" href="class_s_p_u.html">SPU</a>&gt; Interpreter::m_SPU</td>
+          <td class="memname"><a class="el" href="class_s_p_u.html">SPU</a> Interpreter::m_SPU</td>
         </tr>
       </table>
   </td>
@@ -894,13 +932,13 @@ Instruction &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
-<li>EmulatorLib/<a class="el" href="interpreter_8h_source.html">interpreter.h</a></li>
-<li>EmulatorLib/interpreter.cpp</li>
+<li>Desktop/CHIP-16/src/EmulatorLib/<a class="el" href="interpreter_8h_source.html">interpreter.h</a></li>
+<li>Desktop/CHIP-16/src/EmulatorLib/interpreter.cpp</li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 30 2013 15:27:29 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Nov 14 2013 16:11:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

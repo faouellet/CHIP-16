@@ -12,6 +12,7 @@
 /**
 * \class Dynarec
 * \brief Dynamically recompile Chip16 instructions to x86 instructions
+* \author Felix-Antoine Ouellet
 */
 class Dynarec
 {
@@ -32,20 +33,21 @@ private:
 	};
 
 private:
-	typedef void (Emitter::*EmitFunc) (const UInt16 in_Arg1, const UInt16 in_Arg2);
+	typedef void (Emitter::*EmitFunc) (const UInt16 in_Arg1, const UInt16 in_Arg2);	/**< Assembly emission function */
 
 private:
-	//std::map<> m_TranslationCache;	/*!< */
+	std::map<UInt8> m_TranslationCache;	/*!< */
 
-	LocalAllocator m_Allocator;
+	LocalAllocator m_Allocator;		/*!< Register allocator operating at the level of a single basic block */
 	std::shared_ptr<CPU> m_CPU;		/*!< The central processing unit */
-	std::unordered_map<UInt16, EmitFunc> m_EmitTable;
+	std::unordered_map<UInt16, EmitFunc> m_EmitTable;	/*!< Mapping of Chip16 opcodes to assembly emission methods */
 	Emitter m_Emitter;				/*!< x86 code emitter */
 
 public:
 	/**
 	* \fn Dynarec
 	* \brief Default constructor
+	* \param in_CPU Pointer to an abstraction of a central processing unit
 	*/
 	Dynarec(const std::shared_ptr<CPU> & in_CPU = nullptr);
 	
@@ -57,15 +59,16 @@ public:
 
 	/**
 	* \fn CompileBasicBlock
-	* \brief TODO
+	* \brief Recompile a Chip16 basic block to an x86 basic block
 	*/
 	void CompileBasicBlock();
 
 	/**
 	* \fn ExecuteBlock
-	* \brief TODO
+	* \brief Execute a block of x86 assembly
+
 	*/
-	UInt8* ExecuteBlock() const;
+	void ExecuteBlock() const;
 };
 
 #endif // DYNAREC_H

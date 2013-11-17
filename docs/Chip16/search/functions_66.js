@@ -1,7 +1,8 @@
 var searchData=
 [
-  ['fetchhalfbyte',['FetchHalfByte',['../class_interpreter.html#a6f2d02374d1cf39fae986018787603e1',1,'Interpreter']]],
-  ['fetchimmediatevalue',['FetchImmediateValue',['../class_interpreter.html#adee2fd13cb8b75e1056ba2231c66e3c2',1,'Interpreter']]],
+  ['fetchbasicblock',['FetchBasicBlock',['../class_c_p_u.html#acd40cd9dc04bbd4304893b63a00ea1cf',1,'CPU']]],
+  ['fetchhalfbyte',['FetchHalfByte',['../class_instruction.html#a4af621d0d5af12c7a430717199d8fff6',1,'Instruction::FetchHalfByte()'],['../class_interpreter.html#a02720f155a72547690cbf01af95ed5fc',1,'Interpreter::FetchHalfByte()']]],
+  ['fetchimmediatevalue',['FetchImmediateValue',['../class_interpreter.html#aefb4242fd74a70fcb459c73884a3fc8c',1,'Interpreter']]],
   ['fetchinstruction',['FetchInstruction',['../class_c_p_u.html#a8a700f09dd58308cba66e4ae8d877aaa',1,'CPU']]],
   ['fetchpalette',['FetchPalette',['../class_c_p_u.html#a67b87c75d0f7ccc7d6810f5caf84c5ef',1,'CPU']]],
   ['fetchregistersvalues',['FetchRegistersValues',['../class_c_p_u.html#a668f4c3e66d906bad4f045c135d9d854',1,'CPU']]],

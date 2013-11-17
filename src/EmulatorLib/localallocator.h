@@ -7,12 +7,14 @@
 
 /**
 * \class LocalAllocator
+* \brief Allocate physical x86 registers to virtual registers given an analysis
+*        of the usage of the virtual registers in a basic block. It makes no
+*        assumptions concerning the liveness of the virtual registers at the
+*        start or at the end of a basic block.
+* \author Felix-Antoine Ouellet
 */
 class LocalAllocator
 {	
-private:
-	typedef std::pair<UInt8, UInt8> RegUsageCount;
-
 public:
 	/**
 	* \struct GPRStatus
@@ -66,13 +68,20 @@ public:
 private:
 	/**
 	* \fn BlockAnalysis
-	* \brief TODO
+	* \brief Analyze the usage of the virtual registers used in a basic block
+	* \param in_BasicBlock Sequence of linear instructions
+	* \return Sequence of indices going from the most used virtual register to the least used
 	*/
 	std::vector<UInt8> BlockAnalysis(const std::vector<Instruction> & in_BasicBlock);
 
 	/**
 	* \fn AllocateRegisters
-	* \brief TODO
+	* \brief Allocate a physical register per virtual register. If there's not
+	*        enough physical registers, the top N most used virtual registers will 
+	*        get a dedicated physical register and the rest will be flagged as dirty.
+	*        Two physical registers will be left free for further use by the virtual
+	*        registers wihtout a dedicated physical register.
+	* \param List going from the most used virtual register to the least used
 	*/
 	void AllocateRegisters(std::vector<UInt8> && in_RegIndices);
 };

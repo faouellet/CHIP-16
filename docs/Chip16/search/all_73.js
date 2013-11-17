@@ -25,6 +25,7 @@ var searchData=
   ['spriteheight',['SpriteHeight',['../class_g_p_u.html#a7d2962aea919d2dd5b8fbd218b0e805e',1,'GPU']]],
   ['spritewidth',['SpriteWidth',['../class_g_p_u.html#a279f02e8f6d11f83f72428e457f014bd',1,'GPU']]],
   ['spu',['SPU',['../class_s_p_u.html',1,'SPU'],['../class_s_p_u.html#a3c40858a6a5dd433f711539a23563da8',1,'SPU::SPU()']]],
+  ['stackoffset',['StackOffset',['../struct_local_allocator_1_1_g_p_r_status.html#abfe46245b6e5233719b109edf97bda61',1,'LocalAllocator::GPRStatus']]],
   ['stepback',['StepBack',['../class_c_p_u.html#a0376736775293093ba1a23980984e306',1,'CPU']]],
   ['stop',['Stop',['../class_s_p_u.html#acc85c85d4f84eb5d6627962194975de5',1,'SPU']]],
   ['store',['Store',['../class_c_p_u.html#a99ee850068370482fe41da3ca8045840',1,'CPU']]],

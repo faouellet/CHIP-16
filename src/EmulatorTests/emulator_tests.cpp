@@ -34,8 +34,8 @@ BOOST_AUTO_TEST_CASE( AdsrTest )
 
 BOOST_AUTO_TEST_CASE( BC_TestRom )
 {
-	BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/Ninja/Ninja.c16"), Utils::NoError);
-	Emu.Emulate(false);
+	/*BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/Ninja/Ninja.c16"), Utils::NoError);
+	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_CASE( CollisionTest )

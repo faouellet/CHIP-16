@@ -5,5 +5,6 @@ var searchData=
   ['uint8',['UInt8',['../namespace_utils.html#ad4db7aab250328c742e04e4134dca44b',1,'Utils']]],
   ['uint_5f',['UInt_',['../struct_utils_1_1_u_int__.html',1,'Utils']]],
   ['updatecontroller',['UpdateController',['../class_c_p_u.html#a93c2093460a2b46c541a2482213530bd',1,'CPU']]],
+  ['useimmediatevalue',['UseImmediateValue',['../class_instruction.html#a526a994c22726b52349c7473fcb0523d',1,'Instruction']]],
   ['utils',['Utils',['../namespace_utils.html',1,'']]]
 ];

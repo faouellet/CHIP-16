@@ -79,6 +79,8 @@ void Emulator::JIT()
 	{
 		// TODO : Black magic
 		
+		l_StartTime = SDL_GetTicks();
+		
 		// Handle IO
 		while(SDL_PollEvent(&l_ControllerEvent) && 
 			(l_ControllerEvent.type == SDL_KEYDOWN || l_ControllerEvent.type == SDL_KEYUP))

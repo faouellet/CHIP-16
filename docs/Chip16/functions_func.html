@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>All</span></a></li>
       <li class="current"><a href="functions_func.html"><span>Functions</span></a></li>
       <li><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
     </ul>
   </div>
   <div id="navrow4" class="tabs3">
@@ -93,6 +94,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_t"><span>t</span></a></li>
       <li><a href="#index_u"><span>u</span></a></li>
       <li><a href="#index_v"><span>v</span></a></li>
+      <li><a href="#index_w"><span>w</span></a></li>
       <li><a href="#index_0x7e"><span>~</span></a></li>
     </ul>
   </div>
@@ -123,7 +125,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
 <li>BasicArithmetic()
-: <a class="el" href="class_interpreter.html#a5fd17d608cf7b0f4a9b6cd07890b8b05">Interpreter</a>
+: <a class="el" href="class_interpreter.html#a99bcf7b7dcd0027808896b1531fcc2c9">Interpreter</a>
+</li>
+<li>BlockAnalysis()
+: <a class="el" href="class_local_allocator.html#a5873d2d9eaeb2e6bd019ee281cfc40d5">LocalAllocator</a>
 </li>
 </ul>
 
@@ -141,6 +146,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>CommandLineInterface()
 : <a class="el" href="class_command_line_interface.html#aa242712bc60f8d45d65c92af14e32691">CommandLineInterface</a>
 </li>
+<li>CompileBasicBlock()
+: <a class="el" href="class_dynarec.html#a8c46a109cea1d6ed470526959afb96ee">Dynarec</a>
+</li>
 <li>CPU()
 : <a class="el" href="class_c_p_u.html#a2fdd8153d0979ccad9ed8452897267f4">CPU</a>
 </li>
@@ -149,10 +157,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>DiscardArithmetic()
-: <a class="el" href="class_interpreter.html#a370949e31ec494ce122102646fd204c7">Interpreter</a>
+: <a class="el" href="class_interpreter.html#acdf61530286a3216f49c1b6492db13fd">Interpreter</a>
 </li>
 <li>DiscardImmediateArithmetic()
-: <a class="el" href="class_interpreter.html#ae71760ae1ffb5bc87ab0214dbc21ed5e">Interpreter</a>
+: <a class="el" href="class_interpreter.html#a0f708a1817057be454713113f1020e0b">Interpreter</a>
 </li>
 <li>Draw()
 : <a class="el" href="class_g_p_u.html#aaab4d2fe739270b47a99be6ec8aa2069">GPU</a>
@@ -182,7 +190,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_c_p_u.html#a4c583309a62e94b0311a38a73cccfd69">CPU</a>
 </li>
 <li>Dynarec()
-: <a class="el" href="class_dynarec.html#a7623ef0b976cf42552c6b05183e84b46">Dynarec</a>
+: <a class="el" href="class_dynarec.html#aa455d627f2299e9505bbad15b2c8cf85">Dynarec</a>
 </li>
 </ul>
 
@@ -200,15 +208,22 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>ExecuteBadInstruction()
 : <a class="el" href="struct_interpreter_fixture.html#a1bdd08c52869fadebd7d3f48f92ee83c">InterpreterFixture</a>
 </li>
+<li>ExecuteBlock()
+: <a class="el" href="class_dynarec.html#a662efe7e23106263bb151f27f090fa59">Dynarec</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
+<li>FetchBasicBlock()
+: <a class="el" href="class_c_p_u.html#acd40cd9dc04bbd4304893b63a00ea1cf">CPU</a>
+</li>
 <li>FetchHalfByte()
-: <a class="el" href="class_interpreter.html#a6f2d02374d1cf39fae986018787603e1">Interpreter</a>
+: <a class="el" href="class_instruction.html#a4af621d0d5af12c7a430717199d8fff6">Instruction</a>
+, <a class="el" href="class_interpreter.html#a02720f155a72547690cbf01af95ed5fc">Interpreter</a>
 </li>
 <li>FetchImmediateValue()
-: <a class="el" href="class_interpreter.html#adee2fd13cb8b75e1056ba2231c66e3c2">Interpreter</a>
+: <a class="el" href="class_interpreter.html#aefb4242fd74a70fcb459c73884a3fc8c">Interpreter</a>
 </li>
 <li>FetchInstruction()
 : <a class="el" href="class_c_p_u.html#a8a700f09dd58308cba66e4ae8d877aaa">CPU</a>
@@ -244,8 +259,29 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>GenerateToneSample()
 : <a class="el" href="class_s_p_u.html#aa1a61252149f1bf7e09a96ffe1679e14">SPU</a>
 </li>
+<li>GetFirstOperand()
+: <a class="el" href="class_instruction.html#ad3942b96970a378850dae84963d9687e">Instruction</a>
+</li>
+<li>GetImmediateValue()
+: <a class="el" href="class_instruction.html#ab7f8bbac0a039e662345b4d9ecbc31b2">Instruction</a>
+</li>
+<li>GetOpcode()
+: <a class="el" href="class_instruction.html#a9b8c00bd6e8be1d93ab9e254230b37e2">Instruction</a>
+</li>
+<li>GetPhysicalRegister()
+: <a class="el" href="class_local_allocator.html#ab34ed4157715f6063077bb592dd7c0b7">LocalAllocator</a>
+</li>
 <li>GetPtr()
 : <a class="el" href="class_memory_arena.html#af3bea8f92ad4770ab551efb0b913f266">MemoryArena</a>
+</li>
+<li>GetSecondOperand()
+: <a class="el" href="class_instruction.html#a46fb1317dc47a5cea2ccd9df99159c3e">Instruction</a>
+</li>
+<li>GetThirdOperand()
+: <a class="el" href="class_instruction.html#ad0ee3cfadb9aa612f97ab0511b0f33f3">Instruction</a>
+</li>
+<li>GetType()
+: <a class="el" href="class_instruction.html#a04845aa0c62ff034b372b9c5f341ce1c">Instruction</a>
 </li>
 <li>GPU()
 : <a class="el" href="class_g_p_u.html#a2ca7973e32f63ba3472166a007419a75">GPU</a>
@@ -255,7 +291,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>ImmediateArithmetic()
-: <a class="el" href="class_interpreter.html#a4d7a44dc389a6b02a6141f7de39c329e">Interpreter</a>
+: <a class="el" href="class_interpreter.html#af3ac5acca96ff252f18d5876a05e1896">Interpreter</a>
 </li>
 <li>Init()
 : <a class="el" href="class_c_p_u.html#ad1442d889ce7ab4a1e871ecd8cf2c52d">CPU</a>
@@ -263,11 +299,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_s_p_u.html#aa2a23b7e9e205f220894791ec3f61d79">SPU</a>
 , <a class="el" href="class_emulator.html#a66f2e9657706f445882cd1bbf08052aa">Emulator</a>
 </li>
+<li>InitDevices()
+: <a class="el" href="class_interpreter.html#acb0def8785b4313e24832a3c30e57eb9">Interpreter</a>
+</li>
 <li>InitOpcodesTable()
 : <a class="el" href="class_interpreter.html#a81fd953f9f728edc658ae74b83d9b0a8">Interpreter</a>
 </li>
 <li>InplaceArithmetic()
-: <a class="el" href="class_interpreter.html#ace74309bcfe6faabc8dd67752f3c4002">Interpreter</a>
+: <a class="el" href="class_interpreter.html#a27741329a0fa980fda3e2c2b6fb91bee">Interpreter</a>
+</li>
+<li>Instruction()
+: <a class="el" href="class_instruction.html#a3d0584956b1d0a522db30bdde3a38038">Instruction</a>
 </li>
 <li>Interpret()
 : <a class="el" href="class_emulator.html#af56cbeb84fad42b762ff424e898fbd5f">Emulator</a>
@@ -280,6 +322,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>InterpretOp()
 : <a class="el" href="class_interpreter.html#ab77f4a0fd0e15f808a45580a20d48bcf">Interpreter</a>
+</li>
+<li>IsInplace()
+: <a class="el" href="class_instruction.html#a0c2e917bd292589f685d74268960837e">Instruction</a>
 </li>
 </ul>
 
@@ -304,6 +349,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
 <li>MemoryArena()
 : <a class="el" href="class_memory_arena.html#aa836eb81513cfd3f4ea588255ca05d08">MemoryArena</a>
+</li>
+<li>ModRM()
+: <a class="el" href="class_emitter.html#a94a68403cf1d6e2b29af0ef656fe8395">Emitter</a>
 </li>
 </ul>
 
@@ -435,12 +483,25 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>UpdateController()
 : <a class="el" href="class_c_p_u.html#a93c2093460a2b46c541a2482213530bd">CPU</a>
 </li>
+<li>UseImmediateValue()
+: <a class="el" href="class_instruction.html#a526a994c22726b52349c7473fcb0523d">Instruction</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
 <li>VBlankFlag()
 : <a class="el" href="class_g_p_u.html#a048210036a29a07679532e17d9a7800e">GPU</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_w"></a>- w -</h3><ul>
+<li>Write16Bits()
+: <a class="el" href="class_emitter.html#a827b8bedb6b1924aa2e5b5ea1e3bab0e">Emitter</a>
+</li>
+<li>Write8Bits()
+: <a class="el" href="class_emitter.html#ac76d59b2e55f8f8fb7f258408d96db45">Emitter</a>
 </li>
 </ul>
 
@@ -480,7 +541,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 30 2013 15:27:30 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Nov 14 2013 16:11:18 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

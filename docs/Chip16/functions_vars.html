@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="functions.html"><span>All</span></a></li>
       <li><a href="functions_func.html"><span>Functions</span></a></li>
       <li class="current"><a href="functions_vars.html"><span>Variables</span></a></li>
+      <li><a href="functions_type.html"><span>Typedefs</span></a></li>
     </ul>
   </div>
   <div id="navrow4" class="tabs3">
@@ -83,6 +84,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li><a href="#index_h"><span>h</span></a></li>
       <li><a href="#index_i"><span>i</span></a></li>
       <li><a href="#index_m"><span>m</span></a></li>
+      <li><a href="#index_p"><span>p</span></a></li>
       <li><a href="#index_r"><span>r</span></a></li>
       <li><a href="#index_s"><span>s</span></a></li>
       <li><a href="#index_t"><span>t</span></a></li>
@@ -153,10 +155,16 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>Interpret
 : <a class="el" href="struct_interpreter_fixture.html#aba496f57f397258c93e94967a1d2a6d5">InterpreterFixture</a>
 </li>
+<li>IsDirty
+: <a class="el" href="struct_local_allocator_1_1_g_p_r_status.html#aa3a25ba0e55f71cd23afc5849a2c2f5a">LocalAllocator::GPRStatus</a>
+</li>
 </ul>
 
 
 <h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
+<li>m_Allocator
+: <a class="el" href="class_dynarec.html#a6e4a63dcf40a2af5181b54ddb744fe3b">Dynarec</a>
+</li>
 <li>m_Arena
 : <a class="el" href="class_emitter.html#a3abf74629dc8c7773a2e06183e534fc4">Emitter</a>
 </li>
@@ -185,7 +193,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_g_p_u.html#a8b90349cefad7f3ad43a8cee164c7e31">GPU</a>
 </li>
 <li>m_CPU
-: <a class="el" href="class_emulator.html#aac5fe6fa9370c20b5a2ccbdb9a19d44a">Emulator</a>
+: <a class="el" href="class_dynarec.html#ae526e9cddcb37af4c75be15dafc7435d">Dynarec</a>
+, <a class="el" href="class_emulator.html#a903e6feed55adc6c8b1b3628a9220935">Emulator</a>
 , <a class="el" href="class_interpreter.html#a8767197f88567abf37605fdc3047d3cd">Interpreter</a>
 </li>
 <li>m_DecayValues
@@ -200,6 +209,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>m_Dynarec
 : <a class="el" href="class_emulator.html#a38dbcea166b3c3d03f597165009d9d3d">Emulator</a>
 </li>
+<li>m_EmitTable
+: <a class="el" href="class_dynarec.html#a9c7a7ca8026d1107ec4300eb0bdb9808">Dynarec</a>
+</li>
 <li>m_Emitter
 : <a class="el" href="class_dynarec.html#acb38dfe290dc0c02941b8c915c47ac76">Dynarec</a>
 </li>
@@ -213,7 +225,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_command_line_interface.html#afcaf6271a1230a749ccd5797ab829205">CommandLineInterface</a>
 </li>
 <li>m_GPU
-: <a class="el" href="class_interpreter.html#acd13cfca53c0a855de6e1284a992e358">Interpreter</a>
+: <a class="el" href="class_interpreter.html#a2c1cf37c0b54e8e9553a8e03baccd632">Interpreter</a>
 </li>
 <li>m_Interpreter
 : <a class="el" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">Emulator</a>
@@ -223,16 +235,20 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 , <a class="el" href="class_memory_arena.html#a6dc1e82b14d9b6f60dd8b007709448a3">MemoryArena</a>
 </li>
 <li>m_Ops
-: <a class="el" href="class_interpreter.html#a2bfedfd268949151ddf52c877e4e1c44">Interpreter</a>
+: <a class="el" href="class_interpreter.html#a6abf7019eee08dbc171650bdd1935a95">Interpreter</a>
 </li>
 <li>m_PC
 : <a class="el" href="class_c_p_u.html#ae23d7da0e1b35635ee7e1dec59cc996a">CPU</a>
+</li>
+<li>m_PRegNb
+: <a class="el" href="class_local_allocator.html#ab31f9a8160d25543609ba7577c4c3727">LocalAllocator</a>
 </li>
 <li>m_RandEngine
 : <a class="el" href="class_interpreter.html#acbbf883a36109b5928cfd963fb36c626">Interpreter</a>
 </li>
 <li>m_Registers
-: <a class="el" href="class_c_p_u.html#a6e41c1cbae173c2eb7180b374d48c8d4">CPU</a>
+: <a class="el" href="class_local_allocator.html#af3aba9630c378ed61ddc01dc1b0f1b29">LocalAllocator</a>
+, <a class="el" href="class_c_p_u.html#a45c1c61a605ad4f50a6ae5f8ec3f4154">CPU</a>
 </li>
 <li>m_ReleaseValues
 : <a class="el" href="class_s_p_u.html#a5fd8c05986bcda0045d20fb9c158e2d1">SPU</a>
@@ -265,7 +281,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_g_p_u.html#a2317f0aedac19a7402d5c41c36dd04d5">GPU</a>
 </li>
 <li>m_SPU
-: <a class="el" href="class_interpreter.html#ac8b180f9897ffa566ab009f10fe0f3e0">Interpreter</a>
+: <a class="el" href="class_interpreter.html#a70cad5b216683abe218c7a3c48efcf85">Interpreter</a>
 </li>
 <li>m_TestChoices
 : <a class="el" href="class_command_line_interface.html#a522931469c19f97b525b3333be5a6670">CommandLineInterface</a>
@@ -273,11 +289,24 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>m_Texture
 : <a class="el" href="class_g_p_u.html#a5f5b5b224ffe5288ba24975b3c24ee89">GPU</a>
 </li>
+<li>m_Value
+: <a class="el" href="class_instruction.html#a842358550147ed2d1f749724f0bc529d">Instruction</a>
+</li>
 <li>m_VBlankFlag
 : <a class="el" href="class_g_p_u.html#af06787a61f877b4ed35b46ad5d698a89">GPU</a>
 </li>
+<li>m_VRegNb
+: <a class="el" href="class_local_allocator.html#a51fc038fe72060554bb8b4db0e34e9bc">LocalAllocator</a>
+</li>
 <li>m_Window
 : <a class="el" href="class_g_p_u.html#ae079fd87f004244c81391e34d231ab38">GPU</a>
+</li>
+</ul>
+
+
+<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
+<li>PRegID
+: <a class="el" href="struct_local_allocator_1_1_g_p_r_status.html#ae020acd935e5ff2c2f3f62d76ab9427c">LocalAllocator::GPRStatus</a>
 </li>
 </ul>
 
@@ -290,6 +319,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 
 <h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
+<li>StackOffset
+: <a class="el" href="struct_local_allocator_1_1_g_p_r_status.html#abfe46245b6e5233719b109edf97bda61">LocalAllocator::GPRStatus</a>
+</li>
 <li>Sustain
 : <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#a1eafc3ce6548aef8450b80e92270f877">SPU::AudioSmaple</a>
 </li>
@@ -307,6 +339,9 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>Volume
 : <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#a8a5f0ef3b9945b80bfed41aad37577b2">SPU::AudioSmaple</a>
 </li>
+<li>VRegID
+: <a class="el" href="struct_local_allocator_1_1_g_p_r_status.html#af34dc5fa82ec5fcf623dc2c34cef7e4b">LocalAllocator::GPRStatus</a>
+</li>
 </ul>
 
 
@@ -318,7 +353,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Wed Oct 30 2013 15:27:30 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Thu Nov 14 2013 16:11:18 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

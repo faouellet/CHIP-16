@@ -5,24 +5,49 @@ Instruction::Instruction(const Utils::UInt32 in_Value) : m_Value(in_Value)
 	m_Opcode = m_Value >> 24;
 	m_Type = m_Opcode & 0xF0;
 	m_Op1 = FetchHalfByte(4);
-	m_UseImm = !(m_Opcode & 0xF);
-	if(m_UseImm)
+
+	if(Store < m_Type && m_Type < Stack)	// Arithmetic instructions
 	{
-		UInt16 l_IVal = (m_Value >> 8) & 0xFF;
-		m_ImmediateValue = l_IVal | ((m_Value & 0xFF) << 8);
+		if(m_Type == Shift)
+		{
+			m_UseImm = (m_Opcode & 0xF) < 3;
+		
+			if(m_UseImm)
+				m_Op3 = FetchHalfByte(2);
+			else
+				m_Op2 = FetchHalfByte(5);
+		}
+		else
+		{
+			m_UseImm = !(m_Opcode & 0xF);
+		
+			if(m_UseImm)
+			{
+				UInt16 l_IVal = (m_Value >> 8) & 0xFF;
+				m_ImmediateValue = l_IVal | ((m_Value & 0xFF) << 8);
+			}
+			else
+			{
+				m_Op2 = FetchHalfByte(5);
+		
+				if((m_Opcode & 0xF) == 2)
+				{
+					m_IsInplace = false;
+					m_Op3 = FetchHalfByte(2);
+				}
+				else
+				{
+					m_IsInplace = true;
+				}
+			}
+		}
 	}
 	else
 	{
 		m_Op2 = FetchHalfByte(5);
-		if((m_Type != Shift) && ((m_Opcode & 0xF) == 2))
-		{
-			m_Op3 = FetchHalfByte(2);
-			m_IsInplace = false;
-		}
-		else
-		{
-			m_IsInplace = true;
-		}
+		m_Op3 = FetchHalfByte(2);
+		UInt16 l_IVal = (m_Value >> 8) & 0xFF;
+		m_ImmediateValue = l_IVal | ((m_Value & 0xFF) << 8);
 	}
 }
 
