@@ -34,7 +34,7 @@ Université de Sherbrooke \\
 \section{Introduction}
 blah
 
-Le présent article à pour but de faire connaître les techniques utilisées dans le développement d'un émulateur pour une architecture virtuelle. La section 2 s'attardera justement à décrire l'architecture virtuelle ciblée. La section 3 mettra en relief diverses techniques venant du milieu des interpréteurs pouvant servir à mettre en place un émulateur. La section 4 décrira les principaux problèmes liés à la mise en place d'un recompilateur dynamique et les approches classiques utilisées pour les résoudre. Finalement, la section 5 résumera le contenu de l'article pour quiconque serait tenté de programmer un émulateur.
+Le présent article à pour but de faire connaître les techniques utilisées dans le développement d'un émulateur pour une architecture virtuelle. La section 2 s'attardera justement à décrire l'architecture virtuelle ciblée. La section 3 mettra en relief diverses techniques venant du milieu des interpréteurs pouvant servir à mettre en place un émulateur. La section 4 décrira les principaux problèmes liés à la mise en place d'un recompilateur dynamique et les approches classiques utilisées pour les résoudre. Finalement, la section 5 résumera le contenu de l'article pour quiconque serait tenté de programmer un émulateur et ouvrira des portes vers d'autres techniques n'ayant pas été abordée dans le cadre du présent article.
 
 \section{Chip16}
 
@@ -66,9 +66,11 @@ La seconde raison pouvant rendre un recompilateur dynamique peut attrayant est l
 \subsection{Émission d'instructions x86}
 
 \subsection{Analyse d'activité}
-L'analyse d'activité dans un recompilateur, dynamique ou statique, diffère de celle effectuée dans un compilateur traditionnelle. En effet, l'approche classique consiste à évaluer l'activité des variables symboliques contenues dans un sous-ensemble de la représentation intermédiaire résultant de transformations appliqués au programme original. Or, dans le cas d'un recompilateur, l'analyse d'activité se concentrera plutôt sur l'utilisation des registres virtuelles dans une partie de l'exécutable traité.
+L'analyse d'activité dans un compilateur se définit comme un problème d'analyse de flux de données. Le but recherché dans cette analyse est la découverte des endroits dans un programme où une variable est active, c'est-à-dire où elle potentiellement lue avant sa prochaine écriture.
 
-\textbf{TODO : Approche locale}
+L'analyse d'activité dans un recompilateur, dynamique ou statique, diffère de celle effectuée dans un compilateur traditionnelle. Tel que mentionné précédemment, l'approche classique consiste à évaluer l'activité des variables symboliques contenues dans un sous-ensemble de la représentation intermédiaire résultant de transformations appliqués au programme original. Or, dans le cas d'un recompilateur, l'analyse d'activité se concentrera plutôt sur l'utilisation des registres virtuelles dans une partie de l'exécutable traité. Ce problème d'analyse peut être autant approché à partir d'une perspective locale que globale.
+
+Une approche locale à l'analyse d'activité des registres virtuels consiste à se limiter à analyser le flux de données dans une sous-partie bien définie du programme, soit un bloc de base ou une trace. \textbf{TODO : Finish}
 
 \textbf{TODO : Approche globale}
 
@@ -81,14 +83,24 @@ L'analyse d'activité dans un recompilateur, dynamique ou statique, diffère de 
 \section{Conclusion}
 
 \section{Références}
+\textbf{TODO : Ref Chip16 spec}
+
+A. V. Aho, R. Sethi, J. D. Ullman, M. S. Lam, \textit{Compilers: Principles, Techniques and Tools, Second Edition}
+
+K. Cooper and L. Toczon, \textit{Engineering a Compiler}
+
 M. Zaleski, A. D. Brown, K. Stoodley, \textit{YETI: a gradually Extensible Trace Interpreter}
 
 N. Topham and D. Jones, \textit{High Speed CPU Simulation using JIT Binary Translation}
 
 M. Berndl, B. Vitale, M. Zaleski, A. D. Brown, \textit{Context Threading: A flexible and efficient dispatch technique for virtual machine interpreters}
 
-M. Anton Ertl, D. Gregg, \textit{The Structure and Performance of Efficient Interpreters}
+M. Anton Ertl and D. Gregg, \textit{The Structure and Performance of Efficient Interpreters}
 
 V. Chipounov and G. Candea, \textit{Dynamically Translating x86 to LLVM using QEMU}
+
+G. S. M. de Paula and H. D. H. O. Gomes, \textit{Analysis and extension of PCSX2, a PlayStation2 emulator}
+
+M. Probst, A. Krall, B. Scholz, \textit{Register Liveness Analysis for Optimizing Dynamic Binary Translation}
 
 \end{document}
