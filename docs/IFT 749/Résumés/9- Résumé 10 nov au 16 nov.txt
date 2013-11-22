@@ -11,7 +11,7 @@ Trucs à faire dans la semaine à venir:
 - Commencer l'écriture du rapport sous forme d'article
 - Si le temps le permet, mettre en place des tests pour l'émetteur de code
 
-Un not sur la recompilation dynamique
+Un mot sur la recompilation dynamique
 Tout d'abord, une note technique sur l'exécution de bloc recompilé. J'ai eu vent que l'inline assembly était
 quelque chose de très spécifique à chaque compilateur. Dans l'optique de rester le plus portable possible, 
 j'ai donc décidé de laisser tomber l'inline assembly. À la place, je vais convertir le pointeur de début d'un
