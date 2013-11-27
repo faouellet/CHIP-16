@@ -10,7 +10,7 @@
 %\documentstyle[nips13submit_09,times,art10]{article} % For LaTeX 2.09
 
 
-\title{Émulateur}
+\title{Techniques d'émulation pour une architecture virtuelle}
 
 
 \author{
@@ -45,15 +45,27 @@ Avant de pouvoir décrire l'architecture virtuelle Chip16, il faut parler de son
 \subsection{Caractéristiques}
 Chip16 possède un jeu d'instructions réduit comptant 73 instructions. Chaque instruction requiert un espace mémoire de 4 octets et nécessite précisément 1 cycle pour s'exécuter. Le processeur de cette architecture est cadencé à 1 Mhz. Au niveau de la mémoire, Chip16 dispose de 64 KB divisé de la façon suivante. Les adresses de 0 à 0xFDEF sont diponibles pour mettre en mémoire une ROM. La pile débute à l'adresse 0xFDF0 et occupe 512 bytes. Finalement, les deux ports d'entrées-sorties occupe l'espace allant de l'adresse 0xFFF0 à l'adresse 0xFFFF. En effet, les entrées-sorties dans le modèle architecturale de Chip16 produisent une écriture à des adresses mémoire définies à même les spécification de la machine virtuelle. Détail important à noter, la mémoire est ordonancer de manière \textit{little-endian}. De plus, Chip16 possède 16 registres à usage général de 16 bits. À cela vient s'ajouter un registre de 16 bits contenant de compteur d'exécution, un autre registre de 16 bits contenant le  pointeur de pile et un registres de 8 bits servant de registre de drapeaux. 
 
-Au niveau graphique, Chip16 affiche à une résolution de 320x240 en utilisant des couleurs indexé par 4 bits. Le rythme de rafraîchissement est de 60 images par secondes et un drapeau \textit{VBlank} est levé à chaque affichage. Le processeur peut, au besoin, se mettre en attente sur ce drapeau. Une notion importante au niveau graphique est celle du \textit{sprite}. Dans la spécification de Chip16, un \textit{sprite} correspond à un bloc horizontal de 2 pixels. \textbf{TODO: Finish sprite description}. La seconde notion primordiale au niveau graphique est celle de la palette de couleurs. \textbf{TODO: Palette}
+Au niveau graphique, Chip16 affiche à une résolution de 320x240 en utilisant des couleurs indexé par 4 bits. Le rythme de rafraîchissement est de 60 images par secondes et un drapeau \textit{VBlank} est levé à chaque affichage. Le processeur peut, au besoin, se mettre en attente sur ce drapeau. En plus d'une couche primaire, Chip16 possède aussi une couche d'arrière-plan qui ne peut prendre qu'une seule couleur à la fois. 
+
+Une notion importante au niveau graphique est celle du \textit{sprite}. Dans la spécification de Chip16, un \textit{sprite} correspond à un bloc horizontal de 2 pixels, c'est-à-dire, un bloc deux pixels adjacents de façon horizontale. Une conséquence de ce choix est que si, par exemple, la hauteur et la largeur d'un \textit{sprite} sont de deux, concrètement, le \textit{sprite} aura une largeur de 4 pixels et une hauteur de 2 pixels.
+
+La seconde notion primordiale au niveau graphique est celle de la palette de couleurs. Dans l,architecture Chip16, une palette de couleurs est définit comme une collection de 16 couleurs, toutes définies dans le format RGB et occupant donc chacune 3 bytes en mémoire. Une palette de couleurs par défaut est définit, mais un usager peut décider d'importer sa propre palette par le biais d'instructions spécifiques à ce cas d'utilisation.
 
 \section{Interpréteur}
 \subsection{Définition et motivation}
+Un interpréteur est un programme qui exécute directement des instructions écrites dans un langage de programmation sans les compiler au préalable. Au sens strict, il n'investira pas d'efforts dans l'optimisation de l'exécutable qu'il exécute que ce soit au niveau des instructions elles-même ou au niveau de la manière qu'il exécute ces instructions. Bien entendu, un bon nombre d'interpréteurs[REF] vont au-delà de cette définition  pour offrir une meilleure expérience d'utilisation. Les sous-sections 
+3.2, 3.3 et 3.4 font d'ailleurs état des techniques et des architectures utilisés dans le milieu des interpréteurs conçus à des fins d'émulation de systèmes.
 
+Un aspect important qu'il faut souligné lorsqu'on décrit un interpréteur est la forme que va prendre les instructions à exécuter. L'approche usuel est d'utiliser une représentation linéaire. parmi les exemples de cette approche, on compte le \textit{bytecode} utilisé par la JVM et les instructions en lanagage d'assemblage que l'on peut extraire d'un exécutable de jeu pour vieilles consoles de jeux. Une autre approche qui peut être envisagée est l'utilisation d'un arbre syntaxique abstrait (ASA) comme représentation. La différence entre un interpréteur et un compilateur avec une telle représentation est que l'interpréteur ne n'optimisera pas l'ASA. Il supposera plutôt que l'ASA est optimal. Dans une optique plus concrète, l'interprétation avec ce type de représentation s'apparentera au passage d'un visiteur dans un arbre.
+
+Une des forces des interpréteurs pour l'émulation est qu'ils imitent très bien le comportement d'un processeur. Ainsi, la façon dont fonctionne un processeur est qu'il va chercher l'instruction pointée par le compteur d'exécution et il l'exécute. Ce simple algorithme peut facilement être écrit au sein d'un émulateur dans un langage de programmation haut niveau. Ceci permet donc un développement rapide où le programmeur sera en mesure d'obtenir des rétroactions dans des courts délais. Aussi, un tel système sera facilement testable. En effet, il suffira, tout du moins au début, de vérifier que chaque émulation d'instruction résulte en le comportement attendu par les spécifications de l'architecture émulée.
+
+Au niveau des désavantages, celui qui nuit le plus aux interpréteurs est sa lenteur. De fait, un interpréteur va prendre beaucoup plus de cycle que la machine émulée pour exécuter une instruction étant donné tout le traitement qu'il doit effectuer avant l'exécution. En des termes plus concrets, cette situation peut se traduire par le fait qu'une instruction nécessitant un cycle pour s'exécuter nativement sur l'architecture émulée en prendra dix en s'exécutant au travers de l'émulateur.
 
 \subsection{Switch Dispatch}
+L'architecture la plus intuitive et la plus facile à mettre en place pour un interpréteur est celle dénommé \textit{switch dispatch}. Comme son nom l'indique, il s'agit tout simplement de modéliser l'exécution d'une instruction par une conditionnelle à multiples branches. Évidemment, on ne veut utiliser cette architecture pour un jeu d'instructions trop grand. Par contre, pour les jeux d'instructions restreints, cette technique permet d'obtenir des résultats très rapidement. Qui plus est, tout du moins en C++, un compilateur faisant face à une telle conditionnelle, souvent massive, pourra l'optimiser en la transformant en table de sauts.
 
-\subsection{Direct Threading}
+\subsection{Direct (Call?) Threading}
 
 \subsection{Context Threading}
 
@@ -67,9 +79,12 @@ La raison majeure pour laquelle on peut désirer mettre en place un recompilateu
 
 Les raisons pour lesquelles on voudrait éviter de programmer un tel système sont par contre nombreuses. La première est que programmer un recompilateur est une tâche très ardue. Il s'agit, grosso modo, de mettre en place un "backend" de compilateur. On rappelle au passage que les trois grandes étapes mise en place par cette partie d'un compilateur, la sélection d'instructions, l'ordonnancement d'instructions et l'allocation de registres, sont toutes des problèmes NP-complet. Qui plus est, ces trois problèmes interagissent ensemble ce qui complique encore plus la chose. 
 
-La seconde raison pouvant rendre un recompilateur dynamique peut attrayant est la difficulté de tester un tel système. De fait, l'analyse des binaires produits de façon dynamique pour déterminer de leur qualité requiert une expertise dans le langage assembleur ciblé. De plus, suivre le fil de l'exécution d'un recompilateur est difficile compte tenu des sauts qu'il effectue entre l'interprétation et l'exécution de code assembleur.\textbf{TODO?}
+La seconde raison pouvant rendre un recompilateur dynamique peut attrayant est la difficulté de tester un tel système. De fait, l'analyse des binaires produits de façon dynamique pour déterminer de leur qualité requiert une expertise dans le langage assembleur ciblé. De plus, suivre le fil de l'exécution d'un recompilateur est difficile compte tenu des sauts qu'il effectue entre l'interprétation et l'exécution de code assembleur. Et bien que certains environnements de développement permettent de suivre un tel fil d'exécution, le problème de comprendre et réglé des problèmes au niveau de l'assembleur reste entier.
 
 \subsection{Émission d'instructions x86}
+Le but principal d'un recompilateur dynamiqueest de produire du code assembleur pour l'architecture hôte. Compte tenu que le jeu d'intructions le plus répandu au moment de la rédaction de cet article est le jeu x86 d'Intel[REF], cette sous-section s'attardera à la génération d'instructions pour ce jeu en particulier. Pour ce qui est du choix d'instructions, tout les choix sont faits par le recompilateur dynamique qui contient la logique d'association et de traduction d'instructions de diverses architectures.
+
+\textbf{TODO}
 
 \subsection{Analyse d'activité}
 L'analyse d'activité dans un compilateur se définit comme un problème d'analyse de flux de données. Le but recherché dans cette analyse est la découverte des endroits dans un programme où une variable est active, c'est-à-dire où elle potentiellement lue avant sa prochaine écriture.
@@ -78,19 +93,31 @@ L'analyse d'activité dans un recompilateur, dynamique ou statique, diffère de 
 
 Une approche locale à l'analyse d'activité des registres virtuels consiste à limiter l'analyse du flux de données à une sous-partie bien définie du programme, soit un bloc de base[REF] ou une trace[REF]. Ceci sous-entends donc qu'il est pris pour acquis que la totalité des registres physiques sont disponibles au début de la sous-partie traitée et qu'ils sont tous libérés à la sortie. Ceci empêchera nécessairement de lier des sous-parties de programme ensemble, mais rendra l'analyse beaucoup plus simple. Un algorithme populaire \textbf{TODO}
 
-L'approche globale à l'analyse d'activité va considérer que certains registres virtuels sont déjà actifss au début d'une sous-partie de programme et que certains vont être actifs dans une sous-partie subséquente. \textbf{TODO}
+L'approche globale à l'analyse d'activité va considérer que certains registres virtuels sont déjà actifs au début d'une sous-partie de programme et que certains vont être actifs dans une sous-partie subséquente. \textbf{TODO}
 
 \subsection{Allocation de registres}
+Une fois l'analyse d'activité effectuée, le recompilateur possède alors suffisament d'information pour procéder à l'allocation de registres, c'est-à-dire, associer les registres virtuels de l'architecture émulée avec les registres natifs de l'architecture hôte.
 
 \textbf{TODO : Heuristiques}
 
 \textbf{TODO : Linkage}
 
 \section{Conclusion}
+Cet article à décrit une architecture virtuelle minimaliste créée pour faciliter l'acquisition des connaissances nécessaires au développement d'un émulateur. Quelques unes de ces techniques ont ensuite été décrites. Cette description à été divisée en deux parties, la première exposant des techniques issues du milieu de l'interprétation et la seconde posant les bases théoriques pour la mise en place d'un recompilateur dynamique.
+
+Bien évidemment, l'émulation regroupe beaucoup plus de techniques et d'architectures qu'il n'a été présenté dans cet article. Il serait intéressant, dans un but d'atteindre rapidement la fine pointe de cette technologie, d'utiliser la suite d'outils offertes par LLVM[REF] pour développer un recompilateur dynamique. Aussi, le sujet de l'optimisation du code produit pour l'architecture hôte n'a pas du tout été abordé et il serait pertinent d'y revenir dans un article subséquent.
 
 \section{Références}
 \small{
 \textit{CHIP-8}, http://en.wikipedia.org/wiki/Chip8
+
+\textbf{TODO: Ref x86}
+
+\textbf{TODO: Ref JVM}
+
+\textbf{TODO: Ref LLVM}
+
+\textbf{TODO?: Ref Dolphin}
 
 \textit{Chip16 v1.1 specifications}
 
