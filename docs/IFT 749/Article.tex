@@ -98,9 +98,9 @@ L'approche globale à l'analyse d'activité va considérer que certains registre
 \subsection{Allocation de registres}
 Une fois l'analyse d'activité effectuée, le recompilateur possède alors suffisament d'information pour procéder à l'allocation de registres, c'est-à-dire, associer les registres virtuels de l'architecture émulée avec les registres natifs de l'architecture hôte.
 
-\textbf{TODO : Heuristiques}
+Dans le cas que l'analyse d'activité était uniquement locale, une approche à prendre pour l'allocation de registres natifs est d'associer certains de ces registres avec les registres virtuels les plus utilisés. On n'associera par contre pas l'ensemble de ces registres natifs, préférant plutôt en garder libres pour  \textbf{TODO : Heuristiques}
 
-\textbf{TODO : Linkage}
+Advenant que l'analyse d'activité effectuée ait été de façon globale, il est alors possible de lier les blocs de base recompilé ensemble. Au niveau de l'allocation de registres, cela implique qu'on ne pourra plus utiliser de registres natifs pour \textit{dealer} avec les registres virtuels les moins utilisés.\textbf{TODO : Linkage}
 
 \section{Conclusion}
 Cet article à décrit une architecture virtuelle minimaliste créée pour faciliter l'acquisition des connaissances nécessaires au développement d'un émulateur. Quelques unes de ces techniques ont ensuite été décrites. Cette description à été divisée en deux parties, la première exposant des techniques issues du milieu de l'interprétation et la seconde posant les bases théoriques pour la mise en place d'un recompilateur dynamique.
