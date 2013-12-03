@@ -98,9 +98,9 @@ L'approche globale à l'analyse d'activité va considérer que certains registre
 \subsection{Allocation de registres}
 Une fois l'analyse d'activité effectuée, le recompilateur possède alors suffisament d'information pour procéder à l'allocation de registres, c'est-à-dire, associer les registres virtuels de l'architecture émulée avec les registres natifs de l'architecture hôte.
 
-Dans le cas que l'analyse d'activité était uniquement locale, une approche à prendre pour l'allocation de registres natifs est d'associer certains de ces registres avec les registres virtuels les plus utilisés. On n'associera par contre pas l'ensemble de ces registres natifs, préférant plutôt en garder libres pour  \textbf{TODO : Heuristiques}
+Dans le cas que l'analyse d'activité était uniquement locale, une approche à prendre pour l'allocation de registres natifs est d'associer certains de ces registres avec les registres virtuels les plus utilisés. On n'associera par contre pas l'ensemble de ces registres natifs, préférant plutôt en garder libres pour un ensemble de registres virtuels moins utilisés. Dans le cas de l'émulateur implémenté pour cet article, le nombre de registres natifs libres est de 2. Ce choix a été motivé par la présence d'instructions à trois opérandes dans le jeu d'instructions de l'architecture cible. De cette façon, même si les trois registres virtuels impliqués dans l'instruction courante ne sont associés à des registres natifs au préalable, l'instruction pourra tout de même être exécutée avec un chargement dans un registre suivi d'instructions \textit{in situ}.
 
-Advenant que l'analyse d'activité effectuée ait été de façon globale, il est alors possible de lier les blocs de base recompilé ensemble. Au niveau de l'allocation de registres, cela implique qu'on ne pourra plus utiliser de registres natifs pour \textit{dealer} avec les registres virtuels les moins utilisés.\textbf{TODO : Linkage}
+Advenant que l'analyse d'activité effectuée ait été de façon globale, il est alors possible de lier les blocs de base recompilé ensemble. Au niveau de l'allocation de registres, cela implique qu'on ne pourra plus utiliser de registres natifs pour des mises en correspondance éphémères avec les registres virtuels les moins utilisés. Par conséquent, on peut s'attendre à des ralentissements, dans le sens d'un gain de vitesse moins élevés sur un interpréteur, lorsque le programme doit aller chercher des données en mémoire. Tout ceci découle du fait que le passage en mode natif est plus long et donc que l'allocation est pensée pour un plus long terme où on ne veut pas souffrir les pénalités associées avec des manipulations trop nombreuses de la pile. Un exposé sur les différents types d'allocateurs de registres globaux va au-delà de la portée de cet article, mais le lecteur curieux est appelé à consulter [REF LSA] pour un aperçu d'une approche énormément utilisée dans le milieu des compilateurs juste-à-temps.
 
 \section{Conclusion}
 Cet article à décrit une architecture virtuelle minimaliste créée pour faciliter l'acquisition des connaissances nécessaires au développement d'un émulateur. Quelques unes de ces techniques ont ensuite été décrites. Cette description à été divisée en deux parties, la première exposant des techniques issues du milieu de l'interprétation et la seconde posant les bases théoriques pour la mise en place d'un recompilateur dynamique.
@@ -118,6 +118,8 @@ Bien évidemment, l'émulation regroupe beaucoup plus de techniques et d'archite
 \textbf{TODO: Ref LLVM}
 
 \textbf{TODO?: Ref Dolphin}
+
+\textbf{TODO: Ref Linear scan allocation}
 
 \textit{Chip16 v1.1 specifications}
 
