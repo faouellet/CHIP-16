@@ -459,7 +459,7 @@ void Interpreter::RND(const Instruction in_Instruction)
 
 void Interpreter::FLIP(const Instruction in_Instruction)
 {
-	m_GPU.Flip(in_Instruction.GetImmediateValue() & 0xF00);
+	m_GPU.Flip((in_Instruction.GetImmediateValue() & 0xF00) >> 8);
 }
 
 void Interpreter::SND0(const Instruction in_Instruction)

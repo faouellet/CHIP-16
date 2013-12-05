@@ -29,50 +29,49 @@ BOOST_AUTO_TEST_CASE( InitTest )
 BOOST_AUTO_TEST_CASE( AdsrTest )
 {
 	/*Emu.Init(ROM_PATH + "/AdsrTest/AdsrTest.c16");
-	Emu.Emulate();*/
+	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_CASE( BC_TestRom )
 {
-	/*BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/Ninja/Ninja.c16"), Utils::NoError);
+	/*BOOST_REQUIRE_EQUAL(Emu.Init(ROM_PATH + "/BC_TestRom/BC_TestRom.c16"), Utils::NoError);
 	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_CASE( CollisionTest )
 {
-	//Emu.Init(ROM_PATH + "/CollisionTest/CollisionTest.c16");
-	/*Emu.Init(ROM_PATH + "/alien/alien.c16");
-	Emu.Emulate();*/
+	/*Emu.Init(ROM_PATH + "/CollisionTest/CollisionTest.c16");
+	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_CASE( flip_test )
 {
-	/*Emu.Init(ROM_PATH + "/flip_test/flip_test.c16");
-	Emu.Emulate();*/
+	Emu.Init(ROM_PATH + "/flip_test/flip_test.c16");
+	Emu.Emulate(false);
 }
 
 BOOST_AUTO_TEST_CASE( PadTest )
 {
 	/*Emu.Init(ROM_PATH + "/PadTest/PadTest.c16");
-	Emu.Emulate();*/
+	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_CASE( PaleteTest )
 {
 	/*Emu.Init(ROM_PATH + "/PaleteTest/PaleteTest.c16");
-	Emu.Emulate();*/
+	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_CASE( PaletteFlip )
 {
 	/*Emu.Init(ROM_PATH + "/PaletteFlip/paletteflip.c16");
-	Emu.Emulate();*/
+	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_CASE( SoundTest )
 {
 	/*Emu.Init(ROM_PATH + "/SoundTest/SoundTest.c16");
-	Emu.Emulate();*/
+	Emu.Emulate(false);*/
 }
 
 BOOST_AUTO_TEST_SUITE_END()

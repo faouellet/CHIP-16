@@ -19,7 +19,7 @@ Instruction::Instruction(const Utils::UInt32 in_Value) : m_Value(in_Value)
 		}
 		else
 		{
-			m_UseImm = !(m_Opcode & 0xF);
+			m_UseImm = ((m_Opcode & 0xF) == 0) || ((m_Opcode & 0xF) == 3);
 		
 			if(m_UseImm)
 			{

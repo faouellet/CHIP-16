@@ -208,7 +208,7 @@ void GPU::SetBackgroundColor(UInt8 in_ColorIndex)
 	m_BGC = in_ColorIndex;
 }
 
-void GPU::SetSpriteDimensions(UInt8 in_Width, UInt8 in_Height) 
+void GPU::SetSpriteDimensions(UInt8 in_Height, UInt8 in_Width) 
 {
 	m_Sprite.Width = in_Width * 2;
 	m_Sprite.Height = in_Height;

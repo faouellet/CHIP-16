@@ -36,7 +36,7 @@ private:
 	typedef void (Emitter::*EmitFunc) (const UInt16 in_Arg1, const UInt16 in_Arg2);	/**< Assembly emission function */
 
 private:
-	std::map<UInt8, > m_TranslationCache;	/*!< */
+	//std::map<UInt8, > m_TranslationCache;	/*!< */
 
 	LocalAllocator m_Allocator;		/*!< Register allocator operating at the level of a single basic block */
 	std::shared_ptr<CPU> m_CPU;		/*!< The central processing unit */

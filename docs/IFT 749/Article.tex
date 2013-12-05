@@ -7,6 +7,7 @@
 \usepackage{mathtools}
 \usepackage[utf8]{inputenc}
 \usepackage{listings}
+\usepackage{algorithm2e}
 %\documentstyle[nips13submit_09,times,art10]{article} % For LaTeX 2.09
 
 
@@ -40,7 +41,9 @@ Le présent article à donc pour but de faire connaître les techniques utilisé
 \section{Chip16}
 
 \subsection{Historique}
-Avant de pouvoir décrire l'architecture virtuelle Chip16, il faut parler de son prédécesseur: Chip8. \textbf{TODO}
+Avant de pouvoir décrire l'architecture virtuelle Chip16, il faut parler de son prédécesseur: Chip8[REF]. Chip8 est une spécification décrivant une architecture virtuelle et le jeu d'instructions de cette architecture. Le but recherché par cette spécification était d'offrir une plateforme simple à programmer et qui permettrait de développer rapidement des jeux vidéos. La popularité de la plateforme à fait en sorte que que plusieurs dérivés, se voulant tous des évolutions, furent produits tel que Chip-48 et Super Chip-48.
+
+La simplicité de cette architecture lui permis donc d'être la suggestion par défaut à ceux désirant s'initier à la programmation d'émulateurs. Cependant, au fil du temps, la documentation originale de cette architecture se révéla comme étant imcomplète. Ainsi, certains de ces comportements les plus particuliers étaient passer sous silence dans la spécifications originale. La communauté de l'émulation à donc décider de créer elle-même une architecture virtuelle plus prévisible et mieux documentée, Chip16[REF]. Encore une fois, le but recherché était d'offrir une entrée en douceur dans le monde de l'émulation.
 
 \subsection{Caractéristiques}
 Chip16 possède un jeu d'instructions réduit comptant 73 instructions. Chaque instruction requiert un espace mémoire de 4 octets et nécessite précisément 1 cycle pour s'exécuter. Le processeur de cette architecture est cadencé à 1 Mhz. Au niveau de la mémoire, Chip16 dispose de 64 KB divisé de la façon suivante. Les adresses de 0 à 0xFDEF sont diponibles pour mettre en mémoire une ROM. La pile débute à l'adresse 0xFDF0 et occupe 512 bytes. Finalement, les deux ports d'entrées-sorties occupe l'espace allant de l'adresse 0xFFF0 à l'adresse 0xFFFF. En effet, les entrées-sorties dans le modèle architecturale de Chip16 produisent une écriture à des adresses mémoire définies à même les spécification de la machine virtuelle. Détail important à noter, la mémoire est ordonancer de manière \textit{little-endian}. De plus, Chip16 possède 16 registres à usage général de 16 bits. À cela vient s'ajouter un registre de 16 bits contenant de compteur d'exécution, un autre registre de 16 bits contenant le  pointeur de pile et un registres de 8 bits servant de registre de drapeaux. 
@@ -82,9 +85,11 @@ Les raisons pour lesquelles on voudrait éviter de programmer un tel système so
 La seconde raison pouvant rendre un recompilateur dynamique peut attrayant est la difficulté de tester un tel système. De fait, l'analyse des binaires produits de façon dynamique pour déterminer de leur qualité requiert une expertise dans le langage assembleur ciblé. De plus, suivre le fil de l'exécution d'un recompilateur est difficile compte tenu des sauts qu'il effectue entre l'interprétation et l'exécution de code assembleur. Et bien que certains environnements de développement permettent de suivre un tel fil d'exécution, le problème de comprendre et réglé des problèmes au niveau de l'assembleur reste entier.
 
 \subsection{Émission d'instructions x86}
-Le but principal d'un recompilateur dynamiqueest de produire du code assembleur pour l'architecture hôte. Compte tenu que le jeu d'intructions le plus répandu au moment de la rédaction de cet article est le jeu x86 d'Intel[REF], cette sous-section s'attardera à la génération d'instructions pour ce jeu en particulier. Pour ce qui est du choix d'instructions, tout les choix sont faits par le recompilateur dynamique qui contient la logique d'association et de traduction d'instructions de diverses architectures.
+Le but principal d'un recompilateur dynamiqueest de produire du code assembleur pour l'architecture hôte. Compte tenu que le jeu d'intructions le plus répandu au moment de la rédaction de cet article est le jeu x86 d'Intel[REF], cette sous-section s'attardera à la génération d'instructions pour ce jeu en particulier. 
 
-\textbf{TODO}
+Au niveau du recompilateur, plus particulièrement au niveau de l'émetteur d'instructions x86, le travail est des plus simples. En bref, le recompilateur ne doit qu'émettre des instructions selon une mise en correspondance décidée au moment de l'implémentation. Il doit aussi s'attarder au mode d'addressage utilisé dans l'instruction courante de la machine cible pour le reproduire dans l'instruction hôte. De plus, bien que le choix des registres ne relève pas de l'émetteur, ce dernier peut choisir des instructions hôtes ayant été optimisées lorsqu'elles sont mise en oeuvre avec des registres hôtes particuliers. 
+
+La simplicité de cette traduction découle du fait que l'architecture cible est une architecture RISC. Ses opérations sont donc relativement basiques et peuvent donc facilement être mis en correspondance avec les opérations de base offerte par x86, une architecture CISC. 
 
 \subsection{Analyse d'activité}
 L'analyse d'activité dans un compilateur se définit comme un problème d'analyse de flux de données. Le but recherché dans cette analyse est la découverte des endroits dans un programme où une variable est active, c'est-à-dire où elle potentiellement lue avant sa prochaine écriture.
@@ -93,14 +98,56 @@ L'analyse d'activité dans un recompilateur, dynamique ou statique, diffère de 
 
 Une approche locale à l'analyse d'activité des registres virtuels consiste à limiter l'analyse du flux de données à une sous-partie bien définie du programme, soit un bloc de base[REF] ou une trace[REF]. Ceci sous-entends donc qu'il est pris pour acquis que la totalité des registres physiques sont disponibles au début de la sous-partie traitée et qu'ils sont tous libérés à la sortie. Ceci empêchera nécessairement de lier des sous-parties de programme ensemble, mais rendra l'analyse beaucoup plus simple. Un algorithme populaire \textbf{TODO}
 
-L'approche globale à l'analyse d'activité va considérer que certains registres virtuels sont déjà actifs au début d'une sous-partie de programme et que certains vont être actifs dans une sous-partie subséquente. \textbf{TODO}
+L'approche globale à l'analyse d'activité va considérer que certains registres virtuels sont déjà actifs au début d'une sous-partie de programme et que certains vont être actifs dans une sous-partie subséquente. Cette approche est très bien comprise par la communauté de la compilation et l'algorithme la décrivant est explicité ci-dessous.
+
+\begin{algorithm}[H]
+ %\SetLine % For v3.9
+ %\SetAlgoLined % For previous releases [?]
+ \KwData
+ {
+ 	
+ 	n $\rightarrow$ identificateur d'une instruction
+ 
+	in $\rightarrow$ variables actives avant l'exécution d'une instruction
+
+ 	out $\rightarrow$ variables actives après l'exécution d'une instruction
+ 	
+ 	succ $\rightarrow$ identificateurs des instructions pouvant suivre une instruction donnée
+ 	
+ 	use $\rightarrow$ variables utilisées dans une instruction
+ 	
+ 	def $\rightarrow$ variables définies dans une instruction
+ }
+ Initialisation:
+ 
+ \ForEach{n}
+ {
+ 	in[n] $\leftarrow \emptyset$\;
+ 	out[n] $\leftarrow \emptyset$\;
+ }
+ Calcul:
+ 
+ \While{in'=in $\land$ out'=out}
+ {
+  	\ForEach{n}
+  	{
+  		in'[n] $\leftarrow$ in[n]\;
+  		out'[n] $\leftarrow$ out[n]\;
+  		in[n] $\leftarrow$ use[n] $\cup$ (out[n] - def[n])\;
+  		out[n] $\leftarrow \cup_{s \in succ[n]}$ in[s]\;
+  	}
+ }
+ \caption{Analys d'activité globale}
+\end{algorithm}
+
+La bonne image mentale à se faire de cet algorithme est celle d'une analyse de flux dans un graphe de flot de contrôle. Ainsi, le graphe modélisé est en fait la partie du programm sur laquelle l'analyse d'activité s'effectue. L'avantage de cet algorithme est qu'il est facilement généralisable pour plusieurs niveaux d'abstractions. De fait, cet algorithme est autant applicable sur un bloc de base que sur une trace. Il pourrait même être utilisé pour faire de l'analyse et de l'optimisation inter-procédurale.
 
 \subsection{Allocation de registres}
 Une fois l'analyse d'activité effectuée, le recompilateur possède alors suffisament d'information pour procéder à l'allocation de registres, c'est-à-dire, associer les registres virtuels de l'architecture émulée avec les registres natifs de l'architecture hôte.
 
 Dans le cas que l'analyse d'activité était uniquement locale, une approche à prendre pour l'allocation de registres natifs est d'associer certains de ces registres avec les registres virtuels les plus utilisés. On n'associera par contre pas l'ensemble de ces registres natifs, préférant plutôt en garder libres pour un ensemble de registres virtuels moins utilisés. Dans le cas de l'émulateur implémenté pour cet article, le nombre de registres natifs libres est de 2. Ce choix a été motivé par la présence d'instructions à trois opérandes dans le jeu d'instructions de l'architecture cible. De cette façon, même si les trois registres virtuels impliqués dans l'instruction courante ne sont associés à des registres natifs au préalable, l'instruction pourra tout de même être exécutée avec un chargement dans un registre suivi d'instructions \textit{in situ}.
 
-Advenant que l'analyse d'activité effectuée ait été de façon globale, il est alors possible de lier les blocs de base recompilé ensemble. Au niveau de l'allocation de registres, cela implique qu'on ne pourra plus utiliser de registres natifs pour des mises en correspondance éphémères avec les registres virtuels les moins utilisés. Par conséquent, on peut s'attendre à des ralentissements, dans le sens d'un gain de vitesse moins élevés sur un interpréteur, lorsque le programme doit aller chercher des données en mémoire. Tout ceci découle du fait que le passage en mode natif est plus long et donc que l'allocation est pensée pour un plus long terme où on ne veut pas souffrir les pénalités associées avec des manipulations trop nombreuses de la pile. Un exposé sur les différents types d'allocateurs de registres globaux va au-delà de la portée de cet article, mais le lecteur curieux est appelé à consulter [REF LSA] pour un aperçu d'une approche énormément utilisée dans le milieu des compilateurs juste-à-temps.
+Advenant que l'analyse d'activité ait été effectuée de façon globale, il est alors possible de lier les blocs de base recompilé ensemble. Au niveau de l'allocation de registres, cela implique qu'on ne pourra plus utiliser de registres natifs pour des mises en correspondance éphémères avec les registres virtuels les moins utilisés. Par conséquent, on peut s'attendre à des ralentissements, dans le sens d'un gain de vitesse moins élevés sur un interpréteur, lorsque le programme doit aller chercher des données en mémoire. Tout ceci découle du fait que le passage en mode natif est plus long et donc que l'allocation est pensée pour un plus long terme où on ne veut pas souffrir les pénalités associées avec des manipulations trop nombreuses de la pile. Un exposé sur les différents types d'allocateurs de registres globaux va au-delà de la portée de cet article, mais le lecteur curieux est appelé à consulter [REF LSA] pour un aperçu d'une approche énormément utilisée dans le milieu des compilateurs juste-à-temps.
 
 \section{Conclusion}
 Cet article à décrit une architecture virtuelle minimaliste créée pour faciliter l'acquisition des connaissances nécessaires au développement d'un émulateur. Quelques unes de ces techniques ont ensuite été décrites. Cette description à été divisée en deux parties, la première exposant des techniques issues du milieu de l'interprétation et la seconde posant les bases théoriques pour la mise en place d'un recompilateur dynamique.

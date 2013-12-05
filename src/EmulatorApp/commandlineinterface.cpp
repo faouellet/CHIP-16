@@ -41,9 +41,9 @@ CommandLineInterface::CommandLineInterface()
 	m_TestChoices.push_back("PaletteFlip");
 	m_TestChoices.push_back("SoundTest");
 
-	m_Choices.push_back(std::make_pair("demo", m_DemoChoices));
-	m_Choices.push_back(std::make_pair("game", m_GameChoices));
-	m_Choices.push_back(std::make_pair("test", m_TestChoices));
+	m_Choices.push_back(std::make_pair("Demo", m_DemoChoices));
+	m_Choices.push_back(std::make_pair("Game", m_GameChoices));
+	m_Choices.push_back(std::make_pair("Test", m_TestChoices));
 }
 
 CommandLineInterface::~CommandLineInterface() { }
@@ -58,10 +58,10 @@ std::string CommandLineInterface::ChooseROM()
 
 	if(0 < l_Choice && l_Choice < 3)
 	{
-		std::cout << "Choose a" << m_Choices[l_Choice].first << " to run" << std::endl;
-		l_Choice = Choose(m_Choices[l_Choice].second);
-		if(0 <= l_Choice && l_Choice < m_Choices[l_Choice].second.size())
-			l_ROM = FormatChoice(m_Choices[l_Choice].first, m_Choices[l_Choice].second[l_Choice]);
+		std::cout << "Choose a " << m_Choices[--l_Choice].first << " to run" << std::endl;
+		unsigned l_GameChoice = Choose(m_Choices[l_Choice].second);
+		if(0 <= l_GameChoice && l_GameChoice < m_Choices[l_Choice].second.size())
+			l_ROM = FormatChoice(m_Choices[l_Choice].first, m_Choices[l_Choice].second[l_GameChoice]);
 	}
 
 	return l_ROM;
@@ -81,6 +81,6 @@ std::string CommandLineInterface::FormatChoice(const std::string & in_Folder,
 											   const std::string & in_Choice) const
 {
 	std::stringstream l_SStream;
-	l_SStream << in_Folder << "/" << in_Choice << "/" << in_Choice << ".c16";
+	l_SStream << "./" << in_Folder << "s/" << in_Choice << "/" << in_Choice << ".c16";
 	return l_SStream.str();
 }
