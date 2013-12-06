@@ -65,12 +65,13 @@ Une des forces des interpréteurs pour l'émulation est qu'ils imitent très bie
 
 Au niveau des désavantages, celui qui nuit le plus aux interpréteurs est sa lenteur. De fait, un interpréteur va prendre beaucoup plus de cycle que la machine émulée pour exécuter une instruction étant donné tout le traitement qu'il doit effectuer avant l'exécution. En des termes plus concrets, cette situation peut se traduire par le fait qu'une instruction nécessitant un cycle pour s'exécuter nativement sur l'architecture émulée en prendra dix en s'exécutant au travers de l'émulateur.
 
+Les sous-sections suivantes présentent une approche naîve (3.2) et ce qui est considéré comme étant à la fine pointe de la technologie en ce qui concerne l'implémentation d'interpréteurs.
+
 \subsection{Switch Dispatch}
-L'architecture la plus intuitive et la plus facile à mettre en place pour un interpréteur est celle dénommé \textit{switch dispatch}. Comme son nom l'indique, il s'agit tout simplement de modéliser l'exécution d'une instruction par une conditionnelle à multiples branches. Évidemment, on ne veut utiliser cette architecture pour un jeu d'instructions trop grand. Par contre, pour les jeux d'instructions restreints, cette technique permet d'obtenir des résultats très rapidement. Qui plus est, tout du moins en C++, un compilateur faisant face à une telle conditionnelle, souvent massive, pourra l'optimiser en la transformant en table de sauts.
+L'architecture la plus intuitive et la plus facile à mettre en place pour un interpréteur est celle dénommé \textit{switch dispatch}. Comme son nom l'indique, il s'agit tout simplement de modéliser l'exécution d'une instruction par une conditionnelle à multiples branches. Évidemment, on ne veut utiliser cette architecture pour un jeu d'instructions trop grand. Par contre, pour les jeux d'instructions restreints, cette technique permet d'obtenir des résultats très rapidement. Qui plus est, tout du moins en C++, un compilateur faisant face à une telle conditionnelle, souvent massive, pourra l'optimiser en la transformant en table de sauts. 
 
-\subsection{Direct (Call?) Threading}
+\subsection{Threaded Code}
 
-\subsection{Context Threading}
 
 \section{Recompilateur dynamique}
 \subsection{Définition et motivation}
@@ -96,9 +97,7 @@ L'analyse d'activité dans un compilateur se définit comme un problème d'analy
 
 L'analyse d'activité dans un recompilateur, dynamique ou statique, diffère de celle effectuée dans un compilateur traditionnelle. Tel que mentionné précédemment, l'approche classique consiste à évaluer l'activité des variables symboliques contenues dans un sous-ensemble de la représentation intermédiaire résultant de transformations appliqués au programme original. Or, dans le cas d'un recompilateur, l'analyse d'activité se concentrera plutôt sur l'utilisation des registres virtuelles dans une partie de l'exécutable traité. Ce problème d'analyse peut être autant approché à partir d'une perspective locale que globale.
 
-Une approche locale à l'analyse d'activité des registres virtuels consiste à limiter l'analyse du flux de données à une sous-partie bien définie du programme, soit un bloc de base[REF] ou une trace[REF]. Ceci sous-entends donc qu'il est pris pour acquis que la totalité des registres physiques sont disponibles au début de la sous-partie traitée et qu'ils sont tous libérés à la sortie. Ceci empêchera nécessairement de lier des sous-parties de programme ensemble, mais rendra l'analyse beaucoup plus simple. Un algorithme populaire \textbf{TODO}
-
-L'approche globale à l'analyse d'activité va considérer que certains registres virtuels sont déjà actifs au début d'une sous-partie de programme et que certains vont être actifs dans une sous-partie subséquente. Cette approche est très bien comprise par la communauté de la compilation et l'algorithme la décrivant est explicité ci-dessous.
+Au niveau algorithmique, la communauté de la compilation à depuis longtemps formulé un algorithme pour effecter une analyse d'activité sur une sous-partie d'un programme. Cet algorithme est explicité ci-dessous.
 
 \begin{algorithm}[H]
  %\SetLine % For v3.9
@@ -106,41 +105,45 @@ L'approche globale à l'analyse d'activité va considérer que certains registre
  \KwData
  {
  	
- 	n $\rightarrow$ identificateur d'une instruction
+ 	\textit{n} $\rightarrow$ identificateur d'une instruction
  
-	in $\rightarrow$ variables actives avant l'exécution d'une instruction
+	\textit{in} $\rightarrow$ variables actives avant l'exécution d'une instruction
 
- 	out $\rightarrow$ variables actives après l'exécution d'une instruction
+ 	\textit{out} $\rightarrow$ variables actives après l'exécution d'une instruction
  	
- 	succ $\rightarrow$ identificateurs des instructions pouvant suivre une instruction donnée
+ 	\textit{succ} $\rightarrow$ identificateurs des instructions pouvant suivre une instruction donnée
  	
- 	use $\rightarrow$ variables utilisées dans une instruction
+ 	\textit{use} $\rightarrow$ variables utilisées dans une instruction
  	
- 	def $\rightarrow$ variables définies dans une instruction
+ 	\textit{def} $\rightarrow$ variables définies dans une instruction
  }
  Initialisation:
  
  \ForEach{n}
  {
- 	in[n] $\leftarrow \emptyset$\;
- 	out[n] $\leftarrow \emptyset$\;
+ 	\textit{in}[n] $\leftarrow \emptyset$\;
+ 	\textit{out}[n] $\leftarrow \emptyset$\;
  }
  Calcul:
  
- \While{in'=in $\land$ out'=out}
+ \While{\textit{in}'=\textit{in} $\land$ \textit{out}'=\textit{out}}
  {
   	\ForEach{n}
   	{
-  		in'[n] $\leftarrow$ in[n]\;
-  		out'[n] $\leftarrow$ out[n]\;
-  		in[n] $\leftarrow$ use[n] $\cup$ (out[n] - def[n])\;
-  		out[n] $\leftarrow \cup_{s \in succ[n]}$ in[s]\;
+  		\textit{in}'[\textit{n}] $\leftarrow$ \textit{in}[\textit{n}]\;
+  		\textit{out}'[\textit{n}] $\leftarrow$ \textit{out}[\textit{n}]\;
+  		\textit{in}[\textit{n}] $\leftarrow$ use[n] $\cup$ (\textit{out}[\textit{n}] - \textit{def}[\textit{n}])\;
+  		\textit{out}[\textit{n}] $\leftarrow \cup_{s \in succ[n]}$ \textit{in}[\textit{s}]\;
   	}
  }
  \caption{Analys d'activité globale}
 \end{algorithm}
 
 La bonne image mentale à se faire de cet algorithme est celle d'une analyse de flux dans un graphe de flot de contrôle. Ainsi, le graphe modélisé est en fait la partie du programm sur laquelle l'analyse d'activité s'effectue. L'avantage de cet algorithme est qu'il est facilement généralisable pour plusieurs niveaux d'abstractions. De fait, cet algorithme est autant applicable sur un bloc de base que sur une trace. Il pourrait même être utilisé pour faire de l'analyse et de l'optimisation inter-procédurale.
+
+Une approche locale à l'analyse d'activité des registres virtuels consiste à limiter l'analyse du flux de données à une sous-partie bien définie du programme, soit un bloc de base[REF] ou une trace[REF]. Ceci sous-entends donc qu'il est pris pour acquis que la totalité des registres physiques sont disponibles au début de la sous-partie traitée et qu'ils sont tous libérés à la sortie. Ceci empêchera nécessairement de lier des sous-parties de programme ensemble, mais rendra l'analyse beaucoup plus simple. Le lecteur attentif aura remarqué que l'algorithme ci-dessus illustre l'approche locale à l'analyse d'activité du fait que \textit{in} et \textit{out} sont vides au départ.
+
+L'approche globale à l'analyse d'activité va considérer que certains registres virtuels sont déjà actifs au début d'une sous-partie de programme et que certains vont être actifs dans une sous-partie subséquente. Pour ce faire, il suffit juste de faire passer de l'information entre les sous-parties d'un programme au moyen de \textit{in} et \textit{out}. Ainsi, tout en respectant leurs définitions, on peut allonger l'activité considérée avant et après l'exécution d'une instruction pour englober les sous-parties directement avant et après celle présentement traitée.
 
 \subsection{Allocation de registres}
 Une fois l'analyse d'activité effectuée, le recompilateur possède alors suffisament d'information pour procéder à l'allocation de registres, c'est-à-dire, associer les registres virtuels de l'architecture émulée avec les registres natifs de l'architecture hôte.
