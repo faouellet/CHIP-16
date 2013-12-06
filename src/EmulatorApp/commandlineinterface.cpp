@@ -21,8 +21,9 @@ CommandLineInterface::CommandLineInterface()
 	m_DemoChoices.push_back("Triangle");
 	m_DemoChoices.push_back("Water");
 	m_DemoChoices.push_back("XOR");
+	m_DemoChoices.push_back("Tetris");
 
-	m_DemoChoices.push_back("Alien");
+	m_GameChoices.push_back("Alien");
 	m_GameChoices.push_back("Herdle");
 	m_GameChoices.push_back("MusicMaker");
 	m_GameChoices.push_back("Ninja");
@@ -30,8 +31,7 @@ CommandLineInterface::CommandLineInterface()
 	m_GameChoices.push_back("Pong");
 	m_GameChoices.push_back("Reflection");
 	m_GameChoices.push_back("Snafu");
-	m_DemoChoices.push_back("Tetris");
-
+	
 	m_TestChoices.push_back("AdsrTest");
 	m_TestChoices.push_back("BC_TestRom");
 	m_TestChoices.push_back("CollisionTest");
@@ -56,7 +56,7 @@ std::string CommandLineInterface::ChooseROM()
 
 	std::string l_ROM;
 
-	if(0 < l_Choice && l_Choice < 3)
+	if(0 < l_Choice && l_Choice < 4)
 	{
 		std::cout << "Choose a " << m_Choices[--l_Choice].first << " to run" << std::endl;
 		unsigned l_GameChoice = Choose(m_Choices[l_Choice].second);

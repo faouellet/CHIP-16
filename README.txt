@@ -1,6 +1,8 @@
-Emulator for the Chip16
+**Emulator for the Chip16**
+==============
 
 For Windows users:
+--------------
 You will need CMake in order to create the Visual Studio solution. 
 You can get it at http://www.cmake.org/cmake/resources/software.html
 
@@ -13,4 +15,27 @@ How to:
 8- The Visual Studio solution should now be in the folder you previously specified
 
 For Linux users:
-TODO
+--------------
+**TODO**
+
+Controls:
+--------------
+Player 1:
+Left	-> Left Arrow
+Right	-> Right Arrow
+Up		-> Up Arrow
+Down	-> Down Arrow
+A		-> O
+B		-> P
+Select	-> Right Shift
+Start	-> Enter
+
+Player 2:
+Left	-> A
+Right	-> D
+Up		-> W
+Down	-> S
+A		-> V
+B		-> B
+Select	-> Left Shift
+Start	-> Space
