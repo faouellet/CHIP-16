@@ -33,6 +33,12 @@ private:
 public:
 	/**
 	* \enum
+	* \brief Possible interpretation errors
+	*/
+	enum { NoError = 0, UnknownRegister = 1, StackOverflow = 2, StackUnderflow = 4, StackError = 8, MemoryError = 16 };
+
+	/**
+	* \enum
 	* \brief Masks for the flag register
 	*/
 	enum { UnsignedCarryFlag = 2, UnsignedBorrowFlag = 2, ZeroFlag = 4, 
@@ -127,6 +133,7 @@ public:
 	*/
 	UInt16 DumpStackPointer() const;
 
+public:
 	/**
 	* \fn Init
 	* \brief Initialize the central processing unit
@@ -166,23 +173,26 @@ public:
 	* \fn SetProgramCounter
 	* \brief Set the value of the PC
 	* \param in_Value The new value of the PC
+	* \return ErrorCode
 	*/
-	void SetProgramCounter(const UInt16 in_Value);
+	UInt8 SetProgramCounter(const UInt16 in_Value);
 
 	/**
 	* \fn SetRegister
 	* \brief Set the value of a register
 	* \param in_RegID The ID of the register to update
 	* \param in_Value The new value of the register
+	* \return ErrorCode
 	*/
-	void SetRegister(const UInt8 in_RegID, const UInt16 in_Value);
+	UInt8 SetRegister(const UInt8 in_RegID, const UInt16 in_Value);
 
 	/**
 	* \fn SetStackPointer
 	* \brief Set the value of the SP
 	* \param in_Value The new value of the SP
+	* \return ErrorCode
 	*/
-	void SetStackPointer(const UInt16 in_Value);
+	UInt8 SetStackPointer(const UInt16 in_Value);
 
 	/**
 	* \fn StepBack
@@ -242,37 +252,43 @@ public:	// Memory helpers
 	* \fn Load
 	* \brief Load a value from memory
 	* \param in_Address Memory address of the value to fetch
+	* \param out_Value The value at the given address
+	* \return Error code
 	*/
-	UInt16 Load(const UInt16 in_Address) const;
+	UInt8 Load(const UInt16 in_Address, UInt16 & out_Value) const;
 
 	/**
 	* \fn Store
 	* \brief Store a value in memory
 	* \param in_Address Memory address of the value to fetch
 	* \param in_Value The value to store
+	* \return Error code
 	*/
-	void Store(const UInt16 in_Address, const UInt16 in_Value);
+	UInt8 Store(const UInt16 in_Address, const UInt16 in_Value);
 
 public:	// Stack helpers
 	/**
 	* \fn Pop
 	* \brief Pop a value from the stack of the emulator and decrement the SP by 2
-	* \return The value that was at the top of the stack
+	* \param out_Value The value that was at the top of the stack
+	* \return Error code
 	*/
-	UInt16 Pop();
+	UInt8 Pop(UInt16 & out_Value);
 
 	/**
 	* \fn Push
 	* \brief Push a value on the stack and increment the SP by 2
 	* \param in_Val The value to be pushed
+	* \return Error code
 	*/
-	void Push(UInt16 in_Val);
+	UInt8 Push(UInt16 in_Val);
 
 	/**
 	* \fn PushPC
 	* \brief Push the PC on the stack and increment the SP by 2
+	* \return Error code
 	*/
-	void PushPC();
+	UInt8 PushPC();
 
 public:	// Flag register helpers
 	/**

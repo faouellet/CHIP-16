@@ -2,7 +2,7 @@
 
 #include <iostream>
 
-Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m_Dist(0, std::numeric_limits<UInt16>::max())
+Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m_Dist(0, std::numeric_limits<UInt16>::max()), m_ErrorCode(0)
 {
 	m_Ops[0x00] = &Interpreter::NOP; 
 	m_Ops[0x01] = &Interpreter::CLS;
@@ -111,7 +111,7 @@ unsigned Interpreter::InterpretOp()
 	else
 		std::cout << "Unknown opcode" << std::endl;
 	
-	return 0; // TODO : Error code
+	return m_ErrorCode;
 }
 
 void Interpreter::Show()
@@ -275,7 +275,7 @@ void Interpreter::DIV(const Instruction in_Instruction)
 
 void Interpreter::DirectJMP(const Instruction in_Instruction)
 {
-	m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
 }
 
 void Interpreter::Jx(const Instruction in_Instruction)
@@ -290,23 +290,25 @@ void Interpreter::JME(const Instruction in_Instruction)
 	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
 	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
 	if(l_XVal == l_YVal)
-		m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+		m_ErrorCode = m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
 }
 
 void Interpreter::DirectCALL(const Instruction in_Instruction)
 {
-	m_CPU->PushPC();
-	m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU->PushPC();
+	m_ErrorCode |= m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
 }
 
 void Interpreter::RET(const Instruction in_Instruction)
 {
-	m_CPU->SetProgramCounter(m_CPU->Pop());
+	UInt16 l_Val;
+	m_ErrorCode = m_CPU->Pop(l_Val);
+	m_ErrorCode |= m_CPU->SetProgramCounter(l_Val);
 }
 
 void Interpreter::IndirectJMP(const Instruction in_Instruction)
 {
-	m_CPU->SetProgramCounter(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
+	m_ErrorCode = m_CPU->SetProgramCounter(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
 }
 
 void Interpreter::Cx(const Instruction in_Instruction)
@@ -314,15 +316,15 @@ void Interpreter::Cx(const Instruction in_Instruction)
 	UInt8 l_CondCode = in_Instruction.GetFirstOperand();
 	if(InterpretConditions(l_CondCode))
 	{
-		m_CPU->PushPC();
-		m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+		m_ErrorCode = m_CPU->PushPC();
+		m_ErrorCode |= m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
 	}
 }
 
 void Interpreter::IndirectCALL(const Instruction in_Instruction)
 {
-	m_CPU->PushPC();
-	m_CPU->SetProgramCounter(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
+	m_ErrorCode = m_CPU->PushPC();
+	m_ErrorCode |= m_CPU->SetProgramCounter(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
 }
 
 unsigned Interpreter::InterpretConditions(UInt8 in_CondCode)
@@ -369,33 +371,37 @@ unsigned Interpreter::InterpretConditions(UInt8 in_CondCode)
 
 void Interpreter::RegisterLDI(const Instruction in_Instruction)
 {
-	m_CPU->SetRegister(in_Instruction.GetFirstOperand(), in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU->SetRegister(in_Instruction.GetFirstOperand(), in_Instruction.GetImmediateValue());
 }
 
 void Interpreter::StackLDI(const Instruction in_Instruction)
 {
-	m_CPU->SetStackPointer(in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU->SetStackPointer(in_Instruction.GetImmediateValue());
 }
 
 void Interpreter::DirectLDM(const Instruction in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
 	UInt16 l_IVal = in_Instruction.GetImmediateValue();
-	m_CPU->SetRegister(l_Addr, m_CPU->Load(l_IVal));
+	UInt16 l_Val;
+	m_ErrorCode = m_CPU->Load(l_IVal, l_Val);
+	m_ErrorCode |= m_CPU->SetRegister(l_Addr, l_Val);
 }
 
 void Interpreter::IndirectLDM(const Instruction in_Instruction)
 {
 	UInt8 l_AddrX = in_Instruction.GetFirstOperand();
 	UInt8 l_AddrY = in_Instruction.GetSecondOperand();
-	m_CPU->SetRegister(l_AddrX, m_CPU->Load(m_CPU->DumpRegister(l_AddrY)));
+	UInt16 l_Val;
+	m_ErrorCode = m_CPU->Load(m_CPU->DumpRegister(l_AddrY), l_Val);
+	m_ErrorCode = m_CPU->SetRegister(l_AddrX, l_Val);
 }
 
 void Interpreter::MOV(const Instruction in_Instruction)
 {
 	UInt8 l_AddrX = in_Instruction.GetFirstOperand();
 	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand()); 
-	m_CPU->SetRegister(l_AddrX, l_YVal);
+	m_ErrorCode = m_CPU->SetRegister(l_AddrX, l_YVal);
 }
 
 /////////////// Misc ///////////////
@@ -454,7 +460,7 @@ void Interpreter::RND(const Instruction in_Instruction)
 	UInt16 l_RandVal = m_Dist(m_RandEngine);
 	while(l_RandVal > l_MaxVal)
 		l_RandVal= m_Dist(m_RandEngine);
-	m_CPU->SetRegister(l_Addr, l_RandVal);
+	m_ErrorCode = m_CPU->SetRegister(l_Addr, l_RandVal);
 }
 
 void Interpreter::FLIP(const Instruction in_Instruction)
@@ -511,34 +517,42 @@ void Interpreter::RegisterPalette(const Instruction in_Instruction)
 
 void Interpreter::PUSH(const Instruction in_Instruction)
 {
-	m_CPU->Push(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
+	m_ErrorCode = m_CPU->Push(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
 }
 
 void Interpreter::POP(const Instruction in_Instruction)
 {
-	m_CPU->SetRegister(in_Instruction.GetFirstOperand(), m_CPU->Pop());
+	UInt16 l_Val;
+	m_ErrorCode = m_CPU->Pop(l_Val);
+	m_ErrorCode |= m_CPU->SetRegister(in_Instruction.GetFirstOperand(), l_Val);
 }
 
 void Interpreter::PUSHALL(const Instruction in_Instruction)
 {
 	for(UInt8 i = 0; i < 16; ++i)
-		m_CPU->Push(m_CPU->DumpRegister(i));
+		m_ErrorCode |= m_CPU->Push(m_CPU->DumpRegister(i));
 }
 
 void Interpreter::POPALL(const Instruction in_Instruction)
 {
+	UInt16 l_Val;
 	for(int i = 15; i > -1; --i)
-		m_CPU->SetRegister(i, m_CPU->Pop());
+	{
+		m_ErrorCode |= m_CPU->Pop(l_Val);
+		m_ErrorCode |= m_CPU->SetRegister(i, l_Val);
+	}
 }
 
 void Interpreter::PUSHF(const Instruction in_Instruction)
 {
-	m_CPU->Push(m_CPU->DumpFlagRegister());
+	m_ErrorCode = m_CPU->Push(m_CPU->DumpFlagRegister());
 }
 
 void Interpreter::POPF(const Instruction in_Instruction)
 {
-	m_CPU->SetFlagRegister(m_CPU->Pop());
+	UInt16 l_Val;
+	m_ErrorCode = m_CPU->Pop(l_Val);
+	m_CPU->SetFlagRegister(l_Val);
 }
 
 /////////////// Shift ///////////////
@@ -546,42 +560,42 @@ void Interpreter::POPF(const Instruction in_Instruction)
 void Interpreter::NSHL(const Instruction in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_CPU->SetRegister(l_Addr, LeftShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
+	m_ErrorCode = m_CPU->SetRegister(l_Addr, LeftShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
 }
 
 void Interpreter::NSHR(const Instruction in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_CPU->SetRegister(l_Addr, LogicalRightShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
+	m_ErrorCode = m_CPU->SetRegister(l_Addr, LogicalRightShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
 }
 
 void Interpreter::NSAR(const Instruction in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_CPU->SetRegister(l_Addr, ArithmeticRightShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
+	m_ErrorCode = m_CPU->SetRegister(l_Addr, ArithmeticRightShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
 }
 
 void Interpreter::RegisterSHL(const Instruction in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_CPU->SetRegister(l_Addr, LeftShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
+	m_ErrorCode = m_CPU->SetRegister(l_Addr, LeftShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
 }
 
 void Interpreter::RegisterSHR(const Instruction in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_CPU->SetRegister(l_Addr, LogicalRightShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
+	m_ErrorCode = m_CPU->SetRegister(l_Addr, LogicalRightShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
 }
 
 void Interpreter::RegisterSAR(const Instruction in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_CPU->SetRegister(l_Addr, ArithmeticRightShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
+	m_ErrorCode = m_CPU->SetRegister(l_Addr, ArithmeticRightShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
 }
 
@@ -591,14 +605,14 @@ void Interpreter::DirectSTM(const Instruction in_Instruction)
 {
 	UInt8 l_RegAddr = in_Instruction.GetFirstOperand();
 	UInt16 l_MemAddr = in_Instruction.GetImmediateValue();
-	m_CPU->Store(l_MemAddr, m_CPU->DumpRegister(l_RegAddr));
+	m_ErrorCode = m_CPU->Store(l_MemAddr, m_CPU->DumpRegister(l_RegAddr));
 }
 
 void Interpreter::IndirectSTM(const Instruction in_Instruction)
 {
 	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
 	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
-	m_CPU->Store(l_YVal, l_XVal);
+	m_ErrorCode = m_CPU->Store(l_YVal, l_XVal);
 }
 
 /////////////// Artihmetic Helpers ///////////////
@@ -611,7 +625,7 @@ void Interpreter::BasicArithmetic(const Instruction in_Instruction,
 	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
 	in_FRH(l_XVal, l_YVal);
 	UInt8 l_ZReg = in_Instruction.GetThirdOperand();
-	m_CPU->SetRegister(l_ZReg, in_Ins(l_XVal, l_YVal));
+	m_ErrorCode = m_CPU->SetRegister(l_ZReg, in_Ins(l_XVal, l_YVal));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_ZReg));
 }
 
@@ -644,7 +658,7 @@ void Interpreter::ImmediateArithmetic(const Instruction in_Instruction,
 	UInt8 l_Reg = in_Instruction.GetFirstOperand();
 	UInt16 l_IVal = in_Instruction.GetImmediateValue();
 	in_FRH(m_CPU->DumpRegister(l_Reg), l_IVal);
-	m_CPU->SetRegister(l_Reg, in_Ins(m_CPU->DumpRegister(l_Reg), l_IVal));
+	m_ErrorCode = m_CPU->SetRegister(l_Reg, in_Ins(m_CPU->DumpRegister(l_Reg), l_IVal));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Reg));
 }
 
@@ -656,6 +670,6 @@ void Interpreter::InplaceArithmetic(const Instruction in_Instruction,
 	UInt16 l_XVal = m_CPU->DumpRegister(l_XReg);
 	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
 	in_FRH(l_XVal, l_YVal);
-	m_CPU->SetRegister(l_XReg, in_Ins(l_XVal, l_YVal));
+	m_ErrorCode = m_CPU->SetRegister(l_XReg, in_Ins(l_XVal, l_YVal));
 	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_XReg));
 }

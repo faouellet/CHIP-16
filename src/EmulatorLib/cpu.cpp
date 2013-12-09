@@ -1,6 +1,7 @@
 #include "cpu.h"
 
 #include <functional>
+#include <iostream>
 #include <iterator>
 
 CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
@@ -60,8 +61,7 @@ UInt16 CPU::DumpProgramCounter() const
 
 UInt16 CPU::DumpRegister(const UInt8 in_RegID) const
 {
-	// TODO : Check for correct register ID
-	return m_Registers[in_RegID];
+	return m_Registers[in_RegID];	
 }
 
 std::vector<UInt16> CPU::DumpRegisters() const
@@ -123,22 +123,47 @@ void CPU::UnsetFlag(const UInt16 in_Value)
 	m_FR &= ~in_Value;
 }
 
-void CPU::SetProgramCounter(const UInt16 in_Value)
+UInt8 CPU::SetProgramCounter(const UInt16 in_Value)
 {
-	// TODO : Check for correct PC value
-	m_PC = in_Value;
+	if(in_Value > STACK_START)
+	{
+		std::cout << "Not a valid value for the PC: " << std::hex << in_Value << std::endl;
+		return MemoryError;
+	}
+	else
+	{
+		m_PC = in_Value;
+		return NoError;
+	}
 }
 
-void CPU::SetRegister(const UInt8 in_RegID, const UInt16 in_Value)
+UInt8 CPU::SetRegister(const UInt8 in_RegID, const UInt16 in_Value)
 {
-	// TODO : Check for correct register ID
-	m_Registers[in_RegID] = in_Value;
+	if(in_RegID > NB_REGISTERS)
+	{
+		std::cout << "Not a valid register ID: " << std::hex << in_RegID << std::endl;
+		return UnknownRegister;
+	}
+	else
+	{
+		m_Registers[in_RegID] = in_Value;
+		return NoError;
+	}
 }
 
-void CPU::SetStackPointer(const UInt16 in_Value)
+UInt8 CPU::SetStackPointer(const UInt16 in_Value)
 {
-	// TODO : Check for correct SP value
-	m_SP = in_Value;
+	
+	if(in_Value < STACK_START || in_Value > CONTROLLER_1)
+	{
+		std::cout << "Not a valid value for the SP: " << std::hex << in_Value << std::endl;
+		return MemoryError;
+	}
+	else
+	{
+		m_SP = in_Value;
+		return NoError;
+	}
 }
 
 void CPU::StepBack()
@@ -293,7 +318,6 @@ std::vector<UInt8> CPU::FetchSprite(const UInt16 in_Addr, const UInt16 in_Width,
 {
 	std::vector<UInt8> l_SpriteData(in_Width * in_Height);
 
-	// TODO : What if the address is invalid or if part of the sprite is in the stack?
 	for(int i = 0; i < (in_Width * in_Height)/2; ++i)
 	{
 		l_SpriteData[2*i] = m_Memory[in_Addr + i] >> 4;
@@ -303,37 +327,67 @@ std::vector<UInt8> CPU::FetchSprite(const UInt16 in_Addr, const UInt16 in_Width,
 	return l_SpriteData;
 }
 
-UInt16 CPU::Load(const UInt16 in_Address) const
+UInt8 CPU::Load(const UInt16 in_Address, UInt16 & out_Value) const
 {
-	// TODO : Check address
-	return (m_Memory[in_Address+1] << 8) | m_Memory[in_Address];
+	if(STACK_START < in_Address && in_Address < CONTROLLER_1)
+	{
+		std::cout << "Address out of memory: " << std::hex << in_Address << std::endl;
+		return MemoryError;
+	}
+	else
+	{
+		out_Value = (m_Memory[in_Address+1] << 8) | m_Memory[in_Address];
+		return NoError;
+	}
 }
 
-void CPU::Store(const UInt16 in_Address, const UInt16 in_Value)
+UInt8 CPU::Store(const UInt16 in_Address, const UInt16 in_Value)
 {
-	// TODO : Check address
-	m_Memory[in_Address] = in_Value & 0x00FF;
-	m_Memory[in_Address+1] = in_Value >> 8;
+	if(in_Address > STACK_START)
+	{
+		std::cout << "Address out of memory: " << std::hex << in_Address << std::endl;
+		return MemoryError;
+	}
+	else
+	{
+		m_Memory[in_Address] = in_Value & 0x00FF;
+		m_Memory[in_Address+1] = in_Value >> 8;
+		return NoError;
+	}
 }
 
-UInt16 CPU::Pop()
+UInt8 CPU::Pop(UInt16 & out_Value)
 {
-	// TODO : Stop it from going into main memory
-	return UInt16(m_Memory[--m_SP] << 8 | (m_Memory[--m_SP]));
+	if(m_SP-2 < STACK_START)
+	{
+		std::cout << "Stack underflow" << std::endl;
+		return StackUnderflow;
+	}
+	else
+	{
+		out_Value = UInt16(m_Memory[--m_SP] << 8 | (m_Memory[--m_SP]));
+		return NoError;
+	}
 }
 
-void CPU::Push(UInt16 in_Val)
+UInt8 CPU::Push(UInt16 in_Val)
 {
-	// TODO : Check stack overflow
-	m_Memory[m_SP++] = in_Val & 0x00FF;
-	m_Memory[m_SP++] = (in_Val & 0xFF00) >> 8;
+	if(m_SP+2 > CONTROLLER_1)
+	{
+		std::cout << "Stack overflow while pushing: " << in_Val << std::endl;
+		return StackOverflow;
+	}
+	else
+	{
+		m_Memory[m_SP++] = in_Val & 0x00FF;
+		m_Memory[m_SP++] = (in_Val & 0xFF00) >> 8;
+		return NoError;
+	}
 }
 
-void CPU::PushPC()
+UInt8 CPU::PushPC()
 {
-	// TODO : Check stack overflow
-	m_Memory[m_SP++] = m_PC & 0x00FF;
-	m_Memory[m_SP++] = (m_PC & 0xFF00) >> 8;
+	return Push(m_PC);
 }
 
 void CPU::SetSignZeroFlag(UInt16 in_Result)

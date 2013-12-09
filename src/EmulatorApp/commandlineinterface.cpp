@@ -27,7 +27,7 @@ CommandLineInterface::CommandLineInterface()
 	m_GameChoices.push_back("Herdle");
 	m_GameChoices.push_back("MusicMaker");
 	m_GameChoices.push_back("Ninja");
-	m_DemoChoices.push_back("Pacman");
+	m_GameChoices.push_back("Pacman");
 	m_GameChoices.push_back("Pong");
 	m_GameChoices.push_back("Reflection");
 	m_GameChoices.push_back("Snafu");

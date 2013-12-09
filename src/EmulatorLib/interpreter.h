@@ -19,6 +19,8 @@ private:
 	typedef void (Interpreter::*InstructionExec) (const Instruction in_Instruction);
 	
 private:
+	UInt8 m_ErrorCode;				/*!< Current error code */
+
 	std::shared_ptr<CPU> m_CPU;		/*!< The central processing unit */
 	GPU m_GPU;						/*!< The graphics processing unit */
 	SPU m_SPU;						/*!< The sound processing unit */

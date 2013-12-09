@@ -48,7 +48,11 @@ void Emulator::Interpret()
 		// Therefore, the emulator can interpret a precise number of instructions per video frame
 		while(l_NbCycles < CYCLES_PER_FRAME)
 		{
-			m_Interpreter.InterpretOp();
+			if(m_Interpreter.InterpretOp() != NoError)
+			{
+				l_Continue = false;
+				break;
+			}
 			++l_NbCycles;
 		}
 
