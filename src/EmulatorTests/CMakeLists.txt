@@ -9,8 +9,6 @@ set( SOURCES
 	utils_tests.cpp 
 	dynarec_tests.cpp
 	emitter_tests.cpp
-	emulator_tests.cpp 
-	emulator_tests.h 
 	interpreter_tests.cpp 
 	interpreter_tests.h 
 	gpu_tests.cpp 

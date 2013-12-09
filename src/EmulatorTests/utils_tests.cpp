@@ -13,7 +13,6 @@ BOOST_AUTO_TEST_CASE( StaticConditionalTest )
 	BOOST_REQUIRE(sizeof(Utils::IfElse<false, char, double>::type) == sizeof(double));
 }
 
-// TODO : test Error class
 BOOST_AUTO_TEST_CASE( TypeSizeTest )
 {
 	// Test number of bytes

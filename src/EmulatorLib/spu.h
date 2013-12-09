@@ -18,7 +18,11 @@ using Utils::UInt32;
 class SPU
 {
 private:
-	struct AudioSmaple
+	/**
+	* \struct AudioSample
+	* \brief Characteristics of an audio sample
+	*/
+	struct AudioSample
 	{
 		UInt32 Attack;			/*!< Duration it takes to go from intensity 0 to max volume */
 		UInt32 Decay;			/*!< Duration it takes to go from max intensity to sustain intensity */
@@ -47,9 +51,9 @@ private:
 	static const int m_DecayValues[16];			/*!< Possible decay values */
 	static const int m_ReleaseValues[16];		/*!< Possible release values */
 	
-	AudioSmaple m_Sample;		/*!< TODO */
+	AudioSample m_Sample;		/*!< Characteristics of the current audio sample generated */
 
-	static std::function<int16_t(void)> m_SampleGenerator;
+	static std::function<int16_t(void)> m_SampleGenerator;	/*!< Generate the current audio sample */
 
 	SDL_AudioSpec m_AudioGen;	/*!< Generates the actual audio signal */
 
