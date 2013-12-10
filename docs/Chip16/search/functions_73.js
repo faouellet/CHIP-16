@@ -1,6 +1,7 @@
 var searchData=
 [
   ['setbackgroundcolor',['SetBackgroundColor',['../class_g_p_u.html#afc1d89644aeaeee535a94257e78280fe',1,'GPU']]],
+  ['setflag',['SetFlag',['../class_c_p_u.html#a7d2940b72e3530f82a785d5002bdccd7',1,'CPU']]],
   ['setflagregister',['SetFlagRegister',['../class_c_p_u.html#aeace90f8424a3289c083b0a14042ad58',1,'CPU']]],
   ['setoriginalcolorpalette',['SetOriginalColorPalette',['../class_g_p_u.html#a39a3418c641398e4da591962bc3a66f3',1,'GPU']]],
   ['setprogramcounter',['SetProgramCounter',['../class_c_p_u.html#ac3d32626c47d360c805ec9e2f1856ed0',1,'CPU']]],
@@ -12,6 +13,7 @@ var searchData=
   ['setupandtestdata',['SetupAndTestData',['../struct_interpreter_fixture.html#a6258487f0c9af01295dd70bbf26ba9ad',1,'InterpreterFixture']]],
   ['setuparithmeticdata',['SetupArithmeticData',['../struct_interpreter_fixture.html#ac0469158645360800cbb2b73a5b39511',1,'InterpreterFixture']]],
   ['setupdivtestdata',['SetupDivTestData',['../struct_interpreter_fixture.html#a400628861f1c115458d0c3a084c95221',1,'InterpreterFixture']]],
+  ['setuperrordata',['SetupErrorData',['../struct_interpreter_fixture.html#aa686037fcb33713e558a92251b9aec5c',1,'InterpreterFixture']]],
   ['setuploadstoredata',['SetupLoadStoreData',['../struct_interpreter_fixture.html#a85bf82b73eba2dbe6eb0936d61760a3b',1,'InterpreterFixture']]],
   ['setupmultestdata',['SetupMulTestData',['../struct_interpreter_fixture.html#a6d795a112a1bc96bb28248de052b48ed',1,'InterpreterFixture']]],
   ['setuportestdata',['SetupOrTestData',['../struct_interpreter_fixture.html#ad7ab8a55bf711c199fe9ee0975ae2f9f',1,'InterpreterFixture']]],

@@ -14,18 +14,18 @@ using Utils::UInt32;
 class Instruction
 {
 private:
-	UInt32 m_Value;	/*!< 4 byte value of the instruction */
+	UInt32 m_Value;		/*!< 4 byte value of the instruction */
 	
-	UInt16 m_ImmediateValue;
+	UInt16 m_ImmediateValue;	/*!< Last 2 bytes interpreted as an immediate value */
 	
-	UInt8 m_Op1;
-	UInt8 m_Op2;
-	UInt8 m_Op3;
-	UInt8 m_Opcode;
-	UInt8 m_Type;
+	UInt8 m_Op1;		/*!< 1st operand contained in the instruction */
+	UInt8 m_Op2;		/*!< 2nd operand contained in the instruction */
+	UInt8 m_Op3;		/*!< 3rd operand contained in the instruction */
+	UInt8 m_Opcode;		/*!< Opcode of the instruction */
+	UInt8 m_Type;		/*!< Type of the instruction */
 
-	bool m_UseImm;
-	bool m_IsInplace;
+	bool m_UseImm;		/*!< Does the instruction use an immediate value? */
+	bool m_IsInplace;	/*!< Is the instruction done inplace? */
 
 public:
 	/**

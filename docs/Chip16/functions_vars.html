@@ -112,7 +112,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
 <li>Attack
-: <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#add135068dcd22501b46e43c452f7cea9">SPU::AudioSmaple</a>
+: <a class="el" href="struct_s_p_u_1_1_audio_sample.html#a24c34f2a7bd2b6dcf51ea3fc771f4662">SPU::AudioSample</a>
 </li>
 </ul>
 
@@ -126,7 +126,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
 <li>Decay
-: <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#a6e9d2c3dcc38e6f0a460906cf92a0897">SPU::AudioSmaple</a>
+: <a class="el" href="struct_s_p_u_1_1_audio_sample.html#ac90d344b484d235693e224e2c885235b">SPU::AudioSample</a>
 </li>
 </ul>
 
@@ -217,6 +217,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </li>
 <li>m_ErrorCode
 : <a class="el" href="class_c_p_u.html#aebd5639c9022bcdebd160e46a37a50e5">CPU</a>
+, <a class="el" href="class_interpreter.html#a67ec7d471c98cbedfdbe6c5ea63b7475">Interpreter</a>
 </li>
 <li>m_FR
 : <a class="el" href="class_c_p_u.html#a044ef6a2c2623cc0a2fcb29322dc41f7">CPU</a>
@@ -227,12 +228,30 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>m_GPU
 : <a class="el" href="class_interpreter.html#a2c1cf37c0b54e8e9553a8e03baccd632">Interpreter</a>
 </li>
+<li>m_ImmediateValue
+: <a class="el" href="class_instruction.html#ac85d7fa8382f2d2d209c7fc5c3c22035">Instruction</a>
+</li>
 <li>m_Interpreter
 : <a class="el" href="class_emulator.html#ac1391d0715dbe5f38815068a3dfd7302">Emulator</a>
+</li>
+<li>m_IsInplace
+: <a class="el" href="class_instruction.html#acc6b193e69d2816c1643ba2f497d18b8">Instruction</a>
 </li>
 <li>m_Memory
 : <a class="el" href="class_c_p_u.html#aab8d43069375512fddcda76764a2ebe2">CPU</a>
 , <a class="el" href="class_memory_arena.html#a6dc1e82b14d9b6f60dd8b007709448a3">MemoryArena</a>
+</li>
+<li>m_Op1
+: <a class="el" href="class_instruction.html#aaf51a8141f201e4acd978454ff920fd7">Instruction</a>
+</li>
+<li>m_Op2
+: <a class="el" href="class_instruction.html#af4b8179351c0c227fe4b95e5aa16798f">Instruction</a>
+</li>
+<li>m_Op3
+: <a class="el" href="class_instruction.html#a4fbcd592dde60aae7eebbe147c56999a">Instruction</a>
+</li>
+<li>m_Opcode
+: <a class="el" href="class_instruction.html#a4e6b4c02b02d078fa2ed2555e004c21f">Instruction</a>
 </li>
 <li>m_Ops
 : <a class="el" href="class_interpreter.html#a6abf7019eee08dbc171650bdd1935a95">Interpreter</a>
@@ -247,8 +266,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_interpreter.html#acbbf883a36109b5928cfd963fb36c626">Interpreter</a>
 </li>
 <li>m_Registers
-: <a class="el" href="class_local_allocator.html#af3aba9630c378ed61ddc01dc1b0f1b29">LocalAllocator</a>
-, <a class="el" href="class_c_p_u.html#a45c1c61a605ad4f50a6ae5f8ec3f4154">CPU</a>
+: <a class="el" href="class_c_p_u.html#a45c1c61a605ad4f50a6ae5f8ec3f4154">CPU</a>
+, <a class="el" href="class_local_allocator.html#af3aba9630c378ed61ddc01dc1b0f1b29">LocalAllocator</a>
 </li>
 <li>m_ReleaseValues
 : <a class="el" href="class_s_p_u.html#a5fd8c05986bcda0045d20fb9c158e2d1">SPU</a>
@@ -260,7 +279,10 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="class_c_p_u.html#a4159826f5375a1f7b7fbe7346ffff942">CPU</a>
 </li>
 <li>m_Sample
-: <a class="el" href="class_s_p_u.html#afaaeb2625054701f4f1998b71af86947">SPU</a>
+: <a class="el" href="class_s_p_u.html#ab54367e159e0d57f3fe33fd3efb65e94">SPU</a>
+</li>
+<li>m_SampleGenerator
+: <a class="el" href="class_s_p_u.html#a2ce0278ca185d89ff665891c8329b427">SPU</a>
 </li>
 <li>m_ScreenBuffer
 : <a class="el" href="class_g_p_u.html#af4fd0753709ae3d017b856a708560e5f">GPU</a>
@@ -289,6 +311,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <li>m_Texture
 : <a class="el" href="class_g_p_u.html#a5f5b5b224ffe5288ba24975b3c24ee89">GPU</a>
 </li>
+<li>m_Type
+: <a class="el" href="class_instruction.html#a7b42401facf2a8f4753d33ed6204090a">Instruction</a>
+</li>
+<li>m_UseImm
+: <a class="el" href="class_instruction.html#a702df83adbc795312937b4f132e79c51">Instruction</a>
+</li>
 <li>m_Value
 : <a class="el" href="class_instruction.html#a842358550147ed2d1f749724f0bc529d">Instruction</a>
 </li>
@@ -313,7 +341,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 <h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
 <li>Release
-: <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#a672b9d43b835a4435f7132df720ce586">SPU::AudioSmaple</a>
+: <a class="el" href="struct_s_p_u_1_1_audio_sample.html#aec8c927839ceb5de6f4cccc4c76e7c4b">SPU::AudioSample</a>
 </li>
 </ul>
 
@@ -323,21 +351,21 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 : <a class="el" href="struct_local_allocator_1_1_g_p_r_status.html#abfe46245b6e5233719b109edf97bda61">LocalAllocator::GPRStatus</a>
 </li>
 <li>Sustain
-: <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#a1eafc3ce6548aef8450b80e92270f877">SPU::AudioSmaple</a>
+: <a class="el" href="struct_s_p_u_1_1_audio_sample.html#a1e50657a0e83baf8d3b0e9838ea78c66">SPU::AudioSample</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
 <li>Type
-: <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#ac2551a1896228e5b56c3ceeba253c233">SPU::AudioSmaple</a>
+: <a class="el" href="struct_s_p_u_1_1_audio_sample.html#ac40279fc09cbc907c8bab9695c31e2c6">SPU::AudioSample</a>
 </li>
 </ul>
 
 
 <h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
 <li>Volume
-: <a class="el" href="struct_s_p_u_1_1_audio_smaple.html#a8a5f0ef3b9945b80bfed41aad37577b2">SPU::AudioSmaple</a>
+: <a class="el" href="struct_s_p_u_1_1_audio_sample.html#a3946a6768f1221301904124529027310">SPU::AudioSample</a>
 </li>
 <li>VRegID
 : <a class="el" href="struct_local_allocator_1_1_g_p_r_status.html#af34dc5fa82ec5fcf623dc2c34cef7e4b">LocalAllocator::GPRStatus</a>
@@ -353,7 +381,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Nov 14 2013 16:11:18 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 11:59:37 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

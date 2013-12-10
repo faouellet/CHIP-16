@@ -91,7 +91,10 @@ BOOST_AUTO_TEST_CASE( DivTest )
 
 BOOST_AUTO_TEST_CASE( ErrorTest )
 {
-	// TODO : Redo
+	Cpu->Init(PrepareData(ErrorTestData));
+	BOOST_REQUIRE_EQUAL(Interpret.InterpretOp(), CPU::StackUnderflow);
+	BOOST_REQUIRE_EQUAL(Interpret.InterpretOp(), CPU::MemoryError);
+	BOOST_REQUIRE_EQUAL(Interpret.InterpretOp(), CPU::MemoryError);
 }
 
 BOOST_AUTO_TEST_CASE( MulTest )

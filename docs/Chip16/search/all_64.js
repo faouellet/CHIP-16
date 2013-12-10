@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['decay',['Decay',['../struct_s_p_u_1_1_audio_smaple.html#a6e9d2c3dcc38e6f0a460906cf92a0897',1,'SPU::AudioSmaple']]],
+  ['decay',['Decay',['../struct_s_p_u_1_1_audio_sample.html#ac90d344b484d235693e224e2c885235b',1,'SPU::AudioSample']]],
   ['discardarithmetic',['DiscardArithmetic',['../class_interpreter.html#acdf61530286a3216f49c1b6492db13fd',1,'Interpreter']]],
   ['discardimmediatearithmetic',['DiscardImmediateArithmetic',['../class_interpreter.html#a0f708a1817057be454713113f1020e0b',1,'Interpreter']]],
   ['draw',['Draw',['../class_g_p_u.html#aaab4d2fe739270b47a99be6ec8aa2069',1,'GPU']]],

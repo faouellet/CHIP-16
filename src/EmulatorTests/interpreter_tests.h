@@ -37,6 +37,9 @@ struct InterpreterFixture
 	// Data for the load/store tests
 	std::vector<UInt8> MemoryTestData;
 
+	// Data for the error tests
+	std::vector<UInt8> ErrorTestData;
+	
 	// Data for the shift (left, arithmetic right, logical right) tests
 	std::vector<UInt8> ShiftTestData;
 
@@ -119,6 +122,7 @@ private:
 		SetupOrTestData();
 		SetupSubTestData();
 		SetupXorTestData();
+		SetupErrorData();
 	}
 
 	/**
@@ -162,6 +166,17 @@ private:
 		InsertInstruction(DivTestData, 0xA0, 0x00, 0x20, 0x00);	// DIVI : R0 = 32 / R0
 		InsertInstruction(DivTestData, 0XA1, 0x21, 0x00, 0x00);	// DIV : R1 = R2 / R1
 		InsertInstruction(DivTestData, 0XA2, 0x12, 0x03, 0x00);	// DIV : R3 = R1 / R2
+	}
+
+	/**
+	* \fn SetupErrorData
+	* \brief Fills a vector with load/store/push/pop opcodes that will produce errors
+	*/
+	void SetupErrorData()
+	{
+		InsertInstruction(ErrorTestData, 0xC1, 0x00, 0x00, 0x00);	// POP
+		InsertInstruction(ErrorTestData, 0x30, 0x00, 0xFF, 0xFF);	// STM R0 FFFF
+		InsertInstruction(ErrorTestData, 0x22, 0x00, 0xE0, 0xFF);	// STM R0 FFFF
 	}
 
 	/**

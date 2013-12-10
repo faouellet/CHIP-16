@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['attack',['Attack',['../struct_s_p_u_1_1_audio_smaple.html#add135068dcd22501b46e43c452f7cea9',1,'SPU::AudioSmaple']]]
+  ['attack',['Attack',['../struct_s_p_u_1_1_audio_sample.html#a24c34f2a7bd2b6dcf51ea3fc771f4662',1,'SPU::AudioSample']]]
 ];

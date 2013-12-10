@@ -102,6 +102,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-types"></a>
 Public Types</h2></td></tr>
 <tr class="memitem:adee2a94087dfd373dc95450184986564"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
+&#160;&#160;<b>NoError</b> = 0, 
+<b>UnknownRegister</b> = 1, 
+<b>StackOverflow</b> = 2, 
+<b>StackUnderflow</b> = 4, 
+<br/>
+&#160;&#160;<b>StackError</b> = 8, 
+<b>MemoryError</b> = 16
+<br/>
+ }</td></tr>
+<tr class="separator:adee2a94087dfd373dc95450184986564"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0ef7bac420d9cdc90880c9c155942da9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <br/>
 &#160;&#160;<b>UnsignedCarryFlag</b> = 2, 
 <b>UnsignedBorrowFlag</b> = 2, 
 <b>ZeroFlag</b> = 4, 
@@ -110,10 +121,10 @@ Public Types</h2></td></tr>
 &#160;&#160;<b>NegativeFlag</b> = 128
 <br/>
  }</td></tr>
-<tr class="separator:adee2a94087dfd373dc95450184986564"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0ef7bac420d9cdc90880c9c155942da9"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>NB_REGISTERS</b> = 16
- }</td></tr>
 <tr class="separator:a0ef7bac420d9cdc90880c9c155942da9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a553897a88d5fe4a14459e062675fb475"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <b>NB_REGISTERS</b> = 16
+ }</td></tr>
+<tr class="separator:a553897a88d5fe4a14459e062675fb475"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
@@ -158,19 +169,19 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:aeace90f8424a3289c083b0a14042ad58"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#aeace90f8424a3289c083b0a14042ad58">SetFlagRegister</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
 <tr class="memdesc:aeace90f8424a3289c083b0a14042ad58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the flag register.  <a href="#aeace90f8424a3289c083b0a14042ad58">More...</a><br/></td></tr>
 <tr class="separator:aeace90f8424a3289c083b0a14042ad58"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a306ada5eb533d6a4309a0fcb6028a406"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a306ada5eb533d6a4309a0fcb6028a406"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>SetFlag</b> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
-<tr class="separator:a306ada5eb533d6a4309a0fcb6028a406"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb4c4ad9d0cfa0b9d18556631b8f1eaf"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afb4c4ad9d0cfa0b9d18556631b8f1eaf"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>UnsetFlag</b> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
-<tr class="separator:afb4c4ad9d0cfa0b9d18556631b8f1eaf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac3d32626c47d360c805ec9e2f1856ed0"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ac3d32626c47d360c805ec9e2f1856ed0">SetProgramCounter</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
+<tr class="memitem:a7d2940b72e3530f82a785d5002bdccd7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a7d2940b72e3530f82a785d5002bdccd7">SetFlag</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
+<tr class="memdesc:a7d2940b72e3530f82a785d5002bdccd7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a flag within the flag register.  <a href="#a7d2940b72e3530f82a785d5002bdccd7">More...</a><br/></td></tr>
+<tr class="separator:a7d2940b72e3530f82a785d5002bdccd7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a90b3b2367ea4e99163987262bb2c70cc"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a90b3b2367ea4e99163987262bb2c70cc">UnsetFlag</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
+<tr class="memdesc:a90b3b2367ea4e99163987262bb2c70cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Unset a flag within the flag register.  <a href="#a90b3b2367ea4e99163987262bb2c70cc">More...</a><br/></td></tr>
+<tr class="separator:a90b3b2367ea4e99163987262bb2c70cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac3d32626c47d360c805ec9e2f1856ed0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ac3d32626c47d360c805ec9e2f1856ed0">SetProgramCounter</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
 <tr class="memdesc:ac3d32626c47d360c805ec9e2f1856ed0"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the PC.  <a href="#ac3d32626c47d360c805ec9e2f1856ed0">More...</a><br/></td></tr>
 <tr class="separator:ac3d32626c47d360c805ec9e2f1856ed0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab7de588697a9cde80c981095ad5e335d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ab7de588697a9cde80c981095ad5e335d">SetRegister</a> (const <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_RegID, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
+<tr class="memitem:ab7de588697a9cde80c981095ad5e335d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ab7de588697a9cde80c981095ad5e335d">SetRegister</a> (const <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> in_RegID, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
 <tr class="memdesc:ab7de588697a9cde80c981095ad5e335d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of a register.  <a href="#ab7de588697a9cde80c981095ad5e335d">More...</a><br/></td></tr>
 <tr class="separator:ab7de588697a9cde80c981095ad5e335d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a49d91648a05be56c1b24c1b525b74032"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a49d91648a05be56c1b24c1b525b74032">SetStackPointer</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
+<tr class="memitem:a49d91648a05be56c1b24c1b525b74032"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a49d91648a05be56c1b24c1b525b74032">SetStackPointer</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
 <tr class="memdesc:a49d91648a05be56c1b24c1b525b74032"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the value of the SP.  <a href="#a49d91648a05be56c1b24c1b525b74032">More...</a><br/></td></tr>
 <tr class="separator:a49d91648a05be56c1b24c1b525b74032"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0376736775293093ba1a23980984e306"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0376736775293093ba1a23980984e306"></a>
@@ -196,21 +207,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:af1b59eb1ad9676f029bcb39f9cfda2cc"><td class="memItemLeft" align="right" valign="top">std::vector&lt; <a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#af1b59eb1ad9676f029bcb39f9cfda2cc">FetchSprite</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Addr, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Width, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Height) const </td></tr>
 <tr class="memdesc:af1b59eb1ad9676f029bcb39f9cfda2cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read a number of bytes from memory which corresponds to a sprite data.  <a href="#af1b59eb1ad9676f029bcb39f9cfda2cc">More...</a><br/></td></tr>
 <tr class="separator:af1b59eb1ad9676f029bcb39f9cfda2cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad78203ed8537d48b01e49a5630fb120e"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ad78203ed8537d48b01e49a5630fb120e">Load</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Address) const </td></tr>
-<tr class="memdesc:ad78203ed8537d48b01e49a5630fb120e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a value from memory.  <a href="#ad78203ed8537d48b01e49a5630fb120e">More...</a><br/></td></tr>
-<tr class="separator:ad78203ed8537d48b01e49a5630fb120e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a99ee850068370482fe41da3ca8045840"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a99ee850068370482fe41da3ca8045840">Store</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Address, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
+<tr class="memitem:ab94b5f27f05255eba968a806e673cb7d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#ab94b5f27f05255eba968a806e673cb7d">Load</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Address, <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;out_Value) const </td></tr>
+<tr class="memdesc:ab94b5f27f05255eba968a806e673cb7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Load a value from memory.  <a href="#ab94b5f27f05255eba968a806e673cb7d">More...</a><br/></td></tr>
+<tr class="separator:ab94b5f27f05255eba968a806e673cb7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99ee850068370482fe41da3ca8045840"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a99ee850068370482fe41da3ca8045840">Store</a> (const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Address, const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Value)</td></tr>
 <tr class="memdesc:a99ee850068370482fe41da3ca8045840"><td class="mdescLeft">&#160;</td><td class="mdescRight">Store a value in memory.  <a href="#a99ee850068370482fe41da3ca8045840">More...</a><br/></td></tr>
 <tr class="separator:a99ee850068370482fe41da3ca8045840"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af1202bccda6ff040002e136b538fed67"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#af1202bccda6ff040002e136b538fed67">Pop</a> ()</td></tr>
-<tr class="memdesc:af1202bccda6ff040002e136b538fed67"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop a value from the stack of the emulator and decrement the SP by 2.  <a href="#af1202bccda6ff040002e136b538fed67">More...</a><br/></td></tr>
-<tr class="separator:af1202bccda6ff040002e136b538fed67"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7adc62aa3a7cf5b02cdb6c1d3006bc64"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a7adc62aa3a7cf5b02cdb6c1d3006bc64">Push</a> (<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Val)</td></tr>
+<tr class="memitem:a567ee113039b0e74f8bc0691ec275618"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a567ee113039b0e74f8bc0691ec275618">Pop</a> (<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;out_Value)</td></tr>
+<tr class="memdesc:a567ee113039b0e74f8bc0691ec275618"><td class="mdescLeft">&#160;</td><td class="mdescRight">Pop a value from the stack of the emulator and decrement the SP by 2.  <a href="#a567ee113039b0e74f8bc0691ec275618">More...</a><br/></td></tr>
+<tr class="separator:a567ee113039b0e74f8bc0691ec275618"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7adc62aa3a7cf5b02cdb6c1d3006bc64"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a7adc62aa3a7cf5b02cdb6c1d3006bc64">Push</a> (<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Val)</td></tr>
 <tr class="memdesc:a7adc62aa3a7cf5b02cdb6c1d3006bc64"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push a value on the stack and increment the SP by 2.  <a href="#a7adc62aa3a7cf5b02cdb6c1d3006bc64">More...</a><br/></td></tr>
 <tr class="separator:a7adc62aa3a7cf5b02cdb6c1d3006bc64"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b9ce7d8c1a91226334e06f80ddb459c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b9ce7d8c1a91226334e06f80ddb459c"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a9b9ce7d8c1a91226334e06f80ddb459c">PushPC</a> ()</td></tr>
-<tr class="memdesc:a9b9ce7d8c1a91226334e06f80ddb459c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push the PC on the stack and increment the SP by 2. <br/></td></tr>
+<tr class="memitem:a9b9ce7d8c1a91226334e06f80ddb459c"><td class="memItemLeft" align="right" valign="top"><a class="el" href="namespace_utils.html#ad4db7aab250328c742e04e4134dca44b">UInt8</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a9b9ce7d8c1a91226334e06f80ddb459c">PushPC</a> ()</td></tr>
+<tr class="memdesc:a9b9ce7d8c1a91226334e06f80ddb459c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Push the PC on the stack and increment the SP by 2.  <a href="#a9b9ce7d8c1a91226334e06f80ddb459c">More...</a><br/></td></tr>
 <tr class="separator:a9b9ce7d8c1a91226334e06f80ddb459c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3ace29681aa63f0552c37f431ff980e0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3ace29681aa63f0552c37f431ff980e0"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_c_p_u.html#a3ace29681aa63f0552c37f431ff980e0">SetSignZeroFlag</a> (<a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> in_Result)</td></tr>
@@ -548,7 +558,7 @@ Private Attributes</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ad78203ed8537d48b01e49a5630fb120e"></a>
+<a class="anchor" id="ab94b5f27f05255eba968a806e673cb7d"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -556,8 +566,18 @@ Private Attributes</h2></td></tr>
           <td class="memname">CPU::Load </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td>
-          <td class="paramname"><em>in_Address</em></td><td>)</td>
-          <td> const</td>
+          <td class="paramname"><em>in_Address</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;&#160;</td>
+          <td class="paramname"><em>out_Value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -566,27 +586,36 @@ Private Attributes</h2></td></tr>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">in_Address</td><td>Memory address of the value to fetch </td></tr>
+    <tr><td class="paramname">out_Value</td><td>The value at the given address </td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_error.html" title="Dummy class. ">Error</a> code </dd></dl>
 
 </div>
 </div>
-<a class="anchor" id="af1202bccda6ff040002e136b538fed67"></a>
+<a class="anchor" id="a567ee113039b0e74f8bc0691ec275618"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">CPU::Pop </td>
           <td>(</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype"><a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a> &amp;&#160;</td>
+          <td class="paramname"><em>out_Value</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Pop a value from the stack of the emulator and decrement the SP by 2. </p>
-<dl class="section return"><dt>Returns</dt><dd>The value that was at the top of the stack </dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">out_Value</td><td>The value that was at the top of the stack </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_error.html" title="Dummy class. ">Error</a> code </dd></dl>
 
 </div>
 </div>
@@ -611,6 +640,49 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_error.html" title="Dummy class. ">Error</a> code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a9b9ce7d8c1a91226334e06f80ddb459c"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPU::PushPC </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Push the PC on the stack and increment the SP by 2. </p>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_error.html" title="Dummy class. ">Error</a> code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a7d2940b72e3530f82a785d5002bdccd7"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPU::SetFlag </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td>
+          <td class="paramname"><em>in_Value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Set a flag within the flag register. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_Value</td><td>The flag to set </td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -629,11 +701,9 @@ Private Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Set the value of the flag register. </p>
-<p>Set a flag within the flag register.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">in_Value</td><td>The new value of the PC</td></tr>
-    <tr><td class="paramname">in_Value</td><td>The flag to set </td></tr>
+    <tr><td class="paramname">in_Value</td><td>The new value of the PC </td></tr>
   </table>
   </dd>
 </dl>
@@ -661,6 +731,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>ErrorCode </dd></dl>
 
 </div>
 </div>
@@ -696,6 +767,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>ErrorCode </dd></dl>
 
 </div>
 </div>
@@ -720,6 +792,7 @@ Private Attributes</h2></td></tr>
   </table>
   </dd>
 </dl>
+<dl class="section return"><dt>Returns</dt><dd>ErrorCode </dd></dl>
 
 </div>
 </div>
@@ -752,6 +825,31 @@ Private Attributes</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">in_Address</td><td>Memory address of the value to fetch </td></tr>
     <tr><td class="paramname">in_Value</td><td>The value to store </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_error.html" title="Dummy class. ">Error</a> code </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a90b3b2367ea4e99163987262bb2c70cc"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CPU::UnsetFlag </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_utils.html#a1b80b87257b91f6cccca8a9f02296efb">UInt16</a>&#160;</td>
+          <td class="paramname"><em>in_Value</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Unset a flag within the flag register. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">in_Value</td><td>The flag to unset </td></tr>
   </table>
   </dd>
 </dl>
@@ -937,7 +1035,7 @@ Private Attributes</h2></td></tr>
 </div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
-Generated on Thu Nov 14 2013 16:11:17 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Dec 10 2013 11:59:36 for Chip16 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="doxygen.png" alt="doxygen"/>
 </a> 1.8.5
 </small></address>

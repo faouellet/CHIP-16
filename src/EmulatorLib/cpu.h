@@ -156,14 +156,14 @@ public:
 	void SetFlagRegister(const UInt16 in_Value);
 
 	/**
-	* \fn SetFlagRegister
+	* \fn SetFlag
 	* \brief Set a flag within the flag register
 	* \param in_Value The flag to set
 	*/
 	void SetFlag(const UInt16 in_Value);
 
 	/**
-	* \fn UnsetFlagRegister
+	* \fn UnsetFlag
 	* \brief Unset a flag within the flag register
 	* \param in_Value The flag to unset
 	*/
