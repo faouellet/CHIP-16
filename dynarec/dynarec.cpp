@@ -2,6 +2,12 @@
 #include <map>
 #include <vector>
 
+/**
+* \file dynarec.cpp
+* \brief This is my attempt at a dynamic recompiler largely inspired by:
+*        <a href="http://www.altdevblogaday.com/2011/06/12/jit-cpu-emulation-a-6502-to-x86-dynamic-recompiler-part-1/">h-deb</a>
+*/
+
 #if defined(_WIN32)
 #include "windows.h"	// For executable memory allocation on Windows
 #endif
