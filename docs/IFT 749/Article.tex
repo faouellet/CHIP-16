@@ -155,7 +155,7 @@ Au niveau algorithmique, la communauté de la compilation à depuis longtemps fo
   		\textit{out}[\textit{n}] $\leftarrow \cup_{s \in succ[n]}$ \textit{in}[\textit{s}]\;
   	}
  }
- \caption{Analys d'activité globale}
+ \caption{Analyse d'activité globale}
 \end{algorithm}
 
 La bonne image mentale à se faire de cet algorithme est celle d'une analyse de flux dans un graphe de flot de contrôle. Ainsi, le graphe modélisé est en fait la partie du programme sur laquelle l'analyse d'activité s'effectue. L'avantage de cet algorithme est qu'il est facilement généralisable pour plusieurs niveaux d'abstractions. De fait, cet algorithme est autant applicable sur un bloc de base que sur une trace. Il pourrait même être utilisé pour faire de l'analyse et de l'optimisation interprocédurale.
