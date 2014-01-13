@@ -1,8 +1,0 @@
-Trucs faits cette semaine:
-- Finir la rédaction de l'article
-- Préparer la présentation
-- Ajout de la propagation d'erreurs d'accès à la pile ou en mémoire
-- Ajout de tests
-
-
-THAT'S ALL FOLKS!!

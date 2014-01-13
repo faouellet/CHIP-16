@@ -1,7 +1,0 @@
-Trucs faits cette semaine:
-- Poursuite de la rédaction de l'article présentant le projet
-- Dernier bugfix (on l'espère)
-
-Trucs à faire dans la semaine à venir:
-- Finir la rédaction de l'article
-- Préparer la présentation
