@@ -1,6 +1,5 @@
-#ifdef STAND_ALONE
-#   define BOOST_TEST_MODULE Main
-#endif
+#define BOOST_TEST_MODULE Main
+
 #include <boost/test/unit_test.hpp>
 
 #include "utils.h"
@@ -44,25 +43,3 @@ BOOST_AUTO_TEST_CASE( TypeSizeTest )
 	BOOST_REQUIRE_EQUAL(sizeof(Utils::UInt_<9>), 1);
 }
 
-BOOST_AUTO_TEST_CASE( LeftShiftTest )
-{
-	Utils::LeftShift l_LS;
-	BOOST_REQUIRE(l_LS(1,1) == 2);
-	BOOST_REQUIRE(l_LS(1,20) == 0);
-}
-
-BOOST_AUTO_TEST_CASE( ArithmeticRightShiftTest )
-{
-	Utils::ArithmeticRightShift l_ARS;
-	BOOST_REQUIRE(l_ARS(0,2) == 0);
-	BOOST_REQUIRE(l_ARS(1,2) == 0);
-	BOOST_REQUIRE(l_ARS(-1,16) == std::numeric_limits<Utils::UInt16>::max());
-}
-
-BOOST_AUTO_TEST_CASE( LogicalRightShiftTest )
-{
-	Utils::LogicalRightShift l_LRS;
-	BOOST_REQUIRE(l_LRS(0,2) == 0);
-	BOOST_REQUIRE(l_LRS(1,2) == 0);
-	BOOST_REQUIRE(l_LRS(-1,16) == 0);
-}

@@ -11,20 +11,6 @@
 namespace Utils
 {
 	/**
-	* \enum
-	* \brief Masks for the possible errors that can happen during the initialization
-	*/
-	enum { NoError = 0, EmptyROMError = 1, ROMOverflowError = 2, GPUInitError = 4, 
-		GPUWindowCreationError = 8, GPURendererError = 16, GPUTextureError = 32, 
-		SPUError = 64, FileError = 128 };
-
-	/**
-	* \enum
-	* \brief Masks for the possible errors that can happen during the emulation
-	*/
-	enum { StackError = 1, UnknownOpError = 2, EmulationDone = 4 };
-
-	/**
 	* \struct IfElse
 	* \brief Defines a type depending on the condition by using partial specialization
 	*/
@@ -106,46 +92,6 @@ namespace Utils
 	typedef UInt_<4>::type UInt32;	/**< Unsigned 32 bits integer type */
 
 	typedef Int_<2>::type Int16;	/**< Signed 16 bits integer type */
-
-	/**
-	* \struct LeftShift
-	* \brief Functor wrapping the left shift operator
-	*/
-	struct LeftShift
-	{
-		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS)
-		{
-			return in_LHS << in_RHS;
-		}
-	};
-
-	/**
-	* \struct ArithmeticRightShift
-	* \brief Functor wrapping the right shift operator when the value to shift doesn't
-	*        have its sign bit on. Otherwise, it uses a mask to copy the sign bit.
-	*/
-	struct ArithmeticRightShift
-	{
-		UInt16 operator()(const Int16 & in_LHS, const UInt16 & in_RHS) const
-		{
-			// if(in_LHS < 0)
-			//	return in_LHS >> in_RHS | ~(~0U >> in_RHS);
-			//else
-				return in_LHS >> in_RHS;
-		}
-	};
-
-	/**
-	* \struct LogicalRightShift
-	* \brief Functor wrapping the right shift operator
-	*/
-	struct LogicalRightShift
-	{
-		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS) const
-		{
-			return in_LHS >> in_RHS;
-		}
-	};
 };
 
 #endif // UTILS_H

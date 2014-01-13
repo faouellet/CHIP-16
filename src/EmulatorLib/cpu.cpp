@@ -3,6 +3,11 @@
 #include <functional>
 #include <iostream>
 #include <iterator>
+#include <limits>
+
+#ifdef __unix__ 
+#include <string.h>
+#endif
 
 CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
 {

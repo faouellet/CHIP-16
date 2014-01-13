@@ -16,6 +16,44 @@
 class Interpreter
 {
 private:
+	/**
+	* \struct LeftShift
+	* \brief Functor wrapping the left shift operator
+	*/
+	struct LeftShift
+	{
+		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS)
+		{
+			return in_LHS << in_RHS;
+		}
+	};
+
+	/**
+	* \struct ArithmeticRightShift
+	* \brief Functor wrapping the right shift operator when the value to shift doesn't
+	*        have its sign bit on. Otherwise, it uses a mask to copy the sign bit.
+	*/
+	struct ArithmeticRightShift
+	{
+		UInt16 operator()(const Int16 & in_LHS, const UInt16 & in_RHS) const
+		{
+			return in_LHS >> in_RHS;
+		}
+	};
+
+	/**
+	* \struct LogicalRightShift
+	* \brief Functor wrapping the right shift operator
+	*/
+	struct LogicalRightShift
+	{
+		UInt16 operator()(const UInt16 & in_LHS, const UInt16 & in_RHS) const
+		{
+			return in_LHS >> in_RHS;
+		}
+	};
+
+private:
 	typedef void (Interpreter::*InstructionExec) (const Instruction in_Instruction);
 	
 private:

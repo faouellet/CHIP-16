@@ -23,7 +23,6 @@ add_library( EmulatorLib STATIC
 		spu.h
 		memoryarena.cpp
 		memoryarena.h
-		utils.h
 		)
 	   
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)

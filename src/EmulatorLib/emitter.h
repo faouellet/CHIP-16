@@ -2,7 +2,7 @@
 #define EMITTER_H
 
 #include "memoryarena.h"
-#include "utils.h"
+#include "../Utils/utils.h"
 
 using Utils::UInt8;
 using Utils::UInt16;

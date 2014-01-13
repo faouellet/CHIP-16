@@ -6,7 +6,7 @@
 
 #include "SDL.h"
 
-#include "utils.h"
+#include "../Utils/utils.h"
 
 using Utils::UInt8;
 using Utils::Int16;
