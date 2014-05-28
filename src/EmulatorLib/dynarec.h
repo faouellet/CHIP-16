@@ -1,13 +1,13 @@
 #ifndef DYNAREC_H
 #define DYNAREC_H
 
-#include <memory>
-#include <unordered_map>
-#include <vector>
-
 #include "localallocator.h"
 #include "cpu.h"
 #include "emitter.h"
+
+#include <memory>
+#include <unordered_map>
+#include <vector>
 
 /**
 * \class Dynarec

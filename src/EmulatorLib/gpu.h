@@ -1,12 +1,12 @@
 #ifndef GPU_H
 #define GPU_H
 
-#include <memory>
-#include <vector>
+#include "../Utils/utils.h"
 
 #include "SDL.h"
 
-#include "../Utils/utils.h"
+#include <memory>
+#include <vector>
 
 using Utils::UInt8;
 using Utils::Int16;

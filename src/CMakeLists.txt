@@ -7,3 +7,5 @@ add_subdirectory (AssemblerTests)
 add_subdirectory (EmulatorApp)
 add_subdirectory (EmulatorLib)
 add_subdirectory (EmulatorTests)
+
+add_subdirectory (Utils)

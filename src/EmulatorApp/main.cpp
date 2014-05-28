@@ -1,7 +1,8 @@
-#include <iostream>
-
 #include "commandlineinterface.h"
+#include "constants.h"
 #include "emulator.h"
+
+#include <iostream>
 
 /**
 * \fn main

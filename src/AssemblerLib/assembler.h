@@ -33,7 +33,7 @@ public:
 	 * \fn ~Assembler
 	 * \brief Destructor
 	 */
-	~Assembler() noexcept;
+	~Assembler();
 
 	/*
 	 * \fn Assemble

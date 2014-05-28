@@ -1,9 +1,9 @@
 #include "gpu.h"
 
+#include "constants.h"
+
 #include <functional>
 #include <vector>
-
-#include <iostream>
 
 #ifdef __unix__ 
 #include <string.h>
@@ -64,23 +64,23 @@ std::vector<UInt32> GPU::DumpScreenBuffer() const
 unsigned GPU::Init()
 {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
-		return Utils::GPUInitError;
+		return GPUInitError;
 
 	m_Window.reset(SDL_CreateWindow("Chip16", SDL_WINDOWPOS_CENTERED, 
 		SDL_WINDOWPOS_CENTERED, WIDTH, HEIGHT, SDL_WINDOW_MAXIMIZED));
 	if(m_Window == nullptr)
-		return Utils::GPUWindowCreationError;
+		return GPUWindowCreationError;
 
 	m_Renderer.reset(SDL_CreateRenderer(m_Window.get(), -1, 0));
 	if(m_Renderer == nullptr)
-		return Utils::GPURendererError;
+		return GPURendererError;
 
 	m_Texture.reset(SDL_CreateTexture(m_Renderer.get(), SDL_PIXELFORMAT_ABGR8888,
 		SDL_TEXTUREACCESS_STREAMING, WIDTH, HEIGHT));
 	if(m_Texture == nullptr)
-		return Utils::GPUTextureError;
+		return GPUTextureError;
 
-	return Utils::NoError;
+	return NoError;
 }
 
 void GPU::Reset()

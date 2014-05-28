@@ -1,12 +1,11 @@
 cmake_minimum_required (VERSION 2.8)
 
-#set(Boost_USE_STATIC_LIBS ON)
-#set(Boost_USE_MULTITHREADED ON) 
-#set(Boost_USE_STATIC_RUNTIME OFF)
+set(Boost_USE_STATIC_LIBS ON)
+set(Boost_USE_MULTITHREADED ON) 
+set(Boost_USE_STATIC_RUNTIME OFF)
 
 set( SOURCES 
 	main.cpp 
-	utils_tests.cpp 
 	dynarec_tests.cpp
 	emitter_tests.cpp
 	interpreter_tests.cpp 
@@ -16,6 +15,10 @@ set( SOURCES
 	)
 
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
+
+if(MSVC)
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /EHsc") 
+endif()
 
 find_package(Boost COMPONENTS unit_test_framework)
 
@@ -34,7 +37,7 @@ if(Boost_FOUND)
     
     add_executable(EmulatorTests ${SOURCES}) 
     target_link_libraries(EmulatorTests ${Boost_LIBRARIES} SDL2 EmulatorLib)
-    message("${PROJECT_SOURCE_DIR}/Chip16 Program Pack")
+	
     add_custom_command(TARGET EmulatorTests
                POST_BUILD 
     		   COMMAND ${CMAKE_COMMAND} -E copy_directory

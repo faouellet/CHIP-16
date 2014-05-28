@@ -1,11 +1,11 @@
 #ifndef SPU_H
 #define SPU_H
 
-#include <functional>
+#include "../Utils/utils.h"
 
 #include "SDL.h"
 
-#include "../Utils/utils.h"
+#include <functional>
 
 using Utils::UInt8;
 using Utils::UInt32;

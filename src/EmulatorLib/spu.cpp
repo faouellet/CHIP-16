@@ -1,3 +1,5 @@
+#include "constants.h"
+
 #include "spu.h"
 
 #include <functional>
@@ -16,7 +18,7 @@ SPU::~SPU()
 UInt8 SPU::Init() 
 {
 	if(SDL_Init(SDL_INIT_AUDIO) < 0)
-		return Utils::SPUError;
+		return SPUError;
 
 	using namespace std::placeholders;
 
@@ -25,7 +27,7 @@ UInt8 SPU::Init()
 	m_AudioGen.format = AUDIO_S16SYS;
 	//m_AudioGen.samples = buffer size
 
-	return Utils::NoError;
+	return NoError;
 }
 
 void SPU::Reset() 

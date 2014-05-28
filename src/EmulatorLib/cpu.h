@@ -1,11 +1,11 @@
 #ifndef CPU_H
 #define CPU_H
 
-#include <vector>
+#include "instruction.h"
 
 #include "SDL.h"
 
-#include "instruction.h"
+#include <vector>
 
 using namespace Utils;
 

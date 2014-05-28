@@ -1,6 +1,7 @@
 cmake_minimum_required (VERSION 2.8)
 
-add_library( EmulatorLib STATIC
+add_library( EmulatorLib STATIC 
+        constants.h
 		globalallocator.h
 		globalallocator.cpp
 		localallocator.h

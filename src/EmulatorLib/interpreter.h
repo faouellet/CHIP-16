@@ -1,13 +1,13 @@
 #ifndef INTERPRETER_H
 #define INTERPRETER_H
 
-#include <memory>
-#include <random>
-#include <unordered_map>
-
 #include "cpu.h"
 #include "gpu.h"
 #include "spu.h"
+
+#include <memory>
+#include <random>
+#include <unordered_map>
 
 /**
 * \class Interpreter

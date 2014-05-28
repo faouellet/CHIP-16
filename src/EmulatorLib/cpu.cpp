@@ -1,5 +1,7 @@
 #include "cpu.h"
 
+#include "constants.h"
+
 #include <functional>
 #include <iostream>
 #include <iterator>

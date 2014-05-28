@@ -20,7 +20,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL Windows)
     add_custom_command(TARGET EmulatorApp
                        POST_BUILD 
         			   COMMAND ${CMAKE_COMMAND} -E copy 
-    				   "${PROJECT_SOURCE_DIR}/../3rd party/SDL2/lib/x86/SDL2.dll"
+    				   "${PROJECT_SOURCE_DIR}/3rd party/SDL2/lib/x86/SDL2.dll"
     				   $<TARGET_FILE_DIR:EmulatorApp>
     				   COMMENT "Copying DLLs")
 endif()

@@ -1,11 +1,11 @@
 #ifndef EMULATOR_H
 #define EMULATOR_H
 
-#include <string>
-
 #include "cpu.h"
 #include "dynarec.h"
 #include "interpreter.h"
+
+#include <string>
 
 using Utils::UInt8;
 using Utils::UInt16;

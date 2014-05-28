@@ -1,5 +1,7 @@
 #include "emulator.h"
 
+#include "constants.h"
+
 #include <fstream>
 
 const float Emulator::FRAME_TIME = (1.f/60.f)*1000.f;

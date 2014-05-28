@@ -5,6 +5,8 @@
 
 #include "interpreter_tests.h"
 
+#include "constants.h"
+
 BOOST_FIXTURE_TEST_SUITE( InterpreterTestSuite, InterpreterFixture )
 
 BOOST_AUTO_TEST_CASE( InitTest )

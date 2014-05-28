@@ -1,5 +1,7 @@
 #include "interpreter.h"
 
+#include "constants.h"
+
 #include <iostream>
 
 Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m_Dist(0, std::numeric_limits<UInt16>::max()), m_ErrorCode(0)

@@ -10,7 +10,7 @@ Assembler::Assembler():
 {
 }
 
-Assembler::~Assembler() noexcept 
+Assembler::~Assembler() 
 {
 }
 
@@ -42,7 +42,7 @@ void Assembler::FirstPass(const std::vector<std::string> & in_FileContents)
 {
 	for(auto& l_Line : in_FileContents)
 	{
-        if(m_LabelRegex.)
+        //if(m_LabelRegex.)
 	}
 }
 
