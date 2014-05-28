@@ -2,14 +2,6 @@ cmake_minimum_required (VERSION 2.8)
 
 add_library( EmulatorLib STATIC 
         constants.h
-		globalallocator.h
-		globalallocator.cpp
-		localallocator.h
-		localallocator.cpp
-		dynarec.cpp
-		dynarec.h
-		emitter.cpp
-		emitter.h
 		instruction.cpp
 		instruction.h
 		interpreter.cpp
@@ -22,8 +14,6 @@ add_library( EmulatorLib STATIC
 		gpu.h
 		spu.cpp 
 		spu.h
-		memoryarena.cpp
-		memoryarena.h
 		)
 	   
 set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)

@@ -6,8 +6,6 @@ set(Boost_USE_STATIC_RUNTIME OFF)
 
 set( SOURCES 
 	main.cpp 
-	dynarec_tests.cpp
-	emitter_tests.cpp
 	interpreter_tests.cpp 
 	interpreter_tests.h 
 	gpu_tests.cpp 

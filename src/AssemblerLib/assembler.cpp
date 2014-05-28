@@ -1,6 +1,7 @@
 #include "assembler.h"
 
 #include <fstream>
+#include <iostream>
 
 Assembler::Assembler(): 
     m_DataRegex("\s*db #?([0-9]+|\"[A-Za-z0-9\s]+\")\s*;"), 
@@ -14,7 +15,7 @@ Assembler::~Assembler()
 {
 }
 
-void Assembler::Assemble(const std::string & in_Filename)
+bool Assembler::Assemble(const std::string & in_Filename)
 {
 	std::ifstream l_Stream(in_Filename);
     std::string l_Dump;
@@ -30,12 +31,23 @@ void Assembler::Assemble(const std::string & in_Filename)
 		
 		l_Stream.close();
 	}
+	else
+	{
+		std::cout << "ERROR: Problem reading the given assembly file" << std::endl;
+		return false;
+	}
 
 	if(!l_FileContents.empty())
 	{
         FirstPass(l_FileContents);
         SecondPass(l_FileContents);
-	};
+	}
+	else
+	{
+		std::cout << "WARNING: The given assembly is empty" << std::endl;
+	}
+
+	return true;
 }
 	
 void Assembler::FirstPass(const std::vector<std::string> & in_FileContents)

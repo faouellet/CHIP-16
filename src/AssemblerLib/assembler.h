@@ -39,8 +39,9 @@ public:
 	 * \fn Assemble
 	 * \brief Assemble a binary file from a Chip16 file
 	 * \param in_Filename Name of the Chip16 assembly file
+	 * \return Assembly succesful?
 	 */
-	void Assemble(const std::string & in_Filename); 
+	bool Assemble(const std::string & in_Filename); 
 
 private: // TODO: maybe add a ref to asm book
 	/*

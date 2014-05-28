@@ -7,7 +7,8 @@ int main(int argc, char** argv)
     if(argc > 1)
     {
         Assembler l_Asm;
-        l_Asm.Assemble(argv[1]);
+		if (!l_Asm.Assemble(argv[1]))
+			std::cout << "ERROR: Could not assemble the given file" << std::endl;
     }
     else
     {

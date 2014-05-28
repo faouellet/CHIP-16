@@ -1,6 +1,7 @@
 #include "emitter.h"
 
 #include <fstream>
+#include <iostream>
 
 Emitter::Emitter(const UInt32 & in_BufSize) :
     m_Buffer(in_BufSize / 4 + 1) { }
@@ -19,6 +20,13 @@ void Emitter::EmitInstruction(const UInt8 in_Opcode, const UInt8 in_Op1,
 
 void Emitter::EmitToFile(const std::string & in_Filename) const
 {
+	std::ofstream l_Stream(in_Filename);
+
+	if (!l_Stream.is_open())
+	{
+
+	}
+
     // TODO: Chip16 Header
     
 }

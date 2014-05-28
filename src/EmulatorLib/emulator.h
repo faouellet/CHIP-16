@@ -2,7 +2,6 @@
 #define EMULATOR_H
 
 #include "cpu.h"
-#include "dynarec.h"
 #include "interpreter.h"
 
 #include <string>
@@ -30,7 +29,6 @@ private:
 
 private:
 	std::shared_ptr<CPU> m_CPU;		/*!< Central processing unit state */
-	Dynarec m_Dynarec;				/*!< Recompiler engine */
 	Interpreter m_Interpreter;		/*!< Interpreter engine */
 
 public:
