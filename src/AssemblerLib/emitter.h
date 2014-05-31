@@ -25,7 +25,7 @@ public:
      * \brief Default constructor
      * \param in_BufSize Size of the buffer to generate in bytes
      */
-    Emitter(const UInt32 & in_BufSize);
+    Emitter(const UInt32 & in_BufSize = 0);
 
     /*
      * \fn ~Emitter
