@@ -51,7 +51,7 @@ struct EmitterFixture
 
 			l_TestFileStream.close();
 
-			// Don;t care about the header
+			// Don't care about the header
 			return std::vector<UInt8>(l_TestData.begin()+16, l_TestData.end());
 		}
 
@@ -124,26 +124,69 @@ private:
 
 	void SetupStackTest()
 	{
+		InsertInstruction(StackTestData, 0xC0, 0x01, 0x00, 0x00); // PUSH R1
+		InsertInstruction(StackTestData, 0xC2, 0x02, 0x00, 0x00); // POP R2
+		InsertInstruction(StackTestData, 0xC3, 0x00, 0x00, 0x00); // PUSHALL
+		InsertInstruction(StackTestData, 0xC3, 0x00, 0x00, 0x00); // POPALL
+		InsertInstruction(StackTestData, 0xC4, 0x00, 0x00, 0x00); // PUSHF
+		InsertInstruction(StackTestData, 0xC5, 0x00, 0x00, 0x00); // POPF
 	}
 
 	void SetupMemoryTest()
 	{
+		InsertInstruction(MemoryTestData, 0x20, 0x01, 0xFF, 0x00); // LDI R1 0x00FF
+		InsertInstruction(MemoryTestData, 0x21, 0x00, 0xFF, 0x00); // LDI SP 0x00FF
+
+		
+		InsertInstruction(MemoryTestData, 0x23, 0x21, 0x00, 0x00); // LDM R1 R2
+		InsertInstruction(MemoryTestData, 0x22, 0x01, 0xFF, 0x00); // LDM R1 0x00FF
+		
+		InsertInstruction(MemoryTestData, 0x24, 0x21, 0x00, 0x00); // MOV R1 R2
+
+		InsertInstruction(MemoryTestData, 0x31, 0x21, 0x00, 0x00); // STM R1 R2
+		InsertInstruction(MemoryTestData, 0x30, 0x01, 0xFF, 0x00); // STM R1 0x00FF
 	}
 
 	void SetupJumpTest()
 	{
+		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, );
+
+		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, );
 	}
 
 	void SetupPaletteTest()
 	{
+		InsertInstruction(PaletteTestData, );
+		InsertInstruction(PaletteTestData, );
 	}
 
 	void SetupMiscTest()
 	{
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, );
 	}
 
 	void SetupSoundTest()
 	{
+		InsertInstruction(SoundTestData, );
+		InsertInstruction(SoundTestData, );
+		InsertInstruction(SoundTestData, );
+		InsertInstruction(SoundTestData, );
+		InsertInstruction(SoundTestData, );
+		InsertInstruction(SoundTestData, );
 	}
 };
 
