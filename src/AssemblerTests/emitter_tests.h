@@ -168,15 +168,15 @@ private:
 
 	void SetupMiscTest()
 	{
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
-		InsertInstruction(MiscTestData, );
+		InsertInstruction(MiscTestData, 0x00, 0x00, 0x00, 0x00); // NOP
+		InsertInstruction(MiscTestData, 0x01, 0x00, 0x00, 0x00); // CLS
+		InsertInstruction(MiscTestData, 0x02, 0x00, 0x00, 0x00); // VBLNK
+		InsertInstruction(MiscTestData, 0x03, 0x00, 0x01, 0x00); // BGC 1
+		InsertInstruction(MiscTestData, 0x04, 0x00, 0xFF, 0x00); // SPR 0x00FF
+		InsertInstruction(MiscTestData, 0x06, 0x21, 0x03, 0x00); // DRW R1 R2 R3
+		InsertInstruction(MiscTestData, 0x05, 0x21, 0xFF, 0x00); // DRW R1 R2 0x00FF
+		InsertInstruction(MiscTestData, 0x07, 0x01, 0xFF, 0x00); // RND R1 0x00FF
+		InsertInstruction(MiscTestData, 0x08, 0x00, 0x00, 0x03); // FLIP 3
 	}
 
 	void SetupSoundTest()

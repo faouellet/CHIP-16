@@ -146,12 +146,12 @@ BOOST_AUTO_TEST_CASE( MiscTest )
 	Emitter.EmitNop();
 	Emitter.EmitCls();
 	Emitter.EmitVBlnk();
-	Emitter.EmitBgc();
-	Emitter.EmitSpr();
-	Emitter.EmitDrw();
-	Emitter.EmitDrwImm();
-	Emitter.EmitRnd();
-	Emitter.EmitFlip();
+	Emitter.EmitBgc(0x01);
+	Emitter.EmitSpr(0x00FF);
+	Emitter.EmitDrw(0x01, 0x02, 0x03);
+	Emitter.EmitDrwImm(0x01, 0x02, 0x00FF);
+	Emitter.EmitRnd(0x01, 0x00FF);
+	Emitter.EmitFlip(0x01, 0x01);
 
 	Emitter.EmitToFile(TestFilename);
 
