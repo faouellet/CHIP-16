@@ -106,15 +106,15 @@ BOOST_AUTO_TEST_CASE( MemoryTest )
 
 BOOST_AUTO_TEST_CASE( JumpTest )
 {
-	Emitter.EmitJmp();
-	Emitter.EmitJx();
-	Emitter.EmitJme();
+	Emitter.EmitJmp(0x00FF);
+	Emitter.EmitJx(0x01, 0x00FF);
+	Emitter.EmitJme(0x01, 0x02, 0x00FF);
 	Emitter.EmitJmpInd();
 
-	Emitter.EmitCall();
-	Emitter.EmitCallImm();
+	Emitter.EmitCall(0x00FF);
+	Emitter.EmitCallImm(0x00FF);
 	Emitter.EmitRet();
-	Emitter.EmitCx();
+	Emitter.EmitCx(0x01, 0x00FF);
 
 	Emitter.EmitToFile(TestFilename);
 

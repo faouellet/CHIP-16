@@ -149,15 +149,15 @@ private:
 
 	void SetupJumpTest()
 	{
-		InsertInstruction(JumpTestData, );
-		InsertInstruction(JumpTestData, );
-		InsertInstruction(JumpTestData, );
-		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, 0x10, 0x00, 0xFF, 0x00); // JMP 0x00FF
+		InsertInstruction(JumpTestData, 0x12, 0x01, 0xFF, 0x00); // J1 0x00FF
+		InsertInstruction(JumpTestData, 0x13, 0x21, 0xFF, 0x00); // JME R1 R2 0x00FF
+		InsertInstruction(JumpTestData, 0x16, 0x01, 0x00, 0x00); // JMP R1
 
-		InsertInstruction(JumpTestData, );
-		InsertInstruction(JumpTestData, );
-		InsertInstruction(JumpTestData, );
-		InsertInstruction(JumpTestData, );
+		InsertInstruction(JumpTestData, 0x18, 0x01, 0x00, 0x00); // CALL R1
+		InsertInstruction(JumpTestData, 0x14, 0x00, 0xFF, 0x00); // CALL 0x00FF
+		InsertInstruction(JumpTestData, 0x15, 0x00, 0x00, 0x00); // RET
+		InsertInstruction(JumpTestData, 0x17, 0x01, 0xFF, 0x00); // C1 0x00FF		
 	}
 
 	void SetupPaletteTest()
