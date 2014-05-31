@@ -128,8 +128,8 @@ BOOST_AUTO_TEST_CASE( JumpTest )
 
 BOOST_AUTO_TEST_CASE( PaletteTest )
 {
-	Emitter.EmitPal();
-	Emitter.EmitPalImm();
+	Emitter.EmitPal(0x01);
+	Emitter.EmitPalImm(0x00FF);
 
 	Emitter.EmitToFile(TestFilename);
 

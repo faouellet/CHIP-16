@@ -162,8 +162,8 @@ private:
 
 	void SetupPaletteTest()
 	{
-		InsertInstruction(PaletteTestData, );
-		InsertInstruction(PaletteTestData, );
+		InsertInstruction(PaletteTestData, 0xD1, 0x01, 0x00, 0x00); // PAL R1
+		InsertInstruction(PaletteTestData, 0xD0, 0x00, 0xFF, 0x00); // PAL 0x00FF
 	}
 
 	void SetupMiscTest()
