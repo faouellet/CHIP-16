@@ -166,11 +166,11 @@ BOOST_AUTO_TEST_CASE( MiscTest )
 BOOST_AUTO_TEST_CASE( SoundTest )
 {
 	Emitter.EmitSnd0();
-	Emitter.EmitSnd1();
-	Emitter.EmitSnd2();
-	Emitter.EmitSnd3();
-	Emitter.EmitSnp();
-	Emitter.EmitSng();
+	Emitter.EmitSnd1(0x00FF);
+	Emitter.EmitSnd2(0x00FF);
+	Emitter.EmitSnd3(0x00FF);
+	Emitter.EmitSnp(0x01, 0x00FF);
+	//Emitter.EmitSng();
 
 	Emitter.EmitToFile(TestFilename);
 

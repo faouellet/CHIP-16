@@ -181,12 +181,12 @@ private:
 
 	void SetupSoundTest()
 	{
-		InsertInstruction(SoundTestData, );
-		InsertInstruction(SoundTestData, );
-		InsertInstruction(SoundTestData, );
-		InsertInstruction(SoundTestData, );
-		InsertInstruction(SoundTestData, );
-		InsertInstruction(SoundTestData, );
+		InsertInstruction(SoundTestData, 0x09, 0x00, 0x00, 0x00); // SND0
+		InsertInstruction(SoundTestData, 0x0A, 0x00, 0xFF, 0x00); // SND1 0x00FF
+		InsertInstruction(SoundTestData, 0x0B, 0x00, 0xFF, 0x00); // SND2 0x00FF
+		InsertInstruction(SoundTestData, 0x0C, 0x00, 0xFF, 0x00); // SND3 0x00FF
+		InsertInstruction(SoundTestData, 0x0D, 0x01, 0xFF, 0x00); // SNP R1 0x00FF
+		// InsertInstruction(SoundTestData, 0x0E, );
 	}
 };
 
