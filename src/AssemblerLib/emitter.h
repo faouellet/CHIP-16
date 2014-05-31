@@ -17,6 +17,7 @@ using Utils::UInt32;
 class Emitter
 {
 private:
+	UInt16 m_MagicNumber;
     std::vector<UInt32> m_Buffer;
 
 public:

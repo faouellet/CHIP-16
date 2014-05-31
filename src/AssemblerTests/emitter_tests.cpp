@@ -5,62 +5,61 @@
 
 #include "emitter_tests.h"
 
-#include <fstream>
-
 BOOST_FIXTURE_TEST_SUITE(EmitterTestSuite, EmitterFixture)
 
 BOOST_AUTO_TEST_CASE( ArithmeticTest )
 {
-	Emitter.EmitAdd();
-	Emitter.EmitAddImm();
-	Emitter.EmitAddInp();
+	Emitter.EmitAdd(0x01, 0x02, 0x03);
+	Emitter.EmitAddImm(0x01, 0x00FF);
+	Emitter.EmitAddInp(0x01, 0x02);
 
-	Emitter.EmitAnd();
-	Emitter.EmitAndImm();
-	Emitter.EmitAndInp();
+	Emitter.EmitAnd(0x05, 0x04, 0x06);
+	Emitter.EmitAndImm(0x01, 0xAA00);
+	Emitter.EmitAndInp(0x03, 0x02);
 
-	Emitter.EmitARShift();
-	Emitter.EmitARShiftImm();
+	Emitter.EmitARShift(0x01, 0x02);
+	Emitter.EmitARShiftImm(0x03, 0x02);
 
-	Emitter.EmitCmp();
-	Emitter.EmitCmpImm();
+	Emitter.EmitCmp(0x05, 0x06);
+	Emitter.EmitCmpImm(0x03, 0x02);
 
-	Emitter.EmitDiv();
-	Emitter.EmitDivImm();
-	Emitter.EmitDivInp();
+	Emitter.EmitDiv(0x01, 0x02, 0x03);
+	Emitter.EmitDivImm(0x01, 0x00FF);
+	Emitter.EmitDivInp(0x01, 0x02);
 
-	Emitter.EmitLLShift();
-	Emitter.EmitLLShiftImm();
+	Emitter.EmitLLShift(0x01, 0x02);
+	Emitter.EmitLLShiftImm(0x01, 0x02);
 
-	Emitter.EmitLRShift();
-	Emitter.EmitLRShiftImm();
+	Emitter.EmitLRShift(0x01, 0x02);
+	Emitter.EmitLRShiftImm(0x01, 0x02);
 
-	Emitter.EmitMul();
-	Emitter.EmitMulImm();
-	Emitter.EmitMulInp();
+	Emitter.EmitMul(0x01, 0x02, 0x03);
+	Emitter.EmitMulImm(0x01, 0x00FF);
+	Emitter.EmitMulInp(0x01, 0x02);
 
-	Emitter.EmitOr();
-	Emitter.EmitOrImm();
-	Emitter.EmitOrInp();
+	Emitter.EmitOr(0x01, 0x02, 0x03);
+	Emitter.EmitOrImm(0x01, 0x00FF);
+	Emitter.EmitOrInp(0x01, 0x02);
 
-	Emitter.EmitSub();
-	Emitter.EmitSubImm();
-	Emitter.EmitSubInp();
+	Emitter.EmitSub(0x01, 0x02, 0x03);
+	Emitter.EmitSubImm(0x01, 0x00EE);
+	Emitter.EmitSubInp(0x01, 0x02);
 
-	Emitter.EmitTst();
-	Emitter.EmitTstImm();
+	Emitter.EmitTst(0x03, 0x02);
+	Emitter.EmitTstImm(0x01, 0xFFFF);
 
-	Emitter.EmitXor();
-	Emitter.EmitXorImm();
-	Emitter.EmitXorInp();
+	Emitter.EmitXor(0x01, 0x02, 0x03);
+	Emitter.EmitXorImm(0x01, 0xFF00);
+	Emitter.EmitXorInp(0x01, 0x02);
 
-	Emitter.EmitToFile("test.c16");
+	Emitter.EmitToFile(TestFilename);
 
-	std::ifstream l_TestFileStream(TestFilename);
+	std::vector<UInt8> l_TestData(ReadFile());
 
-	BOOST_REQUIRE(l_TestFileStream.is_open());
+	BOOST_REQUIRE_EQUAL(l_TestData.size(), ArithmeticTestData.size());
 
-
+	for (unsigned i = 0; i < l_TestData.size(); ++i)
+		BOOST_REQUIRE_EQUAL(l_TestData[i], ArithmeticTestData[i]);
 }
 
 BOOST_AUTO_TEST_CASE( StackTest )

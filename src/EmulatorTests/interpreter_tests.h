@@ -73,23 +73,6 @@ struct InterpreterFixture
 	}
 
 	/**
-	* \fn PrepareData
-	* \brief Insert a 32 bits instruction into a data vector
-	* \param out_DataVec Data vector to be inserted into
-	* \param in_Op1 Bit[0] to bit[3] of the instruction
-	* \param in_Op2 Bit[4] to bit[7] of the instruction
-	* \param in_Op3 Bit[8] to bit[11] of the instruction
-	* \param in_Op4 Bit[12] to bit[15] of the instruction
-	*/
-	void InsertInstruction(std::vector<UInt8> & out_DataVec, UInt8 in_Op1, UInt8 in_Op2, UInt8 in_Op3, UInt8 in_Op4)
-	{
-		out_DataVec.push_back(in_Op1);
-		out_DataVec.push_back(in_Op2);
-		out_DataVec.push_back(in_Op3);
-		out_DataVec.push_back(in_Op4);
-	}
-
-	/**
 	* \fn ExecuteBadInstruction
 	* \brief Execute an instruction known to raise an error
 	* \param out_DataVec Data vector to be inserted into
@@ -109,6 +92,22 @@ struct InterpreterFixture
 	}
 
 private:
+	/**
+	* \fn PrepareData
+	* \brief Insert a 32 bits instruction into a data vector
+	* \param out_DataVec Data vector to be inserted into
+	* \param in_Op1 Bit[0] to bit[3] of the instruction
+	* \param in_Op2 Bit[4] to bit[7] of the instruction
+	* \param in_Op3 Bit[8] to bit[11] of the instruction
+	* \param in_Op4 Bit[12] to bit[15] of the instruction
+	*/
+	void InsertInstruction(std::vector<UInt8> & out_DataVec, UInt8 in_Op1, UInt8 in_Op2, UInt8 in_Op3, UInt8 in_Op4)
+	{
+		out_DataVec.push_back(in_Op1);
+		out_DataVec.push_back(in_Op2);
+		out_DataVec.push_back(in_Op3);
+		out_DataVec.push_back(in_Op4);
+	}
 	/**
 	* \fn SetupArithmeticData
 	* \brief Fills the arithmetic data vectors with opcodes

@@ -4,7 +4,7 @@
 #include <iostream>
 
 Emitter::Emitter(const UInt32 & in_BufSize) :
-    m_Buffer(in_BufSize / 4 + 1) { }
+	m_Buffer(in_BufSize / 4 + 1), m_MagicNumber(0x43483136) { }
 
 Emitter::~Emitter() { }
 
@@ -27,12 +27,21 @@ void Emitter::EmitToFile(const std::string & in_Filename) const
 {
 	std::ofstream l_Stream(in_Filename);
 
-	if (!l_Stream.is_open())
+	if (l_Stream.is_open())
 	{
+		// Write header
+		l_Stream.write(reinterpret_cast<const char *>(m_MagicNumber), sizeof(m_MagicNumber));
+		l_Stream.write(reinterpret_cast<const char *>(0x00), 1); // Reserved
+		l_Stream.write(reinterpret_cast<const char *>(0x11), 1); // Version number
+		l_Stream.write(reinterpret_cast<const char *>(m_Buffer.size()), 4); // ROM Size
+		l_Stream.write(reinterpret_cast<const char *>(0x00), 2); // Start address
+		l_Stream.write(reinterpret_cast<const char *>(0x00), 4); // TODO: CRC32 checksum
 
+		for (auto l_Byte : m_Buffer)
+			l_Stream.write(reinterpret_cast<const char *>(l_Byte), 4);
+
+		l_Stream.close();
 	}
-
-    // TODO: Chip16 Header
 }
 
 /////////////// Arithmetric ///////////////
