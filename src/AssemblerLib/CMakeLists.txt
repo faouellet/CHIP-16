@@ -6,6 +6,12 @@ add_library( AssemblerLib STATIC
 	emitter.h
 	emitter.cpp
 	)
-	   
-set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 
+find_package(Boost)
+
+if(Boost_FOUND)
+    # Boost
+    include_directories("${Boost_INCLUDE_DIR}")
+	
+    set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
+endif()

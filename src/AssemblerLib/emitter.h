@@ -18,9 +18,10 @@ using Utils::UInt32;
 class Emitter
 {
 private:
-	UInt32 m_MagicNumber;
 	UInt8 m_VersionNumer;
-	UInt8 m_Zero;
+	UInt32 m_MagicNumber;
+	UInt32 m_CRCPolynom;
+
     std::vector<UInt32> m_Buffer;
 
 public:
@@ -55,6 +56,13 @@ private:
 	*/
     void EmitInstruction(const UInt8 in_Opcode, const UInt8 in_Op1, 
             const UInt8 in_Op2, const UInt16 in_Op3);
+	
+	/*
+	* \fn ComputeCRC32
+	* \brief Compute the CRC32 checksum for the instructions buffer
+	*/
+	UInt32 ComputeCRC32();
+
 	/*
 	* \fn InverseBytes
 	* \brief Invert the two bytes making up an UInt16

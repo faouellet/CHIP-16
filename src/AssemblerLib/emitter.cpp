@@ -1,8 +1,10 @@
 #include "emitter.h"
 
+#include <boost\crc.hpp>
+
 Emitter::Emitter(const UInt32 & in_BufSize) :
-	m_Buffer(in_BufSize / 4), m_MagicNumber(0x43483136), m_VersionNumer(0x11),
-	m_Zero(0x00) { }
+	m_Buffer(in_BufSize / 4), m_VersionNumer(0x11),
+	m_MagicNumber(0x43483136), m_CRCPolynom(0x04C11DB7) {}
 
 Emitter::~Emitter() { }
 
@@ -16,6 +18,15 @@ void Emitter::EmitInstruction(const UInt8 in_Opcode, const UInt8 in_Op1,
     m_Buffer.push_back(l_Ins);
 }
 
+UInt32 Emitter::ComputeCRC32()
+{
+	boost::crc_32_type l_CRC;
+	
+	l_CRC.process_bytes((void *)&m_Buffer[0], m_Buffer.size());
+
+	return l_CRC.checksum();
+}
+
 UInt16 Emitter::ReverseBytes(const UInt16 in_Bytes)
 {
 	return UInt16(((in_Bytes & 0xFF) << 8) | (in_Bytes >> 8));
@@ -23,14 +34,13 @@ UInt16 Emitter::ReverseBytes(const UInt16 in_Bytes)
 
 void Emitter::WriteHeader(std::ofstream & io_FStream)
 {
-	// TODO: Write little endian
-	io_FStream.write(reinterpret_cast<const char *>(&m_MagicNumber), sizeof(m_MagicNumber));
-	io_FStream.write(reinterpret_cast<const char *>(&m_Zero), sizeof(m_Zero)); // Reserved
-	io_FStream.write(reinterpret_cast<const char *>(&m_VersionNumer), sizeof(m_VersionNumer));
-	UInt32 l_Size = m_Buffer.size();
-	io_FStream.write(reinterpret_cast<const char *>(&l_Size), 4); // ROM Size
-	io_FStream.write(reinterpret_cast<const char *>(&m_Zero), 2); // Start address
-	io_FStream.write(reinterpret_cast<const char *>(&m_Zero), 4); // TODO: CRC32 checksum
+	WriteLittleEndian(io_FStream, m_MagicNumber);
+	io_FStream.put(0x00); // Reserved
+	io_FStream.put(m_VersionNumer);
+	WriteLittleEndian(io_FStream, m_Buffer.size());
+	io_FStream.put(0x00); // Start address (Low)
+	io_FStream.put(0x00); // Start address (High)
+	WriteLittleEndian(io_FStream, ComputeCRC32());
 }
 
 void Emitter::WriteLittleEndian(std::ofstream & io_FStream, const UInt32 in_Bytes)
