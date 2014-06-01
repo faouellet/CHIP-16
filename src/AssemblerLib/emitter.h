@@ -1,6 +1,7 @@
 #ifndef ASM_EMITTER_H
 #define ASM_EMITTER_H
 
+#include <fstream>
 #include <string>
 #include <vector>
 
@@ -17,7 +18,9 @@ using Utils::UInt32;
 class Emitter
 {
 private:
-	UInt16 m_MagicNumber;
+	UInt32 m_MagicNumber;
+	UInt8 m_VersionNumer;
+	UInt8 m_Zero;
     std::vector<UInt32> m_Buffer;
 
 public:
@@ -39,7 +42,7 @@ public:
 	* \brief Dump the Emitter instructions buffer in a file
 	* \param in_Filename Name of the file to writethe Chip16 instructions to
 	*/
-    void EmitToFile(const std::string & in_Filename) const;
+    void EmitToFile(const std::string & in_Filename);
 
 private:
 	/*
@@ -59,6 +62,21 @@ private:
 	* \return The inverted bytes
 	*/
 	UInt16 ReverseBytes(const UInt16 in_Bytes);
+
+	/*
+	* \fn WriteHeader
+	* \brief Write the Chip16 file header (See spec for details)
+	* \param io_FStream Stream to the file to write to
+	*/
+	void WriteHeader(std::ofstream & io_FStream);
+
+	/*
+	* \fn WriteLittleEndian
+	* \brief Invert the two bytes making up an UInt16
+	* \param io_FStream Stream to the file to write to
+	* \param in_Bytes The four bytes to write
+	*/
+	void WriteLittleEndian(std::ofstream & io_FStream, const UInt32 in_Bytes);
 
 public:    /////////////// Arithmetric ///////////////
     void EmitAdd(const UInt8 in_RegX, const UInt8 in_RegY, const UInt8 in_RegZ);

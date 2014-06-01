@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE( ArithmeticTest )
 	Emitter.EmitARShiftImm(0x03, 0x02);
 
 	Emitter.EmitCmp(0x05, 0x06);
-	Emitter.EmitCmpImm(0x03, 0x02);
+	Emitter.EmitCmpImm(0x04, 0xFF00);
 
 	Emitter.EmitDiv(0x01, 0x02, 0x03);
 	Emitter.EmitDivImm(0x01, 0x00FF);
@@ -31,7 +31,7 @@ BOOST_AUTO_TEST_CASE( ArithmeticTest )
 	Emitter.EmitLLShiftImm(0x01, 0x02);
 
 	Emitter.EmitLRShift(0x01, 0x02);
-	Emitter.EmitLRShiftImm(0x01, 0x02);
+	Emitter.EmitLRShiftImm(0x02, 0x04);
 
 	Emitter.EmitMul(0x01, 0x02, 0x03);
 	Emitter.EmitMulImm(0x01, 0x00FF);
@@ -39,7 +39,7 @@ BOOST_AUTO_TEST_CASE( ArithmeticTest )
 
 	Emitter.EmitOr(0x01, 0x02, 0x03);
 	Emitter.EmitOrImm(0x01, 0x00FF);
-	Emitter.EmitOrInp(0x01, 0x02);
+	Emitter.EmitOrInp(0x03, 0x02);
 
 	Emitter.EmitSub(0x01, 0x02, 0x03);
 	Emitter.EmitSubImm(0x01, 0x00EE);

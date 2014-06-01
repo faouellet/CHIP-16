@@ -60,7 +60,7 @@ struct EmitterFixture
 
 private:
 	/**
-	* \fn PrepareData
+	* \fn InsertInstruction
 	* \brief Insert a 32 bits instruction into a data vector
 	* \param out_DataVec Data vector to be inserted into
 	* \param in_Op1 Bit[0] to bit[3] of the instruction
@@ -108,7 +108,7 @@ private:
 		
 		InsertInstruction(ArithmeticTestData, 0x72, 0x21, 0x03, 0x00); // OR: R3 = R1 | R2
 		InsertInstruction(ArithmeticTestData, 0x70, 0x01, 0xFF, 0x00); // ORI: R1 |= 0x00FF
-		InsertInstruction(ArithmeticTestData, 0x71, 0x23, 0x00, 0x00); // OR: R1 |= R2
+		InsertInstruction(ArithmeticTestData, 0x71, 0x23, 0x00, 0x00); // OR: R3 |= R2
 		
 		InsertInstruction(ArithmeticTestData, 0x52, 0x21, 0x03, 0x00); // SUB: R3 = R2 - R1
 		InsertInstruction(ArithmeticTestData, 0x50, 0x01, 0xEE, 0x00); // SUBI: R1 -= 0x00EE

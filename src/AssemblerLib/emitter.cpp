@@ -1,10 +1,8 @@
 #include "emitter.h"
 
-#include <fstream>
-#include <iostream>
-
 Emitter::Emitter(const UInt32 & in_BufSize) :
-	m_Buffer(in_BufSize / 4 + 1), m_MagicNumber(0x43483136) { }
+	m_Buffer(in_BufSize / 4), m_MagicNumber(0x43483136), m_VersionNumer(0x11),
+	m_Zero(0x00) { }
 
 Emitter::~Emitter() { }
 
@@ -23,22 +21,37 @@ UInt16 Emitter::ReverseBytes(const UInt16 in_Bytes)
 	return UInt16(((in_Bytes & 0xFF) << 8) | (in_Bytes >> 8));
 }
 
-void Emitter::EmitToFile(const std::string & in_Filename) const
+void Emitter::WriteHeader(std::ofstream & io_FStream)
 {
-	std::ofstream l_Stream(in_Filename);
+	// TODO: Write little endian
+	io_FStream.write(reinterpret_cast<const char *>(&m_MagicNumber), sizeof(m_MagicNumber));
+	io_FStream.write(reinterpret_cast<const char *>(&m_Zero), sizeof(m_Zero)); // Reserved
+	io_FStream.write(reinterpret_cast<const char *>(&m_VersionNumer), sizeof(m_VersionNumer));
+	UInt32 l_Size = m_Buffer.size();
+	io_FStream.write(reinterpret_cast<const char *>(&l_Size), 4); // ROM Size
+	io_FStream.write(reinterpret_cast<const char *>(&m_Zero), 2); // Start address
+	io_FStream.write(reinterpret_cast<const char *>(&m_Zero), 4); // TODO: CRC32 checksum
+}
+
+void Emitter::WriteLittleEndian(std::ofstream & io_FStream, const UInt32 in_Bytes)
+{
+	io_FStream.put(in_Bytes >> 24);
+	io_FStream.put(in_Bytes >> 16);
+	io_FStream.put(in_Bytes >> 8);
+	io_FStream.put(in_Bytes);
+}
+
+void Emitter::EmitToFile(const std::string & in_Filename)
+{
+	std::ofstream l_Stream("test.c16", std::ios_base::out | std::ios_base::binary);
+	l_Stream.imbue(std::locale::classic());
 
 	if (l_Stream.is_open())
 	{
-		// Write header
-		l_Stream.write(reinterpret_cast<const char *>(m_MagicNumber), sizeof(m_MagicNumber));
-		l_Stream.write(reinterpret_cast<const char *>(0x00), 1); // Reserved
-		l_Stream.write(reinterpret_cast<const char *>(0x11), 1); // Version number
-		l_Stream.write(reinterpret_cast<const char *>(m_Buffer.size()), 4); // ROM Size
-		l_Stream.write(reinterpret_cast<const char *>(0x00), 2); // Start address
-		l_Stream.write(reinterpret_cast<const char *>(0x00), 4); // TODO: CRC32 checksum
+		WriteHeader(l_Stream);
 
-		for (auto l_Byte : m_Buffer)
-			l_Stream.write(reinterpret_cast<const char *>(l_Byte), 4);
+		for (const auto& l_Byte : m_Buffer)
+			WriteLittleEndian(l_Stream, l_Byte);
 
 		l_Stream.close();
 	}
@@ -184,7 +197,7 @@ void Emitter::EmitTst(const UInt8 in_RegX, const UInt8 in_RegY)
 
 void Emitter::EmitTstImm(const UInt8 in_RegX, const UInt16 in_ImmVal)
 {
-	EmitInstruction(0x63, in_RegX, ReverseBytes(in_ImmVal), 0);
+	EmitInstruction(0x63, in_RegX, 0, ReverseBytes(in_ImmVal));
 }
 
 void Emitter::EmitXor(const UInt8 in_RegX, const UInt8 in_RegY, const UInt8 in_RegZ)
