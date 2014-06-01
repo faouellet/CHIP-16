@@ -23,15 +23,7 @@ unsigned Emulator::Init(const std::string & in_ROMName)
 	else return FileError;
 }
 
-void Emulator::Emulate(bool in_UseMixedMode)
-{
-	if(in_UseMixedMode)
-		JIT();
-	else
-		Interpret();
-}
-
-void Emulator::Interpret()
+void Emulator::Emulate()
 {
 	// TODO : Handle errors at this level
 
@@ -68,35 +60,6 @@ void Emulator::Interpret()
 		// Draw on screen
 		m_Interpreter.Show();
 		
-		// Sleep
-		Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));
-		if(static_cast<int>(l_Delay) > 0)
-			SDL_Delay(l_Delay);
-	}
-}
-
-void Emulator::JIT()
-{
-	bool l_Continue = true;
-	SDL_Event l_ControllerEvent;
-	Uint32 l_StartTime;
-
-	while(l_Continue)
-	{
-		// TODO : Black magic
-		
-		l_StartTime = SDL_GetTicks();
-		
-		// Handle IO
-		while(SDL_PollEvent(&l_ControllerEvent) && 
-			(l_ControllerEvent.type == SDL_KEYDOWN || l_ControllerEvent.type == SDL_KEYUP))
-			m_CPU->UpdateController(l_ControllerEvent.key);
-
-
-		// TODO : Sound, later...
-		
-		// TODO : Draw on screen
-
 		// Sleep
 		Uint32 l_Delay = static_cast<Uint32>(std::ceil(FRAME_TIME - (SDL_GetTicks() - l_StartTime)));
 		if(static_cast<int>(l_Delay) > 0)

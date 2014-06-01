@@ -22,7 +22,7 @@ int main(int argc, char** argv)
 		unsigned l_ErrorCode = l_Emu.Init(l_ROM);
 		if(!l_ErrorCode)
 		{
-			l_Emu.Emulate(false);
+			l_Emu.Emulate();
 		}
 		else
 		{
