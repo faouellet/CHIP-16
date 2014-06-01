@@ -111,7 +111,7 @@ BOOST_AUTO_TEST_CASE( JumpTest )
 	Emitter.EmitJme(0x01, 0x02, 0x00FF);
 	Emitter.EmitJmpInd(0x01);
 
-	Emitter.EmitCall(0x00FF);
+	Emitter.EmitCall(0x01);
 	Emitter.EmitCallImm(0x00FF);
 	Emitter.EmitRet();
 	Emitter.EmitCx(0x01, 0x00FF);
@@ -123,7 +123,11 @@ BOOST_AUTO_TEST_CASE( JumpTest )
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), JumpTestData.size());
 
 	for (unsigned i = 0; i < l_TestData.size(); ++i)
+	{
+		if (l_TestData[i] != JumpTestData[i])
+			int k = 0;
 		BOOST_REQUIRE_EQUAL(l_TestData[i], JumpTestData[i]);
+	}
 }
 
 BOOST_AUTO_TEST_CASE( PaletteTest )
@@ -179,7 +183,11 @@ BOOST_AUTO_TEST_CASE( SoundTest )
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), SoundTestData.size());
 
 	for (unsigned i = 0; i < l_TestData.size(); ++i)
+	{
+		if (l_TestData[i] != SoundTestData[i])
+			int k = 0;
 		BOOST_REQUIRE_EQUAL(l_TestData[i], SoundTestData[i]);
+	}
 }
 
 BOOST_AUTO_TEST_SUITE_END()

@@ -358,7 +358,7 @@ void Emitter::EmitSnd3(const UInt16 in_ImmVal)
 
 void Emitter::EmitSnp(const UInt8 in_RegX, const UInt16 in_ImmVal)
 {
-	EmitInstruction(0x0C, in_RegX, 0, ReverseBytes(in_ImmVal));
+	EmitInstruction(0x0D, in_RegX, 0, ReverseBytes(in_ImmVal));
 }
 
 void Emitter::EmitSng(const UInt8 in_AD, const UInt8 in_SR, const UInt8 in_VT)
