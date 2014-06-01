@@ -30,5 +30,5 @@ if(Boost_FOUND)
     link_directories("${CMAKE_BINARY_DIR}/lib")
     
     add_executable(AssemblerTests ${SOURCES}) 
-    target_link_libraries(AssemblerTests ${Boost_LIBRARIES})
+    target_link_libraries(AssemblerTests ${Boost_LIBRARIES} AssemblerLib)
 endif()

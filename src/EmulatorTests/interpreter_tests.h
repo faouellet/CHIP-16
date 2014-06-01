@@ -46,6 +46,10 @@ struct InterpreterFixture
 	// Data for the pop/push tests
 	std::vector<UInt8> StackTestData;
 	
+	// Data for the rnd test
+	std::vector<UInt8> RndTestData;
+	
+	
 	/**
 	* \fn Constructor
 	* \brief Setup the data for the cpu instructions tests
@@ -56,6 +60,7 @@ struct InterpreterFixture
 		SetupLoadStoreData();
 		SetupShiftData();
 		SetupStackData();
+		SetupRandomData();
 	}
 
 	/**
@@ -236,7 +241,7 @@ private:
 		InsertInstruction(SubTestData, 0x52, 0x10, 0x02, 0x00);	// SUB : R2 = R0 - R1
 		InsertInstruction(SubTestData, 0x52, 0x01, 0x03, 0x00);	// SUB : R3 = R1 - R0
 
-		/// CMPI ??
+		// CMPI ??
 		// CMP ??
 	}
 	
@@ -292,6 +297,16 @@ private:
 
 		for(int i = 0; i < NB_REGISTERS; ++i)
 			InsertInstruction(StackTestData, 0xC1, i, 0x00, 0x00);	// POP Ri
+	}
+	
+	/**
+	* \fn SetupRandomData
+	* \brief Fills a vector with random values
+	*/
+	void SetupRandomData()
+	{
+		for (int i = 0; i < NB_REGISTERS; ++i)
+			InsertInstruction(RndTestData, 0x07, i, 0x00, 0xFF);	// Ri = Random
 	}
 };
 
