@@ -3,6 +3,7 @@
 
 #include <map>
 #include <regex>
+#include <set>
 #include <string>
 #include <vector>
 
@@ -20,7 +21,9 @@ private:
 	std::regex m_DataRegex;
 	std::regex m_MacroRegex;
 
-	std::map<std::string, UInt8> m_SymbolTable;
+	std::map<std::string, UInt16> m_SymbolTable;
+
+	std::set<std::string> m_ValidInstructions;
 
 public:	
 	/*
@@ -46,10 +49,11 @@ public:
 private: // TODO: maybe add a ref to asm book
 	/*
 	 * \fn FirstPass
-	 * \brief Read the file to populate the symbols table
+	 * \brief Read the file to populate the symbols table and check for syntax errors
 	 * \param in_FileContents The assembly contained in a file 
+	 * \return Pass completed without error?
 	 */
-	void FirstPass(const std::vector<std::string> & in_FileContents);
+	bool FirstPass(const std::vector<std::string> & in_FileContents);
 
 	/* 
 	 * \fn SecondPass
