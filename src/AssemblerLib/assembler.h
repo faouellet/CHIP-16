@@ -16,6 +16,7 @@
 class Assembler
 {
 private:
+	std::regex m_CommentRegex;
 	std::regex m_LabelRegex;
 	std::regex m_InstructionRegex;
 	std::regex m_DataRegex;

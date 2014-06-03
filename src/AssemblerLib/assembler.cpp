@@ -4,8 +4,9 @@
 #include <iostream>
 
 Assembler::Assembler(): 
-    m_DataRegex("\s*db #?([0-9]+|\"[A-Za-z0-9\s]+\")\s*;"), 
-    m_InstructionRegex("\s*([a-z]+) ([#A-Za-z0-9_]+)?,? ([#A-Za-z0-9_]+)?,? ([#A-Za-z0-9_]+)?\s*;"), 
+	m_CommentRegex(";.*"),
+	m_DataRegex("\s*db #?([0-9]+|\"[A-Za-z0-9\s]+\")\s*;"),
+    m_InstructionRegex("\s*([a-z]+) ([#A-Za-z0-9_]+)?,?([#A-Za-z0-9_]+)?,?([#A-Za-z0-9_]+)?\s*;"), 
     m_LabelRegex("\s*:([A-Za-z0-9]+)\s*;"), 
     m_MacroRegex("importbin \s*;")
 {
@@ -64,9 +65,42 @@ bool Assembler::Assemble(const std::string & in_Filename)
 	
 bool Assembler::FirstPass(const std::vector<std::string> & in_FileContents)
 {
+	UInt16 l_Address = 0;
+
 	for(auto& l_Line : in_FileContents)
 	{
-        
+		std::smatch l_Match;
+		
+		std::regex_match(l_Line, l_Match, m_CommentRegex);
+		if (l_Match.size())
+			continue;
+		
+		std::regex_match(l_Line, l_Match, m_DataRegex);
+		if (l_Match.size())
+		{
+			l_Address += 4;
+			continue;
+		}
+
+		std::regex_match(l_Line, l_Match, m_MacroRegex);
+		if (l_Match.size())
+		{
+			l_Address += 4;
+			continue;
+		}
+
+		std::regex_match(l_Line, l_Match, m_InstructionRegex);
+		if (l_Match.size())
+		{
+			l_Address += 4;
+			continue;
+		}
+		
+		std::regex_match(l_Line, l_Match, m_LabelRegex);
+		if (l_Match.size())
+		{
+			m_SymbolTable[l_Match] = l_Address;
+		}
 	}
 }
 
