@@ -1,6 +1,17 @@
-- Add a nice GUI interface
+////////////
+/ System16 /
+////////////
+- Add graphical interface
 - License ??
-- Allow user to choose screen resolution
-- Add visual debugging infos that can be optionally turned on or off
-- Add pause option
-- Make the emulator endian independant
+- Scrap the *App projects for a unified System16 project
+
+** Assembler16 **
+- 
+
+** Debugger16 **
+
+** Emulator16 **
+- Implement the sound commands
+- Implement a dynamic recompiler mode
+
+** Lang16 **
