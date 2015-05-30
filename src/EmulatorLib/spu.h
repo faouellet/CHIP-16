@@ -13,7 +13,6 @@ using Utils::UInt32;
 /**
 * \class SPU
 * \brief Emulates the Sound Processing Unit (SPU)
-* \author Felix-Antoine Ouellet
 */
 class SPU
 {

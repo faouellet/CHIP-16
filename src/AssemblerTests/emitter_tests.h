@@ -8,7 +8,6 @@
 /**
 * \struct EmitterFixture
 * \brief Fixture containing data to test the emitter functions.
-* \author Felix-Antoine Ouellet
 */
 struct EmitterFixture
 {

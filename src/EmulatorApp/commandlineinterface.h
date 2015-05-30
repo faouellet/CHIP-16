@@ -9,7 +9,6 @@
 /**
 * \class CommandLineInterface
 * \brief Basic interface from which to choose a ROM
-* \author Felix-Antoine Ouellet
 */
 class CommandLineInterface
 {

@@ -99,7 +99,7 @@ bool Assembler::FirstPass(const std::vector<std::string> & in_FileContents)
 		std::regex_match(l_Line, l_Match, m_LabelRegex);
 		if (l_Match.size())
 		{
-			m_SymbolTable[l_Match] = l_Address;
+			m_SymbolTable[l_Match.str()] = l_Address;
 		}
 	}
 }

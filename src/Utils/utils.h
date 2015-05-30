@@ -4,9 +4,8 @@
 /**
 * \namespace Utils
 * \brief Contains a mix of useful templated tools.
-*        Credits goes to Patrice Roy for teaching me some of those tools
+*        Credits goes to Patrice Roy for teaching me some of these tools
 *        His website : <a href="http://h-deb.clg.qc.ca/">h-deb</a>
-* \author Felix-Antoine Ouellet
 */
 namespace Utils
 {

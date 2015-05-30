@@ -16,7 +16,6 @@ using Utils::UInt32;
 /**
 * \class GPU
 * \brief Emulates the Graphics Processing Unit (GPU)
-* \author Felix-Antoine Ouellet
 */
 class GPU
 {

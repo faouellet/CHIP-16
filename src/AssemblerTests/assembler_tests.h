@@ -6,7 +6,6 @@
 /**
 * \struct AssemblerFixture
 * \brief Fixture containing data to test the assembler
-* \author Felix-Antoine Ouellet
 */
 struct AssemblerFixture
 {

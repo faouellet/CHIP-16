@@ -13,7 +13,6 @@ using Utils::UInt32;
 /**
 * \class Emulator
 * \brief Emulate the Chip16 architecture
-* \author Felix-Antoine Ouellet
 */
 class Emulator
 {

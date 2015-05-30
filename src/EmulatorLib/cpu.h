@@ -12,7 +12,6 @@ using namespace Utils;
 /**
 * \class CPU
 * \brief Emulates the Central Processing Unit (CPU)
-* \author Felix-Antoine Ouellet
 */
 class CPU
 {

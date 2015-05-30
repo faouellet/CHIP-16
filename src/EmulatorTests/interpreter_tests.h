@@ -11,7 +11,6 @@ using Utils::UInt8;
 * \brief Fixture containing data to test the CPU specific instructions.
 *        That means the arithmetic, bitwise, call, jump, load, pop, push,
 *        shift and store instructions.
-* \author Felix-Antoine Ouellet
 */
 struct InterpreterFixture
 {
