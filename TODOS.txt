@@ -3,15 +3,22 @@
 ////////////
 - Add graphical interface
 - License ??
-- Scrap the *App projects for a unified System16 project
+- Scrap the *App projects for a unified System16 project ??
+- Continuous integration:
+	-- Travis
+	-- Coverall
+	-- Coverity
 
 ** Assembler16 **
-- 
 
 ** Debugger16 **
 
 ** Emulator16 **
 - Implement the sound commands
 - Implement a dynamic recompiler mode
+- Implement to the latest spec
 
 ** Lang16 **
+
+** Interpreter/6 **
+- Make an interactive interpreter for Chip16
