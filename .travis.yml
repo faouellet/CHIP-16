@@ -40,8 +40,8 @@ install:
        export CC=/usr/bin/clang-3.6 CXX=/usr/bin/clang++-3.6; 
     fi
     
-  # Getting the latest version of Boost Unit Test Framework
-  - sudo apt-get install libboost-test-dev
+  # Getting the latest version of Boost
+  - sudo apt-get install libboost-all-dev
   
   # Getting latest version of LCOV if needed
   - if [ "${COVERAGE}" == "1" ]; then
