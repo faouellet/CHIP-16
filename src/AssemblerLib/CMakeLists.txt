@@ -12,6 +12,7 @@ find_package(Boost)
 if(Boost_FOUND)
     # Boost
     include_directories("${Boost_INCLUDE_DIR}")
+    link_directories("${Boost_LIBRARY_DIRS}")
 	
     set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 endif()

@@ -1,6 +1,6 @@
 #include "emitter.h"
 
-#include <boost\crc.hpp>
+#include <boost/crc.hpp>
 
 Emitter::Emitter(const UInt32 & in_BufSize) :
 	m_Buffer(in_BufSize / 4), m_VersionNumer(0x11),
