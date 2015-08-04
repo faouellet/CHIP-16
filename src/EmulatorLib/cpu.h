@@ -1,10 +1,13 @@
 #ifndef CPU_H
 #define CPU_H
 
+#include "constants.h"
 #include "instruction.h"
+#include "../Utils/utils.h"
 
-#include "SDL.h"
+#include "SDL.h"	// TODO: Can this be removed?
 
+#include <array>
 #include <vector>
 
 using namespace Utils;
@@ -15,20 +18,6 @@ using namespace Utils;
 */
 class CPU
 {
-private:
-	/**
-	* \enum
-	* \brief Useful size constants
-	*/
-	enum { HEADER_SIZE = 16, MEMORY_SIZE = 64*1024, STACK_START = 0xFDF0, CONTROLLER_1 = 0xFFF0, CONTROLLER_2 = 0xFFF2 };
-
-	/**
-	* \enum
-	* \brief Masks for the controllers' bits
-	*/
-	enum { UP = 1, DOWN = 2, LEFT = 4, RIGHT = 8, SELECT = 16,
-			START = 32, A = 64, B = 128 };
-
 public:
 	/**
 	* \enum
@@ -50,17 +39,25 @@ public:
 	enum { NB_REGISTERS = 16 };
 
 private:
+	/**
+	* \enum
+	* \brief Masks for the controllers' bits
+	*/
+	enum {
+		UP = 1, DOWN = 2, LEFT = 4, RIGHT = 8, SELECT = 16,
+		START = 32, A = 64, B = 128
+	};
+
+private:
 	UInt8 m_FR;										/*!< Flag register */
 	UInt16 m_PC;									/*!< Program counter */
 	UInt16 m_SP;									/*!< Stack pointer */
 
 	UInt16 m_ErrorCode;								/*!< Code used when an error happens during emulation */
 	
-	UInt16 m_Registers[NB_REGISTERS];							/*!< General purpose registers */
+	UInt16 m_Registers[NB_REGISTERS];				/*!< General purpose registers */
+	std::array<Uint8, MEMORY_SIZE> m_Memory;		/*!< Memory of the CPU. See specs for layout details */
 
-	UInt8 m_ROMHeader[HEADER_SIZE];					/*!< The header of a .c16 file. See specs for details */
-	UInt8 m_Memory[MEMORY_SIZE];					/*!< Memory of the CPU. See specs for layout details */
-	
 public:
 	/**
 	* \fn CPU
@@ -69,24 +66,10 @@ public:
 	CPU();
 
 	/**
-	* \fn CPU
-	* \brief Copy constructor
-	* \param in_CPU The CPU to copy
-	*/
-	CPU(const CPU & in_CPU);
-
-	/**
-	* \fn CPU
-	* \brief Copy constructor
-	* \param in_CPU The CPU to copy
-	*/
-	CPU(const CPU * in_CPU);
-
-	/**
 	* \fn ~CPU
 	* \brief Destructor
 	*/
-	~CPU();
+	~CPU() = default;
 
 public:
 	/**
@@ -134,12 +117,26 @@ public:
 
 public:
 	/**
-	* \fn Init
-	* \brief Initialize the central processing unit
-	* \param in_ROMData The content of a .c16 binary file
-	* \return Error code
+	* \fn FetchInstruction
+	* \brief Fetch a Chip16 instruction from the emulator memory
+	* \return Chip16 instruction
 	*/
-	unsigned Init(std::vector<UInt8> && in_ROMData);
+	Instruction FetchInstruction();
+
+	/**
+	* \fn InitMemory
+	* \brief Initialize the CPU with a program
+	* \param in_Program Sequence of bytes representing a program
+	* \return Error code depending on the situation
+	*/
+	unsigned InitMemory(std::vector<UInt8> && in_Program);
+
+	/**
+	* \fn InitPC
+	* \brief Set the program counter at the start of the program
+	* \param in_PCStart
+	*/
+	void InitPC(UInt8 in_PCStart);
 
 	/**
 	* \fn Reset
@@ -207,21 +204,6 @@ public:
 	void UpdateController(SDL_KeyboardEvent & in_Event);
 
 public:	// Memory helpers
-	/**
-	* \fn FetchBasicBlock
-	* \brief Fetch a contiguous block of sequential instruction
-	* \return A block of instructions
-	*/
-	std::vector<Instruction> FetchBasicBlock();
-	
-	/**
-	* \fn FetchInstruction
-	* \brief Read the current instruction and its operands as pointed by the PC.
-	*        Note that it increases the PC by 4 i.e. to the next instruction.
-	* \return An instruction and its operands
-	*/
-	Instruction FetchInstruction();
-
 	/**
 	* \fn FetchPalette
 	* \brief Read a number of bytes from memory which corresponds to a palette data

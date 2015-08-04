@@ -2,44 +2,45 @@
 
 #include "constants.h"
 
+#include <fstream>
 #include <iostream>
 
-Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m_Dist(0, std::numeric_limits<UInt16>::max()), m_ErrorCode(0)
+Interpreter::Interpreter() : m_Dist(0, std::numeric_limits<UInt16>::max()), m_ErrorCode(0)
 {
-	m_Ops[0x00] = &Interpreter::NOP; 
+	m_Ops[0x00] = &Interpreter::NOP;
 	m_Ops[0x01] = &Interpreter::CLS;
-	m_Ops[0x02] = &Interpreter::VBLNK; 
-	m_Ops[0x03] = &Interpreter::BGC; 
-	m_Ops[0x04] = &Interpreter::SPR; 
-	m_Ops[0x05] = &Interpreter::ImmediateDRW; 
-	m_Ops[0x06] = &Interpreter::RegisterDRW; 
+	m_Ops[0x02] = &Interpreter::VBLNK;
+	m_Ops[0x03] = &Interpreter::BGC;
+	m_Ops[0x04] = &Interpreter::SPR;
+	m_Ops[0x05] = &Interpreter::ImmediateDRW;
+	m_Ops[0x06] = &Interpreter::RegisterDRW;
 	m_Ops[0x07] = &Interpreter::RND;
-	
-	m_Ops[0x08] = &Interpreter::FLIP; 
-	
-	m_Ops[0x09] = &Interpreter::SND0; 
+
+	m_Ops[0x08] = &Interpreter::FLIP;
+
+	m_Ops[0x09] = &Interpreter::SND0;
 	m_Ops[0x0A] = &Interpreter::SND1;
 	m_Ops[0x0B] = &Interpreter::SND2;
 	m_Ops[0x0C] = &Interpreter::SND3;
-	m_Ops[0x0D] = &Interpreter::SNP; 
+	m_Ops[0x0D] = &Interpreter::SNP;
 	m_Ops[0x0E] = &Interpreter::SNG;
 
-	m_Ops[0x10] = &Interpreter::DirectJMP; 
+	m_Ops[0x10] = &Interpreter::DirectJMP;
 	m_Ops[0x12] = &Interpreter::Jx;
-	m_Ops[0x13] = &Interpreter::JME; 
-	m_Ops[0x14] = &Interpreter::DirectCALL; 
-	m_Ops[0x15] = &Interpreter::RET; 
-	m_Ops[0x16] = &Interpreter::IndirectJMP; 
-	m_Ops[0x17] = &Interpreter::Cx; 
+	m_Ops[0x13] = &Interpreter::JME;
+	m_Ops[0x14] = &Interpreter::DirectCALL;
+	m_Ops[0x15] = &Interpreter::RET;
+	m_Ops[0x16] = &Interpreter::IndirectJMP;
+	m_Ops[0x17] = &Interpreter::Cx;
 	m_Ops[0x18] = &Interpreter::IndirectCALL;
 
 	m_Ops[0x20] = &Interpreter::RegisterLDI;
 	m_Ops[0x21] = &Interpreter::StackLDI;
 	m_Ops[0x22] = &Interpreter::DirectLDM;
-	m_Ops[0x23] = &Interpreter::IndirectLDM; 
+	m_Ops[0x23] = &Interpreter::IndirectLDM;
 	m_Ops[0x24] = &Interpreter::MOV;
 
-	m_Ops[0x30] = &Interpreter::DirectSTM; 
+	m_Ops[0x30] = &Interpreter::DirectSTM;
 	m_Ops[0x31] = &Interpreter::IndirectSTM;
 
 	m_Ops[0x40] = &Interpreter::ADDI;
@@ -56,7 +57,7 @@ Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m
 	m_Ops[0x60] = &Interpreter::ANDI;
 	m_Ops[0x61] = &Interpreter::InplaceAND;
 	m_Ops[0x62] = &Interpreter::AND;
-	
+
 	m_Ops[0x63] = &Interpreter::TSTI;
 	m_Ops[0x64] = &Interpreter::TST;
 
@@ -71,11 +72,11 @@ Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m
 	m_Ops[0x90] = &Interpreter::MULI;
 	m_Ops[0x91] = &Interpreter::InplaceMUL;
 	m_Ops[0x92] = &Interpreter::MUL;
-	
+
 	m_Ops[0xA0] = &Interpreter::DIVI;
 	m_Ops[0xA1] = &Interpreter::InplaceDIV;
 	m_Ops[0xA2] = &Interpreter::DIV;
-	
+
 	m_Ops[0xB0] = &Interpreter::NSHL;
 	m_Ops[0xB1] = &Interpreter::NSHR;
 	m_Ops[0xB2] = &Interpreter::NSAR;
@@ -94,7 +95,67 @@ Interpreter::Interpreter(const std::shared_ptr<CPU> & in_CPU) : m_CPU(in_CPU), m
 	m_Ops[0xD1] = &Interpreter::RegisterPalette;
 }
 
-Interpreter::~Interpreter() { }
+unsigned Interpreter::InterpretOne()
+{
+	Instruction l_Inst = m_CPU.FetchInstruction();
+	InstructionExec l_Func = m_Ops[l_Inst.GetOpcode()];
+	if (l_Func)
+		(this->*l_Func)(l_Inst);
+	else
+		std::cout << "Unknown opcode" << std::endl;
+
+	return m_ErrorCode;
+}
+
+unsigned Interpreter::AcquireROM(const std::string & in_ROMName)
+{
+	std::fstream l_FileStream(in_ROMName, std::ios::in | std::ios::binary);
+
+	if (l_FileStream.is_open())
+	{
+		l_FileStream.seekg(0, std::ios::end);
+		auto size = l_FileStream.tellg();
+		l_FileStream.seekg(0, std::ios::beg);
+
+		std::vector<UInt8> l_ROMData(size);
+		l_FileStream.read((char*)&l_ROMData[0], size);
+
+		l_FileStream.close();
+
+		// TODO: Should check for a valid header
+
+		m_CPU.InitPC(l_ROMData[0x0A]);
+
+		l_ROMData.erase(l_ROMData.begin(), l_ROMData.begin() + HEADER_SIZE);
+
+		m_CPU.InitMemory(std::move(l_ROMData));
+
+		return NoError;
+	}
+	else
+	{
+		return FileError;
+	}
+}
+
+void Interpreter::AcquireProgram(std::vector<UInt8> && in_Program)
+{
+	m_CPU.InitMemory(std::move(in_Program));
+}
+
+const CPU & Interpreter::DumpCPUState() const
+{
+	return m_CPU;
+}
+
+void Interpreter::HandleKeyboardInputs()
+{
+	SDL_Event l_ControllerEvent;
+
+	while (SDL_PollEvent(&l_ControllerEvent) &&
+		(l_ControllerEvent.type == SDL_KEYDOWN || l_ControllerEvent.type == SDL_KEYUP))
+		m_CPU.UpdateController(l_ControllerEvent.key);
+}
 
 unsigned Interpreter::InitDevices()
 {
@@ -104,16 +165,9 @@ unsigned Interpreter::InitDevices()
 	return l_ErrorCode;
 }
 
-unsigned Interpreter::InterpretOp()
+void Interpreter::Reset()
 {
-	Instruction l_Instruction = m_CPU->FetchInstruction();
-	InstructionExec l_Func = m_Ops[l_Instruction.GetOpcode()];
-	if(l_Func)
-		(this->*l_Func)(l_Instruction);
-	else
-		std::cout << "Unknown opcode" << std::endl;
-	
-	return m_ErrorCode;
+	m_CPU.Reset();
 }
 
 void Interpreter::Show()
@@ -123,555 +177,556 @@ void Interpreter::Show()
 
 /////////////// Arithmetic ///////////////
 
-void Interpreter::ADDI(const Instruction in_Instruction) 
+void Interpreter::ADDI(const Instruction & in_Instruction)
 {
 	ImmediateArithmetic(in_Instruction, std::plus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2) { m_CPU->SetCarryOverflowFlagAdd(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2) { m_CPU.SetCarryOverflowFlagAdd(in_Op1, in_Op2); });
 }
 
-void Interpreter::InplaceADD(const Instruction in_Instruction) 
-{ 
+void Interpreter::InplaceADD(const Instruction & in_Instruction)
+{
 	InplaceArithmetic(in_Instruction, std::plus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2) { m_CPU->SetCarryOverflowFlagAdd(in_Op1, in_Op2); }); 
+		[this](UInt16 in_Op1, UInt16 in_Op2) { m_CPU.SetCarryOverflowFlagAdd(in_Op1, in_Op2); });
 }
 
-void Interpreter::ADD(const Instruction in_Instruction)
-{ 
+void Interpreter::ADD(const Instruction & in_Instruction)
+{
 	BasicArithmetic(in_Instruction, std::plus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagAdd(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagAdd(in_Op1, in_Op2); });
 }
 
-void Interpreter::SUBI(const Instruction in_Instruction) 
+void Interpreter::SUBI(const Instruction & in_Instruction)
 {
 	ImmediateArithmetic(in_Instruction, std::minus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagSub(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagSub(in_Op1, in_Op2); });
 }
 
-void Interpreter::InplaceSUB(const Instruction in_Instruction) 
-{ 
+void Interpreter::InplaceSUB(const Instruction & in_Instruction)
+{
 	InplaceArithmetic(in_Instruction, std::minus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagSub(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagSub(in_Op1, in_Op2); });
 }
 
-void Interpreter::SUB(const Instruction in_Instruction) 
+void Interpreter::SUB(const Instruction & in_Instruction)
 {
 	BasicArithmetic(in_Instruction, std::minus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagSub(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagSub(in_Op1, in_Op2); });
 }
 
-void Interpreter::CMPI(const Instruction in_Instruction) 
-{ 
+void Interpreter::CMPI(const Instruction & in_Instruction)
+{
 	DiscardImmediateArithmetic(in_Instruction, std::minus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagSub(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagSub(in_Op1, in_Op2); });
 }
 
-void Interpreter::CMP(const Instruction in_Instruction) 
-{ 
+void Interpreter::CMP(const Instruction & in_Instruction)
+{
 	DiscardArithmetic(in_Instruction, std::minus<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagSub(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagSub(in_Op1, in_Op2); });
 }
 
-void Interpreter::ANDI(const Instruction in_Instruction) 
-{ 
+void Interpreter::ANDI(const Instruction & in_Instruction)
+{
 	ImmediateArithmetic(in_Instruction, std::bit_and<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::InplaceAND(const Instruction in_Instruction) 
-{ 
+void Interpreter::InplaceAND(const Instruction & in_Instruction)
+{
 	InplaceArithmetic(in_Instruction, std::bit_and<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::AND(const Instruction in_Instruction) 
-{ 
+void Interpreter::AND(const Instruction & in_Instruction)
+{
 	BasicArithmetic(in_Instruction, std::bit_and<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::TSTI(const Instruction in_Instruction) 
-{ 
+void Interpreter::TSTI(const Instruction & in_Instruction)
+{
 	DiscardImmediateArithmetic(in_Instruction, std::bit_and<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::TST(const Instruction in_Instruction) 
-{ 
+void Interpreter::TST(const Instruction & in_Instruction)
+{
 	DiscardArithmetic(in_Instruction, std::bit_and<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::ORI(const Instruction in_Instruction) 
-{ 
+void Interpreter::ORI(const Instruction & in_Instruction)
+{
 	ImmediateArithmetic(in_Instruction, std::bit_or<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::InplaceOR(const Instruction in_Instruction) 
-{ 
+void Interpreter::InplaceOR(const Instruction & in_Instruction)
+{
 	InplaceArithmetic(in_Instruction, std::bit_or<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::OR(const Instruction in_Instruction) 
-{ 
+void Interpreter::OR(const Instruction & in_Instruction)
+{
 	BasicArithmetic(in_Instruction, std::bit_or<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::XORI(const Instruction in_Instruction) 
-{ 
+void Interpreter::XORI(const Instruction & in_Instruction)
+{
 	ImmediateArithmetic(in_Instruction, std::bit_xor<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::InplaceXOR(const Instruction in_Instruction) 
-{ 
+void Interpreter::InplaceXOR(const Instruction & in_Instruction)
+{
 	InplaceArithmetic(in_Instruction, std::bit_xor<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::XOR(const Instruction in_Instruction) 
-{ 
+void Interpreter::XOR(const Instruction & in_Instruction)
+{
 	BasicArithmetic(in_Instruction, std::bit_xor<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlag(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlag(in_Op1, in_Op2); });
 }
 
-void Interpreter::MULI(const Instruction in_Instruction) 
-{ 
+void Interpreter::MULI(const Instruction & in_Instruction)
+{
 	ImmediateArithmetic(in_Instruction, std::multiplies<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagMul(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagMul(in_Op1, in_Op2); });
 }
 
-void Interpreter::InplaceMUL(const Instruction in_Instruction) 
-{ 
+void Interpreter::InplaceMUL(const Instruction & in_Instruction)
+{
 	InplaceArithmetic(in_Instruction, std::multiplies<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagMul(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagMul(in_Op1, in_Op2); });
 }
 
-void Interpreter::MUL(const Instruction in_Instruction) 
-{ 
+void Interpreter::MUL(const Instruction & in_Instruction)
+{
 	BasicArithmetic(in_Instruction, std::multiplies<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagMul(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagMul(in_Op1, in_Op2); });
 }
 
-void Interpreter::DIVI(const Instruction in_Instruction) 
-{ 
+void Interpreter::DIVI(const Instruction & in_Instruction)
+{
 	ImmediateArithmetic(in_Instruction, std::divides<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
 }
 
-void Interpreter::InplaceDIV(const Instruction in_Instruction) 
-{ 
+void Interpreter::InplaceDIV(const Instruction & in_Instruction)
+{
 	InplaceArithmetic(in_Instruction, std::divides<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
 }
 
-void Interpreter::DIV(const Instruction in_Instruction) 
-{ 
+void Interpreter::DIV(const Instruction & in_Instruction)
+{
 	BasicArithmetic(in_Instruction, std::divides<UInt16>(),
-		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU->SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
+		[this](UInt16 in_Op1, UInt16 in_Op2){ m_CPU.SetCarryOverflowFlagDiv(in_Op1, in_Op2); });
 }
 
 /////////////// Call/Jump ///////////////
 
-void Interpreter::DirectJMP(const Instruction in_Instruction)
+void Interpreter::DirectJMP(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU.SetProgramCounter(in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::Jx(const Instruction in_Instruction)
+void Interpreter::Jx(const Instruction & in_Instruction)
 {
 	UInt8 l_CondCode = in_Instruction.GetFirstOperand();
-	if(InterpretConditions(l_CondCode))
-		m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+	if (InterpretConditions(l_CondCode))
+		m_CPU.SetProgramCounter(in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::JME(const Instruction in_Instruction)
+void Interpreter::JME(const Instruction & in_Instruction)
 {
-	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
-	if(l_XVal == l_YVal)
-		m_ErrorCode = m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+	UInt16 l_XVal = m_CPU.DumpRegister(in_Instruction.GetFirstOperand());
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
+	if (l_XVal == l_YVal)
+		m_ErrorCode = m_CPU.SetProgramCounter(in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::DirectCALL(const Instruction in_Instruction)
+void Interpreter::DirectCALL(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->PushPC();
-	m_ErrorCode |= m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU.PushPC();
+	m_ErrorCode |= m_CPU.SetProgramCounter(in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::RET(const Instruction in_Instruction)
+void Interpreter::RET(const Instruction & in_Instruction)
 {
 	UInt16 l_Val;
-	m_ErrorCode = m_CPU->Pop(l_Val);
-	m_ErrorCode |= m_CPU->SetProgramCounter(l_Val);
+	m_ErrorCode = m_CPU.Pop(l_Val);
+	m_ErrorCode |= m_CPU.SetProgramCounter(l_Val);
 }
 
-void Interpreter::IndirectJMP(const Instruction in_Instruction)
+void Interpreter::IndirectJMP(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->SetProgramCounter(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
+	m_ErrorCode = m_CPU.SetProgramCounter(m_CPU.DumpRegister(in_Instruction.GetFirstOperand()));
 }
 
-void Interpreter::Cx(const Instruction in_Instruction)
+void Interpreter::Cx(const Instruction & in_Instruction)
 {
 	UInt8 l_CondCode = in_Instruction.GetFirstOperand();
-	if(InterpretConditions(l_CondCode))
+	if (InterpretConditions(l_CondCode))
 	{
-		m_ErrorCode = m_CPU->PushPC();
-		m_ErrorCode |= m_CPU->SetProgramCounter(in_Instruction.GetImmediateValue());
+		m_ErrorCode = m_CPU.PushPC();
+		m_ErrorCode |= m_CPU.SetProgramCounter(in_Instruction.GetImmediateValue());
 	}
 }
 
-void Interpreter::IndirectCALL(const Instruction in_Instruction)
+void Interpreter::IndirectCALL(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->PushPC();
-	m_ErrorCode |= m_CPU->SetProgramCounter(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
+	m_ErrorCode = m_CPU.PushPC();
+	m_ErrorCode |= m_CPU.SetProgramCounter(m_CPU.DumpRegister(in_Instruction.GetFirstOperand()));
 }
 
 unsigned Interpreter::InterpretConditions(UInt8 in_CondCode)
 {
-	UInt16 l_FR = m_CPU->DumpFlagRegister();
+	UInt16 l_FR = m_CPU.DumpFlagRegister();
 	switch (in_CondCode & 0xF)
 	{
-		case 0x0:	// Z
-			return l_FR & CPU::ZeroFlag;
-		case 0x1:	// NZ
-			return l_FR ^ (l_FR | CPU::ZeroFlag);
-		case 0x2:	// N
-			return l_FR & CPU::NegativeFlag;
-		case 0x3:	// NN
-			return (l_FR ^ (l_FR | CPU::NegativeFlag));
-		case 0x4:	// P
-			return !(l_FR & CPU::ZeroFlag) && (l_FR ^ (l_FR | CPU::NegativeFlag));
-		case 0x5:	// O
-			return l_FR & CPU::SignedOverflowFlag;
-		case 0x6:	// NO
-			return l_FR ^ (l_FR | CPU::SignedOverflowFlag);
-		case 0x7:	// A
-			return (l_FR ^ (l_FR | CPU::ZeroFlag)) && (l_FR ^ (l_FR | CPU::SignedOverflowFlag));
-		case 0x8:	// AE
-			return l_FR ^ (l_FR | CPU::UnsignedCarryFlag);
-		case 0x9:	// B
-			return l_FR & CPU::UnsignedCarryFlag;
-		case 0xA:	// BE
-			return (l_FR & CPU::ZeroFlag) || (l_FR & CPU::UnsignedCarryFlag);
-		case 0xB:	// G
-			return (l_FR & CPU::ZeroFlag) && ((l_FR & CPU::SignedOverflowFlag) == (l_FR & CPU::NegativeFlag));
-		case 0xC:	// GE
-			return ((l_FR & CPU::SignedOverflowFlag) == (l_FR & CPU::NegativeFlag));
-		case 0xD:	// L
-			return ((l_FR & CPU::SignedOverflowFlag) != (l_FR & CPU::NegativeFlag));
-		case 0xE:	// LE
-			return l_FR & CPU::ZeroFlag || ((l_FR & CPU::SignedOverflowFlag) != (l_FR & CPU::NegativeFlag));
-		default:
-			return 0;
+	case 0x0:	// Z
+		return l_FR & CPU::ZeroFlag;
+	case 0x1:	// NZ
+		return l_FR ^ (l_FR | CPU::ZeroFlag);
+	case 0x2:	// N
+		return l_FR & CPU::NegativeFlag;
+	case 0x3:	// NN
+		return (l_FR ^ (l_FR | CPU::NegativeFlag));
+	case 0x4:	// P
+		return !(l_FR & CPU::ZeroFlag) && (l_FR ^ (l_FR | CPU::NegativeFlag));
+	case 0x5:	// O
+		return l_FR & CPU::SignedOverflowFlag;
+	case 0x6:	// NO
+		return l_FR ^ (l_FR | CPU::SignedOverflowFlag);
+	case 0x7:	// A
+		return (l_FR ^ (l_FR | CPU::ZeroFlag)) && (l_FR ^ (l_FR | CPU::SignedOverflowFlag));
+	case 0x8:	// AE
+		return l_FR ^ (l_FR | CPU::UnsignedCarryFlag);
+	case 0x9:	// B
+		return l_FR & CPU::UnsignedCarryFlag;
+	case 0xA:	// BE
+		return (l_FR & CPU::ZeroFlag) || (l_FR & CPU::UnsignedCarryFlag);
+	case 0xB:	// G
+		return (l_FR & CPU::ZeroFlag) && ((l_FR & CPU::SignedOverflowFlag) == (l_FR & CPU::NegativeFlag));
+	case 0xC:	// GE
+		return ((l_FR & CPU::SignedOverflowFlag) == (l_FR & CPU::NegativeFlag));
+	case 0xD:	// L
+		return ((l_FR & CPU::SignedOverflowFlag) != (l_FR & CPU::NegativeFlag));
+	case 0xE:	// LE
+		return l_FR & CPU::ZeroFlag || ((l_FR & CPU::SignedOverflowFlag) != (l_FR & CPU::NegativeFlag));
+	default:
+		return 0;
 	}
 }
 
 /////////////// Loads ///////////////
 
-void Interpreter::RegisterLDI(const Instruction in_Instruction)
+void Interpreter::RegisterLDI(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->SetRegister(in_Instruction.GetFirstOperand(), in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU.SetRegister(in_Instruction.GetFirstOperand(), in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::StackLDI(const Instruction in_Instruction)
+void Interpreter::StackLDI(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->SetStackPointer(in_Instruction.GetImmediateValue());
+	m_ErrorCode = m_CPU.SetStackPointer(in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::DirectLDM(const Instruction in_Instruction)
+void Interpreter::DirectLDM(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
 	UInt16 l_IVal = in_Instruction.GetImmediateValue();
 	UInt16 l_Val;
-	m_ErrorCode = m_CPU->Load(l_IVal, l_Val);
-	m_ErrorCode |= m_CPU->SetRegister(l_Addr, l_Val);
+	m_ErrorCode = m_CPU.Load(l_IVal, l_Val);
+	m_ErrorCode |= m_CPU.SetRegister(l_Addr, l_Val);
 }
 
-void Interpreter::IndirectLDM(const Instruction in_Instruction)
+void Interpreter::IndirectLDM(const Instruction & in_Instruction)
 {
 	UInt8 l_AddrX = in_Instruction.GetFirstOperand();
 	UInt8 l_AddrY = in_Instruction.GetSecondOperand();
 	UInt16 l_Val;
-	m_ErrorCode = m_CPU->Load(m_CPU->DumpRegister(l_AddrY), l_Val);
-	m_ErrorCode = m_CPU->SetRegister(l_AddrX, l_Val);
+	m_ErrorCode = m_CPU.Load(m_CPU.DumpRegister(l_AddrY), l_Val);
+	m_ErrorCode = m_CPU.SetRegister(l_AddrX, l_Val);
 }
 
-void Interpreter::MOV(const Instruction in_Instruction)
+void Interpreter::MOV(const Instruction & in_Instruction)
 {
 	UInt8 l_AddrX = in_Instruction.GetFirstOperand();
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand()); 
-	m_ErrorCode = m_CPU->SetRegister(l_AddrX, l_YVal);
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
+	m_ErrorCode = m_CPU.SetRegister(l_AddrX, l_YVal);
 }
+
 
 /////////////// Misc ///////////////
 
-void Interpreter::NOP(const Instruction in_Instruction) {  }
+void Interpreter::NOP(const Instruction & in_Instruction) {  }
 
-void Interpreter::CLS(const Instruction in_Instruction)
+void Interpreter::CLS(const Instruction & in_Instruction)
 {
 	m_GPU.ClearScreen();
 }
 
-void Interpreter::VBLNK(const Instruction in_Instruction)
+void Interpreter::VBLNK(const Instruction & in_Instruction)
 {
-	if(!m_GPU.VBlankFlag())
-		m_CPU->StepBack();
+	if (!m_GPU.VBlankFlag())
+		m_CPU.StepBack();
 	else
 		m_GPU.TurnOffVBlankFlag();
 }
 
-void Interpreter::BGC(const Instruction in_Instruction)
+void Interpreter::BGC(const Instruction & in_Instruction)
 {
 	m_GPU.SetBackgroundColor(in_Instruction.GetThirdOperand());
 }
 
-void Interpreter::SPR(const Instruction in_Instruction)
+void Interpreter::SPR(const Instruction & in_Instruction)
 {
 	m_GPU.SetSpriteDimensions((in_Instruction.GetImmediateValue() >> 8) & 0xFF, in_Instruction.GetImmediateValue() & 0xFF);
 }
 
-void Interpreter::ImmediateDRW(const Instruction in_Instruction)
+void Interpreter::ImmediateDRW(const Instruction & in_Instruction)
 {
-	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
+	UInt16 l_XVal = m_CPU.DumpRegister(in_Instruction.GetFirstOperand());
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
 	UInt16 l_Addr = in_Instruction.GetImmediateValue();
-	bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_CPU->FetchSprite(l_Addr, m_GPU.SpriteWidth(), m_GPU.SpriteHeight()));
-	if(l_RetVal)
-		m_CPU->SetFlag(CPU::UnsignedCarryFlag);
-	else m_CPU->UnsetFlag(CPU::UnsignedCarryFlag);
+	bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_CPU.FetchSprite(l_Addr, m_GPU.SpriteWidth(), m_GPU.SpriteHeight()));
+	if (l_RetVal)
+		m_CPU.SetFlag(CPU::UnsignedCarryFlag);
+	else m_CPU.UnsetFlag(CPU::UnsignedCarryFlag);
 }
 
-void Interpreter::RegisterDRW(const Instruction in_Instruction)
+void Interpreter::RegisterDRW(const Instruction & in_Instruction)
 {
-	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
-	UInt16 l_Addr = m_CPU->DumpRegister(in_Instruction.GetThirdOperand());
-	bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_CPU->FetchSprite(l_Addr, m_GPU.SpriteWidth(), m_GPU.SpriteHeight()));
-	if(l_RetVal)
-		m_CPU->SetFlag(CPU::UnsignedCarryFlag);
-	else m_CPU->UnsetFlag(CPU::UnsignedCarryFlag);
+	UInt16 l_XVal = m_CPU.DumpRegister(in_Instruction.GetFirstOperand());
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
+	UInt16 l_Addr = m_CPU.DumpRegister(in_Instruction.GetThirdOperand());
+	bool l_RetVal = m_GPU.Draw(l_XVal, l_YVal, m_CPU.FetchSprite(l_Addr, m_GPU.SpriteWidth(), m_GPU.SpriteHeight()));
+	if (l_RetVal)
+		m_CPU.SetFlag(CPU::UnsignedCarryFlag);
+	else m_CPU.UnsetFlag(CPU::UnsignedCarryFlag);
 }
 
-void Interpreter::RND(const Instruction in_Instruction)
+void Interpreter::RND(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
 	UInt16 l_MaxVal = in_Instruction.GetImmediateValue();
 	UInt16 l_RandVal = m_Dist(m_RandEngine);
-	while(l_RandVal > l_MaxVal)
-		l_RandVal= m_Dist(m_RandEngine);
-	m_ErrorCode = m_CPU->SetRegister(l_Addr, l_RandVal);
+	while (l_RandVal > l_MaxVal)
+		l_RandVal = m_Dist(m_RandEngine);
+	m_ErrorCode = m_CPU.SetRegister(l_Addr, l_RandVal);
 }
 
-void Interpreter::FLIP(const Instruction in_Instruction)
+void Interpreter::FLIP(const Instruction & in_Instruction)
 {
 	m_GPU.Flip((in_Instruction.GetImmediateValue() & 0xF00) >> 8);
 }
 
-void Interpreter::SND0(const Instruction in_Instruction)
+void Interpreter::SND0(const Instruction & in_Instruction)
 {
 	m_SPU.Stop();
 }
 
-void Interpreter::SND1(const Instruction in_Instruction)
+void Interpreter::SND1(const Instruction & in_Instruction)
 {
 	m_SPU.PlayTone(UInt8(500), in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::SND2(const Instruction in_Instruction)
+void Interpreter::SND2(const Instruction & in_Instruction)
 {
 	m_SPU.PlayTone(UInt8(1000), in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::SND3(const Instruction in_Instruction)
+void Interpreter::SND3(const Instruction & in_Instruction)
 {
 	m_SPU.PlayTone(UInt8(1500), in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::SNP(const Instruction in_Instruction)
+void Interpreter::SNP(const Instruction & in_Instruction)
 {
 	m_SPU.PlayTone(in_Instruction.GetFirstOperand(), in_Instruction.GetImmediateValue());
 }
 
-void Interpreter::SNG(const Instruction in_Instruction)
+void Interpreter::SNG(const Instruction & in_Instruction)
 {
 	// TODO...
-	/*m_SPU->GenerateSound((m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF, 
-		(m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF,
-		(m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF);*/
+	/*m_SPU->GenerateSound((m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF,
+	(m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF,
+	(m_Memory[m_PC] & 0xF0) >> 4, m_Memory[m_PC++] & 0xF);*/
 }
 
 /////////////// Palettes ///////////////
 
-void Interpreter::ImmediatePalette(const Instruction in_Instruction)
+void Interpreter::ImmediatePalette(const Instruction & in_Instruction)
 {
-	m_GPU.LoadPalette(m_CPU->FetchPalette(in_Instruction.GetImmediateValue()));
+	m_GPU.LoadPalette(m_CPU.FetchPalette(in_Instruction.GetImmediateValue()));
 }
 
-void Interpreter::RegisterPalette(const Instruction in_Instruction)
+void Interpreter::RegisterPalette(const Instruction & in_Instruction)
 {
-	m_GPU.LoadPalette(m_CPU->FetchPalette(m_CPU->DumpRegister(in_Instruction.GetFirstOperand())));
+	m_GPU.LoadPalette(m_CPU.FetchPalette(m_CPU.DumpRegister(in_Instruction.GetFirstOperand())));
 }
 
 /////////////// Push/Pop ///////////////
 
-void Interpreter::PUSH(const Instruction in_Instruction)
+void Interpreter::PUSH(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->Push(m_CPU->DumpRegister(in_Instruction.GetFirstOperand()));
+	m_ErrorCode = m_CPU.Push(m_CPU.DumpRegister(in_Instruction.GetFirstOperand()));
 }
 
-void Interpreter::POP(const Instruction in_Instruction)
+void Interpreter::POP(const Instruction & in_Instruction)
 {
 	UInt16 l_Val;
-	m_ErrorCode = m_CPU->Pop(l_Val);
-	m_ErrorCode |= m_CPU->SetRegister(in_Instruction.GetFirstOperand(), l_Val);
+	m_ErrorCode = m_CPU.Pop(l_Val);
+	m_ErrorCode |= m_CPU.SetRegister(in_Instruction.GetFirstOperand(), l_Val);
 }
 
-void Interpreter::PUSHALL(const Instruction in_Instruction)
+void Interpreter::PUSHALL(const Instruction & in_Instruction)
 {
-	for(UInt8 i = 0; i < 16; ++i)
-		m_ErrorCode |= m_CPU->Push(m_CPU->DumpRegister(i));
+	for (UInt8 i = 0; i < CPU::NB_REGISTERS; ++i)
+		m_ErrorCode |= m_CPU.Push(m_CPU.DumpRegister(i));
 }
 
-void Interpreter::POPALL(const Instruction in_Instruction)
+void Interpreter::POPALL(const Instruction & in_Instruction)
 {
 	UInt16 l_Val;
-	for(int i = 15; i > -1; --i)
+	for (int i = 15; i > -1; --i)
 	{
-		m_ErrorCode |= m_CPU->Pop(l_Val);
-		m_ErrorCode |= m_CPU->SetRegister(i, l_Val);
+		m_ErrorCode |= m_CPU.Pop(l_Val);
+		m_ErrorCode |= m_CPU.SetRegister(i, l_Val);
 	}
 }
 
-void Interpreter::PUSHF(const Instruction in_Instruction)
+void Interpreter::PUSHF(const Instruction & in_Instruction)
 {
-	m_ErrorCode = m_CPU->Push(m_CPU->DumpFlagRegister());
+	m_ErrorCode = m_CPU.Push(m_CPU.DumpFlagRegister());
 }
 
-void Interpreter::POPF(const Instruction in_Instruction)
+void Interpreter::POPF(const Instruction & in_Instruction)
 {
 	UInt16 l_Val;
-	m_ErrorCode = m_CPU->Pop(l_Val);
-	m_CPU->SetFlagRegister(l_Val);
+	m_ErrorCode = m_CPU.Pop(l_Val);
+	m_CPU.SetFlagRegister(l_Val);
 }
 
 /////////////// Shift ///////////////
 
-void Interpreter::NSHL(const Instruction in_Instruction)
+void Interpreter::NSHL(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_ErrorCode = m_CPU->SetRegister(l_Addr, LeftShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
+	m_ErrorCode = m_CPU.SetRegister(l_Addr, LeftShift()(m_CPU.DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_Addr));
 }
 
-void Interpreter::NSHR(const Instruction in_Instruction)
+void Interpreter::NSHR(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_ErrorCode = m_CPU->SetRegister(l_Addr, LogicalRightShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
+	m_ErrorCode = m_CPU.SetRegister(l_Addr, LogicalRightShift()(m_CPU.DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_Addr));
 }
 
-void Interpreter::NSAR(const Instruction in_Instruction)
+void Interpreter::NSAR(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_ErrorCode = m_CPU->SetRegister(l_Addr, ArithmeticRightShift()(m_CPU->DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
+	m_ErrorCode = m_CPU.SetRegister(l_Addr, ArithmeticRightShift()(m_CPU.DumpRegister(l_Addr), in_Instruction.GetThirdOperand()));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_Addr));
 }
 
-void Interpreter::RegisterSHL(const Instruction in_Instruction)
+void Interpreter::RegisterSHL(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_ErrorCode = m_CPU->SetRegister(l_Addr, LeftShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
+	m_ErrorCode = m_CPU.SetRegister(l_Addr, LeftShift()(m_CPU.DumpRegister(l_Addr), m_CPU.DumpRegister(in_Instruction.GetSecondOperand())));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_Addr));
 }
 
-void Interpreter::RegisterSHR(const Instruction in_Instruction)
+void Interpreter::RegisterSHR(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_ErrorCode = m_CPU->SetRegister(l_Addr, LogicalRightShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
+	m_ErrorCode = m_CPU.SetRegister(l_Addr, LogicalRightShift()(m_CPU.DumpRegister(l_Addr), m_CPU.DumpRegister(in_Instruction.GetSecondOperand())));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_Addr));
 }
 
-void Interpreter::RegisterSAR(const Instruction in_Instruction)
+void Interpreter::RegisterSAR(const Instruction & in_Instruction)
 {
 	UInt8 l_Addr = in_Instruction.GetFirstOperand();
-	m_ErrorCode = m_CPU->SetRegister(l_Addr, ArithmeticRightShift()(m_CPU->DumpRegister(l_Addr), m_CPU->DumpRegister(in_Instruction.GetSecondOperand())));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Addr));
+	m_ErrorCode = m_CPU.SetRegister(l_Addr, ArithmeticRightShift()(m_CPU.DumpRegister(l_Addr), m_CPU.DumpRegister(in_Instruction.GetSecondOperand())));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_Addr));
 }
 
 /////////////// Store ///////////////
 
-void Interpreter::DirectSTM(const Instruction in_Instruction)
+void Interpreter::DirectSTM(const Instruction & in_Instruction)
 {
 	UInt8 l_RegAddr = in_Instruction.GetFirstOperand();
 	UInt16 l_MemAddr = in_Instruction.GetImmediateValue();
-	m_ErrorCode = m_CPU->Store(l_MemAddr, m_CPU->DumpRegister(l_RegAddr));
+	m_ErrorCode = m_CPU.Store(l_MemAddr, m_CPU.DumpRegister(l_RegAddr));
 }
 
-void Interpreter::IndirectSTM(const Instruction in_Instruction)
+void Interpreter::IndirectSTM(const Instruction & in_Instruction)
 {
-	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
-	m_ErrorCode = m_CPU->Store(l_YVal, l_XVal);
+	UInt16 l_XVal = m_CPU.DumpRegister(in_Instruction.GetFirstOperand());
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
+	m_ErrorCode = m_CPU.Store(l_YVal, l_XVal);
 }
 
 /////////////// Artihmetic Helpers ///////////////
 
-void Interpreter::BasicArithmetic(const Instruction in_Instruction, 
-								  std::function<UInt16(UInt16,UInt16)> in_Ins, 
-								  std::function<void(UInt16,UInt16)> in_FRH)
+void Interpreter::BasicArithmetic(const Instruction & in_Instruction,
+	std::function<UInt16(UInt16, UInt16)> in_Ins,
+	std::function<void(UInt16, UInt16)> in_FRH)
 {
-	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
+	UInt16 l_XVal = m_CPU.DumpRegister(in_Instruction.GetFirstOperand());
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
 	in_FRH(l_XVal, l_YVal);
 	UInt8 l_ZReg = in_Instruction.GetThirdOperand();
-	m_ErrorCode = m_CPU->SetRegister(l_ZReg, in_Ins(l_XVal, l_YVal));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_ZReg));
+	m_ErrorCode = m_CPU.SetRegister(l_ZReg, in_Ins(l_XVal, l_YVal));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_ZReg));
 }
 
-void Interpreter::DiscardArithmetic(const Instruction in_Instruction, 
-									std::function<UInt16(UInt16,UInt16)> in_Ins, 
-									std::function<void(UInt16,UInt16)> in_FRH)
+void Interpreter::DiscardArithmetic(const Instruction & in_Instruction,
+	std::function<UInt16(UInt16, UInt16)> in_Ins,
+	std::function<void(UInt16, UInt16)> in_FRH)
 {
-	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
+	UInt16 l_XVal = m_CPU.DumpRegister(in_Instruction.GetFirstOperand());
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
 	in_FRH(l_XVal, l_YVal);
 	UInt16 l_Result = in_Ins(l_XVal, l_YVal);
-	m_CPU->SetSignZeroFlag(l_Result);
+	m_CPU.SetSignZeroFlag(l_Result);
 }
 
-void Interpreter::DiscardImmediateArithmetic(const Instruction in_Instruction, 
-											 std::function<UInt16(UInt16,UInt16)> in_Ins, 
-											 std::function<void(UInt16,UInt16)> in_FRH)
+void Interpreter::DiscardImmediateArithmetic(const Instruction & in_Instruction,
+	std::function<UInt16(UInt16, UInt16)> in_Ins,
+	std::function<void(UInt16, UInt16)> in_FRH)
 {
-	UInt16 l_XVal = m_CPU->DumpRegister(in_Instruction.GetFirstOperand());
+	UInt16 l_XVal = m_CPU.DumpRegister(in_Instruction.GetFirstOperand());
 	UInt16 l_IVal = in_Instruction.GetImmediateValue();
 	in_FRH(l_XVal, l_IVal);
 	UInt16 l_Result = in_Ins(l_XVal, l_IVal);
-	m_CPU->SetSignZeroFlag(l_Result);
+	m_CPU.SetSignZeroFlag(l_Result);
 }
 
-void Interpreter::ImmediateArithmetic(const Instruction in_Instruction, 
-									  std::function<UInt16(UInt16,UInt16)> in_Ins, 
-									  std::function<void(UInt16,UInt16)> in_FRH)
+void Interpreter::ImmediateArithmetic(const Instruction & in_Instruction,
+	std::function<UInt16(UInt16, UInt16)> in_Ins,
+	std::function<void(UInt16, UInt16)> in_FRH)
 {
 	UInt8 l_Reg = in_Instruction.GetFirstOperand();
 	UInt16 l_IVal = in_Instruction.GetImmediateValue();
-	in_FRH(m_CPU->DumpRegister(l_Reg), l_IVal);
-	m_ErrorCode = m_CPU->SetRegister(l_Reg, in_Ins(m_CPU->DumpRegister(l_Reg), l_IVal));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_Reg));
+	in_FRH(m_CPU.DumpRegister(l_Reg), l_IVal);
+	m_ErrorCode = m_CPU.SetRegister(l_Reg, in_Ins(m_CPU.DumpRegister(l_Reg), l_IVal));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_Reg));
 }
 
-void Interpreter::InplaceArithmetic(const Instruction in_Instruction, 
-									std::function<UInt16(UInt16,UInt16)> in_Ins, 
-									std::function<void(UInt16,UInt16)> in_FRH)
+void Interpreter::InplaceArithmetic(const Instruction & in_Instruction,
+	std::function<UInt16(UInt16, UInt16)> in_Ins,
+	std::function<void(UInt16, UInt16)> in_FRH)
 {
 	UInt8 l_XReg = in_Instruction.GetFirstOperand();
-	UInt16 l_XVal = m_CPU->DumpRegister(l_XReg);
-	UInt16 l_YVal = m_CPU->DumpRegister(in_Instruction.GetSecondOperand());
+	UInt16 l_XVal = m_CPU.DumpRegister(l_XReg);
+	UInt16 l_YVal = m_CPU.DumpRegister(in_Instruction.GetSecondOperand());
 	in_FRH(l_XVal, l_YVal);
-	m_ErrorCode = m_CPU->SetRegister(l_XReg, in_Ins(l_XVal, l_YVal));
-	m_CPU->SetSignZeroFlag(m_CPU->DumpRegister(l_XReg));
+	m_ErrorCode = m_CPU.SetRegister(l_XReg, in_Ins(l_XVal, l_YVal));
+	m_CPU.SetSignZeroFlag(m_CPU.DumpRegister(l_XReg));
 }

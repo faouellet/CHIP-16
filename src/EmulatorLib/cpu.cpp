@@ -11,45 +11,10 @@
 #include <string.h>
 #endif
 
-CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(0)
+CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(NoError)
 {
 	memset(m_Registers, 0, sizeof(UInt16)*16);
-	memset(m_Memory, 0, sizeof(UInt8)*MEMORY_SIZE);
 }
-
-CPU::CPU(const CPU & in_CPU) : m_FR(in_CPU.m_FR), m_PC(in_CPU.m_PC), 
-	m_SP(in_CPU.m_SP), m_ErrorCode(in_CPU.m_ErrorCode)
-{
-	int i = 0;
-	for(auto in_Val : in_CPU.DumpRegisters())
-		m_Registers[i++] = in_Val;
-
-	i = 0;
-	for(auto in_Val : in_CPU.m_ROMHeader)
-		m_ROMHeader[i++] = in_Val;
-
-	i = 0;
-	for(auto in_Val : in_CPU.DumpMemory())
-		m_Memory[i++] = in_Val;
-}
-
-CPU::CPU(const CPU * in_CPU) : m_FR(in_CPU->m_FR), m_PC(in_CPU->m_PC), 
-	m_SP(in_CPU->m_SP), m_ErrorCode(in_CPU->m_ErrorCode)
-{
-	int i = 0;
-	for(auto in_Val : in_CPU->DumpRegisters())
-		m_Registers[i++] = in_Val;
-
-	i = 0;
-	for(auto in_Val : in_CPU->m_ROMHeader)
-		m_ROMHeader[i++] = in_Val;
-
-	i = 0;
-	for(auto in_Val : in_CPU->DumpMemory())
-		m_Memory[i++] = in_Val;
-}
-
-CPU::~CPU() { }
 
 UInt16 CPU::DumpFlagRegister() const
 {
@@ -81,33 +46,38 @@ UInt16 CPU::DumpStackPointer() const
 	return m_SP;
 }
 
-unsigned CPU::Init(std::vector<UInt8> && in_ROMData) 
+Instruction CPU::FetchInstruction()
 {
-	if(in_ROMData.empty())
+	UInt32 l_Instruction = 0;
+
+	for (int i = 0; i < 4; ++i)
+	{
+		l_Instruction <<= 8;
+		l_Instruction |= (m_Memory)[m_PC++];
+	}
+
+	return Instruction(l_Instruction);
+}
+
+unsigned CPU::InitMemory(std::vector<UInt8> && in_Program)
+{
+	if (in_Program.empty())
 		return EmptyROMError;
-	if(in_ROMData.size() > STACK_START)
+	else if (in_Program.size() > MEMORY_SIZE)
 		return ROMOverflowError;
 
-	for(int i = 0; i < HEADER_SIZE; ++i)
-		m_ROMHeader[i] = in_ROMData[i];
-
-	for(unsigned i = HEADER_SIZE ; i < in_ROMData.size(); ++i)
-		m_Memory[i-HEADER_SIZE] = in_ROMData[i];
-
-	m_PC = m_ROMHeader[0xA];
-	m_SP = STACK_START;
+	std::copy_n(std::make_move_iterator(in_Program.begin()), in_Program.size(), m_Memory.begin());
 
 	return NoError;
 }
 
+void CPU::InitPC(UInt8 in_PCStart)
+{
+	m_PC = in_PCStart;
+}
+
 void CPU::Reset()
 {
-	for(int i = 0; i < HEADER_SIZE; ++i)
-		m_ROMHeader[i] = 0;
-
-	for(int i = 0; i < MEMORY_SIZE; ++i)
-		m_Memory[i] = 0;
-
 	m_ErrorCode = 0;
 	m_FR = 0;
 	m_SP = 0;
@@ -269,36 +239,6 @@ void CPU::UpdateController(SDL_KeyboardEvent & in_Event)
 			break;
 		}
 	}
-}
-
-std::vector<Instruction> CPU::FetchBasicBlock()
-{
-	Instruction l_Instruction = 0;
-	std::vector<Instruction> l_BasicBlock;
-
-	do
-	{
-		// Q : Should the PC be modified ??
-		l_Instruction = FetchInstruction();
-
-		l_BasicBlock.push_back(l_Instruction);
-	} 
-	while((l_Instruction.GetOpcode() & 0xF0) != 0x10);
-
-	return l_BasicBlock;
-}
-
-Instruction CPU::FetchInstruction()
-{
-	UInt32 l_Instruction = 0;
-
-	for(int i = 0; i < 4; ++i)
-	{
-		l_Instruction <<= 8;
-		l_Instruction |= m_Memory[m_PC++];
-	}
-
-	return Instruction(l_Instruction);
 }
 
 std::vector<UInt8> CPU::FetchPalette(const UInt16 in_Address)

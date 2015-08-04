@@ -6,21 +6,34 @@
 
 const float Emulator::FRAME_TIME = (1.f/60.f)*1000.f;
 
-Emulator::Emulator() : m_CPU(std::make_shared<CPU>(new CPU)), m_Interpreter(m_CPU) { }
-
-Emulator::~Emulator() { }
+Emulator::Emulator(bool in_DynarecMode)
+{
+	// TODO: Do something with the dynarec
+	//if (in_DynarecMode)
+	//	m_Dynarec ...
+	std::fill(std::begin(*m_Memory), std::end(*m_Memory), 0);
+}
 
 unsigned Emulator::Init(const std::string & in_ROMName)
 {
-	auto l_ROMData = ReadROM(in_ROMName);
-	if(!l_ROMData.empty())
+	std::vector<UInt8> l_ROMData;
+	unsigned l_ErrorCode = ReadROM(in_ROMName, l_ROMData);
+	
+	if(l_ErrorCode == NoError)
 	{
-		unsigned l_ErrorCode = NoError;
-		l_ErrorCode |= m_CPU->Init(std::move(l_ROMData));
+		l_ErrorCode |= l_ROMData.empty() ? EmptyROMError : NoError;
+		l_ErrorCode |= l_ROMData.size() > STACK_START ? ROMOverflowError : NoError;
+
+		for (int i = 0; i < HEADER_SIZE; ++i)
+			m_ROMHeader[i] = l_ROMData[i];
+
+		for (unsigned i = HEADER_SIZE; i < l_ROMData.size(); ++i)
+			(*m_Memory)[i - HEADER_SIZE] = l_ROMData[i];
+
 		l_ErrorCode |= m_Interpreter.InitDevices();
-		return l_ErrorCode;
 	}
-	else return FileError;
+
+	return l_ErrorCode;
 }
 
 void Emulator::Emulate()
@@ -30,8 +43,10 @@ void Emulator::Emulate()
 	bool l_Continue = true;
 	int l_NbCycles;
 
-	SDL_Event l_ControllerEvent;
+	
 	Uint32 l_StartTime;
+	
+	Instruction l_Instruction;
 
 	while(l_Continue)
 	{
@@ -42,7 +57,7 @@ void Emulator::Emulate()
 		// Therefore, the emulator can interpret a precise number of instructions per video frame
 		while(l_NbCycles < CYCLES_PER_FRAME)
 		{
-			if(m_Interpreter.InterpretOp() != NoError)
+			if(m_Interpreter.InterpretOne() != NoError)
 			{
 				l_Continue = false;
 				break;
@@ -50,10 +65,8 @@ void Emulator::Emulate()
 			++l_NbCycles;
 		}
 
-		// Handle IO
-		while(SDL_PollEvent(&l_ControllerEvent) && 
-			(l_ControllerEvent.type == SDL_KEYDOWN || l_ControllerEvent.type == SDL_KEYUP))
-			m_CPU->UpdateController(l_ControllerEvent.key);
+		// TODO: Should this be confined to the interpreter? What's gonna happen with the dynarec?
+		m_Interpreter.HandleKeyboardInputs();
 
 		// TODO : Sound, later...
 		
@@ -67,22 +80,37 @@ void Emulator::Emulate()
 	}
 }
 
-std::vector<UInt8> Emulator::ReadROM(const std::string & in_ROMName)
+void Emulator::Reset()
 {
-	std::fstream l_FileStream(in_ROMName, std::ios::in | std::ios::binary);
-	std::vector<UInt8> l_ROMData;
+	for (int i = 0; i < HEADER_SIZE; ++i)
+		m_ROMHeader[i] = 0;
 
+	std::fill(std::begin(*m_Memory), std::end(*m_Memory), 0);
+
+	m_Interpreter.Reset();
+}
+
+unsigned Emulator::ReadROM(const std::string & in_ROMName, std::vector<UInt8> & out_ROMData)
+{
+	if (!out_ROMData.empty())
+		out_ROMData.clear();
+
+	std::fstream l_FileStream(in_ROMName, std::ios::in | std::ios::binary);
+	
 	if(l_FileStream.is_open())
 	{
 		l_FileStream.seekg(0, std::ios::end);
 		auto size = l_FileStream.tellg();
 		l_FileStream.seekg(0, std::ios::beg);
 
-		l_ROMData.resize(size);
-		l_FileStream.read((char*)&l_ROMData[0], size);
+		out_ROMData.resize(size);
+		l_FileStream.read((char*)&out_ROMData[0], size);
 
 		l_FileStream.close();
+		return NoError;
 	}
-
-	return l_ROMData;
+	else
+	{
+		return FileError;
+	}
 }

@@ -4,17 +4,14 @@
 #include "cpu.h"
 #include "interpreter.h"
 
-using Utils::UInt8;
-
 /**
-* \struct CPUFixture
+* \struct InterpreterFixture
 * \brief Fixture containing data to test the CPU specific instructions.
 *        That means the arithmetic, bitwise, call, jump, load, pop, push,
 *        shift and store instructions.
 */
 struct InterpreterFixture
 {
-	std::shared_ptr<CPU> Cpu;			/*!< CPU implementation */
 	std::vector<Utils::UInt8> Header;	/*!< The header of a .c16 file. See specs for details */
 	Interpreter Interpret;				/*!< Interpretive emulator */
 
@@ -22,7 +19,7 @@ struct InterpreterFixture
 	* \enum
 	* \brief Uself constants
 	*/
-	enum { NB_REGISTERS = 16, STACK_START = 0xFDF0 };
+	enum { HEADER_SIZE = 16, NB_REGISTERS = 16, STACK_START = 0xFDF0 };
 
 	// Data for the arithmetic tests
 	std::vector<UInt8> AddTestData;
@@ -32,48 +29,34 @@ struct InterpreterFixture
 	std::vector<UInt8> OrTestData;
 	std::vector<UInt8> SubTestData;
 	std::vector<UInt8> XorTestData;
-	
+
 	// Data for the load/store tests
 	std::vector<UInt8> MemoryTestData;
 
 	// Data for the error tests
 	std::vector<UInt8> ErrorTestData;
-	
+
 	// Data for the shift (left, arithmetic right, logical right) tests
 	std::vector<UInt8> ShiftTestData;
 
 	// Data for the pop/push tests
 	std::vector<UInt8> StackTestData;
-	
+
 	// Data for the rnd test
 	std::vector<UInt8> RndTestData;
-	
-	
+
+
 	/**
 	* \fn Constructor
 	* \brief Setup the data for the cpu instructions tests
 	*/
-	InterpreterFixture() : Header(NB_REGISTERS,0), Cpu(std::make_shared<CPU>(new CPU)), Interpret(Cpu)
+	InterpreterFixture() : Interpret{}
 	{
 		SetupArithmeticData();
 		SetupLoadStoreData();
 		SetupShiftData();
 		SetupStackData();
 		SetupRandomData();
-	}
-
-	/**
-	* \fn PrepareData
-	* \brief Concatenate a data vector to the header
-	* \param in_Data Vector containing the data relevant to a specific instruction
-	*                testing procedure
-	* \return A data vector
-	*/
-	std::vector<UInt8> PrepareData(const std::vector<UInt8> & in_Data)
-	{
-		std::vector<UInt8> l_Data(Header);
-		l_Data.insert(l_Data.end(), in_Data.begin(), in_Data.end());
-		return l_Data;
 	}
 
 	/**
@@ -90,14 +73,14 @@ struct InterpreterFixture
 	{
 		std::vector<UInt8> l_ErrorTestData;
 		InsertInstruction(l_ErrorTestData, in_Op1, in_Op2, in_Op3, in_Op4);
-		Cpu->Reset();
-		Cpu->Init(PrepareData(l_ErrorTestData));
-		return Interpret.InterpretOp();
+		Interpret.Reset();
+		Interpret.AcquireProgram(std::move(l_ErrorTestData));
+		return Interpret.InterpretOne();
 	}
 
 private:
 	/**
-	* \fn PrepareData
+	* \fn std::move
 	* \brief Insert a 32 bits instruction into a data vector
 	* \param out_DataVec Data vector to be inserted into
 	* \param in_Op1 Bit[0] to bit[3] of the instruction
@@ -151,9 +134,9 @@ private:
 		InsertInstruction(AndTestData, 0x60, 0x00, 0xFF, 0xFF);	// ANDI : R0 & 65535
 		InsertInstruction(AndTestData, 0x61, 0x01, 0x00, 0x00);	// AND : R1 &= R0
 		InsertInstruction(AndTestData, 0x62, 0x01, 0x02, 0x00);	// AND : R2 = R0 & R1
-		
-		// TSTI	??
-		// TST ??
+
+		// TODO: TSTI
+		// TODO: TST
 	}
 
 	/**
@@ -232,7 +215,7 @@ private:
 	void SetupSubTestData()
 	{
 		InsertInstruction(SubTestData, 0x40, 0x00, 0x0C, 0x00);	// ADDI : R0 += 12
-		
+
 		InsertInstruction(SubTestData, 0x50, 0x00, 0x04, 0x00);	// SUBI : R0 -= 4
 		InsertInstruction(SubTestData, 0x50, 0x01, 0x04, 0x00);	// SUB : R1 -= 4
 		InsertInstruction(SubTestData, 0x51, 0x10, 0x00, 0x00);	// SUB : R0 -= R1
@@ -243,7 +226,7 @@ private:
 		// CMPI ??
 		// CMP ??
 	}
-	
+
 	/**
 	* \fn SetupXorTestData
 	* \brief Fills a vector with xor opcodes
@@ -261,7 +244,7 @@ private:
 	*/
 	void SetupShiftData()
 	{
-		for(int i = 0; i < NB_REGISTERS/2; ++i)
+		for (int i = 0; i < NB_REGISTERS / 2; ++i)
 			InsertInstruction(ShiftTestData, 0x40, i, 0xFF, 0xFF);	// ADDI : Ri += 65535
 
 		InsertInstruction(ShiftTestData, 0xB0, 0x00, 0x0D, 0x00);	// SHL : R0 << 13 (Logical)
@@ -281,23 +264,23 @@ private:
 	*/
 	void SetupStackData()
 	{
-		for(int i = 0; i < NB_REGISTERS; ++i)
-			InsertInstruction(StackTestData, 0x20, i, i*2, 0x00);	// LDI : Ri = i * 2
+		for (int i = 0; i < NB_REGISTERS; ++i)
+			InsertInstruction(StackTestData, 0x20, i, i * 2, 0x00);	// LDI : Ri = i * 2
 
 		InsertInstruction(StackTestData, 0xC2, 0x00, 0x00, 0x00);	// PUSHALL
 
-		for(int i = 0; i < NB_REGISTERS; ++i)
+		for (int i = 0; i < NB_REGISTERS; ++i)
 			InsertInstruction(StackTestData, 0x20, i, 0x00, 0x00);	// LDI : Ri = 0
 
 		InsertInstruction(StackTestData, 0xC3, 0x00, 0x00, 0x00);	// POPALL
 
-		for(int i = 0; i < NB_REGISTERS; ++i)
+		for (int i = 0; i < NB_REGISTERS; ++i)
 			InsertInstruction(StackTestData, 0xC0, i, 0x00, 0x00);	// PUSH Ri
 
-		for(int i = 0; i < NB_REGISTERS; ++i)
+		for (int i = 0; i < NB_REGISTERS; ++i)
 			InsertInstruction(StackTestData, 0xC1, i, 0x00, 0x00);	// POP Ri
 	}
-	
+
 	/**
 	* \fn SetupRandomData
 	* \brief Fills a vector with random values

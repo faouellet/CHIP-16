@@ -11,7 +11,7 @@
 
 /**
  * \class Assembler
- * \brief TODO
+ * \brief Produce a binary file from a Chip16 assembly file
  */
 class Assembler
 {
@@ -37,13 +37,13 @@ public:
 	 * \fn ~Assembler
 	 * \brief Destructor
 	 */
-	~Assembler();
+	~Assembler() = default;
 
 	/*
 	 * \fn Assemble
 	 * \brief Assemble a binary file from a Chip16 file
 	 * \param in_Filename Name of the Chip16 assembly file
-	 * \return Assembly succesful?
+	 * \return Assembly successful?
 	 */
 	bool Assemble(const std::string & in_Filename); 
 

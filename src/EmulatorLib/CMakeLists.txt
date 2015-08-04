@@ -2,6 +2,8 @@ cmake_minimum_required (VERSION 2.8)
 
 add_library( EmulatorLib STATIC 
         constants.h
+		dynarec.cpp
+		dynarec.h
 		instruction.cpp
 		instruction.h
 		interpreter.cpp

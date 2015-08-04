@@ -2,8 +2,10 @@
 #define EMULATOR_H
 
 #include "cpu.h"
+#include "dynarec.h"
 #include "interpreter.h"
 
+#include <array>
 #include <string>
 
 using Utils::UInt8;
@@ -27,21 +29,25 @@ private:
 	static const float FRAME_TIME;
 
 private:
-	std::shared_ptr<CPU> m_CPU;		/*!< Central processing unit state */
-	Interpreter m_Interpreter;		/*!< Interpreter engine */
+	UInt8 m_ROMHeader[HEADER_SIZE];		/*!< The header of a .c16 file. See specs for details */
+	std::shared_ptr<std::array<Uint8, MEMORY_SIZE>> m_Memory;	/*!< Memory of the CPU. See specs for layout details */
+
+	Interpreter m_Interpreter;			/*!< Interpreter engine */
+	Dynarec m_Dynarec;					/*!< Dynamic recompiler */
 
 public:
 	/**
 	* \fn Emulator
 	* \brief Default constructor
+	* \param in_DynarecMode Is the emulator in dynarec mode or interpreter mode?
 	*/
-	Emulator();
+	Emulator(bool in_DynarecMode = false);
 
 	/**
 	* \fn ~Emulator
 	* \brief Destructor
 	*/
-	~Emulator();
+	~Emulator() = default;
 	
 public:
 	/**
@@ -58,14 +64,21 @@ public:
 	*/
 	void Emulate();
 
+	/**
+	* \fn Reset
+	* \brief Restore the emulator to its base state
+	*/
+	void Reset();
+
 private:
 	/**
 	* \fn ReadROM
 	* \brief Read a ROM from disk
-	* \param in_ROMName The absolute path to the ROM
-	* \return Success or failure
+	* \param in_ROMName  The absolute path to the ROM
+	* \param out_ROMData Data contained in the ROM
+	* \return Error code depending on the situation
 	*/
-	std::vector<UInt8> ReadROM(const std::string & in_ROMName);
+	unsigned ReadROM(const std::string & in_ROMName, std::vector<UInt8> & out_ROMData);
 };
 
 #endif // EMULATOR_H

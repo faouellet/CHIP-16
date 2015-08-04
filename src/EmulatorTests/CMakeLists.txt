@@ -10,6 +10,7 @@ set( SOURCES
 	interpreter_tests.h 
 	gpu_tests.cpp 
 	gpu_tests.h
+	utils_tests.cpp
 	)
 
 set(EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin")
@@ -31,6 +32,7 @@ if(Boost_FOUND)
 	
     # Emulator 
     include_directories("${CMAKE_SOURCE_DIR}/src/EmulatorLib")
+    include_directories("${CMAKE_SOURCE_DIR}/src/Utils")
     link_directories("${CMAKE_BINARY_DIR}/lib")
     
     add_executable(EmulatorTests ${SOURCES}) 

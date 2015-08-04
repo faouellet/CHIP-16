@@ -10,7 +10,7 @@ Assembler::Assembler():
     m_LabelRegex("\s*:([A-Za-z0-9]+)\s*;"), 
     m_MacroRegex("importbin \s*;")
 {
-	m_ValidInstructions = { 
+	m_ValidInstructions = std::set<std::string>{ 
 		"nop", "cls", "vblnk", "bgc", "spr", "drw", "rnd", "flip", 
 		"snd0", "snd1", "snd2", "snd3", "snp", "sng",
 		"jmp", "jme", "call", "ret"
@@ -22,10 +22,6 @@ Assembler::Assembler():
 		"shl", "shr", "sal", "sar",
 		"push", "pop", "pushall", "popall", "pushf", "popf", "pal"
 	};
-}
-
-Assembler::~Assembler() 
-{
 }
 
 bool Assembler::Assemble(const std::string & in_Filename)
@@ -102,6 +98,8 @@ bool Assembler::FirstPass(const std::vector<std::string> & in_FileContents)
 			m_SymbolTable[l_Match.str()] = l_Address;
 		}
 	}
+
+	return true;
 }
 
 void Assembler::SecondPass(const std::vector<std::string> & in_FileContents) const

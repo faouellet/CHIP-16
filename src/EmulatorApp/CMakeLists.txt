@@ -6,7 +6,13 @@ set(SOURCES main.cpp commandlineinterface.cpp commandlineinterface.h)
 
 # SDL
 include_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../3rd party/SDL2/include")
-link_directories("${CMAKE_CURRENT_SOURCE_DIR}/../../3rd party/SDL2/lib/x86")
+set(LINK_DIR "")
+if(${CMAKE_SIZEOF_VOID_P} EQUAL 8)
+	set(LINK_DIR "${PROJECT_SOURCE_DIR}/3rd party/SDL2/lib/x64")
+else()
+	set(LINK_DIR "${PROJECT_SOURCE_DIR}/3rd party/SDL2/lib/x86")
+endif()
+link_directories("${LINK_DIR}")
 
 # Emulator
 include_directories("${CMAKE_SOURCE_DIR}/src/EmulatorLib")
@@ -20,7 +26,7 @@ if(CMAKE_SYSTEM_NAME STREQUAL Windows)
     add_custom_command(TARGET EmulatorApp
                        POST_BUILD 
         			   COMMAND ${CMAKE_COMMAND} -E copy 
-    				   "${PROJECT_SOURCE_DIR}/3rd party/SDL2/lib/x86/SDL2.dll"
+    				   "${LINK_DIR}/SDL2.dll"
     				   $<TARGET_FILE_DIR:EmulatorApp>
     				   COMMENT "Copying DLLs")
 endif()
