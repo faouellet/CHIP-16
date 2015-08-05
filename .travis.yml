@@ -30,6 +30,7 @@ addons:
       - clang-3.6
 
 before_install:
+  - sudo add-apt-repository ppa:zoogie/sdl2-snapshots
   - sudo apt-get update -qq
   
 install:
