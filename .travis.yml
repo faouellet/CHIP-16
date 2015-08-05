@@ -42,6 +42,9 @@ install:
     
   # Getting the latest version of Boost
   - sudo apt-get install libboost-all-dev
+
+  # Getting SDL2
+  - sudo apt-get install libsdl2-dev
   
   # Getting latest version of LCOV if needed
   - if [ "${COVERAGE}" == "1" ]; then
