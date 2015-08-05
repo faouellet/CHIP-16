@@ -1,6 +1,11 @@
 #ifdef STAND_ALONE
 #   define BOOST_TEST_MODULE Main
+#else
+#ifndef _WIN32
+#   define BOOST_TEST_MODULE Emitter
 #endif
+#endif
+
 #include <boost/test/unit_test.hpp>
 
 #include "emitter_tests.h"
@@ -9,52 +14,52 @@ BOOST_FIXTURE_TEST_SUITE(EmitterTestSuite, EmitterFixture)
 
 BOOST_AUTO_TEST_CASE( ArithmeticTest )
 {
-	Emitter.EmitAdd(0x01, 0x02, 0x03);
-	Emitter.EmitAddImm(0x01, 0x00FF);
-	Emitter.EmitAddInp(0x01, 0x02);
+	Emit.EmitAdd(0x01, 0x02, 0x03);
+	Emit.EmitAddImm(0x01, 0x00FF);
+	Emit.EmitAddInp(0x01, 0x02);
 
-	Emitter.EmitAnd(0x05, 0x04, 0x06);
-	Emitter.EmitAndImm(0x01, 0xAA00);
-	Emitter.EmitAndInp(0x03, 0x02);
+	Emit.EmitAnd(0x05, 0x04, 0x06);
+	Emit.EmitAndImm(0x01, 0xAA00);
+	Emit.EmitAndInp(0x03, 0x02);
 
-	Emitter.EmitARShift(0x01, 0x02);
-	Emitter.EmitARShiftImm(0x03, 0x02);
+	Emit.EmitARShift(0x01, 0x02);
+	Emit.EmitARShiftImm(0x03, 0x02);
 
-	Emitter.EmitCmp(0x05, 0x06);
-	Emitter.EmitCmpImm(0x04, 0xFF00);
+	Emit.EmitCmp(0x05, 0x06);
+	Emit.EmitCmpImm(0x04, 0xFF00);
 
-	Emitter.EmitDiv(0x01, 0x02, 0x03);
-	Emitter.EmitDivImm(0x01, 0x00FF);
-	Emitter.EmitDivInp(0x01, 0x02);
+	Emit.EmitDiv(0x01, 0x02, 0x03);
+	Emit.EmitDivImm(0x01, 0x00FF);
+	Emit.EmitDivInp(0x01, 0x02);
 
-	Emitter.EmitLLShift(0x01, 0x02);
-	Emitter.EmitLLShiftImm(0x01, 0x02);
+	Emit.EmitLLShift(0x01, 0x02);
+	Emit.EmitLLShiftImm(0x01, 0x02);
 
-	Emitter.EmitLRShift(0x01, 0x02);
-	Emitter.EmitLRShiftImm(0x02, 0x04);
+	Emit.EmitLRShift(0x01, 0x02);
+	Emit.EmitLRShiftImm(0x02, 0x04);
 
-	Emitter.EmitMul(0x01, 0x02, 0x03);
-	Emitter.EmitMulImm(0x01, 0x00FF);
-	Emitter.EmitMulInp(0x01, 0x02);
+	Emit.EmitMul(0x01, 0x02, 0x03);
+	Emit.EmitMulImm(0x01, 0x00FF);
+	Emit.EmitMulInp(0x01, 0x02);
 
-	Emitter.EmitOr(0x01, 0x02, 0x03);
-	Emitter.EmitOrImm(0x01, 0x00FF);
-	Emitter.EmitOrInp(0x03, 0x02);
+	Emit.EmitOr(0x01, 0x02, 0x03);
+	Emit.EmitOrImm(0x01, 0x00FF);
+	Emit.EmitOrInp(0x03, 0x02);
 
-	Emitter.EmitSub(0x01, 0x02, 0x03);
-	Emitter.EmitSubImm(0x01, 0x00EE);
-	Emitter.EmitSubInp(0x01, 0x02);
+	Emit.EmitSub(0x01, 0x02, 0x03);
+	Emit.EmitSubImm(0x01, 0x00EE);
+	Emit.EmitSubInp(0x01, 0x02);
 
-	Emitter.EmitTst(0x03, 0x02);
-	Emitter.EmitTstImm(0x01, 0xFFFF);
+	Emit.EmitTst(0x03, 0x02);
+	Emit.EmitTstImm(0x01, 0xFFFF);
 
-	Emitter.EmitXor(0x01, 0x02, 0x03);
-	Emitter.EmitXorImm(0x01, 0xFF00);
-	Emitter.EmitXorInp(0x01, 0x02);
+	Emit.EmitXor(0x01, 0x02, 0x03);
+	Emit.EmitXorImm(0x01, 0xFF00);
+	Emit.EmitXorInp(0x01, 0x02);
 
-	Emitter.EmitToFile(TestFilename);
+	Emit.EmitToFile(TestFilename);
 
-	std::vector<UInt8> l_TestData(ReadFile());
+	std::vector<Utils::UInt8> l_TestData(ReadFile());
 
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), ArithmeticTestData.size());
 
@@ -64,16 +69,16 @@ BOOST_AUTO_TEST_CASE( ArithmeticTest )
 
 BOOST_AUTO_TEST_CASE( StackTest )
 {
-	Emitter.EmitPush(0x01);
-	Emitter.EmitPop(0x02);
-	Emitter.EmitPushAll();
-	Emitter.EmitPopAll();
-	Emitter.EmitPushF();
-	Emitter.EmitPopF();
+	Emit.EmitPush(0x01);
+	Emit.EmitPop(0x02);
+	Emit.EmitPushAll();
+	Emit.EmitPopAll();
+	Emit.EmitPushF();
+	Emit.EmitPopF();
 
-	Emitter.EmitToFile(TestFilename);
+	Emit.EmitToFile(TestFilename);
 
-	std::vector<UInt8> l_TestData(ReadFile());
+	std::vector<Utils::UInt8> l_TestData(ReadFile());
 
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), StackTestData.size());
 
@@ -83,20 +88,20 @@ BOOST_AUTO_TEST_CASE( StackTest )
 
 BOOST_AUTO_TEST_CASE( MemoryTest )
 {
-	Emitter.EmitLDIImm(0x01, 0x00FF);
-	Emitter.EmitLDISP(0x00FF);
+	Emit.EmitLDIImm(0x01, 0x00FF);
+	Emit.EmitLDISP(0x00FF);
 
-	Emitter.EmitLDM(0x01, 0x02);
-	Emitter.EmitLDMImm(0x01, 0x00FF);
+	Emit.EmitLDM(0x01, 0x02);
+	Emit.EmitLDMImm(0x01, 0x00FF);
 
-	Emitter.EmitMov(0x01, 0x02);
+	Emit.EmitMov(0x01, 0x02);
 
-	Emitter.EmitStm(0x01, 0x02);
-	Emitter.EmitStmImm(0x01, 0x00FF);
+	Emit.EmitStm(0x01, 0x02);
+	Emit.EmitStmImm(0x01, 0x00FF);
 
-	Emitter.EmitToFile(TestFilename);
+	Emit.EmitToFile(TestFilename);
 
-	std::vector<UInt8> l_TestData(ReadFile());
+	std::vector<Utils::UInt8> l_TestData(ReadFile());
 
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), MemoryTestData.size());
 
@@ -106,19 +111,19 @@ BOOST_AUTO_TEST_CASE( MemoryTest )
 
 BOOST_AUTO_TEST_CASE( JumpTest )
 {
-	Emitter.EmitJmp(0x00FF);
-	Emitter.EmitJx(0x01, 0x00FF);
-	Emitter.EmitJme(0x01, 0x02, 0x00FF);
-	Emitter.EmitJmpInd(0x01);
+	Emit.EmitJmp(0x00FF);
+	Emit.EmitJx(0x01, 0x00FF);
+	Emit.EmitJme(0x01, 0x02, 0x00FF);
+	Emit.EmitJmpInd(0x01);
 
-	Emitter.EmitCall(0x01);
-	Emitter.EmitCallImm(0x00FF);
-	Emitter.EmitRet();
-	Emitter.EmitCx(0x01, 0x00FF);
+	Emit.EmitCall(0x01);
+	Emit.EmitCallImm(0x00FF);
+	Emit.EmitRet();
+	Emit.EmitCx(0x01, 0x00FF);
 
-	Emitter.EmitToFile(TestFilename);
+	Emit.EmitToFile(TestFilename);
 
-	std::vector<UInt8> l_TestData(ReadFile());
+	std::vector<Utils::UInt8> l_TestData(ReadFile());
 
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), JumpTestData.size());
 
@@ -132,12 +137,12 @@ BOOST_AUTO_TEST_CASE( JumpTest )
 
 BOOST_AUTO_TEST_CASE( PaletteTest )
 {
-	Emitter.EmitPal(0x01);
-	Emitter.EmitPalImm(0x00FF);
+	Emit.EmitPal(0x01);
+	Emit.EmitPalImm(0x00FF);
 
-	Emitter.EmitToFile(TestFilename);
+	Emit.EmitToFile(TestFilename);
 
-	std::vector<UInt8> l_TestData(ReadFile());
+	std::vector<Utils::UInt8> l_TestData(ReadFile());
 
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), PaletteTestData.size());
 
@@ -147,19 +152,19 @@ BOOST_AUTO_TEST_CASE( PaletteTest )
 
 BOOST_AUTO_TEST_CASE( MiscTest )
 {
-	Emitter.EmitNop();
-	Emitter.EmitCls();
-	Emitter.EmitVBlnk();
-	Emitter.EmitBgc(0x01);
-	Emitter.EmitSpr(0x00FF);
-	Emitter.EmitDrw(0x01, 0x02, 0x03);
-	Emitter.EmitDrwImm(0x01, 0x02, 0x00FF);
-	Emitter.EmitRnd(0x01, 0x00FF);
-	Emitter.EmitFlip(0x01, 0x01);
+	Emit.EmitNop();
+	Emit.EmitCls();
+	Emit.EmitVBlnk();
+	Emit.EmitBgc(0x01);
+	Emit.EmitSpr(0x00FF);
+	Emit.EmitDrw(0x01, 0x02, 0x03);
+	Emit.EmitDrwImm(0x01, 0x02, 0x00FF);
+	Emit.EmitRnd(0x01, 0x00FF);
+	Emit.EmitFlip(0x01, 0x01);
 
-	Emitter.EmitToFile(TestFilename);
+	Emit.EmitToFile(TestFilename);
 
-	std::vector<UInt8> l_TestData(ReadFile());
+	std::vector<Utils::UInt8> l_TestData(ReadFile());
 
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), MiscTestData.size());
 
@@ -169,16 +174,16 @@ BOOST_AUTO_TEST_CASE( MiscTest )
 
 BOOST_AUTO_TEST_CASE( SoundTest )
 {
-	Emitter.EmitSnd0();
-	Emitter.EmitSnd1(0x00FF);
-	Emitter.EmitSnd2(0x00FF);
-	Emitter.EmitSnd3(0x00FF);
-	Emitter.EmitSnp(0x01, 0x00FF);
+	Emit.EmitSnd0();
+	Emit.EmitSnd1(0x00FF);
+	Emit.EmitSnd2(0x00FF);
+	Emit.EmitSnd3(0x00FF);
+	Emit.EmitSnp(0x01, 0x00FF);
 	//Emitter.EmitSng();
 
-	Emitter.EmitToFile(TestFilename);
+	Emit.EmitToFile(TestFilename);
 
-	std::vector<UInt8> l_TestData(ReadFile());
+	std::vector<Utils::UInt8> l_TestData(ReadFile());
 
 	BOOST_REQUIRE_EQUAL(l_TestData.size(), SoundTestData.size());
 

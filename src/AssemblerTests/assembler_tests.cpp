@@ -1,6 +1,11 @@
 #ifdef STAND_ALONE
 #   define BOOST_TEST_MODULE Main
+#else
+#ifndef _WIN32
+#   define BOOST_TEST_MODULE Assembler
 #endif
+#endif
+
 #include <boost/test/unit_test.hpp>
 
 #include "assembler_tests.h"

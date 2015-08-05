@@ -13,6 +13,8 @@ if(Boost_FOUND)
     # Boost
     include_directories("${Boost_INCLUDE_DIR}")
     link_directories("${Boost_LIBRARY_DIRS}")
+
+    include_directories("${CMAKE_SOURCE_DIR}/src/Utils")
 	
     set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 endif()

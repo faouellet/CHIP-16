@@ -1,6 +1,11 @@
 #ifdef STAND_ALONE
 #   define BOOST_TEST_MODULE Main
+#else
+#ifndef _WIN32
+#   define BOOST_TEST_MODULE GPU
 #endif
+#endif
+
 #include <boost/test/unit_test.hpp>
 
 #include "gpu_tests.h"
@@ -9,7 +14,7 @@ BOOST_FIXTURE_TEST_SUITE( GPUTestSuite, GPUFixture )
 
 BOOST_AUTO_TEST_CASE( InitTest )
 {
-	std::vector<UInt32> l_Palette(Gpu.DumpColors());
+	std::vector<Utils::UInt32> l_Palette(Gpu.DumpColors());
 	BOOST_REQUIRE_EQUAL(l_Palette[0], 0x000000);
 	BOOST_REQUIRE_EQUAL(l_Palette[1], 0x000000);
 	BOOST_REQUIRE_EQUAL(l_Palette[2], 0x888888);

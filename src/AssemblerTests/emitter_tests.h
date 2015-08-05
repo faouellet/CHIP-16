@@ -11,9 +11,9 @@
 */
 struct EmitterFixture
 {
-	const char const* TestFilename = "test.c16";
+	const char * TestFilename = "test.c16";
 
-	Emitter Emitter;
+	Emitter Emit;
 
 	std::vector<UInt8> ArithmeticTestData;
 	std::vector<UInt8> StackTestData;

@@ -9,7 +9,7 @@
 */
 struct AssemblerFixture
 {
-	Assembler Assembler;
+	Assembler Asm;
 
 	AssemblerFixture() { }
 };
