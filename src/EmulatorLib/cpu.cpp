@@ -12,7 +12,7 @@
 #include <string.h>
 #endif
 
-CPU::CPU() : m_FR(0), m_PC(0), m_SP(0), m_ErrorCode(NoError)
+CPU::CPU() : m_FR{ 0 }, m_PC{ 0 }, m_SP{ STACK_START }, m_ErrorCode{ NoError }
 {
 	memset(m_Registers, 0, sizeof(UInt16)*16);
 }

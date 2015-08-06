@@ -1,5 +1,6 @@
 **Emulator for the Chip16**
 ==============
+[![Build Status](https://travis-ci.org/faouellet/System16.svg?branch=master)](https://travis-ci.org/faouellet/System16)
 
 For Windows users:
 --------------
