@@ -60,17 +60,24 @@ BOOST_AUTO_TEST_CASE(AndTest)
 {
 	Interpret.AcquireProgram(std::move(AndTestData));
 	const CPU& Cpu = Interpret.DumpCPUState();
-	Interpret.InterpretOne();						// ANDI : R0 & 65535
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	// Zero flag set
-	Interpret.InterpretOne();						// AND : R1 &= R0
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	// Zero flag set
-	Interpret.InterpretOne();						// AND : R2 = R0 & R1
-	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	// Zero flag set
-	//Cpu.InterpretOne();	// TSTI
-	//Cpu.InterpretOne();	// TST
-	std::vector<UInt16> l_AndDump(Cpu.DumpRegisters());
-
-	for (int i = 0; i < NB_REGISTERS; ++i)
+	Interpret.InterpretOne();						                // ANDI : R0 & 65535
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	                // Zero flag set
+	Interpret.InterpretOne();						                // AND : R1 &= R0
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	                // Zero flag set
+	Interpret.InterpretOne();						                // AND : R2 = R0 & R1
+	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	                // Zero flag set
+    
+    Interpret.InterpretOne();	                                    // ADDI : R0 += 1
+    Interpret.InterpretOne();	                                    // TSTI : R0 & 65535
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), 1);
+	Interpret.InterpretOne();	                                    // TST : R0 & R1
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	                // Zero flag set
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), 1);
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(1), 0);
+	
+    std::vector<UInt16> l_AndDump(Cpu.DumpRegisters());
+    for (int i = 1; i < NB_REGISTERS; ++i)
 		BOOST_REQUIRE_EQUAL(l_AndDump[i], 0);
 }
 
