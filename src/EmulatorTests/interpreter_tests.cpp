@@ -98,6 +98,41 @@ BOOST_AUTO_TEST_CASE(DivTest)
 		BOOST_REQUIRE_EQUAL(l_DivDump[i], 0);
 }
 
+BOOST_AUTO_TEST_CASE(ModTest)
+{
+    Interpret.AcquireProgram(std::move(ModTestData));
+    const CPU& Cpu = Interpret.DumpCPUState();
+    Interpret.InterpretOne();										// ADDI : R0 += 8
+    Interpret.InterpretOne();										// MODI : R0 = R0 % 32
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), 8);
+
+    Interpret.InterpretOne();						                // MODI : R0 = R0 % 32
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);	                // Zero flag set
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), 0);
+
+    Interpret.InterpretOne();										// ADDI : R1 += 4
+    Interpret.InterpretOne();										// ADDI : R2 += 5
+    Interpret.InterpretOne();										// MOD : R2 = R2 % R1
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(2), 1);
+    Interpret.InterpretOne();										// MOD : R1 = R1 % R1
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(1), 0);
+
+    Interpret.InterpretOne();										// ADDI : R3 += 4
+    Interpret.InterpretOne();										// ADDI : R4 += 5
+    Interpret.InterpretOne();										// MOD : R5 = R4 % R3
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(5), 1);
+    Interpret.InterpretOne();										// MOD : R5 = R3 % R2
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);				    // Zero flag set
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(5), 0);
+
+    for (int i = 5; i < NB_REGISTERS; ++i)
+        BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(i), 0);
+}
+
 BOOST_AUTO_TEST_CASE(ErrorTest)
 {
 	Interpret.AcquireProgram(std::move(ErrorTestData));
@@ -129,6 +164,65 @@ BOOST_AUTO_TEST_CASE(MulTest)
 
 	for (int i = 4; i < NB_REGISTERS; ++i)
 		BOOST_REQUIRE_EQUAL(l_MulDump[i], 0);
+}
+
+// TODO: Add better support for signed operation
+BOOST_AUTO_TEST_CASE(NegTest)
+{
+    Interpret.AcquireProgram(std::move(NegTestData));
+    const CPU& Cpu = Interpret.DumpCPUState();
+    const UInt16 l_MaxLimit = std::numeric_limits<UInt16>::max();
+    Interpret.InterpretOne();                                       // NEGI : R0 = -1
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), l_MaxLimit);
+
+    Interpret.InterpretOne();                                       // NEG : R0 = -R0
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), 1);
+    Interpret.InterpretOne();                                       // NEG : R0 = -R0
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), l_MaxLimit);
+
+    Interpret.InterpretOne();                                       // ADDI : R1 += 2
+    Interpret.InterpretOne();                                       // NEG : R0 = -R1
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), l_MaxLimit - 1);
+}
+
+BOOST_AUTO_TEST_CASE(NotTest)
+{
+    Interpret.AcquireProgram(std::move(NotTestData));
+    const CPU& Cpu = Interpret.DumpCPUState();
+    const UInt16 l_MaxLimit = std::numeric_limits<UInt16>::max();
+    Interpret.InterpretOne();                                       // NOTI : R0 = !65535
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), 0);
+
+    Interpret.InterpretOne();                                       // NOTI : R0 = !0
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), l_MaxLimit);
+
+    Interpret.InterpretOne();                                       // NOT : R0 = !R0
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x4);					// Zero flag set
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), 0);
+
+    Interpret.InterpretOne();                                       // NOT : R0 = !R0
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), l_MaxLimit);
+
+    Interpret.InterpretOne();                                       // ADDI : R1 += 2
+
+    Interpret.InterpretOne();                                       // NOT : R0 = !R1
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), l_MaxLimit - 2);
+
+    Interpret.InterpretOne();                                       // NOT : R0 = !R2
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 2) & 0x1, 0);	// Zero flag unset
+    BOOST_REQUIRE_EQUAL(Cpu.DumpRegister(0), l_MaxLimit);
+
+    std::vector<UInt16> l_NotDump(Cpu.DumpRegisters());
+    for (int i = 2; i < NB_REGISTERS; ++i)
+        BOOST_REQUIRE_EQUAL(l_NotDump[i], 0);
 }
 
 BOOST_AUTO_TEST_CASE(OrTest)

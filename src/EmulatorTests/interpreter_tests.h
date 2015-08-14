@@ -25,7 +25,10 @@ struct InterpreterFixture
 	std::vector<UInt8> AddTestData;
 	std::vector<UInt8> AndTestData;
 	std::vector<UInt8> DivTestData;
-	std::vector<UInt8> MulTestData;
+    std::vector<UInt8> ModTestData;
+    std::vector<UInt8> MulTestData;
+    std::vector<UInt8> NegTestData;
+    std::vector<UInt8> NotTestData;
 	std::vector<UInt8> OrTestData;
 	std::vector<UInt8> SubTestData;
 	std::vector<UInt8> XorTestData;
@@ -104,7 +107,10 @@ private:
 		SetupAddTestData();
 		SetupAndTestData();
 		SetupDivTestData();
-		SetupMulTestData();
+        SetupModTestData();
+        SetupMulTestData();
+        SetupNegTestData();
+        SetupNotTestData();
 		SetupOrTestData();
 		SetupSubTestData();
 		SetupXorTestData();
@@ -154,6 +160,30 @@ private:
 		InsertInstruction(DivTestData, 0XA2, 0x12, 0x03, 0x00);	// DIV : R3 = R1 / R2
 	}
 
+    /**
+    * \fn SetupModTestData
+    * \brief Fills a vector with opcodes for testing the modulus instruction
+    */
+    void SetupModTestData()
+    {
+
+        InsertInstruction(ModTestData, 0x40, 0x00, 0x08, 0x00);	// ADDI : R0 += 8
+        InsertInstruction(ModTestData, 0xA3, 0x00, 0x20, 0x00);	// MODI : R0 = R0 % 32
+
+        InsertInstruction(ModTestData, 0xA3, 0x00, 0x08, 0x00);	// MODI : R0 = R0 % 8
+
+        InsertInstruction(ModTestData, 0x40, 0x01, 0x04, 0x00);	// ADDI : R1 += 4
+        InsertInstruction(ModTestData, 0x40, 0x02, 0x05, 0x00);	// ADDI : R2 += 5
+        InsertInstruction(ModTestData, 0XA4, 0x12, 0x00, 0x00);	// MOD : R2 = R2 % R1
+        InsertInstruction(ModTestData, 0XA4, 0x11, 0x00, 0x00);	// MOD : R1 = R1 % R1
+
+        InsertInstruction(ModTestData, 0x40, 0x03, 0x04, 0x00);	// ADDI : R3 += 4
+        InsertInstruction(ModTestData, 0x40, 0x04, 0x05, 0x00);	// ADDI : R4 += 5
+
+        InsertInstruction(ModTestData, 0XA5, 0x34, 0x05, 0x00);	// MOD : R5 = R4 % R3
+        InsertInstruction(ModTestData, 0XA5, 0x23, 0x05, 0x00);	// MOD : R5 = R3 % R2
+    }
+
 	/**
 	* \fn SetupErrorData
 	* \brief Fills a vector with load/store/push/pop opcodes that will produce errors
@@ -195,6 +225,41 @@ private:
 		InsertInstruction(MulTestData, 0x90, 0x03, 0x00, 0x00);	// MUL : R3 *= 0
 		InsertInstruction(MulTestData, 0x92, 0x22, 0x03, 0x00);	// MUL : R3 = R2 * R2
 	}
+
+    /**
+    * \fn SetupNegTestData
+    * \brief Fills a vector with opcodes for testing the neg instruction
+    */
+    void SetupNegTestData()
+    {
+        InsertInstruction(NegTestData, 0xE3, 0x00, 0x01, 0x00); // NEGI : R0 = -1
+
+        InsertInstruction(NegTestData, 0xE4, 0x00, 0x00, 0x00); // NEG : R0 = -R0
+        InsertInstruction(NegTestData, 0xE4, 0x00, 0x00, 0x00); // NEG : R0 = -R0
+
+        InsertInstruction(NegTestData, 0x40, 0x01, 0x02, 0x00);	// ADDI : R1 += 2
+
+        InsertInstruction(NegTestData, 0xE5, 0x10, 0x00, 0x00); // NEG : R0 = -R1
+    }
+
+    /**
+    * \fn SetupNotTestData
+    * \brief Fills a vector with opcodes for testing the not instruction
+    */
+    void SetupNotTestData()
+    {
+        InsertInstruction(NotTestData, 0xE0, 0x00, 0xFF, 0xFF); // NOTI : R0 = !65535
+        InsertInstruction(NotTestData, 0xE0, 0x00, 0x00, 0x00); // NOTI : R0 = !0
+
+        InsertInstruction(NotTestData, 0xE1, 0x00, 0x00, 0x00); // NOT : R0 = !R0
+        InsertInstruction(NotTestData, 0xE1, 0x00, 0x00, 0x00); // NOT : R0 = !R0
+
+        InsertInstruction(NotTestData, 0x40, 0x01, 0x02, 0x00);	// ADDI : R1 += 2
+
+        InsertInstruction(NotTestData, 0xE2, 0x10, 0x00, 0x00); // NOT : R0 = !R1
+        InsertInstruction(NotTestData, 0xE2, 0x20, 0x00, 0x00); // NOT : R0 = !R2
+
+    }
 
 	/**
 	* \fn SetupOrTestData

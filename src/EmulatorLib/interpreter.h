@@ -147,54 +147,81 @@ public:
 
 private:	// Arithmetic helpers
 	/**
-	* \fn BasicArithmetic
+	* \fn BasicBinaryArithmetic
 	* \brief Apply an instruction to two registers and store the result in a third register
 	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void BasicArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
-		std::function<void(UInt16, UInt16)> in_FRH);
+    void BasicBinaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
+        std::function<void(UInt16, UInt16)> in_FRH = std::function<void(UInt16, UInt16)>());
 
 	/**
-	* \fn DiscardArithmetic
+	* \fn DiscardBinaryArithmetic
 	* \brief Apply an instruction to two registers and discard the result
 	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void DiscardArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
-		std::function<void(UInt16, UInt16)> in_FRH);
+    void DiscardBinaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
+        std::function<void(UInt16, UInt16)> in_FRH = std::function<void(UInt16, UInt16)>());
 
 	/**
-	* \fn DiscardImmediateArithmetic
+	* \fn DiscardImmediateBinaryArithmetic
 	* \brief Apply an instruction to a register and an immediate value and discard the result
 	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void DiscardImmediateArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
-		std::function<void(UInt16, UInt16)> in_FRH);
+    void DiscardImmediateBinaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
+        std::function<void(UInt16, UInt16)> in_FRH = std::function<void(UInt16, UInt16)>());
 
 	/**
-	* \fn ImmediateArithmetic
+	* \fn ImmediateBinaryArithmetic
 	* \brief Apply an instruction to a register and an immediate value and store the result in the first register
 	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void ImmediateArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
-		std::function<void(UInt16, UInt16)> in_FRH);
+    void ImmediateBinaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
+        std::function<void(UInt16, UInt16)> in_FRH = std::function<void(UInt16, UInt16)>());
 
 	/**
-	* \fn InplaceArithmetic
+	* \fn InplaceBinaryArithmetic
 	* \brief Apply an instruction to two registers and store the result in the first register
 	* \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
 	* \param in_Ins The instruction to apply
 	* \param in_FRH Handler responsible for updating the flag register
 	*/
-	void InplaceArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
-		std::function<void(UInt16, UInt16)> in_FRH);
+    void InplaceBinaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16, UInt16)> in_Ins,
+        std::function<void(UInt16, UInt16)> in_FRH = std::function<void(UInt16, UInt16)>());
+
+    /**
+    * \fn BasicUnaryArithmetic
+    * \brief Apply an instruction to a register and store the result in another register
+    * \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
+    * \param in_Ins The instruction to apply
+    * \param frh Handler responsible for updating the flag register
+    */
+    void BasicUnaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16)> in_Ins);
+
+    /**
+    * \fn ImmediateUnaryArithmetic
+    * \brief Apply an instruction to an immediate value and store the result in a register
+    * \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
+    * \param in_Ins The instruction to apply
+    * \param frh Handler responsible for updating the flag register
+    */
+    void ImmediateUnaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16)> in_Ins);
+
+    /**
+    * \fn InplaceUnaryArithmetic
+    * \brief Apply an instruction to one register and store the result in the register
+    * \param in_Instruction 4 bytes Chip16 instruction containing the opcode and the operands
+    * \param in_Ins The instruction to apply
+    * \param frh Handler responsible for updating the flag register
+    */
+    void InplaceUnaryArithmetic(const Instruction & in_Instruction, std::function<UInt16(UInt16)> in_Ins);
 
 private:
 	/**
@@ -209,28 +236,48 @@ private:	// Opcodes : See spec for more information
 	void ADDI(const Instruction & in_Instruction);
 	void InplaceADD(const Instruction & in_Instruction);
 	void ADD(const Instruction & in_Instruction);
-	void SUBI(const Instruction & in_Instruction);
+	
+    void SUBI(const Instruction & in_Instruction);
 	void InplaceSUB(const Instruction & in_Instruction);
 	void SUB(const Instruction & in_Instruction);
-	void CMPI(const Instruction & in_Instruction);
+	
+    void CMPI(const Instruction & in_Instruction);
 	void CMP(const Instruction & in_Instruction);
-	void ANDI(const Instruction & in_Instruction);
+	
+    void ANDI(const Instruction & in_Instruction);
 	void InplaceAND(const Instruction & in_Instruction);
 	void AND(const Instruction & in_Instruction);
-	void TSTI(const Instruction & in_Instruction);
+	
+    void TSTI(const Instruction & in_Instruction);
 	void TST(const Instruction & in_Instruction);
-	void ORI(const Instruction & in_Instruction);
+	
+    void ORI(const Instruction & in_Instruction);
 	void InplaceOR(const Instruction & in_Instruction);
 	void OR(const Instruction & in_Instruction);
-	void XORI(const Instruction & in_Instruction);
+	
+    void XORI(const Instruction & in_Instruction);
 	void InplaceXOR(const Instruction & in_Instruction);
 	void XOR(const Instruction & in_Instruction);
-	void MULI(const Instruction & in_Instruction);
+	
+    void MULI(const Instruction & in_Instruction);
 	void InplaceMUL(const Instruction & in_Instruction);
 	void MUL(const Instruction & in_Instruction);
-	void DIVI(const Instruction & in_Instruction);
+	
+    void DIVI(const Instruction & in_Instruction);
 	void InplaceDIV(const Instruction & in_Instruction);
 	void DIV(const Instruction & in_Instruction);
+
+    void MODI(const Instruction & instruction);
+    void InplaceMOD(const Instruction & instruction);
+    void MOD(const Instruction & instruction);
+
+    void NOTI(const Instruction & instruction);
+    void InplaceNOT(const Instruction & instruction);
+    void NOT(const Instruction & instruction);
+
+    void NEGI(const Instruction & instruction);
+    void InplaceNEG(const Instruction & instruction);
+    void NEG(const Instruction & instruction);
 
 	void DirectJMP(const Instruction & in_Instruction);
 	void Jx(const Instruction & in_Instruction);

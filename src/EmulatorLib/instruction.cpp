@@ -30,7 +30,7 @@ Instruction::Instruction(const Utils::UInt32 in_Value) : m_Value(in_Value)
 			{
 				m_Op2 = FetchHalfByte(5);
 		
-				if((m_Opcode & 0xF) == 2)
+                if ((m_Opcode & 0xF) == 2 || ((m_Opcode & 0xF) == 5 && m_Type == Div))
 				{
 					m_IsInplace = false;
 					m_Op3 = FetchHalfByte(2);
