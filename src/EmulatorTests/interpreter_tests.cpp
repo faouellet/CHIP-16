@@ -271,10 +271,19 @@ BOOST_AUTO_TEST_CASE(SubTest)
 	BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
 	Interpret.InterpretOne();										// SUB : R3 = R1 - R0
 	BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
-	//Cpu.InterpretOne();	// CMPI
-	//Cpu.InterpretOne();	// CMP
-	std::vector<UInt16> l_SubDump(Cpu.DumpRegisters());
+	
+    Interpret.InterpretOne();	                                    // CMPI : R0 -= 4
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
+    Interpret.InterpretOne();	                                    // CMPI : R4 -= 4
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
+    Interpret.InterpretOne();	                                    // CMP : R0 -= R1
+    BOOST_REQUIRE_EQUAL((Cpu.DumpFlagRegister() >> 7) & 0x1, 0);	// Negative flag unset
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x2);					// Carry flag set
+    Interpret.InterpretOne();	                                    // CMP : R1 -= R0
+    BOOST_REQUIRE(Cpu.DumpFlagRegister() & 0x80);					// Negative flag set
 
+	std::vector<UInt16> l_SubDump(Cpu.DumpRegisters());
 	BOOST_REQUIRE_EQUAL(l_SubDump[0], 12);
 	BOOST_REQUIRE_EQUAL(l_SubDump[1], 65520);
 	BOOST_REQUIRE_EQUAL(l_SubDump[2], 28);
